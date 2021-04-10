@@ -1,18 +1,52 @@
+	
 	\section{General Overview}
 
-	The aim of this Master Thesis is to analyze to what extent machine learning methods on graphs such as embedding strategies like node2vec 
-	\citep{grover2016node2vec} or Graph Neural Networks (GNN) \citep{kipf2016semi,hamilton2017inductive,velivckovic2017graph,vaswani2017attention} 
-	can be applied for bank client classification. Graph machine learning methods have proven to be very successful for classification or prediction 
-	tasks among others. 
-	The advantage of these methods is that they can consider the network structure of a dataset (e.g. social network). This is a valuable feature 
-	if one for instance compares it to the capabilities of traditional machine learning methods such as Convolutional Neural Networks (CNN) which can 
-	"only" work with grid structures (e.g. image classification). Graph machine learning methods are currently widely used in recommendation systems 
-	for social media (e.g. Pinterest, \citet{ying2018graph}) and could be similarly beneficial for banks when classifying clients. Credit Scoring for 
-	instance appears to be an application in which GNN perform very well as shown by \citet{sukharev2020ews}. \\
+	Everyone has surely made the at times inconvenient experience of having been contacted by marketers, worst of all telemarketers. Not only are these
+	marketers more often than not unpleasantly persistent, they in addition often try to sell something which we are not interested in. While we may 
+	never get rid off marketers, there are methods which could ensure that we at least receive offers which we are likely to be interested in. This 
+	would make a positive outcome for both the customer and the marketer much more likely. \\ 
 
-	\section{Specific Setting}
+	\noindent Thanks to the advent of big data, technology companies such as Google and Facebook have long since built their entire business model on 
+	providing customer data to marketers. The customer data is often collected through social media, internet searches and by any other ways and means 
+	by which customer data can be collected. Of course, many marketers also possess their own databases from their customers which they may use for 
+	marketing purposes. \\
 
-	\noindent Another interesting application and the focus for this thesis is to classify bank clients according to their investment preference 
+	\noindent In order for marketers or from now on more generally companies to accurately predict, whether a particular client would be interested in a	particular product, different methods for predicting client interests can be applied. For instance, a naive but often time predictive method would
+	be to offer a product to people which have purchased the same or a similar product in the past. While one could apply this method, it has a major 
+	shortfall in that it does not allow us to identify new customers for the product. In order to receive better results, more sophisticated methods 
+	from machine learning could be used. In machine learning terminology, predicting whether a client would be interested in a product is referred to 
+	as a classification task. There are many machine learning methods which can perform such a task to varying success such as:
+
+	\begin{enumerate}
+		\item Linear- or Quadratic Discriminant Analysis
+		\item Support Vector Machines
+		\item Ensemble Methods
+		\item Neural Networks
+	\end{enumerate}
+
+	\noindent Of course this list is not exhaustive and there are a myriad of methods available. Further, there is no one size fits all solution, 
+	as every machine learning method has its advantages and disadvantages. The methods listed are all powerful methods in their own right and are
+	capable of performing a large range of classification tasks. Traditionally, these methods were designed to perform tasks using "classical" 
+	datasets such as cross sectional data. The term "classical" is a reference where an observation in a dataset stands for itself. For instance survey
+	data collected from the respondent "Peter" are not directly linked/connected to the answers of the respondent "Paul". Graphs or networks are very
+	different in this respect. As an illustration, observations in social networks are very much connected (e.g. Peter and Paul could be friends). In
+	the past 10 years there has been an explosion of new research in this area, where data scientist have developed methods to perform machine learning 
+	tasks on network data. This is an exciting new frontier in data science, which from a methodological perspective will be the focus of this master 
+	thesis for performing client classification tasks. \\
+
+	\noindent In the following sections a detailed description of the classification task for this master thesis is given, followed by a literature
+	review of the extant literature. 
+
+
+	\section{Topical Setting}
+
+	Retail banking is an area in which client advisers typically serve several thousand clients. In addition, advisers typically work in teams which 
+	makes personalized advice virtually impossible. For this reason, retail clients are often undeserved and are often dissatisfied with their bank. 
+	This is an area where classifying clients according to their needs or interests could tremendously improve the service quality provided. 
+
+
+
+	Another interesting application and the focus for this thesis is to classify bank clients according to their investment preference 
 	(e.g. which type of products should be advertised to which client?). This would be especially useful in the retail banking segment where advisers 
 	typically cannot know their clients personally due to the large number of clients being serviced. Investor classification is the intended main focus
 	of this Master Thesis. \\
