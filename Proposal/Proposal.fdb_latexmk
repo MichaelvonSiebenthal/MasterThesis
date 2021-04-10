@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex Proposal"] 1614856381 "Proposal.aux" "Proposal.bbl" "Proposal" 1614858561
+["bibtex Proposal"] 1616485473 "Proposal.aux" "Proposal.bbl" "Proposal" 1616488769
   "/usr/local/texlive/2020/texmf-dist/bibtex/bst/harvard/agsm.bst" 1136766823 25549 e3d0f1ab4ae55e777f7352db30e2c6f7 ""
-  "Bibliography.bib" 1614856179 3844 8f545b21aac318330b528d2c65ed91bc ""
-  "Proposal.aux" 1614858555 3220 a86d168f250de96f3c200d28e6c57fcd "pdflatex"
+  "Bibliography.bib" 1614858740 3844 8f545b21aac318330b528d2c65ed91bc ""
+  "Proposal.aux" 1616488768 3734 46d80197e207e9f22a8482623de38d12 "pdflatex"
   (generated)
-  "Proposal.blg"
   "Proposal.bbl"
-["pdflatex"] 1614858554 "Proposal.tex" "Proposal.pdf" "Proposal" 1614858561
+  "Proposal.blg"
+["pdflatex"] 1616488767 "Proposal.tex" "Proposal.pdf" "Proposal" 1616488769
   "/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -102,14 +102,16 @@
   "/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1586288239 4811913 0be9a7e86c70a26e5e3042966bcd7097 ""
   "/usr/local/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1614664857 2432469 d960363a94709a09d2107915ec1a0374 ""
   "/usr/local/texlive/2020/texmf.cnf" 1586288231 577 d60164b4589a341208aff7a667fbbdcb ""
-  "Proposal.aux" 1614858555 3220 a86d168f250de96f3c200d28e6c57fcd "pdflatex"
-  "Proposal.bbl" 1614856381 4579 9502d7633dce2a4a4fb5942efbc8f50a "bibtex Proposal"
-  "Proposal.out" 1614858555 481 195f1954d351c15e5ef3d6e47b82af30 "pdflatex"
-  "Proposal.tex" 1614858553 11072 0295f27e7802eb264daf348cf57c3176 ""
-  "Proposal.toc" 1614858555 658 52af7872fdbab68d40d6790bbc7a1511 "pdflatex"
+  "Proposal.aux" 1616488768 3734 46d80197e207e9f22a8482623de38d12 "pdflatex"
+  "Proposal.bbl" 1616485473 4149 8067ae43df35b499d8b80625531e2c99 "bibtex Proposal"
+  "Proposal.out" 1616488768 561 0df9d23f2308f82e4beaf311150d001b "pdflatex"
+  "Proposal.tex" 1616488767 12679 5290d22c30ed5c40350711beca0b362d ""
+  "Proposal.toc" 1616488768 754 33bcc431f113a0b6ffd2313636e23d79 "pdflatex"
+  "images/aff_mat.png" 1616485204 249624 521b72d8a6de177e7fe57f1cd47a2976 ""
+  "images/mag.png" 1616485208 188809 d60fac92598664aa5f23c6a679d847ee ""
   (generated)
-  "Proposal.aux"
-  "Proposal.log"
-  "Proposal.toc"
   "Proposal.pdf"
   "Proposal.out"
+  "Proposal.aux"
+  "Proposal.toc"
+  "Proposal.log"

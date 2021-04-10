@@ -1,0 +1,27 @@
+	\section{General Overview}
+
+	The aim of this Master Thesis is to analyze to what extent machine learning methods on graphs such as embedding strategies like node2vec 
+	\citep{grover2016node2vec} or Graph Neural Networks (GNN) \citep{kipf2016semi,hamilton2017inductive,velivckovic2017graph,vaswani2017attention} 
+	can be applied for bank client classification. Graph machine learning methods have proven to be very successful for classification or prediction 
+	tasks among others. 
+	The advantage of these methods is that they can consider the network structure of a dataset (e.g. social network). This is a valuable feature 
+	if one for instance compares it to the capabilities of traditional machine learning methods such as Convolutional Neural Networks (CNN) which can 
+	"only" work with grid structures (e.g. image classification). Graph machine learning methods are currently widely used in recommendation systems 
+	for social media (e.g. Pinterest, \citet{ying2018graph}) and could be similarly beneficial for banks when classifying clients. Credit Scoring for 
+	instance appears to be an application in which GNN perform very well as shown by \citet{sukharev2020ews}. \\
+
+	\section{Specific Setting}
+
+	\noindent Another interesting application and the focus for this thesis is to classify bank clients according to their investment preference 
+	(e.g. which type of products should be advertised to which client?). This would be especially useful in the retail banking segment where advisers 
+	typically cannot know their clients personally due to the large number of clients being serviced. Investor classification is the intended main focus
+	of this Master Thesis. \\
+
+	\section{Challenges}
+
+	\noindent This topic faces many different hurdles due to the low availability and mostly absence of available bank client data. To the extent 
+	possible, appropriate data sets will be retrieved (thus far 1 dataset found). The main difficulty however is to find a dataset which both includes 
+	attribute/feature data and the network structure of the customer data. For this reason, mostly methods to create synthetic data will be used to 
+	create the dataset for the subsequent simulation/testing.
+
+

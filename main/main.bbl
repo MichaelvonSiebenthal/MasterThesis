@@ -1,0 +1,55 @@
+\begin{thebibliography}{xx}
+
+\harvarditem{Grover \harvardand\ Leskovec}{2016}{grover2016node2vec}
+Grover, A. \harvardand\ Leskovec, J.  \harvardyearleft 2016\harvardyearright ,
+  node2vec: Scalable feature learning for networks, {\em in} `Proceedings of
+  the 22nd ACM SIGKDD international conference on Knowledge discovery and data
+  mining', pp.~855--864.
+\newline\harvardurl{https://doi.org/10.1145/2939672.2939754}
+
+\harvarditem[Hamilton et~al.]{Hamilton, Ying \harvardand\
+  Leskovec}{2017}{hamilton2017inductive}
+Hamilton, W.~L., Ying, R. \harvardand\ Leskovec, J.  \harvardyearleft
+  2017\harvardyearright , `Inductive representation learning on large graphs',
+  {\em arXiv preprint arXiv:1706.02216} .
+\newline\harvardurl{https://arxiv.org/abs/1706.02216}
+
+\harvarditem{Kipf \harvardand\ Welling}{2016}{kipf2016semi}
+Kipf, T.~N. \harvardand\ Welling, M.  \harvardyearleft 2016\harvardyearright ,
+  `Semi-supervised classification with graph convolutional networks', {\em
+  arXiv preprint arXiv:1609.02907} .
+\newline\harvardurl{https://arxiv.org/abs/1609.02907}
+
+\harvarditem[Sukharev et~al.]{Sukharev, Shumovskaia, Fedyanin, Panov
+  \harvardand\ Berestnev}{2020}{sukharev2020ews}
+Sukharev, I., Shumovskaia, V., Fedyanin, K., Panov, M. \harvardand\ Berestnev,
+  D.  \harvardyearleft 2020\harvardyearright , `Ews-gcn: Edge weight-shared
+  graph convolutional network for transactional banking data', {\em arXiv
+  preprint arXiv:2009.14588} .
+\newline\harvardurl{https://arxiv.org/abs/2009.14588}
+
+\harvarditem[Vaswani et~al.]{Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez,
+  Kaiser \harvardand\ Polosukhin}{2017}{vaswani2017attention}
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.~N.,
+  Kaiser, L. \harvardand\ Polosukhin, I.  \harvardyearleft
+  2017\harvardyearright , `Attention is all you need', {\em arXiv preprint
+  arXiv:1706.03762} .
+\newline\harvardurl{https://arxiv.org/abs/1706.03762}
+
+\harvarditem[Veli{\v{c}}kovi{\'c} et~al.]{Veli{\v{c}}kovi{\'c}, Cucurull,
+  Casanova, Romero, Lio \harvardand\ Bengio}{2017}{velivckovic2017graph}
+Veli{\v{c}}kovi{\'c}, P., Cucurull, G., Casanova, A., Romero, A., Lio, P.
+  \harvardand\ Bengio, Y.  \harvardyearleft 2017\harvardyearright , `Graph
+  attention networks', {\em arXiv preprint arXiv:1710.10903} .
+\newline\harvardurl{https://arxiv.org/abs/1710.10903}
+
+\harvarditem[Ying et~al.]{Ying, He, Chen, Eksombatchai, Hamilton \harvardand\
+  Leskovec}{2018}{ying2018graph}
+Ying, R., He, R., Chen, K., Eksombatchai, P., Hamilton, W.~L. \harvardand\
+  Leskovec, J.  \harvardyearleft 2018\harvardyearright , Graph convolutional
+  neural networks for web-scale recommender systems, {\em in} `Proceedings of
+  the 24th ACM SIGKDD International Conference on Knowledge Discovery \& Data
+  Mining', pp.~974--983.
+\newline\harvardurl{https://doi.org/10.1145/3219819.3219890}
+
+\end{thebibliography}

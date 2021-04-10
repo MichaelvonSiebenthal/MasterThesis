@@ -76,12 +76,4 @@ Ying, R., He, R., Chen, K., Eksombatchai, P., Hamilton, W.~L. \harvardand\
   Mining', pp.~974--983.
 \newline\harvardurl{https://doi.org/10.1145/3219819.3219890}
 
-\harvarditem[You et~al.]{You, Ying, Ren, Hamilton \harvardand\
-  Leskovec}{2018}{you2018graphrnn}
-You, J., Ying, R., Ren, X., Hamilton, W. \harvardand\ Leskovec, J.
-  \harvardyearleft 2018\harvardyearright , Graphrnn: Generating realistic
-  graphs with deep auto-regressive models, {\em in} `International Conference
-  on Machine Learning', PMLR, pp.~5708--5717.
-\newline\harvardurl{http://proceedings.mlr.press/v80/you18a.html}
-
 \end{thebibliography}
