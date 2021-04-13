@@ -1,61 +1,106 @@
 	
-	\section{General Overview}
 
-	Everyone has surely made the at times inconvenient experience of having been contacted by marketers, worst of all telemarketers. Not only are these
-	marketers more often than not unpleasantly persistent, they in addition often try to sell something which we are not interested in. While we may 
-	never get rid off marketers, there are methods which could ensure that we at least receive offers which we are likely to be interested in. This 
-	would make a positive outcome for both the customer and the marketer much more likely. \\ 
+	Everyone has surely made the at times inconvenient experience of having 
+	been contacted by marketers, worst of all telemarketers. Not only are these		
+	marketers more often than not unpleasantly persistent, they in addition 
+	often try to sell something which we are not interested in. While we may 
+	never get rid off marketers, there are methods which could ensure that we 
+	at least receive offers which we are likely to be interested in. This 
+	would make a positive outcome for both the customer and the marketer much 
+	more likely. \\ 
 
-	\noindent Thanks to the advent of big data, technology companies such as Google and Facebook have long since built their entire business model on 
-	providing customer data to marketers. The customer data is often collected through social media, internet searches and by any other ways and means 
-	by which customer data can be collected. Of course, many marketers also possess their own databases from their customers which they may use for 
+	\noindent Thanks to the advent of big data, technology companies such as 
+	Google and Facebook have long since built their entire business model on 
+	providing customer insights to marketers. The customer data is often 
+	collected through social media, internet searches and by any other ways and 
+	means by which customer data can be collected. Of course, many marketers 
+	also possess their own databases from their customers which they may use for 
 	marketing purposes. \\
 
-	\noindent In order for marketers or from now on more generally companies to accurately predict, whether a particular client would be interested in a	particular product, different methods for predicting client interests can be applied. For instance, a naive but often time predictive method would
-	be to offer a product to people which have purchased the same or a similar product in the past. While one could apply this method, it has a major 
-	shortfall in that it does not allow us to identify new customers for the product. In order to receive better results, more sophisticated methods 
-	from machine learning could be used. In machine learning terminology, predicting whether a client would be interested in a product is referred to 
-	as a classification task. There are many machine learning methods which can perform such a task to varying success such as:
+	\noindent This leads us to the general topic for this master thesis which 
+	consists of two main components, which are:
 
 	\begin{enumerate}
-		\item Linear- or Quadratic Discriminant Analysis
-		\item Support Vector Machines
-		\item Ensemble Methods
-		\item Neural Networks
+		\item Methodology
+		\item Application
 	\end{enumerate}
 
-	\noindent Of course this list is not exhaustive and there are a myriad of methods available. Further, there is no one size fits all solution, 
-	as every machine learning method has its advantages and disadvantages. The methods listed are all powerful methods in their own right and are
-	capable of performing a large range of classification tasks. Traditionally, these methods were designed to perform tasks using "classical" 
-	datasets such as cross sectional data. The term "classical" is a reference where an observation in a dataset stands for itself. For instance survey
-	data collected from the respondent "Peter" are not directly linked/connected to the answers of the respondent "Paul". Graphs or networks are very
-	different in this respect. As an illustration, observations in social networks are very much connected (e.g. Peter and Paul could be friends). In
-	the past 10 years there has been an explosion of new research in this area, where data scientist have developed methods to perform machine learning 
-	tasks on network data. This is an exciting new frontier in data science, which from a methodological perspective will be the focus of this master 
-	thesis for performing client classification tasks. \\
 
-	\noindent In the following sections a detailed description of the classification task for this master thesis is given, followed by a literature
-	review of the extant literature. 
+	\section{Overview Methodology}
+
+	This thesis has a strong focus on methodology as suggested by its title.
+	Machine Learning on graphs has become a hot topic in the field of machine
+	learning with a large number of papers being published every year in
+	prominent journals and conferences \citep{Ivanov2020}. While graph theory
+	is an old field of mathematics and can be traced back to Leonhard Euler and 
+	the famous "Königsberg Bridge Problem" \citep{euler1741solutio}, it has 
+	experienced a recent revival in machine learning. As it is a relatively 
+	novel field in machine learning, it provides for a fruitful ground for 
+	testing methods and applications. \\
+
+	\noindent Graph structures are significantly different compared to
+	traditional types of data usually used for machine learning tasks or
+	regression analyses. Graph structures are special in that the data points
+	in a graph have connections with each other. A practical example for this
+	are social networks. In a social network, the profiles of "Peter" and
+	"Paul" might be connected because Peter and Paul are friends. This aspect
+	is unique to graph or network data and provides both additional information
+	and additional complexity to graph data not found in other data types. An
+	introduction to graph theory will be given in chapter 2. 
 
 
-	\section{Topical Setting}
 
-	Retail banking is an area in which client advisers typically serve several thousand clients. In addition, advisers typically work in teams which 
-	makes personalized advice virtually impossible. For this reason, retail clients are often undeserved and are often dissatisfied with their bank. 
-	This is an area where classifying clients according to their needs or interests could tremendously improve the service quality provided. 
+	\section{Overview Application}
+
+	Retail banking is an area in which client advisers typically serve several 
+	hundred if not thousands of clients. In addition, advisers typically work
+	in teams which makes personalized advice virtually impossible. For this 
+	reason, it is impossible for an adviser to ensure that she provides offers
+	to her clients which are in line with their interests. From personal
+	experience of the author, having worked as an adviser for over 10 years, 
+	this can lead to unsatisfactory outcomes when contacting clients for services or 
+	products that they are not interested in. This is largely due to inadequate
+	client selection practices. In a bank setting, clients for marketing 
+	campaigns, such as promoting investment products, are typically selected based
+	on whether they have available liquidity for investment and/or whether a 
+	client has already invested in similar products. While this selection makes
+	sense to a certain extent, it falls short in that there remain often too 
+	many clients in the selection, which are not interested in the offer of a 
+	specific marketing campaign or potentially interested clients are falsely 
+	excluded in the pre-selection process. \\
+	
+
+	\noindent This is an area where classifying clients according to their 
+	interests could be of great value and where machine learning methods could 
+	be of particular use. It would in addition improve the service quality 
+	rendered to clients, prevent unnecessary and perhaps annoying marketing 
+	calls and improve the efficiency of a marketing campaigns.
+	
+
+	\section{Motivation}
+
+	The topic is motivated both by the methodology and its application. As
+	shown, machine learning on graphs is a very recent and promising field in
+	machine learning. From an application perspective, many banks lag behind in
+	terms of using appropriate customer classification strategies. It would
+	therefore be of particular use to discover useful approaches for accurate
+	customer classification. Thanks to the novelty of graph machine learning
+	techniques, many possible applications remain to be explored. This provides
+	fruitful ground for research and this master thesis. 
+
+	\noindent In the following an overview of the extant literature regarding 
+	client classification is given with an emphasis on the use of graph data. 
 
 
+	\section{Literature Review}
 
-	Another interesting application and the focus for this thesis is to classify bank clients according to their investment preference 
-	(e.g. which type of products should be advertised to which client?). This would be especially useful in the retail banking segment where advisers 
-	typically cannot know their clients personally due to the large number of clients being serviced. Investor classification is the intended main focus
-	of this Master Thesis. \\
+	There is a lot of published research regarding bank client classification
+	using a myriad of methods. Classifications tasks are performed in areas
+	such as credit scoring, anti-money laundering (AML) compliance or marketing
+	purposes among others
+	\citep{sukharev2020ews,weber2018scalable,moro2014data}. \\
 
-	\section{Challenges}
+	CONTINUE ANOTHER TIME
 
-	\noindent This topic faces many different hurdles due to the low availability and mostly absence of available bank client data. To the extent 
-	possible, appropriate data sets will be retrieved (thus far 1 dataset found). The main difficulty however is to find a dataset which both includes 
-	attribute/feature data and the network structure of the customer data. For this reason, mostly methods to create synthetic data will be used to 
-	create the dataset for the subsequent simulation/testing.
 
 
