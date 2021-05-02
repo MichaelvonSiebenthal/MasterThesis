@@ -12,7 +12,7 @@
 
 	This section provides a brief introduction to graph theory, with a focus on
 	the relevant aspects for this master thesis. The theory presented is
-	primarily taken from the book "Networks: An Introduction by Mark Newman
+	primarily taken from the book "Networks: An Introduction" by Mark Newman
 	\citeyearpar{Newman2010}. \\ 
 
 	\noindent Graphs are special data structures as shown in Figure \ref{fig:graph}. The 
@@ -131,7 +131,7 @@
 	$0 \leqslant \rho \leqslant 1$. In addition, for sufficently large graphs,
 	one can approximate $\rho = \frac{c}{n}$. 
 
-	\subsection{Centrality Measures}
+	\subsection{Eigenvector Centrality}
 
 	The degrees of a vertex shown in the previous section already correspond to
 	the simplest form of centrality measures. The issue with this measure
@@ -176,17 +176,80 @@
 		x(t) =  A^tx(0)
 	\end{equation}
 
-	\noindent Where $x(0)$ is a linear combination of:
+	\noindent Where $x(0)$ is a linear combination of \citep[p. 170]{Newman2010}:
 
 	\begin{equation}
 		x(0) =  \sum_{i}c_{i}v_{i}
 	\end{equation}
 
 	\noindent $v_i$ correspond to the eigenvectors of the adjacency matrix $A$
-	and $c_i$ corresponds to an appropriately chosen constant. 
+	and $c_i$ corresponds to an appropriately chosen constant. Therefore we can
+	write \citep[p. 170]{Newman2010}:
 
+	\begin{equation}
+		x(t) =  A^t \sum_{i}c_{i}v_{i} = \sum_{i} c_i k_i^t v_i = 
+		k_i^t \sum_{i} c_i \left[\frac{k_i}{k_1}\right]^t v_i
+	\end{equation}
 
+	\noindent In the above equation, $k_i$ correspond to the eigenvalues of $A$, 
+	the adjacency matrix. $k_1$ corresponds to the largest eigenvalue of $A$.
+	As $\frac{k_i}{k_1} < 1, \; \forall \; i\neq 1$ , the term is decaying as 
+	$t \rightarrow \infty$. The centralities $x$ can therefore be written
+	as fulfilling following condition \citep[p. 170]{Newman2010}:
 
+	\begin{equation}
+		Ax = k_1 x	
+	\end{equation}
+
+	\noindent Lastly, the eigenvector centrality is defined as \citep[p. 170]{Newman2010}:
+
+	\begin{equation}
+		x_i = k_{1}^{-1} \sum_{j} A_{ij}x_j 
+	\end{equation}
+
+	\subsection{Closeness Centrality}
+
+	Closeness centrality, $C_i$, is defined as the average distance from a vertex to the
+	other vertices. This centrality measure is defined as follows \citep[p.
+	182]{Newman2010}:
+
+	\begin{equation}
+		C_i = \frac{1}{l_i} = \frac{n}{\sum_{j}d_{ij}}
+	\end{equation}
+
+	\noindent In this measure, central vertices exhibit high closeness 
+	centrality and are therefore closer connected to other vertices compared to 
+	vertices with low closeness centrality. $l_i$ refers to the average of the 
+	geodesic distances $d_{ij}$ of vertex $i$.
+
+	\subsection{Betweenness Centrality}
+
+	This centrality measures to which extent a vertex lies on paths between
+	other vertices. For instance, a bottle neck vertex would exhibit a large
+	betweenness centrality as many, if not all nodes must pass through it. More
+	formally, betweenness centrality, $x_i$, is defined as \citep[p.
+	187]{Newman2010}:
+
+	\begin{equation}
+		x_i = \sum_{st} \frac{\eta_{st}^i}{g_{st}}
+	\end{equation}
+
+	\noindent In the above equation, $\eta_{st}^i$ refers to the number of 
+	geodesic paths from $s$ to $t$ which pass through vertex $i$. Further,
+	$g_{st}$ is defined as the number of geodesic paths between vertex $s$ and
+	$t$. \\
+
+	\noindent In order to allow for better comparison of betweenness
+	centrality, it is often standardized by the number of connected vertex
+	pairs $s$ and $t$ denoted as  $\eta^2$. The betweenness centrality
+	can therefore be expressed as \citep[p.190]{Newman2010}:
+
+	\begin{equation}
+		x_i = \frac{1}{\eta^2}\sum_{st} \frac{\eta_{st}^i}{g_{st}}
+	\end{equation}
+
+	\noindent With this measure, the betweenness centrality is within the range
+	$0\leqslant1$
 	
 
 	\section{Graph Generation}
@@ -201,9 +264,12 @@
 	than links in a graph theoretical setting. Unfortunately, access to bank
 	client data is rarely granted due to privacy or bank secrecy laws. \\
 
-	\noindent This is a problem for which no perfect solution exists. The
-	search for alternatives lead to graph generation methods. Among the many 
-	graph generation algorithms researched, the Multiplicative Attribute Graph 
-	(MAG) modelappears to provide a feasible solution \citep{kim2012multiplicative}. 
-	This model creates probabilistic links between observations using link-affinity
-	matrices. 
+	\noindent This is a problem for master thesis for which no perfect solution 
+	exists. The	search for alternatives lead to graph generation methods. 
+	Among the many graph generation algorithms researched, the 
+	Multiplicative Attribute Graph (MAG) model appears to provide a feasible 
+	solution \citep{kim2012multiplicative}. This model creates probabilistic 
+	links between observations using link-affinity matrices. This section will
+	provide an introduction to the MAG model. \\
+
+	\noindent 
