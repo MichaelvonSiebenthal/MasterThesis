@@ -13,7 +13,16 @@
 	This section provides a brief introduction to graph theory, with a focus on
 	the relevant aspects for this master thesis. The theory presented is
 	primarily taken from the book "Networks: An Introduction" by Mark Newman
-	\citeyearpar{Newman2010}. \\ 
+	\citeyearpar{Newman2010}. \\
+
+	ADD AS BACKGROUND
+	graph theory
+	is an old field of mathematics and can be traced back to Leonhard Euler and 
+	the famous "K√∂nigsberg Bridge Problem" \citep{euler1741solutio}, it has 
+	experienced a recent revival in machine learning. As it is a relatively 
+	novel field in machine learning, it provides for a fruitful ground for 
+	testing methods and applications. \\
+	
 
 	\noindent Graphs are special data structures as shown in Figure \ref{fig:graph}. The 
 	terms graph and network are used inerchangeably for the purpose of this 
@@ -250,7 +259,19 @@
 
 	\noindent With this measure, the betweenness centrality is within the range
 	$0\leqslant1$
-	
+
+	\section{Machine Learning on Graphs}
+
+	WHY GRAPH ML
+	\noindent Graph structures are significantly different compared to
+	traditional types of data usually used for machine learning tasks or
+	regression analyses. Graph structures are special in that the data points
+	in a graph have connections with each other. A practical example for this
+	are social networks. In a social network, the profiles of "Peter" and
+	"Paul" might be connected because Peter and Paul are friends. This aspect
+	is unique to graph or network data and provides both additional information
+	and additional complexity to graph data not found in other data types. An
+	introduction to graph theory will be given in chapter 2.
 
 	\section{Graph Generation}
 
@@ -271,5 +292,3 @@
 	solution \citep{kim2012multiplicative}. This model creates probabilistic 
 	links between observations using link-affinity matrices. This section will
 	provide an introduction to the MAG model. \\
-
-	\noindent 
