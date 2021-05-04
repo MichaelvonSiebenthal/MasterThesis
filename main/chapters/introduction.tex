@@ -9,7 +9,9 @@
 	addition, there are a vast range of applications for graphs in the fields of 
 	natural science, social science and many more as shown by the excellent 
 	overview given by \cite{zhou2020graph}. In principle, graphs are useful 
-	whenever one wants to model interactions or relationships. \\
+	whenever one wants to model interactions or relationships.\\
+
+	\section{Relevance to Economics}
 
 	\noindent From a business \& economics perspective, graphs are particularly
 	interesting if one wants to for instance model the interactions between
@@ -33,12 +35,10 @@
 	purposes have been among the most popular. Indeed, this is one of the main
 	areas where social networks such as Facebook or search providers such as 
 	Google make their revenue by selling advertising 
-	\citep{Facebook2021,Alphabet2021}.
-
-	\noindent Both Facebook and Google have the advantage, that their businesses
-	naturally capture relational or more generally network data which can be
-	represented as graphs. Most researchers or companies however do not have 
-	access to such data. Companies for instance may have access to large
+	\citep{Facebook2021,Alphabet2021}. Both Facebook and Google have the advantage, 
+	that their businesses naturally capture relational or more generally network 
+	data which can be represented as graphs. Most researchers or companies however 
+	do not have access to such data. Companies for instance may have access to large
 	amounts of customer data, however they typically would not have access to
 	relational information (e.g. which client is connected with which other
 	clients). The same is true for researchers, where social scientists
@@ -70,11 +70,16 @@
 	would have been preferred for this thesis. The absence of such available 
 	graph data and the difficulty of generating graph data sparked the interest
 	for exploring synthetic graph generation for subsequent machine learning
-	tasks. If this application proved to be successful, this could provide an 
-	alternative approach for analyzing cross-sectional data. Given the richer
-	amount of information.
+	tasks. If this application proves to be successful, this could provide an 
+	alternative and hopefully improved approach for analyzing cross-sectional 
+	data. For that reasons, graph machine learning results will be compared to
+	standard machine learning methods.\\
 
-	\section{Overview Application}
+	\noindent In the following section, the motivation for choosing bank
+	clients (retail clients) for the classification task is presented. 
+
+
+	\section{Application}
 
 	Retail banking is an area in which client advisers typically serve several 
 	hundred if not thousands of clients. In addition, advisers typically work
@@ -89,26 +94,44 @@
 	on whether they have available liquidity for investment and/or whether a 
 	client has already invested in similar products. While this selection makes
 	sense to a certain extent, it falls short in that there remain often too 
-	many clients in the selection, which are not interested in the offer of a 
-	specific marketing campaign or potentially interested clients are falsely 
-	excluded in the pre-selection process. \\
+	many uninterested clients in the selection. In addition, people who might 
+	be interested in the product being promoted might be falsely excluded given 
+	the rather simple selection criteria. \\
 	
 
 	\noindent This is an area where classifying clients according to their 
 	interests could be of great value and where machine learning methods could 
 	be of particular use. It would in addition improve the service quality 
 	rendered to clients, prevent unnecessary and perhaps annoying marketing 
-	calls and improve the efficiency of a marketing campaigns.
+	calls and improve the efficiency of a marketing campaigns. \\
+
+	\noindent In the following subsection a literature review regarding bank
+	client classification is given. The literature review for graph generation
+	and graph machine learning methods are provided in
+	chapter~\ref{section:theory}. The literature review for graph generation
+	requires some theoretical background in graph theory, which is why this
+	part of the literature review is only given in the following chapter.  
 	
-	\section{Literature Review}
+	\subsection{Literature Review Application}
 
 	There is a lot of published research regarding bank client classification
-	using a myriad of methods. Classifications tasks are performed in areas
+	using a myriad of methods. A recent article published by
+	\cite{sukharev2020ews} made use of graph neural networks for credit scoring
+	bank clients. The authors were successful in developing a model in which
+	the bank clients cash flows were used to link bank clients with each other
+	in order to generate a graph. They show in their paper, that by exploiting
+	these relationships, they were able to develop a significantly improved
+	credit scoring model. This article is interesting in that they are to my
+	knowledge the first 
+
+
+	Classifications tasks are performed in areas
 	such as credit scoring, anti-money laundering (AML) compliance or marketing
 	purposes among others
-	\citep{sukharev2020ews,weber2018scalable,moro2014data}. \\
+	
 
-	CONTINUE ANOTHER TIME
+
+	\citep{weber2018scalable,moro2014data}.
 
 
 
