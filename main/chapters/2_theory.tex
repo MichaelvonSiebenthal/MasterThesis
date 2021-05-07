@@ -15,18 +15,15 @@
 	primarily taken from the book "Networks: An Introduction" by Mark Newman
 	\citeyearpar{Newman2010}. \\
 
-	graph theory is an old field of mathematics and can be traced back to Leonhard Euler and 
-	the famous "Königsberg Bridge Problem" \citep{euler1741solutio}, it has 
-	experienced a recent revival in machine learning. As it is a relatively 
-	novel field in machine learning, it provides for a fruitful ground for 
-	testing methods and applications. \\
-	
-
-	\noindent Graphs are special data structures as shown in Figure \ref{fig:graph}. The 
-	terms graph and network are used inerchangeably for the purpose of this 
-	master thesis. Typically, the term graph is used more commonly when referring 
-	to mathematical analysis and the term network is more commonly used for data
-	science purposes.
+	\noindent Graph theory is an old field of mathematics and can be traced back 
+	to Leonhard Euler and the famous "Königsberg Bridge Problem"
+	\citep{euler1741solutio}. The study of graphs has had a recent revival
+	thanks to its useful appplications in machine learing. Graphs are special 
+	data structures as shown in Figure \ref{fig:graph}. The terms graph and network 
+	are often used interchangeably and have identical meaning for the purpose
+	of this master thesis. Typically, the term graph is used more commonly when 
+	referring to mathematical analysis of graphs and the term network is more 
+	commonly used for data science purposes. \\
 
 	\begin{figure}[h]
 		\centering
@@ -36,11 +33,11 @@
 		\label{fig:graph}
 	\end{figure}
 	
-	\noindent The graph shown in Figure \ref{fig:graph} corresponds to an undirected graphs
+	\noindent The graph shown in Figure \ref{fig:graph} corresponds to an undirected graph
 	in which the connections between the vertexes are mutual. In a directed
 	graph for instance, vertex A could be connected to vertex B, however vertex
 	B need not be connected to vertex A. For the purpose of this thesis, only
-	undirected graphs are considered. Vertexes are commonly reffered to as
+	undirected graphs are considered. Vertexes are often reffered to as
 	nodes and the terms will be used interchangeably. Edges refer to the
 	connections between the vertices. Edges are often also referred to as links
 	and the terms will be used interchangeably as well. Graphs may have
@@ -92,13 +89,14 @@
 	to 0. This is because self-edges are excluded. As this is an undirected
 	network, the adjacency matrix is symmetric. There are many additonal
 	aspects one could mention with regard to the adjacency matrix, they are
-	however not relevant for this thesis.
+	however not relevant for this thesis. For additonal regarding the adjacency
+	matrix, I refer to the book by \cite{Newman2010}. 
 
 	\subsection{Degree Measures}
 
-	An important measure for graphs are the degrees $k$ of the vertices, the 
-	number of edges connected to a vertex. The degrees of vertex $i$ can be 
-	formulated as \citep[p.133]{Newman2010}:
+	An important measure for graphs are the degrees denoted by $k$ of the
+	vertices. Degrees refer to the number of edges connected to a vertex. The 
+	degrees of vertex denoted by $i$ can be formulated as \citep[p. 133]{Newman2010}:
 
 	\begin{equation}
 		k_i = \sum_{j=1}^{n} A_{ij}
@@ -107,7 +105,7 @@
 	\noindent For an undirected graph, edges have two ends. This is due to the 
 	fact that vertices connected by an edge are mutually connected. In terms of 
 	the sum of the degrees of all vertices, we can therefore write for a graph 
-	with $m$ edges \citep[p.133]{Newman2010}:
+	with $m$ edges \citep[p. 133]{Newman2010}:
 
 	\begin{equation}
 		2m = \sum_{i=1}^{n} k_i	
@@ -115,27 +113,27 @@
 
 	\noindent The sum of all degrees is therefore just the number of edges $m$ 
 	multiplied by 2. In terms of statistical measures, the mean degree $c$ of a 
-	vertex is defined as follows \citep[p.134]{Newman2010}:
+	vertex is defined as follows \citep[p. 134]{Newman2010}:
 
 	\begin{equation}
 		c = \frac{1}{n}\sum_{i=1}^{n}k_i = \frac{2m}{n}
 	\end{equation}
 
 	\noindent In order to define the connectance or density of a graph, we must
-	first observe, that the maximum number of edges is given by \citep[p.134]{Newman2010}:
+	first observe, that the maximum number of edges is given by \citep[p. 134]{Newman2010}:
 
 	\begin{equation}
 		{n \choose 2} = \frac{1}{2}n(n-1)
 	\end{equation}
 
-	\noindent The density $\rho$ can therefore be written as \citep[p.134]{Newman2010}:
+	\noindent The density $\rho$ can therefore be written as \citep[p. 134]{Newman2010}:
 
 	\begin{equation}
 		\rho = \frac{m}{{n \choose 2}} = \frac{2m}{n(n-1)} = \frac{c}{n-1}
 	\end{equation}
 
 	\noindent Note, that the density $\rho$ lies strictly between 
-	$0 \leqslant \rho \leqslant 1$. In addition, for sufficently large graphs,
+	$0 \leqslant \rho \leqslant 1$. In addition, for sufficiently large graphs,
 	one can approximate $\rho = \frac{c}{n}$. 
 
 	\subsection{Eigenvector Centrality}
@@ -143,7 +141,7 @@
 	The degrees of a vertex shown in the previous section already correspond to
 	the simplest form of centrality measures. The issue with this measure
 	however is, that the every neighbor of vertex $i$ are valued the same. This
-	is a problem, as not all neigbors are of equalt importance due to:
+	is a problem, as not all neigbors are of equal importance due to:
 
 	\begin{enumerate}
 		\item Number of neighbors

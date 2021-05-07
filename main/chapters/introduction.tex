@@ -121,17 +121,36 @@
 	the bank clients cash flows were used to link bank clients with each other
 	in order to generate a graph. They show in their paper, that by exploiting
 	these relationships, they were able to develop a significantly improved
-	credit scoring model. This article is interesting in that they are to my
-	knowledge the first 
+	credit scoring model. This article is interesting in that they are among of
+	the first to use graph machine learning for classifying bank clients. In
+	addition, \cite{sukharev2020ews} show a unique advantage of banks in terms
+	of available data. Thanks to the large increase in use of online banking, as
+	shown for the case of Switzerland \citep{Statistapayment}, there is an
+	abundace of relational information available for generating graphs.
+	Unfortunately banks are hesitant to release such data for external research 
+	due to privacy concerns or bank secrecy laws. \\
 
+	\noindent Another interesting paper by \cite{weber2018scalable} focuses on 
+	anti-money laundering (AML) detection tasks which is a very important and 
+	labor intensive task for banks. The authors employ graph machine learning
+	techniques to predict the plausability of a transaction between two parties
+	(link prediction task). \\
 
-	Classifications tasks are performed in areas
-	such as credit scoring, anti-money laundering (AML) compliance or marketing
-	purposes among others
-	
+	\noindent Lastly the study by \cite{moro2014data} analyzed a Portugese bank client
+	data set in which clients were selected for a telemarketing campaign. The
+	dataset contains a set of features of the contacted clients and their
+	response. After the campaign, clients either invested into a long-term
+	deposit or not. The study is thus set up as a binary classification
+	problem. This study and dataset is well known and has been used by many
+	authors as a test dataset to compare the performance of machine learning
+	methods. To the authors knowledge, the dataset has not been used for
+	synthetic graph creation or graph machine learning tasks. For that reason,
+	this dataset will be used as a reference for the analyses in the upcoming
+	sections. \\
 
-
-	\citep{weber2018scalable,moro2014data}.
-
+	\noindent In terms of studies which perform investor classification, no
+	such studies have been found that use machine learning on graphs. In that
+	sense this master thesis is unique. In the following section, the required
+	theoretical background for this thesis is introduced. 
 
 
