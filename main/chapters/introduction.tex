@@ -1,17 +1,20 @@
 	
+	\section{Introduction}
+
 	The aim of this thesis is to explore the relatively new field of machine
-	learning on graphs for the purpose of gaining customer insights. Graph
+	learning on graphs. In particular, this thesis will focus on graph machine
+	learning applications for the purpose of gaining customer insights. Graph
 	machine learning is the current frontier in machine learning and has vast
 	applications in many areas as recently shown by the success of AlphaFold
 	\citep{senior2020improved}. AlphaFold made a breakthrough for predicting
 	protein structures where they made use of the observation that a folded
 	protein can be considered as a spatial graph \citep{AlphaFoldTeam2020}. In
-	addition, there are a vast range of applications for graphs in the fields of 
+	addition, there is a vast range of applications for graphs in the fields of 
 	natural science, social science and many more as shown by the excellent 
 	overview given by \cite{zhou2020graph}. In principle, graphs are useful 
 	whenever one wants to model interactions or relationships.\\
 
-	\section{Relevance to Economics}
+	\subsection{Relevance to Economics}
 
 	\noindent From a business \& economics perspective, graphs are particularly
 	interesting if one wants to for instance model the interactions between
@@ -21,7 +24,7 @@
 	\ref{fig:bank_network}. This is a useful representation of interdependencies 
 	and is an important basis for making systems more robust. \\
 
-	\begin{figure}
+	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.5\textwidth]{bank_network.jpg}
 		\caption{Bank Network}
@@ -42,115 +45,73 @@
 	amounts of customer data, however they typically would not have access to
 	relational information (e.g. which client is connected with which other
 	clients). The same is true for researchers, where social scientists
-	often collect data via anonymous surveys. This is an issue in terms of data
-	access. \\
-
-	\noindent This leads us to the two main aspect of this master thesis which
-	consists of:
+	often collect data via anonymous surveys. It is important to
+	highlight, that there is a lot of social network data available online. 
+	This network data however typically only contains the network structure. 
+	The feature data of the people present in the network is however typically not
+	provided. This is an issue in terms of data access. \\
 	
-	\begin{enumerate}
-		\item Methodology
-		\item Application
-	\end{enumerate} 
+	\subsection{Research Topic}
 
 	\noindent Given the difficult access to graph data, this thesis will
-	explore whether (semi-) synthetic graphs can be generated using
-	cross-sectional data gathered from surveys. The aim is not only to generate
-	graphs but to then test whether the resulting graph can be used for
-	meaningful machine learning tasks. In order to test this, cross-sectional 
-	data of banking clients will be gathered. The aim in terms of application 
-	will be to perform an investor classification task. This application area is
-	chosen due to the author's experience in this field having worked as a
-	client adviser at a bank for over 10 years. One could however choose almost
-	any customer classification area, meaning that the application can be chosen
-	arbitrarily within reason. \\
+	explore to what extent synthetic graphs can be generated using real-world
+	cross-sectional data. An example for such data could be the client database
+	of a company. The aim is then not only to generate graphs but to test 
+	whether the resulting graph can be used for meaningful machine learning tasks. 
+	In order to test this, appropriate datasets will be selected. It would of 
+	course be best, if one would have access to real graph data. If graph data 
+	had been available for an appropriate application, this would have been 
+	preferred for this thesis. The absence of such available graph data and the 
+	difficulty of generating / collecting real graph data sparked the interest 
+	and research topic for exploring synthetic graph generation for subsequent 
+	machine learning tasks. If this application proves to be successful, this 
+	could provide an alternative and hopefully successful approach for analyzing 
+	cross-sectional data. In order to assess, whether synthetic graphs based on real
+	cross-sectional data is a viable approach, the results of graph machine
+	learning methods will be compared to "standard" machine learning methods.
+	This leads to the research question formally presented in the following
+	section.
 
-	\noindent It would of course be best, if one would have access to real
-	graph data. If graph data had been available for a unique application, this
-	would have been preferred for this thesis. The absence of such available 
-	graph data and the difficulty of generating graph data sparked the interest
-	for exploring synthetic graph generation for subsequent machine learning
-	tasks. If this application proves to be successful, this could provide an 
-	alternative and hopefully improved approach for analyzing cross-sectional 
-	data. For that reasons, graph machine learning results will be compared to
-	standard machine learning methods.\\
+	\subsubsection{Research Question}
 
-	\noindent In the following section, the motivation for choosing bank
-	clients (retail clients) for the classification task is presented. 
+	The research question for this thesis is defined as follows:
 
+	\begin{quote}
+		\item \textbf{To what extent are synthetic graphs based on real cross-sectional
+			data useful for machine learning tasks?}
+	\end{quote}
 
-	\section{Application}
+	\noindent In terms of machine learning task, this thesis will focus on a
+	classification task. This ensures that the results of the graph machine
+	learning methods versus the "standard" machine learning tasks can be
+	compared.
 
-	Retail banking is an area in which client advisers typically serve several 
-	hundred if not thousands of clients. In addition, advisers typically work
-	in teams which makes personalized advice virtually impossible. For this 
-	reason, it is impossible for an adviser to ensure that she provides offers
-	to her clients which are in line with their interests. From personal
-	experience of the author, having worked as an adviser for over 10 years, 
-	this can lead to unsatisfactory outcomes when contacting clients for services or 
-	products that they are not interested in. This is largely due to inadequate
-	client selection practices. In a bank setting, clients for marketing 
-	campaigns, such as promoting investment products, are typically selected based
-	on whether they have available liquidity for investment and/or whether a 
-	client has already invested in similar products. While this selection makes
-	sense to a certain extent, it falls short in that there remain often too 
-	many uninterested clients in the selection. In addition, people who might 
-	be interested in the product being promoted might be falsely excluded given 
-	the rather simple selection criteria. \\
-	
+	\subsection{Literature Review}
 
-	\noindent This is an area where classifying clients according to their 
-	interests could be of great value and where machine learning methods could 
-	be of particular use. It would in addition improve the service quality 
-	rendered to clients, prevent unnecessary and perhaps annoying marketing 
-	calls and improve the efficiency of a marketing campaigns. \\
+	An extensive literature review was conducted. To the best knowledge of the
+	author, there are no other published studies which investigate the
+	applicability of synthetic graphs based on real cross-sectional data for
+	the purpose of machine learning. The literature review revealed the
+	following related literature.
+	\\
 
-	\noindent In the following subsection a literature review regarding bank
-	client classification is given. The literature review for graph generation
-	and graph machine learning methods are provided in
-	chapter~\ref{section:theory}. The literature review for graph generation
-	requires some theoretical background in graph theory, which is why this
-	part of the literature review is only given in the following chapter.  
-	
-	\subsection{Literature Review Application}
-
-	There is a lot of published research regarding bank client classification
-	using a myriad of methods. A recent article published by
-	\cite{sukharev2020ews} made use of graph neural networks for credit scoring
-	bank clients. The authors were successful in developing a model in which
-	the bank clients cash flows were used to link bank clients with each other
-	in order to generate a graph. They show in their paper, that by exploiting
-	these relationships, they were able to develop a significantly improved
-	credit scoring model. This article is interesting in that they are among of
-	the first to use graph machine learning for classifying bank clients. In
-	addition, \cite{sukharev2020ews} show a unique advantage of banks in terms
-	of available data. Thanks to the large increase in use of online banking, as
-	shown for the case of Switzerland \citep{Statistapayment}, there is an
-	abundace of relational information available for generating graphs.
-	Unfortunately banks are hesitant to release such data for external research 
-	due to privacy concerns or bank secrecy laws. \\
-
-	\noindent Another interesting paper by \cite{weber2018scalable} focuses on 
-	anti-money laundering (AML) detection tasks which is a very important and 
-	labor intensive task for banks. The authors employ graph machine learning
-	techniques to predict the plausability of a transaction between two parties
-	(link prediction task). \\
-
-	\noindent Lastly the study by \cite{moro2014data} analyzed a Portugese bank client
-	data set in which clients were selected for a telemarketing campaign. The
-	dataset contains a set of features of the contacted clients and their
-	response. After the campaign, clients either invested into a long-term
-	deposit or not. The study is thus set up as a binary classification
-	problem. This study and dataset is well known and has been used by many
-	authors as a test dataset to compare the performance of machine learning
-	methods. To the authors knowledge, the dataset has not been used for
-	synthetic graph creation or graph machine learning tasks. For that reason,
-	this dataset will be used as a reference for the analyses in the upcoming
-	sections. \\
-
-	\noindent In terms of studies which perform investor classification, no
-	such studies have been found that use machine learning on graphs. In that
-	sense this master thesis is unique. In the following section, the required
-	theoretical background for this thesis is introduced. 
-
-
+	\noindent A large related research area is regarding synthetic 
+	graph generation. Classical models include the famous Erdös-Rényi graph
+	generation model \citep{erdos2011evolution}, the small-world model by
+	Watts and Strogatz \citeyearpar{watts1998collective} or the model by
+	\cite{barabasi1999emergence}. More recent approaches include Kronecker Graphs 
+	\citep{leskovec2010kronecker} and its genralization 
+	Multiplicative Attribute Graphs (MAG) \citep{kim2012multiplicative}. 
+	MAG work well in that it follows commonly observed network properties observed 
+	in real networks as outlined in the paper by Kim \& Leskovec
+	\citeyearpar{kim2012multiplicative}. 
+	For the purpose of this thesis the MAG model will be used for transforming 
+	cross-sectional data into a graph. A more detailed introduction of the MAG 
+	model will be given in the theory section. Recently, synthetic graph generation 
+	models have shifted to deep generative models. Prominent models include 
+	GraphRNN by \cite{you2018graphrnn} or the deep generative model presented
+	by \cite{li2018learning}. These models differ to the traditional graph
+	generation models in that they learn to create synthetic graphs based on
+	real graph samples. These newer approaches could for instance be used for
+	drug molecule discovery among many other approaches. These newer models are
+	however not purposeful for this thesis. 

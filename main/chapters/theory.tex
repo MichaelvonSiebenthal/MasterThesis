@@ -1,0 +1,529 @@
+
+	\section{Theory}
+
+	This chapter will cover the necessary theoretical background for this
+	master thesis and consists of following parts:
+
+	\begin{enumerate}
+		\item Graph Theory
+		\item Machine Learning on Graphs
+		\item Graph Generation
+    \end{enumerate}
+
+	\subsection{Graph Theory}
+
+	This section provides a brief introduction to graph theory, with a focus on
+	the relevant aspects for this master thesis. The theory presented is
+	primarily taken from the book "Networks: An Introduction" by Mark Newman
+	\citeyearpar{Newman2010}. \\
+
+	\noindent Graph theory is an old field of mathematics and can be traced back 
+	to Leonhard Euler and the famous "Königsberg Bridge Problem"
+	\citep{euler1741solutio}. The study of graphs has had a recent revival
+	thanks to its useful applications in machine learning. Graphs are special 
+	data structures as shown in Figure \ref{fig:graph}. The terms graph and network 
+	are often used interchangeably and have identical meaning for the purpose
+	of this master thesis. Typically, the term graph is used more commonly when 
+	referring to mathematical analysis of graphs and the term network is more 
+	commonly used for data science purposes. \\
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{graph.png}
+		\caption{Example of a Graph}
+		\cite[p. 111]{Newman2010}
+		\label{fig:graph}
+	\end{figure}
+	
+	\noindent The graph shown in Figure \ref{fig:graph} corresponds to an undirected graph
+	in which the connections between the vertexes are mutual. In a directed
+	graph for instance, vertex A could be connected to vertex B, however vertex
+	B need not be connected to vertex A. For the purpose of this thesis, only
+	undirected graphs are considered. Vertexes are often referred to as
+	nodes and the terms will be used interchangeably. Edges refer to the
+	connections between the vertices. Edges are often also referred to as links
+	and the terms will be used interchangeably as well. Graphs may have
+	additional elements such as multi-edges or self-edges. These are however
+	not relevant for the purpose of this master thesis. \\
+
+	\noindent In terms of mathematical notation, graphs are typically defined
+	as follows:
+
+	\begin{equation}
+		G(V,E)
+	\end{equation}
+
+	\noindent $G$ refers to the graph as an output. $V$ refers to the set of 
+	vertices present in the graph and $E$ refers to edges present between the 
+	vertices. \\
+
+	\subsubsection{Adjacency Matrix}
+
+	The adjacency matrix $A$ is defined as a $n \times n$ matrix, where $n$ refers
+	to the number of vertices present in the graph. Each vertex is therefore
+	recorded by a column and a row in the adjacency matrix. The elements in the
+	adjacency matrix are further typically defined as follows:
+
+	\begin{equation}
+		A_{ij} = 
+			\begin{cases}
+				1, & \text{if vertex $i$ and $j$ are connected by an edge} \\
+				0, & \text{otherwise}
+			\end{cases}
+	\end{equation}
+	
+	\noindent For illustration, the adjacency matrix of the graph shown in Figure
+	\ref{fig:graph} is shown as follows:
+
+	\[ A = 
+	\begin{pmatrix}
+		0 & 1 & 0 & 0 & 1 & 0 \\
+		1 & 0 & 1 & 1 & 0 & 0 \\
+		0 & 1 & 0 & 1 & 1 & 1 \\
+		0 & 1 & 1 & 0 & 0 & 0 \\
+		1 & 0 & 1 & 0 & 0 & 0 \\
+		0 & 0 & 1 & 0 & 0 & 0  
+	\end{pmatrix}
+	\] \\
+	
+	\noindent As one can see, if vertex $i$ and $j$ are connected, this is recorded with
+	1 and 0 otherwise. Note, that all the elements on the $diag(A)$ are equal
+	to 0. This is because self-edges are excluded. As this is an undirected
+	network, the adjacency matrix is symmetric. There are many additional
+	aspects one could mention with regard to the adjacency matrix, they are
+	however not relevant for this thesis. For additional regarding the adjacency
+	matrix, I refer to the book by \cite{Newman2010}. 
+
+	\subsubsection{Degree Measures}
+
+	An important measure for graphs are the degrees denoted by $k$ of the
+	vertices. Degrees refer to the number of edges connected to a vertex. The 
+	degrees of vertex denoted by $i$ can be formulated as \citep[p. 133]{Newman2010}:
+
+	\begin{equation}
+		k_i = \sum_{j=1}^{n} A_{ij}
+	\end{equation}
+
+	\noindent For an undirected graph, edges have two ends. This is due to the 
+	fact that vertices connected by an edge are mutually connected. In terms of 
+	the sum of the degrees of all vertices, we can therefore write for a graph 
+	with $m$ edges \citep[p. 133]{Newman2010}:
+
+	\begin{equation}
+		2m = \sum_{i=1}^{n} k_i	
+	\end{equation}
+
+	\noindent The sum of all degrees is therefore just the number of edges $m$ 
+	multiplied by 2. In terms of statistical measures, the mean degree $c$ of a 
+	vertex is defined as follows \citep[p. 134]{Newman2010}:
+
+	\begin{equation}
+		c = \frac{1}{n}\sum_{i=1}^{n}k_i = \frac{2m}{n}
+	\end{equation}
+
+	\noindent In order to define the connectance or density of a graph, we must
+	first observe, that the maximum number of edges is given by \citep[p. 134]{Newman2010}:
+
+	\begin{equation}
+		{n \choose 2} = \frac{1}{2}n(n-1)
+	\end{equation}
+
+	\noindent The density $\rho$ can therefore be written as \citep[p. 134]{Newman2010}:
+
+	\begin{equation}
+		\rho = \frac{m}{{n \choose 2}} = \frac{2m}{n(n-1)} = \frac{c}{n-1}
+	\end{equation}
+
+	\noindent Note, that the density $\rho$ lies strictly between 
+	$0 \leqslant \rho \leqslant 1$. In addition, for sufficiently large graphs,
+	one can approximate $\rho = \frac{c}{n}$. 
+
+	\subsubsection{Eigenvector Centrality}
+
+	The degrees of a vertex shown in the previous section already correspond to
+	the simplest form of centrality measures. The issue with this measure
+	however is, that the every neighbor of vertex $i$ are valued the same. This
+	is a problem, as not all neighbors are of equal importance due to:
+
+	\begin{enumerate}
+		\item Number of neighbors
+		\item Importance of neighbor
+		\item both
+	\end{enumerate}
+
+	\noindent There are many different alternative centrality measures which
+	can consider the factors listed above such as eigenvector centrality, Katz
+	centrality or PageRank
+	\citep{katz1953new,page1999pagerank,landau1895relativen,Newman2010}. As we 
+	are only dealing with simple undirected graphs, eigenvector centrality will 
+	suffice, where the other mentioned methods are adaptations to the 
+	eigenvector centrality. \\
+
+	\noindent Eigenvector centrality gives all vertices a score proportional to
+	the sum of the scores of its neighbors. This is a procedure in which
+	typically the initial centrality $x_i$ of vertex $i$ is guessed to be 1
+	$\forall \; i$. This can be used to calculate the centralities of the
+	neighbors of $i$ which is denoted as $x_{i}'$. We can thus write
+	\citep[p. 169]{Newman2010}:
+
+	\begin{equation}
+		x_i' = \sum_{j}A_{ij}x_j
+	\end{equation}
+
+	\noindent In matrix form:
+
+	\begin{equation}
+		x' = Ax
+	\end{equation}
+
+	\noindent This process is repeated $t$ times to provide better estimates
+	\citep[p. 170]{Newman2010}:
+
+	\begin{equation}
+		x(t) =  A^tx(0)
+	\end{equation}
+
+	\noindent Where $x(0)$ is a linear combination of \citep[p. 170]{Newman2010}:
+
+	\begin{equation}
+		x(0) =  \sum_{i}c_{i}v_{i}
+	\end{equation}
+
+	\noindent $v_i$ correspond to the eigenvectors of the adjacency matrix $A$
+	and $c_i$ corresponds to an appropriately chosen constant. Therefore we can
+	write \citep[p. 170]{Newman2010}:
+
+	\begin{equation}
+		x(t) =  A^t \sum_{i}c_{i}v_{i} = \sum_{i} c_i k_i^t v_i = 
+		k_i^t \sum_{i} c_i \left[\frac{k_i}{k_1}\right]^t v_i
+	\end{equation}
+
+	\noindent In the above equation, $k_i$ correspond to the eigenvalues of $A$, 
+	the adjacency matrix. $k_1$ corresponds to the largest eigenvalue of $A$.
+	As $\frac{k_i}{k_1} < 1, \; \forall \; i\neq 1$ , the term is decaying as 
+	$t \rightarrow \infty$. The centralities $x$ can therefore be written
+	as fulfilling following condition \citep[p. 170]{Newman2010}:
+
+	\begin{equation}
+		Ax = k_1 x	
+	\end{equation}
+
+	\noindent Lastly, the eigenvector centrality is defined as \citep[p. 170]{Newman2010}:
+
+	\begin{equation}
+		x_i = k_{1}^{-1} \sum_{j} A_{ij}x_j 
+	\end{equation}
+
+	\subsubsection{Closeness Centrality}
+
+	Closeness centrality, $C_i$, is defined as the average distance from a vertex to the
+	other vertices. This centrality measure is defined as follows \citep[p.
+	182]{Newman2010}:
+
+	\begin{equation}
+		C_i = \frac{1}{l_i} = \frac{n}{\sum_{j}d_{ij}}
+	\end{equation}
+
+	\noindent In this measure, central vertices exhibit high closeness 
+	centrality and are therefore closer connected to other vertices compared to 
+	vertices with low closeness centrality. $l_i$ refers to the average of the 
+	geodesic distances $d_{ij}$ of vertex $i$.
+
+	\subsubsection{Betweenness Centrality}
+
+	This centrality measures to which extent a vertex lies on paths between
+	other vertices. For instance, a bottle neck vertex would exhibit a large
+	betweenness centrality as many, if not all nodes must pass through it. More
+	formally, betweenness centrality, $x_i$, is defined as \citep[p.
+	187]{Newman2010}:
+
+	\begin{equation}
+		x_i = \sum_{st} \frac{\eta_{st}^i}{g_{st}}
+	\end{equation}
+
+	\noindent In the above equation, $\eta_{st}^i$ refers to the number of 
+	geodesic paths from $s$ to $t$ which pass through vertex $i$. Further,
+	$g_{st}$ is defined as the number of geodesic paths between vertex $s$ and
+	$t$. \\
+
+	\noindent In order to allow for better comparison of betweenness
+	centrality, it is often standardized by the number of connected vertex
+	pairs $s$ and $t$ denoted as  $\eta^2$. The betweenness centrality
+	can therefore be expressed as \citep[p.190]{Newman2010}:
+
+	\begin{equation}
+		x_i = \frac{1}{\eta^2}\sum_{st} \frac{\eta_{st}^i}{g_{st}}
+	\end{equation}
+
+	\noindent With this measure, the betweenness centrality is within the range
+	$0\leqslant1$
+
+	\subsection{Machine Learning on Graphs}
+
+	\noindent Graph structures are significantly different compared to
+	traditional types of data usually used for machine learning tasks or
+	regression analyses. Graph structures are special in that the data points
+	in a graph have connections with each other. A practical example for this
+	are social networks. In a social network, the profiles of "Peter" and
+	"Paul" might be connected because Peter and Paul are friends. In addition,
+	"Paul" and "Peter" can only ever reach each-other if they are directly or
+	perhaps indirectly connected. This aspect is unique to graph or network data 
+	and provides both additional information and additional complexity to graph 
+	data. This property does not allow for comparing nodes in a graph in terms
+	of euclidean distances as only connected nodes can reach each-other. For
+	the purpose of this thesis, machine learning on graphs will be categorized
+	into two categories:
+
+	\begin{enumerate}
+		\item Graph representation learning with subsequent downstream machine
+			learning
+		\item Graph neural networks
+	\end{enumerate}
+	
+	\noindent In the following subsections, methods for both graph machine learning
+	categories will be introduced.
+
+	\subsubsection{Graph Representation Learning}
+
+	The aim of graph representation learning is to embed nodes into a
+	$d$-dimensional vector representation. The resulting vector embeddings can
+	then be used for "standard" machine learning applications. A graphical
+	representation of this task is shown in figure \ref{fig:embedding}.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.8\textwidth]{embedding.png}
+		\caption{Network Embedding}
+		\cite{leskovec2021lecture}
+		\label{fig:embedding}
+	\end{figure}
+
+	\noindent Figure \ref{fig:embedding} outlines the task of finding an
+	encoder such that nodes which are similar are also embedded close in the
+	embedding space for which distance measures such as Euclidean distances can
+	be calculated. A common measure for similarity is to find vector embeddings 
+	$z$ of nodes $u$ and node $v$ such that \citep{leskovec2021lecture}:
+
+	\begin{equation}
+		z_u^Tz_v \approx similarity(u,v)
+	\end{equation}
+
+	\noindent The dot product of two node vector embedding should thus
+	approximately equal the similarity of the corresponding nodes in the
+	network. There are different approaches for defining similarity of two
+	nodes which can be applied. An early solution for instance was a graph
+	factorization approach introduced by \cite{ahmed2013distributed}. More
+	recent and successful approaches include methods which make use of random
+	walks. In this context, similarity is defined as follows
+	\citep{leskovec2021lecture}:
+
+	\begin{equation}
+		z_u^Tz_v \approx \text{Prob. that node $u$ and $v$ co-occur on a random walk over the network}
+	\end{equation}
+
+	\noindent This thesis will focus on the methods Deepwalk by
+	\cite{perozzi2014deepwalk} and its generalization Node2Vec by
+	\cite{grover2016node2vec}. There are other noteworthy methods such as LINE
+	by \cite{tang2015line} which could be considered. In order to remain
+	focused these additional methods are not considered. The selected methods
+	are however well suited for the tasks given in this thesis. \\
+
+	\noindent DeepWalk and Node2Vec make use of methods which originated in 
+	natural language processing (NLP). Specifically they makes use of the 
+	Skip-Gram model introduced by
+	\cite{mikolov2013efficient,mikolov2013distributed}. As the Skip-Gram model
+	is a core component of DeepWalk and Node2Vec, the Skip-Gram framework is
+	explained in the detail in the following paragraph as it relates to graph
+	representation learning. \\
+
+
+	\noindent In NLP words are one-hot encoded for the Skip-Gram model in which 
+	vector representations for the words are learned. Similarly, nodes in a network 
+	can be thought of as words in a NLP context. A basic overview of the Skip-Gram 
+	model is provided in figure \ref{fig:skip_gram}. The input defined as $X$ corresponds to 
+	a matrix with dimension $N \times N$ of one-hot encoded words or rather nodes. 
+	$N$ corresponds to the number of nodes. The projection $H$ is calculated using 
+	a simple forward propagation of the input times the weight matrix $\Phi$ with 
+	dimension $N \times D$. Here $D$ defines the number of dimensions for the 
+	vector embedding of the words or nodes. The projection $H$ is thereafter 
+	forward propagated again by multiplying it with a second weight matrix $\Psi$ 
+	with dimensions $D \times V$. $V$ refers to the context size a node is being 
+	compared to. For graph representation learning context size is defined by the 
+	number of neighboring nodes a node is being compared to. The output is thereafter 
+	activated using the Softmax activation function and the loss is calculated
+	by comparing the activated output with the actual context node. The
+	aim of the Skip-Gram model is to accurately predict the context of an input
+	node, the neighbors of a given input node. The weights $\Psi$ and 
+	$\Phi$ are thereafter updated using stochastic gradient descent. This procedure is 
+	repeated for several iterations and the Skip-Gram model is therefore a 
+	special form of a recurrent neural network. The weight matrix $\Phi$ lastly 
+	corresponds to the node vector embeddings. \\ 
+
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.4\textwidth]{skip_gram.png}
+		\caption{Skip-Gram Architecture}
+		\cite[p. 5]{mikolov2013efficient}
+		\label{fig:skip_gram}
+	\end{figure}
+
+	\noindent Based on this logic, the DeepWalk algorithm was developed which was a big
+	breakthrough. The DeepWalk algorithm builds on top of the Skip-Gram model and 
+	uses random walks for learning the node vector embeddings. To provide a 
+	better overview of the DeepWalk algorithm, the pseudo-code is presented in 
+	algorithm \ref{algo:DeepWalk} \& \ref{algo:SkipGram} as defined in its original paper.
+	
+	\begin{algorithm}
+		\scriptsize
+		\SetAlgoLined
+		\KwIn{graph $G(V,E)$}
+		window size $w$\\
+		embedding size $d$\\
+		walks per vertex $\gamma$\\
+		walk length $t$\\
+		\KwOut{matrix of vertex representations $\Phi \in \mathbb{R}^{\mid V
+		\mid \times d}$}
+		\nl Initialization: Sample $\Phi$ from $\mathcal{U}^{\mid V
+		\mid \times d}$ \\
+		\nl Build a binary Tree $T$ from $V$ \\
+		\nl \For{$i=0$ to $\gamma$}{
+		\nl		$\mathcal{O}$ = Shuffle($V$) \\
+		\nl		\ForEach{$v_i \in \mathcal{O}$}{
+		\nl			$\mathcal{W}_{vi} = RandomWalk(G,v_i,t)$\\
+		\nl			SkipGram($\Phi,\mathcal{W}_{vi}, w$)
+				}
+			}
+		\caption{DeepWalk($G,w,d,\gamma,t$)}
+		\label{algo:DeepWalk}
+	\end{algorithm}
+	
+	\begin{algorithm}
+		\scriptsize
+		\SetAlgoLined
+		\nl \ForEach{$v_j \in \mathcal{W}_{vi}$}{
+		\nl		\ForEach{$u_k \in \mathcal{W}_{vi}[j-w:j+w]$}{
+		\nl			$J(\Phi) = - \log \Pr(u_k \mid \Phi(v_j))$\\
+		\nl			$\Phi = \Phi - \alpha * \frac{\partial J}{\partial \Phi}$
+				}
+			}
+		\caption{SkipGram($\Phi,\mathcal{W}_{vi},w$)}
+		\label{algo:SkipGram}
+	\end{algorithm}
+	
+	\vspace{5mm}
+	
+	\noindent The DeepWalk algorithm generates fixed length random walks for
+	every node. The Skip Gram model is then run for every node on the random
+	walk. In terms of context, the window size determines the neighboring nodes 
+	on the random walk the currently selected node is trying to predict in
+	terms of context. The DeepWalk algorithm is then repeated for a defined
+	number of random walks. In terms of training, the DeepWalk algorithm can
+	lastly be run for a defined number of epochs. Lastly, the DeepWalk
+	algorithm often uses more efficient approximation methods such as
+	hierarchical Softmax which makes use of a binary tree or negative sampling.
+	Both approximation methods are outlined in the paper by
+	\cite{mikolov2013distributed}. \\
+
+
+	\noindent This is in principle the model which will be used to find the node
+	embeddings. In the application, the Node2Vec algorithm by will be employed. 
+	Node2Vec is a generalization of the DeepWalk algorithm and allows for the deployment of
+	biased random walks. In particular, it allows to set probabilities as to
+	whether the random walk is biased towards breadth-first (BFS) search or
+	depth-first search (DFS). Depending on the network structure, setting an
+	appropriate bias can greatly improve the quality of the embeddings. If no
+	bias towards BFS or DFS is set, an unbiased random walk is employed which is when
+	the Node2Vec algorithm corresponds to the DeepWalk algorithm. More
+	precisely, this occurs when the search bias $\alpha = 1$ with $p=q=1$ as
+	outlined in the Node2Vec paper \citep[p. 860]{grover2016node2vec}. The results
+	revealed, that an unbiased random walk embedded the nodes very well. For
+	that reason the Node2Vec algorithm is not explained in further detail as
+	the relevant parts are covered by the simpler and reader friendlier 
+	DeepWalk algorithm. \\
+
+	\noindent The resulting node vector embeddings can then be used for downstream
+	machine learning tasks. An additional benefit of graph representation
+	learning is that the nodes can be encoded into an arbitrary number of
+	dimensions. In this sense, graph representation learning can be used as a
+	powerful dimensionality reduction strategy. Further, the node embedding vectors
+	correspond to the features used in the downstream machine learning tasks.
+	The values of the features were learned automatically using the DeepWalk or
+	Node2Vec algorithm. This approach directly takes care of the otherwise
+	tedious feature selection process. With this approach, only the number of
+	features needs to be defined in terms of feature selection. This is a large
+	advantage and can save a lot of time when working with graphs. 
+
+	\subsubsection{Graph Neural Networks}
+
+	This section will provide an overview regarding the theory about Graph
+	Neural Networks (GNN). Within the family of GNNs, there are a myriad of
+	different methods available and every few months new methods are being
+	published. GNNs currently enjoy a large popularity and benefit from a large
+	research output. This thesis will focus on two popular and established GNN
+	approaches which are:
+
+	\begin{enumerate}
+		\item Graph Convolutional Networks
+		\item GraphSage
+	\end{enumerate}
+	
+	\noindent Before presenting the two above mentioned methods, a general
+	overview of the GNN framework is given. First the required setup is
+	defined \citep{leskovec2021lecture}:
+
+	\begin{itemize}
+		\item $G(V,E)$ is a graph with a set of vertices and edge connections
+		\item $V$ is a set of vertices
+		\item $A$ is the adjacency matrix graph $G$
+		\item $X \in \mathbb{R}^{\mid V\mid \times F}$ is the matrix of node
+			features
+		\item $v$ is a node $\in V$ and $\mathcal{N}(v)$ is the set of
+			neighbors of $v$
+	\end{itemize}
+
+	\noindent If there are no node features present, $X$ can for instance be
+	defined as a one-hot encoded vector. A naïve approach would be to join the 
+	adjacency matrix with the feature matrix as the input for a recurrent
+	neural network. The problem with this approach is, that the input is not order 
+	invariant and the model cannot be applied to graphs of different sizes \citep{leskovec2021lecture}. 
+	One of the first methods to overcome these challenges are Graph
+	Convolutional Networks and are presented in the following paragraph.
+
+	\paragraph{Graph Convolutional Networks}\mbox{}\\
+	
+	\noindent The Graph Convolutional Network (GCN) was introduced by 
+	\cite{kipf2016semi} and makes use of simplified spectral graph
+	convolutions. The author Thomas Kipf \citeyearpar{kipf2016online} provides 
+	excellent explanations on his website which is used as inspiration for
+	presenting the theory. \\
+
+	\noindent GCN are inspired by Convolutional Neural Networks (CNN) and its
+	famous filtering mechanism as outlined by \cite{krizhevsky2012imagenet}.
+	CNNs typically work with grid structured input data such as pixels of
+	images. The convolutional filter then samples the input grid using a
+	filter with a specified size (e.g. $3\times3$ grid filter). Similarly GCN
+	sample a graph using the node neighbors $\mathcal{N}(v)$ of node $v$ as a
+	filter. The filter can then be fine tuned in the sense of how many $k$-hops
+	of neighbors to consider (e.g. 1-hop: immediate neighbors of $v$, 2-hop:
+	include neighbors of $v$'s neighbors etc.). 
+
+
+	\subsection{Graph Generation}
+
+	It is very difficult to collect graph data, as one cannot capture links
+	between observations by traditional data collection means such as surveys. 
+	In this regard, banks have a unique advantage (similar to social networks)
+	in that they can capture relationships by analyzing their clients cash
+	flows. In today's world most people make most if not all of their payments
+	electronically and usually pay by card. This provides banks with a large
+	amount of information such as spending behavior. Payments are nothing other
+	than links in a graph theoretical setting. Unfortunately, access to bank
+	client data is rarely granted due to privacy or bank secrecy laws. \\
+
+	\noindent This is a problem for master thesis for which no perfect solution 
+	exists. The	search for alternatives lead to graph generation methods. 
+	Among the many graph generation algorithms researched, the 
+	Multiplicative Attribute Graph (MAG) model appears to provide a feasible 
+	solution \citep{kim2012multiplicative}. This model creates probabilistic 
+	links between observations using link-affinity matrices. This section will
+	provide an introduction to the MAG model. \\

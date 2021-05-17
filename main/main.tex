@@ -1,5 +1,5 @@
 
-\documentclass[12pt]{report}
+\documentclass[12pt]{article}
 \usepackage{titlesec}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -25,9 +25,13 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
+\usepackage[ruled,vlined]{algorithm2e}
+\SetAlCapNameFnt{\scriptsize}
+\SetAlCapFnt{\scriptsize}
+
 % \titleformat{\chapter}[display]
 % {\normalfont\bfseries}{}{0pt}{\Huge}
-
+ 
 
 \begin{document}
   
@@ -38,7 +42,7 @@
 	  \huge Gaining Customer Insights using Machine Learning on Graphs \\ 
 	  \large \vspace{1em}
 	  University of Basel\\
-	  \vspace{4em}
+	  \vspace{4em} 
 	  \large
 	  Author: \\
 	  Michael von Siebenthal\\
@@ -49,16 +53,15 @@
 	  \today
 	  \vspace{3em}
     \end{center}
-  \end{titlepage}
+  \end{titlepage} 
 
 
 
   %%% frontmatter
-  \chapter*{Abstract}
-  Abstract goes here
-
-  \chapter*{Declaration}
-  \input{chapters/declaration}
+  \include{chapters/abstract}
+  
+  \include{chapters/declaration}
+  %\input{chapters/declaration}
 
   \tableofcontents
   \listoffigures
@@ -68,16 +71,13 @@
   \onehalfspacing
   
   % Introduction
-  \chapter{Introduction}
-  \input{chapters/introduction}
+  \include{chapters/introduction}
+
 
   % Theory
-  \chapter{Theory}
+  \include{chapters/theory}
   \label{section:theory}
-  \input{chapters/2_theory}
-
-  %\chapter{Chapter Three Title}
-  %\input{chapters/chapter03}
+ 
 
   %\chapter{Chapter Four Title}
   %\input{chapters/chapter04}
