@@ -830,6 +830,11 @@ INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecbx0800.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecbx0600.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecti0800.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm
+INPUT ./images//GNN.png
+INPUT ./images//GNN.png
+INPUT images//GNN.png
+INPUT ./images//GNN.png
+INPUT ./images//GNN.png
 INPUT ./main.bbl
 INPUT main.bbl
 INPUT ./main.bbl

@@ -485,9 +485,84 @@
 	defined as a one-hot encoded vector. A naïve approach would be to join the 
 	adjacency matrix with the feature matrix as the input for a recurrent
 	neural network. The problem with this approach is, that the input is not order 
-	invariant and the model cannot be applied to graphs of different sizes \citep{leskovec2021lecture}. 
-	One of the first methods to overcome these challenges are Graph
-	Convolutional Networks and are presented in the following paragraph.
+	invariant and the model cannot be applied to graphs of different sizes
+	\citep{leskovec2021lecture}. \\
+
+
+	\noindent Modern GNNs have overcome this problem by drawing inspiration from 
+	Convolutional Neural Networks (CNN) and its famous filtering mechanism as 
+	outlined by \cite{krizhevsky2012imagenet}.
+	CNNs typically work with grid structured input data such as pixels of
+	images. The convolutional filter then samples the input grid using a
+	filter with a specified size (e.g. $3\times3$ grid filter). Similarly GNN
+	sample a graph using the node neighbors $\mathcal{N}(v)$ of node $v$ as a
+	filter. The filter can then be fine tuned in the sense of how many $k$-hops
+	of neighbors to consider (e.g. 1-hop: immediate neighbors of $v$, 2-hop:
+	include neighbors of $v$'s neighbors etc.). In terms of implementation, the
+	number of $k$-hops is set by the number of graph convolutional layers
+	included in the GNN model. A graphical illustration of this mechanism is 
+	shown in figure \ref{fig:GNN_structure}. \\
+
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.8\textwidth]{GNN.png}
+		\caption{GNN Structure}
+		\cite{leskovec2021lecture}
+		\label{fig:GNN_structure}
+	\end{figure}
+
+
+	\noindent The GNN Structure outlined shows an example of a 2-hop or 3 layer GNN. 
+	The 1-hop convolutional layer considers the neighboring nodes of the target node A. 
+	The 2-hop layer considers the neighbors of node A's neighbors. Note, that the 
+	target node A is included as an input node in the 2-hop layer. This is reasonable 
+	as node A itself is also a neighboring node to it neighbors. Further, node 
+	A is also a determining factor for its neighbors. Taking the example shown in
+	figure \ref{fig:GNN_structure}, the challenge for the GNN is to find node
+	embeddings based on local network neighborhoods
+	\citep{leskovec2021lecture}. The node embeddings at layer 0 correspond to
+	the features of the input nodes where $X = H^{(0)}$. The key transformations 
+	then occur typically in the following sequential steps in the gray boxes
+	\citep{you2020design}. 
+
+	\begin{enumerate}
+		\item Message passing from layer $H^{(l-1)}$ to $H^{(l)}$
+		\item Aggregate the received messages in layer $H^{(l)}$
+		\item Optionally apply a normalization and/or an activation function to
+			the aggregated message
+		\item Message passing from layer $H^{(l)}$ to $H^{(l+1)}$ and repeat the
+			previous procedure until the target node is reached.
+		\item Calculate the loss of the target node output versus the learning
+			objective by using a defined loss function
+		\item Update the learnable model parameters with stochastic gradient
+			descent by using the calculated loss.
+	\end{enumerate}
+
+	\noindent The above list is not meant to be considered as a complete overview
+	and should be rather regarded as an example of a typical GNN structure.
+	GNNs are flexible in that a myriad of modifications can be added to the GNN
+	layers similar to the possibilities of CNNs or RNNs. The defining features of
+	different GNN methods usually involve the selection of different message
+	passing methods and aggregation strategies. An excellent overview regarding 
+	the design space for GNNs is provided in the article by \cite{you2020design}.
+	Of course there are exceptions and alternative procedures exist. The GNN 
+	methods evaluated in this thesis and most successful GNNs however tend to 
+	follow this general structure.  \\
+
+	\noindent In terms of interpretation, the output of the first GNN layers in
+	figure \ref{fig:GNN_structure} (gray boxes) corresponds to the hidden layer 
+	representations of the direct neighbors of target node A and the output of 
+	the final GNN layer corresponds to the node embedding of the target node A. 
+	This should sound familiar when comparing this approach to the graph 
+	representation learning approach outlined in the previous section. 
+	GNNs can indeed be used for unsupervised learning tasks such as finding node 
+	embeddings such that similar nodes are embedded close together. A nice
+	example for this is shown in the paper regarding Graph Convolutional
+	Networks by \cite[p. 11-12]{kipf2016semi}. The focus of this thesis is
+	placed on supervised classification tasks, which is why unsupervised
+	learning approaches are not further investigated. In the following paragraph 
+	the first GNN method of interest is presented. 
+
 
 	\paragraph{Graph Convolutional Networks}\mbox{}\\
 	
@@ -495,19 +570,89 @@
 	\cite{kipf2016semi} and makes use of simplified spectral graph
 	convolutions. The author Thomas Kipf \citeyearpar{kipf2016online} provides 
 	excellent explanations on his website which is used as inspiration for
-	presenting the theory. \\
+	presenting the theory. As outlined, GNNs typically differ with regards to
+	the type of message passing and aggregation strategy. GCN make us of the
+	following forward propagation method \citep[p. 2]{kipf2016semi}:
 
-	\noindent GCN are inspired by Convolutional Neural Networks (CNN) and its
-	famous filtering mechanism as outlined by \cite{krizhevsky2012imagenet}.
-	CNNs typically work with grid structured input data such as pixels of
-	images. The convolutional filter then samples the input grid using a
-	filter with a specified size (e.g. $3\times3$ grid filter). Similarly GCN
-	sample a graph using the node neighbors $\mathcal{N}(v)$ of node $v$ as a
-	filter. The filter can then be fine tuned in the sense of how many $k$-hops
-	of neighbors to consider (e.g. 1-hop: immediate neighbors of $v$, 2-hop:
-	include neighbors of $v$'s neighbors etc.). 
+	\begin{equation}
+		H^{(l+1)} = \sigma\left(\tilde D^{-\frac{1}{2}}\tilde A \tilde
+		D^{-\frac{1}{2}}H^{(l)}W^{(l)}\right)
+		\label{eq:GCN}
+	\end{equation}
+	
+	\noindent The variables in equation \ref{eq:GCN} are defined as follows:
 
+	\begin{itemize}
+		\item $H^{l}\in\mathcal{R}^{N \times D}$ refers to the embedding matrix
+			at layer $l$ where $N$ refers to the number of nodes $\mid V \mid$
+			and $D$ refers to the number of embedding dimensions. $H^{(0)}=X$.
+		\item $W^{l}$ refers to the trainable and layer specific weight matrix
+			for the linear message passing employed in the GCN model.
+		\item $\tilde A = A + I_N$ where $A$ is the adjacency matrix of the
+			input graph $G$. The identity matrix is added so that self-loops
+			are considered. This is necessary as the target node of every layer
+			is considered in the aggregation process as previously outlined.
+		\item $\tilde D_{ii} = \sum_{j}\tilde A_{ij}$ is a diagonal matrix
+			containing the degree distributions of the modified adjacency
+			matrix $\tilde A$.
+		\item $\sigma(\cdot)$ refers to an activation function such as ReLu or
+			Softmax.
+	\end{itemize}
 
+	\noindent To provide a better overview, the compact notation shown in 
+	equation \ref{eq:GCN} is expanded in the following equation
+	\citep{Dubois2019}:
+
+	\begin{equation}
+		h_{ij}^{(l)} = \sigma\left(\sum_{(i,j)\in
+		\mathcal{N}(v)}\frac{\tilde a_{ik}h_{kj}^{(l-1)}}{\sqrt{\tilde
+d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
+		\label{eq:GCN_expand}
+	\end{equation}
+	
+	\noindent In Equation \ref{eq:GCN_expand} $h_{ij}^{(l)}$ refers to the 
+	specific node in the hidden layer $l$. $i$ specifies the position of the
+	hidden layer node and $j$ refers to the set of neighbors or inputs used to derive
+	$h_{ij}^{(l)}$. $h_{kj}^{(l-1)}$ refers to the embedding vector at position
+	$k$ of the set of neighbors $j$ in the layer $(l-1)$. In terms of filtering
+	strategy, $(i,j) \in \mathcal{N}(v)$. This means that both $i$ and $j$ are
+	neighbors of the target node $v$ at layers $l$ and $(l-1)$ respectively. Linear message
+	passing is then performed for every neighbor in $j$. The node in the graph
+	$G$ at position $\tilde a_{ik}$ of the modified adjacency matrix selects
+	the nodes for which a connection between $h_{ij}^{(l)}$ and
+	$h_{kj}^{(l-1)}$ exists. The embeddings $h_{kj}^{(l-1)}$ of the selected nodes are
+	normalized by the symmetric degree distributions of the previous hidden
+	layer node $\tilde d_{k,k}$ and the new hidden layer node $\tilde d_{i,i}$.
+	Afterwards the normalized embeddings are message passed by multiplying it
+	with the shared weight matrix $W^{(l)}$. Lastly, the sum of the received
+	messages is taken in terms of aggregation strategy and the resulting
+	aggregate is passed through the activation function to yield $h_{ij}^{(l)}$.
+	Note, that the aggregation strategy involves taking a weighted sum thanks
+	to the symmetric normalization. \\
+
+	\noindent The detailed explanations given above show the procedure for a
+	two-layer GCN (1-hop). Returning now to compact notation, this procedure can be
+	expanded for three or more GCN layers. First, the notation is further
+	simplified by defining $\hat A = \tilde D^{-\frac{1}{2}}\tilde A \tilde
+	D^{-\frac{1}{2}}$. An example of a two-layer GCN is then given as follows 
+	where $Z$ refers to the embedding or output of the target node 
+	\citep[p. 3]{kipf2016semi}:
+
+	\begin{equation}
+		Z = f(X,A) = \text{softmax}\left(\hat A \;\text{ReLu}\left(\hat A X
+		W^{(0)}\right)W^{(1)}\right)
+	\end{equation}
+
+	\noindent Finally, the model parameters are updated using a loss function and
+	a from of gradient descent. The procedure is identical for GNNs as it is
+	for CNNs or RNNs using a common backward propagation function. 
+
+	\paragraph{GraphSage} \mbox{}\\
+	
+	\noindent This paragraph introduces GraphSage which in many ways is a
+	generalization of the GCN introduces in the previous section. There are
+	however very clear differences. 
+ 
 	\subsection{Graph Generation}
 
 	It is very difficult to collect graph data, as one cannot capture links
