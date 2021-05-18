@@ -651,8 +651,39 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	
 	\noindent This paragraph introduces GraphSage by
 	\cite{hamilton2017inductive} which can be thought of as the inductive 
-	counterpart of GCN presented in the previous paragraph. 
- 
+	counterpart of GCN presented in the previous paragraph. Inductive refers to
+	the capability of not only performing machine learning tasks on the graph 
+	used for training but to apply the trained GNN to new and unseen graphs.
+	
+
+	GraphSage has shown to achieve this by sampling the neighborhood
+	$\mathcal{N}(v)$ of the target node $v$. This means that not the entire
+	neighborhood of $v$ is considered. Rather, only a fixed number of uniformly 
+	sampled number of neighbors $\in\mathcal{N}(v)$ are considered as inputs. 
+	A graphical example of this procedure is shown in figure 
+	\ref{fig:GraphSage_sample}:
+
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.8\textwidth]{graphsage.png}
+		\caption{GraphSage Sampling}
+		\cite[p. 2]{hamilton2017inductive}
+		\label{fig:GraphSage_sample}
+	\end{figure}
+
+	\noindent The steps shown in figure \ref{fig:GraphSage_sample} are similar
+	to the procedures for GCNs. The main two differences are outlined as
+	follows:
+
+	\begin{enumerate}
+		\item For GraphSage only a sample of $\mathcal{N}(v)$ is considered. 
+			The GCN always considers the entire neighborhood.
+		\item The aggregation strategies are more flexible in that one can
+			select different strategies such as mean, pool, LSTM or gcn
+			\citep[p. ]{hamilton2017inductive}. 
+	\end{enumerate}
+
 	\subsection{Graph Generation}
 
 	It is very difficult to collect graph data, as one cannot capture links

@@ -835,6 +835,11 @@ INPUT ./images//GNN.png
 INPUT images//GNN.png
 INPUT ./images//GNN.png
 INPUT ./images//GNN.png
+INPUT ./images//graphsage.png
+INPUT ./images//graphsage.png
+INPUT images//graphsage.png
+INPUT ./images//graphsage.png
+INPUT ./images//graphsage.png
 INPUT ./main.bbl
 INPUT main.bbl
 INPUT ./main.bbl
