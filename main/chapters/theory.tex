@@ -356,7 +356,7 @@
 	node, the neighbors of a given input node. The weights $\Psi$ and 
 	$\Phi$ are thereafter updated using stochastic gradient descent. This procedure is 
 	repeated for several iterations and the Skip-Gram model is therefore a 
-	special form of a recurrent neural network. The weight matrix $\Phi$ lastly 
+	special form of a artificial neural network. The weight matrix $\Phi$ lastly 
 	corresponds to the node vector embeddings. \\ 
 
 	\begin{figure}
@@ -483,7 +483,7 @@
 
 	\noindent If there are no node features present, $X$ can for instance be
 	defined as a one-hot encoded vector. A naïve approach would be to join the 
-	adjacency matrix with the feature matrix as the input for a recurrent
+	adjacency matrix with the feature matrix as the input for a artificial
 	neural network. The problem with this approach is, that the input is not order 
 	invariant and the model cannot be applied to graphs of different sizes
 	\citep{leskovec2021lecture}. \\
@@ -512,7 +512,7 @@
 	\end{figure}
 
 
-	\noindent The GNN Structure outlined shows an example of a 2-hop or 3 layer GNN. 
+	\noindent The GNN Structure outlined shows an example of a 2-hop or 2 layer GNN. 
 	The 1-hop convolutional layer considers the neighboring nodes of the target node A. 
 	The 2-hop layer considers the neighbors of node A's neighbors. Note, that the 
 	target node A is included as an input node in the 2-hop layer. This is reasonable 
@@ -541,7 +541,7 @@
 	\noindent The above list is not meant to be considered as a complete overview
 	and should be rather regarded as an example of a typical GNN structure.
 	GNNs are flexible in that a myriad of modifications can be added to the GNN
-	layers similar to the possibilities of CNNs or RNNs. The defining features of
+	layers similar to the possibilities of CNNs or ANNs. The defining features of
 	different GNN methods usually involve the selection of different message
 	passing methods and aggregation strategies. An excellent overview regarding 
 	the design space for GNNs is provided in the article by \cite{you2020design}.
@@ -583,7 +583,7 @@
 	\noindent The variables in equation \ref{eq:GCN} are defined as follows:
 
 	\begin{itemize}
-		\item $H^{l}\in\mathcal{R}^{N \times D}$ refers to the embedding matrix
+		\item $H^{l}\in\mathbb{R}^{N \times D}$ refers to the embedding matrix
 			at layer $l$ where $N$ refers to the number of nodes $\mid V \mid$
 			and $D$ refers to the number of embedding dimensions. $H^{(0)}=X$.
 		\item $W^{l}$ refers to the trainable and layer specific weight matrix
@@ -631,8 +631,8 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	to the symmetric normalization. \\
 
 	\noindent The detailed explanations given above show the procedure for a
-	two-layer GCN (1-hop). Returning now to compact notation, this procedure can be
-	expanded for three or more GCN layers. First, the notation is further
+	one-layer GCN. Returning now to compact notation, this procedure can be
+	expanded for two or more GCN layers. First, the notation is further
 	simplified by defining $\hat A = \tilde D^{-\frac{1}{2}}\tilde A \tilde
 	D^{-\frac{1}{2}}$. An example of a two-layer GCN is then given as follows 
 	where $Z$ refers to the embedding or output of the target node 
@@ -645,13 +645,13 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\noindent Finally, the model parameters are updated using a loss function and
 	a from of gradient descent. The procedure is identical for GNNs as it is
-	for CNNs or RNNs using a common backward propagation function. 
+	for CNNs or ANNs using a common backward propagation function. 
 
 	\paragraph{GraphSage} \mbox{}\\
 	
-	\noindent This paragraph introduces GraphSage which in many ways is a
-	generalization of the GCN introduces in the previous section. There are
-	however very clear differences. 
+	\noindent This paragraph introduces GraphSage by
+	\cite{hamilton2017inductive} which can be thought of as the inductive 
+	counterpart of GCN presented in the previous paragraph. 
  
 	\subsection{Graph Generation}
 
