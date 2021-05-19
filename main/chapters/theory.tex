@@ -645,7 +645,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\noindent Finally, the model parameters are updated using a loss function and
 	a from of gradient descent. The procedure is identical for GNNs as it is
-	for CNNs or ANNs using a common backward propagation function. 
+	for CNNs or ANNs using a common backward propagation function.
 
 	\paragraph{GraphSage} \mbox{}\\
 	
@@ -653,15 +653,12 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\cite{hamilton2017inductive} which can be thought of as the inductive 
 	counterpart of GCN presented in the previous paragraph. Inductive refers to
 	the capability of not only performing machine learning tasks on the graph 
-	used for training but to apply the trained GNN to new and unseen graphs.
-	
-
-	GraphSage has shown to achieve this by sampling the neighborhood
-	$\mathcal{N}(v)$ of the target node $v$. This means that not the entire
-	neighborhood of $v$ is considered. Rather, only a fixed number of uniformly 
-	sampled number of neighbors $\in\mathcal{N}(v)$ are considered as inputs. 
-	A graphical example of this procedure is shown in figure 
-	\ref{fig:GraphSage_sample}:
+	used for training but to apply the trained GNN model to new and unseen graphs.
+	GraphSage achieves this by sampling the neighborhood $\mathcal{N}(v)$ of the 
+	target node $v$. This means that not the entire neighborhood of $v$ is 
+	considered. Rather, only a fixed number of uniformly  sampled number of 
+	neighbors $\in\mathcal{N}(v)$ are considered as inputs. A graphical example 
+	of this procedure is shown in figure \ref{fig:GraphSage_sample}:
 
 
 	\begin{figure}[h]
@@ -673,16 +670,79 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\end{figure}
 
 	\noindent The steps shown in figure \ref{fig:GraphSage_sample} are similar
-	to the procedures for GCNs. The main two differences are outlined as
+	to the procedures for GCNs. The main three differences are outlined as
 	follows:
 
 	\begin{enumerate}
 		\item For GraphSage only a sample of $\mathcal{N}(v)$ is considered. 
-			The GCN always considers the entire neighborhood.
+			The GCN always considers the entire neighborhood $\mathcal{N}(v)$.
 		\item The aggregation strategies are more flexible in that one can
-			select different strategies such as mean, pool, LSTM or gcn
-			\citep[p. ]{hamilton2017inductive}. 
+			select different strategies such as mean, pool, LSTM. Alternative 
+			aggregation strategies could be considered as long as the 
+			aggregation strategy is designed such that it is order invariant.
+			\citep[p. 5]{hamilton2017inductive} 
+		\item A mini-batch application for stochastic gradient descent was
+			introduced for GraphSage. GCN in its original implementation and
+			publication relies on full-batch training. The authors
+			\cite[p. 8]{kipf2016semi} point out in the GCN model limitations
+			that mini-batch training should be introduced for GCN in future
+			work. 
 	\end{enumerate}
+
+	\noindent The pseudo code for the GraphSage forward propagation layers is 
+	given in algorithm \ref{algo:GraphSage} \cite[p. 12]{hamilton2017inductive}.
+
+
+	\begin{algorithm}
+		\scriptsize
+		\SetAlgoLined
+		\KwIn{Graph $G(V,E)$;}
+		\myinput{input features \{$x_v,\forall v \in \mathcal{B}$\};}
+		\myinput{depth $K$; weight matrices $W^{k},\forall k \in
+					\{1,\dots,K\}$;}
+		\myinput{non-linearity $\sigma$;}
+		\myinput{differentiable aggregator functions $AGGREGATE_k,\forall k \in
+					\{1,\dots,K\}$;}
+		\myinput{neighborhood sampling functions, $\mathcal{N}_k:v\rightarrow
+					2^{v},\forall k \in \{1,\dots,K\}$}
+		\KwOut{Vector representations $z_v$ for all $v\in\mathcal{B}$}
+		\nl $\mathcal{B}^{K}\in\mathcal{B}$\;
+		\nl \For{$k=K\dots 1$}{
+		\nl		$\mathcal{B}^{k-1}\leftarrow\mathcal{B}^{k}$\;
+		\nl		\For{$u\in\mathcal{B}^{k}$}{
+		\nl			$\mathcal{B}^{k-1}\leftarrow\mathcal{B}^{k-1}\cup\mathcal{N}_{k}(u)$
+					}
+				}
+		\nl $h_{u}^{0}\leftarrow x_{v},\forall v \in \mathcal{B}^{0}$\;
+		\nl \For{$k=1\dots K$}{
+		\nl		\For{$u\in\mathcal{B}^{k}$}{
+		\nl			$h_{\mathcal{N}(u)}^{k}\leftarrow
+					AGGREGATE_k(\{h_{u'}^{k-1},\forall u'\in \mathcal{N}_{k}(u)\})$\;
+		\nl			$h_{u}^{k}\leftarrow\sigma\left(W^{k}\cdot
+					CONCAT(h_{u}^{k-1},h_{\mathcal{N}(u)}^{k})\right)$\;
+		\nl			$h_{u}^{k} \leftarrow h_{u}^{k}/\lVert
+					h_{u}^{k}\rVert_{2}$		
+				}		
+			}
+		\nl $z_v \leftarrow h_{u}^{K},\forall u \in \mathcal{B}$
+		\caption{GraphSAGE minibatch forward propagation algorithm}
+		\label{algo:GraphSage}
+	\end{algorithm}
+	
+	\noindent Note that algorithm \ref{algo:GraphSage} assumes that the
+	parameters of the $K$ aggregator functions and the weight matrices $W^{k}$
+	are known. Algorithm \ref{algo:GraphSage} thus shows the forward
+	propagation of a trained GraphSage model. The graph layers are typically
+	trained using standard optimization strategies using stochastic gradient
+	descent with standard backward propagation procedures. $\mathcal{B}$ refers
+	to the mini-batch taken from the set of vertices $V$ from the graph
+	$G(V,E)$. Finally, algorithm \ref{algo:GraphSage} refers to the model 
+	introduced by \cite{hamilton2017inductive}. The model for this thesis will 
+	deviate in some aspects from the pseudo code and will be specified in the 
+	model design section. \\
+
+	\noindent 
+
 
 	\subsection{Graph Generation}
 

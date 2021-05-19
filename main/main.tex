@@ -28,6 +28,11 @@
 \usepackage[ruled,vlined]{algorithm2e}
 \SetAlCapNameFnt{\scriptsize}
 \SetAlCapFnt{\scriptsize}
+\newlength\mylen
+\newcommand\myinput[1]{%
+  \settowidth\mylen{\KwIn{}}%
+  \setlength\hangindent{\mylen}%
+  \hspace*{\mylen}#1\\}
 
 % \titleformat{\chapter}[display]
 % {\normalfont\bfseries}{}{0pt}{\Huge}
