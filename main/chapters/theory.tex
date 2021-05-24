@@ -521,33 +521,61 @@
 	figure \ref{fig:GNN_structure}, the challenge for the GNN is to find node
 	embeddings based on local network neighborhoods
 	\citep{leskovec2021lecture}. The node embeddings at layer 0 correspond to
-	the features of the input nodes where $X = H^{(0)}$. The key transformations 
-	then occur typically in the following sequential steps in the gray boxes
-	\citep{you2020design}. 
+	the features of the input nodes where $X = H^{(0)}$. A typical procedure
+	for a GNN model is outlined in algorithm \ref{algo:GNN_struct}
+	\citep{hamilton2017inductive,leskovec2021lecture,you2020design}.
+	
 
-	\begin{enumerate}
-		\item Message passing from layer $H^{(l-1)}$ to $H^{(l)}$
-		\item Aggregate the received messages in layer $H^{(l)}$
-		\item Optionally apply a normalization and/or an activation function to
-			the aggregated message
-		\item Message passing from layer $H^{(l)}$ to $H^{(l+1)}$ and repeat the
-			previous procedure until the target node is reached.
-		\item Calculate the loss of the target node output versus the learning
-			objective by using a defined loss function
-		\item Update the learnable model parameters with stochastic gradient
-			descent by using the calculated loss.
-	\end{enumerate}
+	\begin{algorithm}
+		\scriptsize
+		\SetAlgoLined
+		\KwIn{Graph $G(V,E)$;}
+		\myinput{input features $\{x_v,\forall v \in V\}$;}
+		\myinput{node labels $\{y_v, \forall v \in V\}$;}
+		\myinput{training set $\mathcal{T}\subset V$;}
+		\myinput{depth/layers $K$ with parameters $\Theta^{k} =
+		\{W^{k},B^{k}\},\forall k \in \{1\dots K\}$} 
+		\myinput{non-linearity $\sigma$;}
+		\myinput{differentiable aggregator functions $AGGREGATE_k,\forall k \in
+					\{1,\dots,K\}$;}
+		\myinput{neighborhood function $\mathcal{N}:v\rightarrow 2^{V}$;}
+		\myinput{loss function $\mathcal{L}$ such as cross entropy $CE$;}
+		\myinput{learning rate $\alpha$}
+		\KwOut{Vector representations $z_v, \forall v\in V$}
+		\nl Initialize layer specific $W^{k}$ from $\mathcal{U},\forall k \in 
+			\{1,\dots,K\}$\;
+		\nl Initialize layer specific $B^{k}$ from $\mathcal{U},\forall k \in
+			\{1,\dots,K\}$\;
+		\nl $h_{v}^{0} = x_{v},\forall v \in V$\\
+		\nl \For{Number of epochs}{
+		\nl \For{$k=1\dots K$}{
+		\nl		\ForEach{$v\in V$}{
+		\nl			$h_{v}^{k} =
+		\sigma\left(CONCAT\left(AGGREGATE_k(\{W^{k}\cdot h_{u}^{k-1}, u \in
+		\mathcal{N}(v)\}),B^{k}\cdot h_{v}^{k-1}\right)\right)$
+				}		
+   			}
+		\nl $z_v = h_{v}^{K},\forall v \in V$\;
+		\nl $\mathcal{L}(\Theta)=\sum_{(z_{v},y_{v})\in\mathcal{T}}CE(y_{v},z_{v})$\;
+		\nl $\Theta = \Theta - \alpha\cdot \frac{\partial\mathcal{L}}{\partial\Theta}$
+			}
+		\caption{Typical GNN algorithm}
+		\label{algo:GNN_struct}
+	\end{algorithm}
 
-	\noindent The above list is not meant to be considered as a complete overview
-	and should be rather regarded as an example of a typical GNN structure.
-	GNNs are flexible in that a myriad of modifications can be added to the GNN
-	layers similar to the possibilities of CNNs or ANNs. The defining features of
-	different GNN methods usually involve the selection of different message
-	passing methods and aggregation strategies. An excellent overview regarding 
-	the design space for GNNs is provided in the article by \cite{you2020design}.
+
+	\noindent Algorithm \ref{algo:GNN_struct} is not meant to be considered as
+	a complete overview and should be rather regarded as an example of a typical 
+	GNN structure. GNNs are flexible in that a myriad of modifications can be 
+	added to the GNN layers similar to the possibilities of CNNs or ANNs. The 
+	defining features of different GNN methods usually involve the selection of 
+	different message passing methods and aggregation strategies. An excellent 
+	overview regarding the design space for GNNs is provided in the articles by
+	\cite{you2020design} and \cite{zhou2020graph}.
 	Of course there are exceptions and alternative procedures exist. The GNN 
 	methods evaluated in this thesis and most successful GNNs however tend to 
-	follow this general structure.  \\
+	follow a variation of the structure shown in algorithm 
+	\ref{algo:GNN_struct}.  \\
 
 	\noindent In terms of interpretation, the output of the first GNN layers in
 	figure \ref{fig:GNN_structure} (gray boxes) corresponds to the hidden layer 
@@ -556,12 +584,13 @@
 	This should sound familiar when comparing this approach to the graph 
 	representation learning approach outlined in the previous section. 
 	GNNs can indeed be used for unsupervised learning tasks such as finding node 
-	embeddings such that similar nodes are embedded close together. A nice
-	example for this is shown in the paper regarding Graph Convolutional
-	Networks by \cite[p. 11-12]{kipf2016semi}. The focus of this thesis is
-	placed on supervised classification tasks, which is why unsupervised
-	learning approaches are not further investigated. In the following paragraph 
-	the first GNN method of interest is presented. 
+	embeddings such that similar nodes are embedded close together. Good
+	examples for this is shown in the papers regarding Graph Convolutional
+	Networks by \cite{kipf2016semi} and GraphSage by
+	\cite{hamilton2017inductive}. The focus of this thesis is placed on 
+	supervised classification tasks, which is why unsupervised learning
+	approaches are not further investigated. In the following paragraph the 
+	first GNN method of interest is presented. 
 
 
 	\paragraph{Graph Convolutional Networks}\mbox{}\\
@@ -600,8 +629,8 @@
 	\end{itemize}
 
 	\noindent To provide a better overview, the compact notation shown in 
-	equation \ref{eq:GCN} is expanded in the following equation
-	\citep{Dubois2019}:
+	equation \ref{eq:GCN} is expanded in the following equation for one GCN
+	layer \citep{Dubois2019}:
 
 	\begin{equation}
 		h_{ij}^{(l)} = \sigma\left(\sum_{(i,j)\in
@@ -611,18 +640,18 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\end{equation}
 	
 	\noindent In Equation \ref{eq:GCN_expand} $h_{ij}^{(l)}$ refers to the 
-	specific node in the hidden layer $l$. $i$ specifies the position of the
-	hidden layer node and $j$ refers to the set of neighbors or inputs used to derive
-	$h_{ij}^{(l)}$. $h_{kj}^{(l-1)}$ refers to the embedding vector at position
-	$k$ of the set of neighbors $j$ in the layer $(l-1)$. In terms of filtering
-	strategy, $(i,j) \in \mathcal{N}(v)$. This means that both $i$ and $j$ are
-	neighbors of the target node $v$ at layers $l$ and $(l-1)$ respectively. Linear message
-	passing is then performed for every neighbor in $j$. The node in the graph
-	$G$ at position $\tilde a_{ik}$ of the modified adjacency matrix selects
-	the nodes for which a connection between $h_{ij}^{(l)}$ and
-	$h_{kj}^{(l-1)}$ exists. The embeddings $h_{kj}^{(l-1)}$ of the selected nodes are
-	normalized by the symmetric degree distributions of the previous hidden
-	layer node $\tilde d_{k,k}$ and the new hidden layer node $\tilde d_{i,i}$.
+	hidden layer representation of node $i$ at layer $l$ considering the set of
+	neighbors $j$. $h_{kj}^{(l-1)}$ corresponds to the hidden layer
+	representation of node $k$ at layer $l-1$ which is part of the set of 
+	neighbors $j$. In terms of filtering strategy, $(i,j) \in \mathcal{N}(v)$. 
+	This means that both $i$ and $j$ are neighbors of the target node $v$ at 
+	layers $l$ and $(l-1)$ respectively. Linear message
+	passing is then performed for every neighbor in $j$ at layer $l-1$. The node 
+	in the graph $G$ at position $\tilde a_{ik}$ of the modified adjacency matrix 
+	selects the nodes for which a connection between $h_{ij}^{(l)}$ and
+	$h_{kj}^{(l-1)}$ exists. The embeddings $h_{kj}^{(l-1)}$ of the selected 
+	nodes are normalized by the symmetric degree distributions of the previous 
+	hidden layer node $\tilde d_{k,k}$ and the new hidden layer node $\tilde d_{i,i}$.
 	Afterwards the normalized embeddings are message passed by multiplying it
 	with the shared weight matrix $W^{(l)}$. Lastly, the sum of the received
 	messages is taken in terms of aggregation strategy and the resulting
@@ -630,8 +659,8 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	Note, that the aggregation strategy involves taking a weighted sum thanks
 	to the symmetric normalization. \\
 
-	\noindent The detailed explanations given above show the procedure for a
-	one-layer GCN. Returning now to compact notation, this procedure can be
+	\noindent The detailed explanations given above show the procedure for
+	one layer of a GCN. Returning now to compact notation, this procedure can be
 	expanded for two or more GCN layers. First, the notation is further
 	simplified by defining $\hat A = \tilde D^{-\frac{1}{2}}\tilde A \tilde
 	D^{-\frac{1}{2}}$. An example of a two-layer GCN is then given as follows 
@@ -651,14 +680,19 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	
 	\noindent This paragraph introduces GraphSage by
 	\cite{hamilton2017inductive} which can be thought of as the inductive 
-	counterpart of GCN presented in the previous paragraph. Inductive refers to
-	the capability of not only performing machine learning tasks on the graph 
-	used for training but to apply the trained GNN model to new and unseen graphs.
-	GraphSage achieves this by sampling the neighborhood $\mathcal{N}(v)$ of the 
-	target node $v$. This means that not the entire neighborhood of $v$ is 
-	considered. Rather, only a fixed number of uniformly  sampled number of 
-	neighbors $\in\mathcal{N}(v)$ are considered as inputs. A graphical example 
-	of this procedure is shown in figure \ref{fig:GraphSage_sample}:
+	counterpart and generalization of the GCN presented in the previous paragraph. 
+	Inductive refers to the capability of not only performing machine learning 
+	tasks on the graph used for training but to apply the trained GNN model to 
+	new and unseen graphs. This is a large leap as GCN for instance can only be 
+	used to predict unseen nodes on the graph which was used for training. 
+	This is very limiting for the application of GNN in a practical setting. 
+	GraphSage achieves this by applying different aggregation strategies. 
+	In addition, GraphSage allows for efficiency increases when learning on 
+	large graphs by only considering a sample of the neighborhood 
+	$\mathcal{N}(v)$. In the GraphSage setting only a fixed number of uniformly 
+	sampled neighbors $\in\mathcal{N}(v)$ with depth $K$ are considered. 
+	A graphical example of this procedure is shown in figure 
+	\ref{fig:GraphSage_sample}:
 
 
 	\begin{figure}[h]
@@ -670,50 +704,32 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\end{figure}
 
 	\noindent The steps shown in figure \ref{fig:GraphSage_sample} are similar
-	to the procedures for GCNs. The main three differences are outlined as
-	follows:
-
-	\begin{enumerate}
-		\item For GraphSage only a sample of $\mathcal{N}(v)$ is considered. 
-			The GCN always considers the entire neighborhood $\mathcal{N}(v)$.
-		\item The aggregation strategies are more flexible in that one can
-			select different strategies such as mean, pool, LSTM. Alternative 
-			aggregation strategies could be considered as long as the 
-			aggregation strategy is designed such that it is order invariant.
-			\citep[p. 5]{hamilton2017inductive} 
-		\item A mini-batch application for stochastic gradient descent was
-			introduced for GraphSage. GCN in its original implementation and
-			publication relies on full-batch training. The authors
-			\cite[p. 8]{kipf2016semi} point out in the GCN model limitations
-			that mini-batch training should be introduced for GCN in future
-			work. 
-	\end{enumerate}
-
-	\noindent The pseudo code for the GraphSage forward propagation layers is 
-	given in algorithm \ref{algo:GraphSage} \cite[p. 12]{hamilton2017inductive}.
+	to the procedures for GCNs. The pseudo code for the GraphSage forward 
+	propagation layers is given in algorithm \ref{algo:GraphSage} 
+	\cite[p. 12]{hamilton2017inductive}. \\
 
 
-	\begin{algorithm}
+	\begin{algorithm}[h]
 		\scriptsize
 		\SetAlgoLined
 		\KwIn{Graph $G(V,E)$;}
 		\myinput{input features \{$x_v,\forall v \in \mathcal{B}$\};}
-		\myinput{depth $K$; weight matrices $W^{k},\forall k \in
-					\{1,\dots,K\}$;}
+		\myinput{depth $K$;} 
+		\myinput{weight matrices $W^{k},\forall k \in\{1,\dots,K\}$;}
 		\myinput{non-linearity $\sigma$;}
 		\myinput{differentiable aggregator functions $AGGREGATE_k,\forall k \in
 					\{1,\dots,K\}$;}
 		\myinput{neighborhood sampling functions, $\mathcal{N}_k:v\rightarrow
 					2^{v},\forall k \in \{1,\dots,K\}$}
 		\KwOut{Vector representations $z_v$ for all $v\in\mathcal{B}$}
-		\nl $\mathcal{B}^{K}\in\mathcal{B}$\;
+		\nl $\mathcal{B}^{K}\in\mathcal{B}$\\
 		\nl \For{$k=K\dots 1$}{
-		\nl		$\mathcal{B}^{k-1}\leftarrow\mathcal{B}^{k}$\;
+		\nl		$\mathcal{B}^{k-1}\leftarrow\mathcal{B}^{k}$\\
 		\nl		\For{$u\in\mathcal{B}^{k}$}{
 		\nl			$\mathcal{B}^{k-1}\leftarrow\mathcal{B}^{k-1}\cup\mathcal{N}_{k}(u)$
 					}
 				}
-		\nl $h_{u}^{0}\leftarrow x_{v},\forall v \in \mathcal{B}^{0}$\;
+		\nl $h_{u}^{0}\leftarrow x_{v},\forall v \in \mathcal{B}^{0}$\\
 		\nl \For{$k=1\dots K$}{
 		\nl		\For{$u\in\mathcal{B}^{k}$}{
 		\nl			$h_{\mathcal{N}(u)}^{k}\leftarrow
@@ -732,34 +748,80 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\noindent Note that algorithm \ref{algo:GraphSage} assumes that the
 	parameters of the $K$ aggregator functions and the weight matrices $W^{k}$
 	are known. Algorithm \ref{algo:GraphSage} thus shows the forward
-	propagation of a trained GraphSage model. The graph layers are typically
-	trained using standard optimization strategies using stochastic gradient
-	descent with standard backward propagation procedures. $\mathcal{B}$ refers
-	to the mini-batch taken from the set of vertices $V$ from the graph
-	$G(V,E)$. Finally, algorithm \ref{algo:GraphSage} refers to the model 
-	introduced by \cite{hamilton2017inductive}. The model for this thesis will 
-	deviate in some aspects from the pseudo code and will be specified in the 
-	model design section. \\
+	propagation of a trained GraphSage model. The model is trained by
+	optimizing the model parameters for every batch trained during a specified 
+	number of epochs. The training procedure can be implemented by using an
+	adaptation of the general procedure shown in algorithm 
+	\ref{algo:GNN_struct}. In algorithm \ref{algo:GraphSage} $\mathcal{B}$ 
+	refers to the mini-batch training for the set of vertices $V$ of the graph 
+	$G(V,E)$. \\
 
-	\noindent 
+	\noindent There are three aggregator types proposed for GraphSage
+	\citep{hamilton2017inductive}:
 
+	\begin{enumerate}
+		\item Mean aggregation
+		\item Max pooling
+		\item LSTM (Long short-term memory) aggregation
+	\end{enumerate}
+
+	\noindent The three proposed aggregation strategies are briefly introduced
+	as follows: \\
+
+	\noindent\textbf{Mean Aggregation}:\\
+	\noindent This type of aggregation is similar to the GCN and takes the
+	average of the received messages from the message passing process. The 
+	difference to GCN is that mean aggregation does not rely on the full graph 
+	Laplacian. The aggregation process differs to the one shown in algorithm 
+	\ref{algo:GraphSage} and replaces the procedures in line 9 and 10 with 
+	\citep[p. 5]{hamilton2017inductive}:
+
+	\begin{equation}
+		h_{v}^{k} \leftarrow \sigma\left(W\cdot
+		\text{MEAN}(\{h_{v}^{k-1}\}\cup\{h_{u}^{k-1},\forall u \in \mathcal{N}(v)\})\right)
+	\end{equation}
+
+	\noindent\textbf{Max Pooling}:\\
+	\noindent Max Pooling aggregation refers to the application of an 
+	element-wise $\max$ operator. This means 
+	that of the neighbors, only the largest features are considered. More 
+	formally, max pooling aggregation is defined as follows and is used for the
+	aggregation shown in line 9 of algorithm \ref{algo:GraphSage} 
+	\citep[p. 6]{hamilton2017inductive}:
+
+	\begin{equation}
+		AGGREGATE_{k}^{pool} = \max\left(\sigma(\{W_{pool}h_{u_{i}}^{k} +
+		b),\forall u_{i} \in \mathcal{N}(v)\}\right)
+	\end{equation}
+
+	\noindent Note, that $W_{pool}$ refers to a separate weight matrix for the 
+	one layer ANN of the max pooling aggregation. In principle, an arbitrary 
+	number of layers could be added for max pooling. The authors 
+	\cite{hamilton2017inductive} however focus on the case with one layer. The
+	parameters of max pooling are learned analogues to the other GraphSage
+	model parameters. \\ 
+
+	\noindent\textbf{LSTM}:\\
+	\noindent LSTM is the last aggregation strategy proposed for GraphSage and
+	uses the LSTM recurrent neural network (RNN) first introduced by
+	\cite{hochreiter1997long} as an aggregation strategy. LSTMs are not
+	permutation invariant which is a requirement for the aggregation strategy.
+	The authors propose using a random permutation of the set of node neighbors 
+	to counter this problem \citep[p. 5]{hamilton2017inductive}. The LSTM
+	parameters are trained along with the other GraphSage model parameters.  
 
 	\subsection{Graph Generation}
 
-	It is very difficult to collect graph data, as one cannot capture links
-	between observations by traditional data collection means such as surveys. 
-	In this regard, banks have a unique advantage (similar to social networks)
-	in that they can capture relationships by analyzing their clients cash
-	flows. In today's world most people make most if not all of their payments
-	electronically and usually pay by card. This provides banks with a large
-	amount of information such as spending behavior. Payments are nothing other
-	than links in a graph theoretical setting. Unfortunately, access to bank
-	client data is rarely granted due to privacy or bank secrecy laws. \\
+	\noindent As mentioned in the introduction, gathering network data
+	including features is rather difficult task. This is especially true, as
+	most databases do not capture relationships. Further, it is very difficult
+	if not impossible to collect network data using standard surveys. This is a 
+	problem for master thesis for which no perfect solution exists. As
+	outlined, this problem sparked the research question as to whether network
+	data can be generated from cross-sectional data for subsequent and
+	meaningful machine learning tasks. Among the many graph generation 
+	algorithms researched, the Multiplicative Attribute Graph (MAG) model by 
+	\cite{kim2012multiplicative} appears to provide a feasible solution and
+	will be used for this thesis. \\
 
-	\noindent This is a problem for master thesis for which no perfect solution 
-	exists. The	search for alternatives lead to graph generation methods. 
-	Among the many graph generation algorithms researched, the 
-	Multiplicative Attribute Graph (MAG) model appears to provide a feasible 
-	solution \citep{kim2012multiplicative}. This model creates probabilistic 
-	links between observations using link-affinity matrices. This section will
-	provide an introduction to the MAG model. \\
+	\noindent The
