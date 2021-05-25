@@ -43,8 +43,10 @@
 	nodes and the terms will be used interchangeably. Edges refer to the
 	connections between the vertices. Edges are often also referred to as links
 	and the terms will be used interchangeably as well. Graphs may have
-	additional elements such as multi-edges or self-edges. These are however
-	not relevant for the purpose of this master thesis. \\
+	additional elements such as multi-edges or self-edges. Self-edges refer to
+	nodes which have a looped link to itself. This can be considered as a feedback
+	loop of a node on to itself. Lastly, multi-edges refer to direct node 
+	connections with multiple paths. \\
 
 	\noindent In terms of mathematical notation, graphs are typically defined
 	as follows:
@@ -88,11 +90,14 @@
 	
 	\noindent As one can see, if vertex $i$ and $j$ are connected, this is recorded with
 	1 and 0 otherwise. Note, that all the elements on the $diag(A)$ are equal
-	to 0. This is because self-edges are excluded. As this is an undirected
-	network, the adjacency matrix is symmetric. There are many additional
-	aspects one could mention with regard to the adjacency matrix, they are
-	however not relevant for this thesis. For additional regarding the adjacency
-	matrix, I refer to the book by \cite{Newman2010}. 
+	to 0. This is because there are no self-edges present in figure
+	\ref{fig:graph}. Nodes with self-loops would have a 1 recorded on the
+	corresponding diagonal element of the adjacency matrix. As this is an 
+	undirected network, the adjacency matrix is symmetric. There are many 
+	additional aspects one could mention with regard to the adjacency matrix, 
+	they are however not relevant for this thesis. For additional information 
+	regarding the adjacency matrix, the book by Mark Newman 
+	\citeyearpar{Newman2010} is highly recommended. 
 
 	\subsubsection{Degree Measures}
 
@@ -333,7 +338,7 @@
 	Skip-Gram model introduced by
 	\cite{mikolov2013efficient,mikolov2013distributed}. As the Skip-Gram model
 	is a core component of DeepWalk and Node2Vec, the Skip-Gram framework is
-	explained in the detail in the following paragraph as it relates to graph
+	explained in detail in the following paragraph as it relates to graph
 	representation learning. \\
 
 
@@ -587,10 +592,18 @@
 	embeddings such that similar nodes are embedded close together. Good
 	examples for this is shown in the papers regarding Graph Convolutional
 	Networks by \cite{kipf2016semi} and GraphSage by
-	\cite{hamilton2017inductive}. The focus of this thesis is placed on 
-	supervised classification tasks, which is why unsupervised learning
-	approaches are not further investigated. In the following paragraph the 
-	first GNN method of interest is presented. 
+	\cite{hamilton2017inductive}. As shown in algorithm \ref{algo:GNN_struct},
+	GNNs can be applied directly to a supervised learning task. In order to
+	avoid redundancy with the graph representation learning strategies
+	introduced previously, the GNNs will be applied in a supervised learning
+	context. GNNs are powerful tools for unsupervised learning for tasks such
+	as clustering or graph representation learning \citep{zhou2020graph}. While
+	GNNs are possibly more efficient for graph representation learning 
+	\citep[p. 12-13]{kipf2016semi}, the results are unlikely to differ 
+	significantly and is not the focus of this thesis. The aim is to use GNNs
+	in a supervised learning setting as it hopefully provides superior results
+	for a given classification task. In the following paragraph the first GNN 
+	method of interest is presented. 
 
 
 	\paragraph{Graph Convolutional Networks}\mbox{}\\
@@ -614,7 +627,8 @@
 	\begin{itemize}
 		\item $H^{l}\in\mathbb{R}^{N \times D}$ refers to the embedding matrix
 			at layer $l$ where $N$ refers to the number of nodes $\mid V \mid$
-			and $D$ refers to the number of embedding dimensions. $H^{(0)}=X$.
+			and $D$ refers to the number of embedding dimensions. The input
+			embedding matrix is set equal to the feature matrix, $H^{(0)}=X$.
 		\item $W^{l}$ refers to the trainable and layer specific weight matrix
 			for the linear message passing employed in the GCN model.
 		\item $\tilde A = A + I_N$ where $A$ is the adjacency matrix of the
@@ -644,8 +658,8 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	neighbors $j$. $h_{kj}^{(l-1)}$ corresponds to the hidden layer
 	representation of node $k$ at layer $l-1$ which is part of the set of 
 	neighbors $j$. In terms of filtering strategy, $(i,j) \in \mathcal{N}(v)$. 
-	This means that both $i$ and $j$ are neighbors of the target node $v$ at 
-	layers $l$ and $(l-1)$ respectively. Linear message
+	This means that both set of nodes $i$ and $j$ are neighbors of the target 
+	node $v$ at layers $l$ and $(l-1)$ respectively. Linear message
 	passing is then performed for every neighbor in $j$ at layer $l-1$. The node 
 	in the graph $G$ at position $\tilde a_{ik}$ of the modified adjacency matrix 
 	selects the nodes for which a connection between $h_{ij}^{(l)}$ and
@@ -672,9 +686,9 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 		W^{(0)}\right)W^{(1)}\right)
 	\end{equation}
 
-	\noindent Finally, the model parameters are updated using a loss function and
-	a from of gradient descent. The procedure is identical for GNNs as it is
-	for CNNs or ANNs using a common backward propagation function.
+	\noindent Finally, the model parameters are updated analogues to the
+	procedure outlined in algorithm \ref{algo:GNN_struct}. The main distinctive
+	feature for the GCN is the differing forward propagation procedure. 
 
 	\paragraph{GraphSage} \mbox{}\\
 	
@@ -772,7 +786,8 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\noindent This type of aggregation is similar to the GCN and takes the
 	average of the received messages from the message passing process. The 
 	difference to GCN is that mean aggregation does not rely on the full graph 
-	Laplacian. The aggregation process differs to the one shown in algorithm 
+	Laplacian and makes use of a slightly different normalization approach. The 
+	aggregation process differs to the one shown in algorithm 
 	\ref{algo:GraphSage} and replaces the procedures in line 9 and 10 with 
 	\citep[p. 5]{hamilton2017inductive}:
 
@@ -816,7 +831,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	including features is rather difficult task. This is especially true, as
 	most databases do not capture relationships. Further, it is very difficult
 	if not impossible to collect network data using standard surveys. This is a 
-	problem for master thesis for which no perfect solution exists. As
+	problem for this master thesis for which no perfect solution exists. As
 	outlined, this problem sparked the research question as to whether network
 	data can be generated from cross-sectional data for subsequent and
 	meaningful machine learning tasks. Among the many graph generation 
@@ -824,4 +839,118 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\cite{kim2012multiplicative} appears to provide a feasible solution and
 	will be used for this thesis. \\
 
-	\noindent The
+	\noindent The MAG model makes use of two main inputs which are:
+
+	\begin{enumerate}
+		\item Node attribute vectors $a_i$
+		\item Link-affinity matrices $\Theta_i$
+	\end{enumerate}
+
+	\noindent The node attribute vector $a_i$ is part of the graph node-attribute
+	generation matrix $B^{N \times K}$. For the purpose of graph generation, 
+	only attributes can be considered for which reasonable link-affinity 
+	probabilities can be defined. Therefore $B \subseteq X$ where $X^{N \times F}$ 
+	is the full feature matrix with $N$ observations and $F$ features. The 
+	feature matrix $X$ could for instance be data collected in a survey or a 
+	client database with absent relational information. $F$ could for instance 
+	refer to the number of questions in a survey for which responses were 
+	collected. Every respondent in the survey subsequently is considered as a 
+	node in graph setting and the responses are the corresponding node features. 
+	Note, that the authors refer to node features as attributes. The terms are 
+	used interchangeably for the purpose of this thesis. The $K$ appropriate 
+	features which can be included in $B$ are variables for which reasonable
+	link-affinity probabilities can be defined. A typical example for this 
+	could be age. One could imagine an appropriate setting in which people of 
+	the same age group are more likely to form a connection / become friends in 
+	a social network setting versus people which are in different age groups. 
+	Another example for this could be gender in terms of biological sex which 
+	is a classical binary setting for a link-affinity matrix. An example for 
+	binary attribute link-affinity matrices $\Theta_i$ is given in figure 
+	\ref{fig:link-affinity}.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.8\textwidth]{affinity_matrices.png}
+		\caption{Node-attribute link-affinities}
+		\cite[p. 118]{kim2012multiplicative}
+		\label{fig:link-affinity}
+	\end{figure}
+
+	\noindent Figure \ref{fig:link-affinity} shows 4 types of link-affinity
+	matrices depending on the relationship between nodes one wants to model.
+	Homophily refers to love of the same which would make a connection between
+	two nodes more likely if they have the same features. Similarly,
+	Heterophily refers to the love of the different where nodes which do not
+	have the same features are more likely form a connection. Core-periphery is
+	a special case which can be used to generate realistic social-networks in
+	terms of network properties \citep[p. 139]{kim2012multiplicative}. For
+	instance one could model a group of people in terms of whether they are
+	members in a football club or not. It would then be reasonable to assume,
+	that members of a football club are very likely to be connected while
+	non-members have a significantly lower probability of forming a
+	connections. Lastly, random graphs can be generated by setting the
+	link-affinity probabilities to 0.5. Given the available data sets, graphs 
+	will be generated using homophily structures. The node-attribute
+	link-affinity matrices $\Theta_i$ are defined for every attribute and can
+	be set for an arbitrary size of categories within an attribute (extends
+	beyond the binary setting). More formally for each node $u \in V$ with $K$
+	categorical attributes of cardinality $d_i$ for $i = 1,2,\dots,K$ and
+	corresponding link-affinity matrices $\Theta_i \in d_i \times d_i$ for
+	$i=1,2,\dots,K$, the probability $P[u,v]$ of an edge between nodes
+	$(u,v)$ is defined as \citep[p. 119]{kim2012multiplicative}:
+
+	\begin{equation}
+		P[u,v] = \prod_{i=1}^{K}\Theta_{i}[a_{i}(u),a_i(v)]
+		\label{eq:MAG}
+	\end{equation}
+
+	\noindent In equation \ref{eq:MAG} $a_{i}(u)$ refers to the value of the 
+	$i$th attribute of node $u$. A schematic representation of the procedure
+	for a binary link-affinity matrix is shown in figure \ref{fig:MAG}.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.8\textwidth]{MAG.png}
+		\caption{Schematic representation of the 
+			multiplicative attribute graphs (MAG) model}
+		\cite[p. 120]{kim2012multiplicative}
+		\label{fig:MAG}
+	\end{figure}
+	
+	\noindent Based on this procedure the graph was generated using algorithm
+	\ref{algo:MAG}.
+
+
+\begin{algorithm}[h]
+		\scriptsize
+		\SetAlgoLined
+		\KwIn{graph node-attribute generation matrix $B^{N \times K}$, where 
+			$B\subseteq X^{N \times F}$;}
+		\myinput{node attribute vector \{$a_i,\forall i \in B$\} with
+			cardinalities $d_i$ for $i=1,2,\dots,K$;}
+		\myinput{link affinity matrices $\Theta_i \in 
+			d_i \times d_i$ for $i= 1,2,\dots,K$;}
+		\KwOut{adjacency Matrix $A^{N\times N}$ for Graph $G(V,E)$} 
+		\nl $B^{K \times N} = B^{T}$ \\
+		\nl \For{$j = 1,2,\dots,N$}{
+		\nl	$u = B[:,j]$\\
+		\nl		\For{$k = 1,2,\dots,N$}{
+		\nl			$v = B[:,k]$\\
+		\nl			\For{$i = 1,2,\dots,K$}{
+		\nl				$P_{j,k} = \prod_{i=1}^{K}\Theta_{i}[a_{i}(u),a_i(v)]$
+						}
+				}
+			}
+		\nl $U^{N \times N} = uppertriangular(P)$ and with $diag(P)=0$\\
+		\nl \For{$i=1,2,\dots,N$}{
+		\nl		\For{$j=1,2,\dots,N$}{
+		\nl			\If{$U_{i,j} > \mathcal{U}(0,1)$}{
+		\nl				$\hat A_{i,j} = 1$} 
+		\nl			\Else{$\hat A_{i,j} = 0$}
+				}
+			}
+		\nl $A = \hat A + \hat A^{T}$
+
+		\caption{Multiplicative Attribute Graph Model}
+		\label{algo:MAG}
+	\end{algorithm}

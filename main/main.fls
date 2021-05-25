@@ -840,6 +840,16 @@ INPUT ./images//graphsage.png
 INPUT images//graphsage.png
 INPUT ./images//graphsage.png
 INPUT ./images//graphsage.png
+INPUT ./images//affinity_matrices.png
+INPUT ./images//affinity_matrices.png
+INPUT images//affinity_matrices.png
+INPUT ./images//affinity_matrices.png
+INPUT ./images//affinity_matrices.png
+INPUT ./images//MAG.png
+INPUT ./images//MAG.png
+INPUT images//MAG.png
+INPUT ./images//MAG.png
+INPUT ./images//MAG.png
 INPUT ./main.bbl
 INPUT main.bbl
 INPUT ./main.bbl
