@@ -917,16 +917,13 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 		\label{fig:MAG}
 	\end{figure}
 	
-	\noindent Based on this procedure the graph was generated using algorithm
-	\ref{algo:MAG}.
 
-
-\begin{algorithm}[h]
+	\begin{algorithm}[h]
 		\scriptsize
 		\SetAlgoLined
 		\KwIn{graph node-attribute generation matrix $B^{N \times K}$, where 
 			$B\subseteq X^{N \times F}$;}
-		\myinput{node attribute vector \{$a_i,\forall i \in B$\} with
+		\myinput{node attribute vector $a_i$ with
 			cardinalities $d_i$ for $i=1,2,\dots,K$;}
 		\myinput{link affinity matrices $\Theta_i \in 
 			d_i \times d_i$ for $i= 1,2,\dots,K$;}
@@ -941,7 +938,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 						}
 				}
 			}
-		\nl $U^{N \times N} = uppertriangular(P)$ and with $diag(P)=0$\\
+		\nl $U^{N \times N} = uppertriangular(P)$ with $diag(U)=0$\\
 		\nl \For{$i=1,2,\dots,N$}{
 		\nl		\For{$j=1,2,\dots,N$}{
 		\nl			\If{$U_{i,j} > \mathcal{U}(0,1)$}{
@@ -954,3 +951,19 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 		\caption{Multiplicative Attribute Graph Model}
 		\label{algo:MAG}
 	\end{algorithm}
+
+	\noindent Algorithm \ref{algo:MAG} generates the adjacency matrix $A$ for
+	constructing the resulting graph $G(V,E)$. The node features $X$ can
+	thereafter be assigned to the corresponding nodes as the node ordering of 
+	the adjacency matrix corresponds to the ordering of the node feature matrix
+	$X$. The resulting graph $G(V,E)$ is therefore constructed by first
+	assigning the probabilities for two node $(u,v)$ to form a connection based 
+	on the link-affinity matrices $\Theta_i$. Once the probabilities are
+	calculated, a connection is formed if the probability for a connection is
+	larger than a randomly drawn value from a standard uniform distribution
+	$\mathcal{U}(0,1)$. If the probability is lower, no connection is formed.
+	As this thesis focuses on undirected graphs with no self-edges, the
+	resulting adjacency matrix $A$ is symmetric with $diag(A) = 0$. In order to
+	ensure this, the upper triangular matrix $U$ of the probability matrix $P$ 
+	is taken and setting the $diag(U)=0$. Tis ensures, that the resulting
+	adjacency matrix is symmetric and contains no self-edges. 
