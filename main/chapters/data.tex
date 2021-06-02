@@ -11,8 +11,18 @@
     \item Airline passenger satisfaction survey
   \end{enumerate}
 
-  \noindent In the following subsections the different datasets are briefly 
-  introduced and reasons for its use or non-use will be given. 
+  \noindent The datasets are introduced in the following subsections to the
+  extent that they were of use for the purpose of this thesis. In particular,
+  the self launched survey and the bank telemarketing dataset showed to be
+  problematic for different reasons. These two datasets are therefore briefly
+  introduced and the results which highlight the difficulties of the datasets
+  are shown directly. The detailed analyses of these two datasets are deferred
+  to the appendix as the focus will be placed on the airline passenger
+  satisfaction survey for which more promising results were achieved. 
+
+
+  In the following subsections the different datasets are briefly 
+  introduced and reasons for its use or non-use will be given.
 
   \subsection{Self Launched Survey}
   \label{section:self_survey}
@@ -64,14 +74,14 @@
   \subsection{Bank Telemarketing Dataset}
 
   The bank telemarketing dataset first introduced in the article by
-  \cite{moro2014data} was considered as an alternative back-up dataset in case
-  the self made survey did not yield a sufficient number of responses. The bank
-  telemarketing dataset is based on a marketing campaign at a Portuguese bank.
-  The dataset includes demographic data, data regarding the bank client's
-  wealth, information regarding the success of contacting the client in
-  previous campaigns and information such as the length of the telephone
-  conversation. The dataset further provides information as to whether the 
-  campaign was successful in that the contacted client invested in a short-term 
+  \cite{moro2011using,moro2014data} was considered as an alternative back-up 
+  dataset in case the self made survey did not yield a sufficient number of 
+  responses. The bank telemarketing dataset is based on a marketing campaign at 
+  a Portuguese bank. The dataset includes demographic data, data regarding the 
+  bank client's wealth, information regarding the success of contacting the 
+  client in previous campaigns and information such as the length of the 
+  telephone conversation. The dataset further provides information as to whether 
+  the campaign was successful in that the contacted client invested in a short-term 
   deposit which was being advertised in the telemarketing campaign. This is the
   label data and the dataset is thus staged as a binary classification task.
   The resulting MAG graphs is shown in figure \ref{fig:Moro}:
@@ -91,29 +101,51 @@
   which are suitable and were used for the MAG generation process do not
   capture the structure of the label well. The graph further shows, that only a
   relatively small number of clients appear to have invested in the short-term
-  deposit. To be more precise, in the dataset only consists of 11.524\% of bank
-  clients which invested in the short-term deposit. The dataset is therefore 
-  relatively unbalanced which makes the classification task rather difficult. 
-  Graph representation learning using Node2Vec did not provide any useful 
-  results and the GNNs also performed rather poorly. In particular, GNNs tended
-  to classify most clients as non-investors and struggled to accurately
+  deposit. To be more precise, in the dataset only consists of approximately 
+  12\% of bank clients which invested in the short-term deposit. The dataset is 
+  therefore relatively unbalanced which makes the classification task rather 
+  difficult. Graph representation learning using Node2Vec did not provide any 
+  useful results and the GNNs also performed rather poorly. In particular, GNNs 
+  tendedto classify most clients as non-investors and struggled to accurately
   classify clients which did invest. Due to the unbalanced label data, it was
   loss optimizing to predict most nodes as non-investors rather than learning
-  the true observations. This behavior was observed for both graph based
-  methods and standard machine learning approaches such as ANN or support
-  vector machines (SVM). \\
+  the true observations. Table \ref{table:Moro_conf} shows the confusion matrix
+  of the model classifications for the validation data (20\%) using a GraphSage
+  GNN.
 
-  \noindent This is part of a larger and common problem in a machine learning 
-  setting. Possible remedies might include using loss functions which penalize 
-  false classifications harsher than a standard cross entropy loss function. 
-  Alternatively one could also reduce the data set by dropping observations
-  such that the remaining dataset is balanced. This approach has its own
-  problem as dropping a large number of observation discards a lot of
-  potentially valuable information. It could also put in question the external
-  validity of the model. These comments point to a separate field of research
-  and could be interesting for a future project. These approaches were not
-  researched in detail and should be taken as suggestions. This thesis will not
-  focus on this problem which is why this issue is not further investigated. \\
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|c|c}
+      \hline
+      \diagbox{Label}{Predicted} & Did not invest & Invested \\
+      \hline
+      Did not invest & 1'026 & 30 \\ 
+      Invested & 119 & 33 \\
+      \hline
+    \end{tabular}
+    \caption{Confusion Matrix Validation Bank Telemarketing Data}
+    \label{table:Moro_conf}
+  \end{table}
+
+
+  \noindent The resulting confusion matrix corresponds to an accuracy of
+  approximately 87.67\%. The graph generation and subsequent model fitting was
+  repeated several times and the accuracies all ranged between 87-90\%. This 
+  behavior was observed for both graph based methods and standard machine 
+  learning approaches such as ANN or support vector machines (SVM). \\
+
+  \noindent This is part of a larger and common problem in machine learning. 
+  Possible remedies might include using loss functions which penalize 
+  false classifications harsher than the standard cross entropy loss function
+  used for the GNNs. Alternatively one could also reduce the data set by 
+  dropping observations such that the remaining dataset is balanced. This 
+  approach has its own problem as dropping a large number of observation 
+  discards a lot of potentially valuable information. It could also put in 
+  question the external validity of the model. These comments point to a 
+  separate field of research and could be interesting for a future project. 
+  These approaches were not researched in detail and should be taken as 
+  suggestions. This thesis will not focus on this problem which is why this 
+  issue is not further investigated. \\
 
   \noindent The failure using graph machine learning methods for this dataset
   reveals, that GNNs are not an easy remedy for unbalanced data. Perhaps if the
@@ -138,30 +170,40 @@
   \begin{figure}[h]
 		\centering
 		\includegraphics[width=0.7\textwidth]{Moro_network_bias.png}
-		\caption{MAG graph of bank telemarketing dataset}
+		\caption{Biased MAG graph of bank telemarketing dataset}
         \label{fig:Moro_bias}
   \end{figure}
 
   \noindent It now becomes apparent in figure \ref{fig:Moro_bias} that the
-  nodes are perfectly separated from each other and grouped according to their
-  label. Nevertheless, both node clusters remain connected thanks to the
-  stochastic structure of the MAG model. The GNN method GraphSage achieved an 
-  accuracy of 100\% for both the training and validation nodes after only 3 
-  epochs for the graph shown in figure \ref{fig:Moro_bias}. This is of course a 
-  form of cheating, as we cannot assume to know the labels of the entire graph 
-  and especially when applying the model to new and unseen data which might not 
+  nodes are almost perfectly separated from each other and grouped according to 
+  their label. The GNN method GraphSage achieved an accuracy of over 95\% for 
+  the graph shown in figure \ref{fig:Moro_bias}. This is of course a form of 
+  cheating, as we cannot assume to know the labels of the entire graph and 
+  especially when applying the model to new and unseen data which might not 
   contain any label information. It however shows, that if the graph provides 
   node clusters which corresponds to the node labels, that graph machine 
-  learning can overcome the problem of unbalanced data. The difficulty for 
-  graph machine learning here is to find graph data including features which 
-  naturally captures node clusters which correspond to the node labels. For the 
-  synthetic graph generation setting using the MAG model, one would have to
-  collect data which generates clusters via the MAG model that highly correlate
-  with the label. An example for such a dataset was found and while not
-  perfect, it yielded good results and is presented in the following section. 
+  learning can overcome the problem of unbalanced data to a cerain extent. 
+  The difficulty for graph machine learning here is to find graph data including 
+  features which naturally captures node clusters which correspond to the node 
+  labels. For the synthetic graph generation setting using the MAG model, one 
+  would have to collect data which generates clusters via the MAG model that 
+  highly correlate with the label. An example for such a dataset was found and 
+  while not perfect, it yielded good results and is presented in the following 
+  section. 
 
   \subsection{Airline Passenger Satisfaction Survey}
+  
+  The US airline passenger satisfaction survey was a survey conducted in 2015
+  by J.D. Power and the dataset was retrieved on the website kaggle
+  \citep{JDPower2015,KAGGLE2015}. This dataset revealed to be well suited for
+  applying graph machine learning tasks via the MAG method. It further showed
+  to be a competitive dataset for classic machine learning methods. Therefore,
+  this dataset is suitable for a fair comparison of graph machine learning
+  methods vs standard machine learning strategies. This dataset will be
+  presented in more detail as it will be used for the detailed analyses which
+  are to follow. \\
 
+  \noindent A description of the variables 
 
   \subsection{Stochastic vs. Deterministic MAG}
 
@@ -197,8 +239,19 @@
   \noindent In short, the deterministic graph clustering creates disconnected 
   sub-graphs which forms clusters based on the nodes similarity to each other.
   In terms of performance, the performance and loss behavior of both the
-  deterministically and stochastically generated graphs are virtually identical. 
-  For the purpose of visualization the stochastically generated graph appears
+  deterministically and stochastically generated graphs are virtually
+  identical. This was true for the datasets considered for this thesis. For the 
+  purpose of visualization the stochastically generated graph appears
   to be more useful, as one can identify the different cluster on a single
-  connected graph.
+  connected graph. Further, the stochastic graph creates a nice social
+  network that appear to be somewhat realistic given the homophily assumption
+  and its corresponding link-affinity probabilities. For this reason, the
+  stochastic graph generation process is kept. Nevertheless, deterministic
+  graph generation appears to be useful if one wants to separate nodes in to
+  more homogeneous sub-graphs. These sub-graphs or clusters could then be used
+  for subsequent machine learning tasks with a cluster specific task. The
+  clusters further could reveal information as to which clusters tend to be
+  more or less satisfied. This is an area which could be interesting for future
+  research. It is however not the focus of this thesis which is why it is not
+  further investigated. 
   
