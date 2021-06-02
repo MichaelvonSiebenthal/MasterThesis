@@ -194,7 +194,7 @@
   \subsection{Airline Passenger Satisfaction Survey}
   
   The US airline passenger satisfaction survey was a survey conducted in 2015
-  by J.D. Power and the dataset was retrieved on the website kaggle
+  by J.D. Power and the dataset was retrieved on the website Kaggle
   \citep{JDPower2015,KAGGLE2015}. This dataset revealed to be well suited for
   applying graph machine learning tasks via the MAG method. It further showed
   to be a competitive dataset for classic machine learning methods. Therefore,
@@ -203,7 +203,52 @@
   presented in more detail as it will be used for the detailed analyses which
   are to follow. \\
 
-  \noindent A description of the variables 
+  \noindent An overview of the US Airline Passenger dataset is shown in table
+  \ref{table:airline_summary}
+
+  \newpage
+  \begin{landscape}
+  \pagestyle{empty}%
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|c|c|}
+      \hline
+      \textbf{Variable} & \textbf{Description} & \textbf{Mean} & \textbf{Range} \\
+      \hline
+      Female & Gender of the passengers (Female, Male) & 0.5076 & 0 - 1 \\ 
+      Disloyal Customer & Customer Type: The customer type (Loyal customer, disloyal customer) & 0.18 & 0 - 1 \\
+      Age & Age: The actual age of the passengers & 39.101 & 7 - 85 \\
+      Business Travel & Type of Travel: Purpose of the flight of the passengers (Personal Travel, Business Travel) & 0.6891 & 0 - 1 \\
+      Class & Class: Travel class in the plane of the passengers (Business,
+      Eco, Eco Plus) & - & 0 - 2 \\
+      Flight Distance & Flight distance: The flight distance of this journey & 1'197.438 & 67 - 4'963 \\
+      Departure Delay in Minutes & Departure Delay in Minutes: Minutes delayed when departure & 14.808 & 0 - 595 \\
+      Satisfied & Satisfaction: Airline satisfaction level(Satisfaction, neutral or dissatisfaction) & 0.4295 & 0 - 1 \\
+      Inflight wifi service & Satisfaction level of the inflight wifi service
+      (0:Not Applicable;1-5) & - & 0 - 5 \\
+      Ease of Online booking & Satisfaction level of online booking & - & 0 - 5
+      \\
+      Gate location & Satisfaction level of Gate location & - & 0 - 5 \\
+      Food and drink & Satisfaction level of Food and drink & - & 0 - 5 \\
+      Online boarding & Satisfaction level of online boarding & - & 0 - 5 \\
+      Seat comfort & Satisfaction level of Seat comfort & - & 0 - 5 \\
+      Inflight entertainment & Satisfaction level of inflight entertainment & -
+                             & 0 - 5 \\
+      On-board service & Satisfaction level of On-board service & - & 0 - 5 \\
+      Leg room service & Satisfaction level of Leg room service & - & 0 - 5 \\
+      Baggage handling & Satisfaction level of baggage handling & - & 0 - 5 \\
+      Check-in service & Satisfaction level of Check-in service & - & 0 - 5 \\
+      Inflight service & Satisfaction level of inflight service & - & 0 - 5 \\
+      Cleanliness & Satisfaction level of Cleanliness & - & 0 - 5 \\
+      \hline
+    \end{tabular}
+    \caption{Airline Dataset overview}
+    \label{table:airline_summary}
+  \end{table}
+  \end{landscape}
+  \newpage
+
+  \noindent The dataset further included 14 variables 
 
   \subsection{Stochastic vs. Deterministic MAG}
 

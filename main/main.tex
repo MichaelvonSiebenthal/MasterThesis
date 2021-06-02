@@ -22,9 +22,25 @@
 \usepackage{amssymb}
 
 \usepackage[a4paper, width=150mm, top=25mm, bottom=25mm]{geometry}
+\usepackage{pdflscape}
+\usepackage{pdflscape}
+\usepackage{everypage}
+\usepackage{lipsum}
+\usepackage{rotating}
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
+
+\newcommand{\Lpagenumber}{\ifdim\textwidth=\linewidth\else\bgroup
+  \dimendef\margin=0 %use \margin instead of \dimen0
+  \ifodd\value{page}\margin=\oddsidemargin
+  \else\margin=\evensidemargin
+  \fi
+  \raisebox{\dimexpr -\topmargin-\headheight-\headsep-0.5\linewidth}[0pt][0pt]{%
+    \rlap{\hspace{\dimexpr \margin+\textheight+\footskip}%
+    \llap{\rotatebox{90}{\thepage}}}}%
+\egroup\fi}
+\AddEverypageHook{\Lpagenumber}%
 
 \usepackage[ruled,vlined]{algorithm2e}
 \SetAlCapNameFnt{\scriptsize}
