@@ -117,10 +117,11 @@
     \centering
     \begin{tabular}{|l|l|c|c}
       \hline
-      \diagbox{Label}{Predicted} & Did not invest & Invested \\
+      \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Did not invest} &
+      \textbf{Invested} \\
       \hline
-      Did not invest & 1'026 & 30 \\ 
-      Invested & 119 & 33 \\
+      \textbf{Did not invest} & 1'026 & 30 \\\hline 
+      \textbf{Invested} & 119 & 33 \\
       \hline
     \end{tabular}
     \caption{Confusion Matrix Validation Bank Telemarketing Data}
@@ -204,51 +205,261 @@
   are to follow. \\
 
   \noindent An overview of the US Airline Passenger dataset is shown in table
-  \ref{table:airline_summary}
+  \ref{table:airline_summary}. The correlation heatmap of the dataset is
+  further shown in figure \ref{fig:corr_heatmap}. The correlation heatmap
+  revealed, that the variables "Departure Delay in Minutes" and "Arrival Delay
+  in Minutes" are highly correlated. As "Arrival Delay in Minutes" has some
+  missing observations, this variable is dropped in favor of "Departure Delay 
+  in Minutes". The heatmap and its corresponding correlation matrix reveal,
+  that "Gender" is approximately uncorrelated with any of the other variables.
+  Further, "Departure Delay in Minutes" appears to be approximately
+  uncorrelated with any of the other variables. For that reason, it was tested
+  whether both variables could be excluded. The results however revealed, that
+  the model performed better if these variables were included in the model. The
+  table with a brief description of the variables is provided on the following
+  page. The data shown in table \ref{table:airline_summary} and figure
+  \ref{fig:corr_heatmap} corresponds to a random sample of 6’000 observations 
+  from the training dataset consisting of 103’904 observations.
 
-  \newpage
   \begin{landscape}
-  \pagestyle{empty}%
+  \pagestyle{empty}
   \begin{table}[h]
     \centering
-    \begin{tabular}{|l|l|c|c|}
+    \begin{tabular}{|l|L|c|c|}
       \hline
       \textbf{Variable} & \textbf{Description} & \textbf{Mean} & \textbf{Range} \\
       \hline
-      Female & Gender of the passengers (Female, Male) & 0.5076 & 0 - 1 \\ 
-      Disloyal Customer & Customer Type: The customer type (Loyal customer, disloyal customer) & 0.18 & 0 - 1 \\
-      Age & Age: The actual age of the passengers & 39.101 & 7 - 85 \\
-      Business Travel & Type of Travel: Purpose of the flight of the passengers (Personal Travel, Business Travel) & 0.6891 & 0 - 1 \\
-      Class & Class: Travel class in the plane of the passengers (Business,
-      Eco, Eco Plus) & - & 0 - 2 \\
-      Flight Distance & Flight distance: The flight distance of this journey & 1'197.438 & 67 - 4'963 \\
-      Departure Delay in Minutes & Departure Delay in Minutes: Minutes delayed when departure & 14.808 & 0 - 595 \\
-      Satisfied & Satisfaction: Airline satisfaction level(Satisfaction, neutral or dissatisfaction) & 0.4295 & 0 - 1 \\
-      Inflight wifi service & Satisfaction level of the inflight wifi service
-      (0:Not Applicable;1-5) & - & 0 - 5 \\
+      Gender & Gender of the passengers (Male:0, Female:1) & 0.5076 & 0 - 1
+      \\\hline 
+      Customer Type & The customer type (loyal customer:0, disloyal customer:1) 
+      & 0.18 & 0 - 1 \\\hline
+      Age & The actual age of the passengers & 39.101 & 7 - 85 \\\hline
+      Type of Travel & Purpose of the flight of the passengers
+      (Personal Travel:0, Business Travel:1) & 0.6891 & 0 - 1 \\\hline
+      Class & Travel class in the plane of the passengers (Eco:1, Eco Plus:2, 
+      Business:3) & - & 0 - 2 \\\hline
+      Flight Distance & The flight distance of this journey &
+      1'197.438 & 67 - 4'963 \\\hline
+      Departure Delay in Minutes & Minutes delayed when departure & 14.808 & 0 - 595 \\\hline
+      Arrival Delay in Minutes & Minutes delayed when arrival & 15.159 & 0 -
+      589 \\\hline
+      Satisfied & Satisfaction: Airline satisfaction level(Satisfied, 
+      Neutral or Dissatisfaction) & 0.4295 & 0 - 1 \\\hline
+      Inflight WiFi service & Satisfaction level of the inflight WiFi service
+      (0:Not Applicable;1-5) & - & 0 - 5 \\\hline
       Ease of Online booking & Satisfaction level of online booking & - & 0 - 5
-      \\
-      Gate location & Satisfaction level of Gate location & - & 0 - 5 \\
-      Food and drink & Satisfaction level of Food and drink & - & 0 - 5 \\
-      Online boarding & Satisfaction level of online boarding & - & 0 - 5 \\
-      Seat comfort & Satisfaction level of Seat comfort & - & 0 - 5 \\
+      \\\hline
+      Gate location & Satisfaction level of gate location & - & 0 - 5 \\\hline
+      Food and drink & Satisfaction level of Food and drink & - & 0 - 5
+      \\\hline
+      Online boarding & Satisfaction level of online boarding & - & 0 - 5
+      \\\hline
+      Seat comfort & Satisfaction level of seat comfort & - & 0 - 5 \\\hline
       Inflight entertainment & Satisfaction level of inflight entertainment & -
-                             & 0 - 5 \\
-      On-board service & Satisfaction level of On-board service & - & 0 - 5 \\
-      Leg room service & Satisfaction level of Leg room service & - & 0 - 5 \\
-      Baggage handling & Satisfaction level of baggage handling & - & 0 - 5 \\
-      Check-in service & Satisfaction level of Check-in service & - & 0 - 5 \\
-      Inflight service & Satisfaction level of inflight service & - & 0 - 5 \\
-      Cleanliness & Satisfaction level of Cleanliness & - & 0 - 5 \\
+                             & 0 - 5 \\\hline
+      On-board service & Satisfaction level of on-board service & - & 0 - 5
+      \\\hline
+      Leg room service & Satisfaction level of leg room service & - & 0 - 5
+      \\\hline
+      Baggage handling & Satisfaction level of baggage handling & - & 0 - 5
+      \\\hline
+      Check-in service & Satisfaction level of check-in service & - & 0 - 5
+      \\\hline
+      Inflight service & Satisfaction level of inflight service & - & 0 - 5
+      \\\hline
+      Cleanliness & Satisfaction level of cleanliness & - & 0 - 5 \\
       \hline
     \end{tabular}
     \caption{Airline Dataset overview}
     \label{table:airline_summary}
   \end{table}
   \end{landscape}
-  \newpage
 
-  \noindent The dataset further included 14 variables 
+
+  \begin{figure}[h]
+	  \centering
+	  \includegraphics[width=0.8\textwidth]{corr_heatmap.png}
+	  \caption{Correlation Heatmap of US Airline Passenger Dataset}
+      \label{fig:corr_heatmap}
+  \end{figure}
+
+  \noindent The variables of the dataset can further be classified as follows:
+
+  \begin{itemize}
+    \item \textbf{Categorical Variables:} Gender, Class, Customer Type, Type of 
+      Travel, Satisfaction
+    \item \textbf{Ordinal Variables:} Inflight WiFi Service, Ease of Online
+      Booking, Gate Location, Food and Drink, Online Boarding, Seat Comfort,
+      Inflight Entertainment, On-Board Service, Leg Room Service, Baggage
+      Handling, Check-in Service, Inflight Service, Cleanliness
+    \item \textbf{Numerical Variables:} Age, Flight Distance, Departure Delay in
+      Minutes
+  \end{itemize}
+
+  \noindent The categorical variables were dummy coded as shown in table
+  \ref{table:airline_summary}. The remaining variables are already correctly
+  in the dataset as is. In the following subsection the graph generation
+  procedure for the US Airline Passenger dataset is briefly described.
+
+  \subsubsection{Graph Generation}
+
+  To create a graph from the US Airline Passenger Dataset, appropriate
+  variables must be selected for the MAG model. The selected variables must be
+  of the type such that realistic probabilities can be applied in terms of
+  homophily or heterophily. As an example it is for instance difficult to
+  assign link-affinity probabilities for people who gave ratings regarding
+  the "inflight wifi service". In this case one could assign a probability
+  that people who gave high ratings are more similar with relative ease.
+  However, does this than also translate to people not liking the wifi-service
+  being similar as well? Further, how do we assign probabilities for people who
+  are dissimilar? These considerations make the selection of appropriate
+  variables for the graph generation more difficult. It is therefore important
+  to select variables for which realistic variables for all 3 settings
+  which are:
+
+  \begin{itemize}
+    \item \textbf{Positively similar observations} (e.g. both observations like 
+      the service)
+    \item \textbf{Negatively similar observations} (e.g. both observations 
+      dislike the service)
+    \item \textbf{Dissimilar observations} (Symmetric for undirected graphs, 
+      can be asymmetric for directed graphs)
+  \end{itemize}
+ 
+  \noindent The variables were selected using the above mentioned 
+  considerations. The variables with the corresponding link-affinity 
+  probabilities are shown in table \ref{table:link_aff}.
+
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{|l||L|}
+      \hline
+      \textbf{Variable Name} & \textbf{Link-Affinity Probabilities}\\
+      \hline\hline
+      Gender & 0.6, 0.4; 0.4, 0.6  \\\hline 
+      Customer Type & 0.8, 0.5; 0.5, 0.8 \\\hline
+      Age & 0.90, 0.80, 0.60, 0,40; 0.80, 0.90, 0.80, 0.60; 0.60, 0.80, 0.90,
+      0.80; 0.40, 0.60, 0.80, 0.90 \\\hline
+      Type of Travel & 0.80, 0.20; 0.20, 0.80 \\\hline
+      Class & 0.85, 0.60, 0.45; 0.60, 0.85, 0.60; 0.45, 0.60, 0.85 \\
+      \hline
+    \end{tabular}
+    \caption{Link Affinity Matrices}
+    \label{table:link_aff}
+  \end{table}
+
+  \noindent The probabilities in table \ref{table:link_aff} correspond to the
+  rows of the link-affinity matrices up to the semi-colon. To give a better
+  overview, the link-affinity matrix for age is shown explicitly as follows:
+
+  \[ \Theta_{Age} = 
+	\begin{pmatrix}
+		0.90 & 0.80 & 0.60 & 0.40 \\
+        0.80 & 0.90 & 0.80 & 0.60 \\
+        0.60 & 0.80 & 0.90 & 0.80 \\
+        0.40 & 0.60 & 0.80 & 0.90 \\
+	\end{pmatrix}
+  \] \\
+
+  \noindent Age was not only selected as an example as its the largest
+  link-affinity matrix, it also required some additional data transformation.
+  The MAG model can only consider discrete variables which is why age had to be
+  binned into categories. Age was binned into 4 bins with 0 if age $<$ 26,
+  1 if 26 $\leqslant$ age $<$ 39, 2 if 39 $\leqslant$ age $<$ 50 and 3 if age
+  $\geqslant$ 50. The value of the bin corresponds to the position of two
+  observations $(u,v)$ in the link-affinity matrix row/column. These bins were
+  chosen according to the interquartile lengths present in the variable age. \\
+
+  \noindent For assigning probabilities there exist no rules as to how these
+  must be applied. The paper by \cite{kim2012multiplicative} shows the 4 common
+  structures of homophily, heterophily, core-periphery and random for creating
+  graphs. For this thesis, the homophily approach was selected where the more
+  similar two observations are, the more likely they are to form a connection.
+  For the selected variables reasonable similarity and dissimilarity 
+  probabilities could be assigned in a homophily setting. The probabilities were
+  assigned based on personal intuition and experimentation. Several graphs were
+  created with different probabilities and the probabilities shown in table
+  \ref{table:link_aff} appear to generate reasonable graphs. There is however
+  no exact science or selection criteria applied when choosing the
+  probabilities. \\
+
+  \noindent A random sub-sample of 6'000 observations was retrieved from the
+  training dataset consisting of 103’904 observations. With this random
+  sub-sample the adjacency matrix for the resulting graph was generated using
+  algorithm \ref{algo:MAG} with the link-affinity matrices shown in table
+  \ref{table:link_aff}. The random sub-sample was retrieved due to the
+  computational cost involved applying algorithm \ref{algo:MAG}. Simulations
+  involving creating graphs with different random sub-samples suggest, that the
+  random sub-samples are representative for the entire dataset. The resulting
+  graph used for the subsequent analyses is shown in figure
+  \ref{fig:us_airline_graph}.
+
+  \begin{figure}[h]
+	  \centering
+	  \includegraphics[width=0.7\textwidth]{us_airline_graph.png}
+	  \caption{Graph of US Airline Passenger Dataset}
+      \label{fig:us_airline_graph}
+  \end{figure}
+  
+  \noindent The network shown in figure \ref{fig:us_airline_graph} show the
+  emergence of two groups. In addition one can see, that most satisfied airline
+  passengers appear to be somewhat clustered together. To gain a deeper
+  understanding of the dynamics involved in the network formation, the nodes of
+  the network (excluding the edges) are plotted in figure
+  \ref{fig:us_airline_nodes}.
+
+  \begin{figure}[h]
+	  \centering
+	  \includegraphics[width=0.8\textwidth]{us_airline_nodes.png}
+	  \caption{Graph Nodes of US Airline Passenger Dataset}
+      \label{fig:us_airline_nodes}
+  \end{figure}
+
+  \noindent Figure \ref{fig:us_airline_nodes} plots the nodes of the network
+  for the label "Satisfaction" and the 5 variables used for the graph
+  generation. The nodes were plotted with $\alpha = 0.6$ to avoid covering
+  nodes during the graph generation process. The node plots reveal interesting
+  relationships. First, we can see that people traveling for business purposes
+  tend to be more satisfied than people traveling for personal reasons. On a
+  second level we can see, that people who flew business class appear to be
+  mostly satisfied and constitute the majority of the cluster with satisfied
+  passengers visible on figures \ref{fig:us_airline_graph} \&
+  \ref{fig:us_airline_nodes}. When comparing to people traveling for personal
+  reasons, "Class" does not appear to be a determining factor for satisfaction.
+  For the variable "Age" we can see that older people tend to fly more business
+  class when on a business trip. In addition, older people traveling for
+  business purposes tend to be loyal customers compared to younger customers.
+  Interestingly, these relationships do appear to be present for passengers
+  traveling for personal reasons. Interestingly, most passenger traveling for
+  personal reasons appear to be loyal customers. This however does not appear
+  to translate into positive satisfaction. Lastly, the variable Gender does not
+  appear to form any distinguishable clusters. For that reason it was
+  considered to omit this variable for the graph generation process. This was
+  tested and the resulting graph yielded similar structures within the graph.
+  The graph was however more spread out and neighborhood structures were less
+  clear. In addition, the graph without gender did not perform as well in the
+  subsequent ML tasks. For those reasons, gender was kept for the graph
+  generation process. \\
+
+  \noindent Last but not least, the graph is described using metrics from graph
+  theory. The degree distribution as well as the centrality measures
+  eigenvector centrality, closeness centrality and betweenness centrality are
+  shown in figure \ref{fig:centrality_measures}.
+
+  \begin{figure}[h]
+	  \centering
+	  \includegraphics[width=0.7\textwidth]{centrality_measures.png}
+	  \caption{Graph Statistics}
+      \label{fig:centrality_measures}
+  \end{figure}
+
+  \noindent The network further has a density of approximately 0.0933. This
+  means that 9\% of the maximum number of connections formed in the network.
+  Nevertheless when looking at the degree distribution histogram we can see 
+  that a all nodes have a large number of connections ranging between 263 -
+  828 with an average of 559.63 connections. Further, the distribution has two
+  modes. 
+
 
   \subsection{Stochastic vs. Deterministic MAG}
 
