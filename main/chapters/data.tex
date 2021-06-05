@@ -25,7 +25,7 @@
   introduced and reasons for its use or non-use will be given.
 
   \subsection{Self Launched Survey}
-  \label{section:self_survey}
+  \label{section:self_survey} 
 
   Initially, the aim was to make use of a self-launched survey which focused on
   a bank client classification task. The classification task was two-fold in 
@@ -442,9 +442,9 @@
   generation process. \\
 
   \noindent Last but not least, the graph is described using metrics from graph
-  theory. The degree distribution as well as the centrality measures
-  eigenvector centrality, closeness centrality and betweenness centrality are
-  shown in figure \ref{fig:centrality_measures}.
+  theory. The degree distribution as well as the distributions of the 
+  centrality measures eigenvector centrality, closeness centrality and 
+  betweenness centrality are shown in figure \ref{fig:centrality_measures}.
 
   \begin{figure}[h]
 	  \centering
@@ -458,7 +458,31 @@
   Nevertheless when looking at the degree distribution histogram we can see 
   that a all nodes have a large number of connections ranging between 263 -
   828 with an average of 559.63 connections. Further, the distribution has two
-  modes. 
+  modes. The eigenvector centrality distribution shows, that all nodes have a
+  very low centrality measure and therefore none of the nodes appear to have a
+  large impact in terms of eigenvector centrality. The closeness centrality
+  distribution shows, that all nodes have an average closeness centrality
+  ranging from 0.51 - 0.53. This means that every node is similarly connected
+  and has an average impact for disseminating information across the network.
+  Lastly, the betweenness centrality distribution reveals that there are no
+  bottle-necks through which information flows. \\
+
+  \noindent As a reference point, it is important to compare the properties of
+  the created graph to real world graphs. In our case, the most appropriate for
+  comparison is a social network. Common structures of social networks are
+  \citep{watts1998collective,newman2006structure,Newman2010}:
+
+  \begin{enumerate}
+    \item Degree distributions typically follow a power law or concave log
+      distribution
+    \item Emergence of a giant connected component
+  \end{enumerate}
+
+  \noindent This power law degree distribution and emergence of a giant
+  connected component creates network structures that have an onion
+  (core-periphery) structure \citep[p. 121]{kim2012multiplicative}. This
+  indicates, that most social networks have a few very highly connected nodes
+  with the remaining  
 
 
   \subsection{Stochastic vs. Deterministic MAG}
