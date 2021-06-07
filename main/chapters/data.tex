@@ -18,11 +18,24 @@
   introduced and the results which highlight the difficulties of the datasets
   are shown directly. The detailed analyses of these two datasets are deferred
   to the appendix as the focus will be placed on the airline passenger
-  satisfaction survey for which more promising results were achieved. 
+  satisfaction survey for which more promising results were achieved. \\ 
 
+  \noindent In the upcoming subsections the different datasets are briefly 
+  introduced and reasons for its use or non-use will be given. First, the used
+  programming language and packages are thankfully referenced in the following
+  subsection.
 
-  In the following subsections the different datasets are briefly 
-  introduced and reasons for its use or non-use will be given.
+  \subsection{Software}
+
+  The entire thesis was evaluated using the Python 3 programming
+  language \citep{vanRossum2009}. In addition, following open-source python
+  packages were thankfully used which are Numpy \citep{harris2020array},
+  Matplotlib \citep{Hunter2007}, NetworkX \citep{hagberg2008exploring}, Seaborn
+  \citep{Waskom2021}, Pandas \citep{mckinney2010data}, Statsmodels
+  \citep{seabold2010statsmodels}, Scikit-Learn \citep{pedregosa2011scikit},
+  Tensorflow \citep{abadi2016tensorflow}, Pytorch \citep{paszke2019pytorch},
+  deep graph library (dgl) \citep{wang2019deep}, tqdm \citep{da2021tqdm} and
+  Node2Vec \citep{Cohen2021}. 
 
   \subsection{Self Launched Survey}
   \label{section:self_survey} 
@@ -84,7 +97,7 @@
   the campaign was successful in that the contacted client invested in a short-term 
   deposit which was being advertised in the telemarketing campaign. This is the
   label data and the dataset is thus staged as a binary classification task.
-  The resulting MAG graphs is shown in figure \ref{fig:Moro}:
+  The resulting MAG graphs is shown in figure \ref{fig:Moro}.
  
 	\begin{figure}[h]
 		\centering
@@ -470,19 +483,39 @@
   \noindent As a reference point, it is important to compare the properties of
   the created graph to real world graphs. In our case, the most appropriate for
   comparison is a social network. Common structures of social networks are
-  \citep{watts1998collective,newman2006structure,Newman2010}:
+  \citep{watts1998collective,newman2006structure,Newman2010,
+  kim2012multiplicative}:
 
   \begin{enumerate}
-    \item Degree distributions typically follow a power law or concave log
-      distribution
+    \item Degree distributions typically follow a power law distribution
     \item Emergence of a giant connected component
+    \item Core-periphery structure
   \end{enumerate}
 
   \noindent This power law degree distribution and emergence of a giant
   connected component creates network structures that have an onion
   (core-periphery) structure \citep[p. 121]{kim2012multiplicative}. This
   indicates, that most social networks have a few very highly connected nodes
-  with the remaining  
+  and many nodes with few connections. This creates a right skewed degree 
+  distribution which also lead to a right skewed eigenvector centrality and
+  closeness centrality distribution. For the betweenness centrality, we would
+  also expect, that more central nodes in a core-periphery network structure
+  would exhibit some bottle-neck properties for the central nodes. For that
+  reason we would expect central nodes to have a higher betweenness centrality.
+  When we look at the distributions in figure \ref{fig:centrality_measures}
+  this does not correspond to the power law degree distribution and the effect
+  this has on the centrality measures observed in real social networks. This
+  indicates, that the graph created with the MAG method does not share the
+  properties ovserved in real graphs. In order to generate a graph which
+  shares the properties of real graphs, one would have to adapt the 
+  link-affinity properties to the core-periphery setting as shown in figure
+  \ref{fig:link-affinity}. Forcing this core-periphery structure is however not
+  purposeful for this thesis. Further, the aim of this thesis is not
+  necessarily to create realistic graphs rather than to create useful graphs 
+  for graph machine learning. The results revealed that the graph is indeed
+  useful for graph machine learining. In addition, limiting factors of the
+  graph were discovered. These aspects will be discussed further in the results
+  and discussion section. 
 
 
   \subsection{Stochastic vs. Deterministic MAG}
@@ -523,15 +556,12 @@
   identical. This was true for the datasets considered for this thesis. For the 
   purpose of visualization the stochastically generated graph appears
   to be more useful, as one can identify the different cluster on a single
-  connected graph. Further, the stochastic graph creates a nice social
-  network that appear to be somewhat realistic given the homophily assumption
-  and its corresponding link-affinity probabilities. For this reason, the
-  stochastic graph generation process is kept. Nevertheless, deterministic
-  graph generation appears to be useful if one wants to separate nodes in to
-  more homogeneous sub-graphs. These sub-graphs or clusters could then be used
-  for subsequent machine learning tasks with a cluster specific task. The
-  clusters further could reveal information as to which clusters tend to be
-  more or less satisfied. This is an area which could be interesting for future
-  research. It is however not the focus of this thesis which is why it is not
-  further investigated. 
+  connected graph.  For this reason, the stochastic graph generation process is 
+  kept. Nevertheless, deterministic graph generation appears to be useful if 
+  one wants to separate nodes in to more homogeneous sub-graphs. These 
+  sub-graphs or clusters could then be used for subsequent machine learning 
+  tasks with a cluster specific target. The clusters further could reveal 
+  information as to which clusters tend to be more or less satisfied. This is 
+  an area which could be interesting for future research. It is however not 
+  the focus of this thesis which is why it is not further investigated. 
   
