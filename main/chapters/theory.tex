@@ -537,7 +537,7 @@
 		\KwIn{Graph $G(V,E)$;}
 		\myinput{input features $\{x_v,\forall v \in V\}$;}
 		\myinput{node labels $\{y_v, \forall v \in V\}$;}
-		\myinput{training set $\mathcal{T}\subset V$;}
+		\myinput{training set $\mathcal{T}\subseteq V$;}
 		\myinput{depth/layers $K$ with parameters $\Theta^{k} =
 		\{W^{k},B^{k}\},\forall k \in \{1\dots K\}$} 
 		\myinput{non-linearity $\sigma$;}
@@ -551,7 +551,7 @@
 			\{1,\dots,K\}$\;
 		\nl Initialize layer specific $B^{k}$ from $\mathcal{U},\forall k \in
 			\{1,\dots,K\}$\;
-		\nl $h_{v}^{0} = x_{v},\forall v \in V$\\
+		\nl $h_{v}^{0} = x_{v},\forall v \in \mathcal{T}$\\
 		\nl \For{Number of epochs}{
 		\nl \For{$k=1\dots K$}{
 		\nl		\ForEach{$v\in V$}{
@@ -684,6 +684,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\begin{equation}
 		Z = f(X,A) = \text{softmax}\left(\hat A \;\text{ReLu}\left(\hat A X
 		W^{(0)}\right)W^{(1)}\right)
+	\label{eq:GCN_forward}
 	\end{equation}
 
 	\noindent Finally, the model parameters are updated analogues to the

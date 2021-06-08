@@ -1087,6 +1087,11 @@ INPUT ./images//node2vec_emb.png
 INPUT images//node2vec_emb.png
 INPUT ./images//node2vec_emb.png
 INPUT ./images//node2vec_emb.png
+INPUT ./images//gcn_plots.png
+INPUT ./images//gcn_plots.png
+INPUT images//gcn_plots.png
+INPUT ./images//gcn_plots.png
+INPUT ./images//gcn_plots.png
 INPUT ./main.bbl
 INPUT main.bbl
 INPUT ./main.bbl
