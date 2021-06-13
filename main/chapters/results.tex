@@ -106,10 +106,10 @@
   node features were standardized due to large differences between the
   variables in terms of scale. In addition, standardizing yielded significant
   performance improvements. The hidden layer size for both convolutional layers
-  was set to 128 and the output layer was set to size 2 for the binary
+  was set to 21 and the output layer was set to size 2 for the binary
   classification. The training loss was calculated using cross-entropy loss and 
   the model parameters were updated using the Adam optimizer
-  \citep{kingma2014adam} with the learning rate set to $0.01$. Essentially,
+  \citep{kingma2014adam} with the learning rate set to $0.002$. Essentially,
   algorithm \ref{algo:GNN_struct} ca be applied by replacing the forward
   propagation with equation \ref{eq:GCN_forward_1} and the model parameters are
   updated with the Adam optimizer instead of standard gradient descent.
@@ -124,7 +124,7 @@
 
   \begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{gcn_plots.png}
+		\includegraphics[width=0.9\textwidth]{gcn_plots.png}
 		\caption{GCN Loss- and Accuracy Plots}
         \label{fig:gcn_plots}
   \end{figure}
@@ -185,20 +185,106 @@
   For GraphSage the exact same data input was used as for the GCN. The 
   GraphSage model included 2 convolutional layers where both have a hidden 
   layer size of 128 and the output layer is of size 2. The model is defined
-  using an adaptation of algorithm \ref{algo:GraphSage} where the normalizing
-  procedure in line  11 is skipped. This was done, as normalizing decreased the
-  performance of the model. Similar as for the GCN, the training graph is
-  split into 80\% training and 20\% validation using node masking. The loss is
-  calculated using cross-entropy and the model parameters are updated using the
-  Adam optimizer with the learning rate set to 0.001 and is an adaptation 
-  to the model updating procedure shown in algorithm \ref{algo:GNN_struct}.
-  The output of the first convolutional layer is activated using the ReLu 
-  function and the output of the second convolutional layer is activated using 
-  the softmax function. The model was trained using a mini-batch size of 50
-  nodes and the neighborhood function $\mathcal{N}(v)$ randomly sampled 10
-  neighbors for each node which are 2-hops away and randomly sampled 5 hidden 
-  node representations which correspond to the activated output of the first 
-  convolutional layer. This corresponds to the steps shown in figure
-  \ref{fig:GraphSage_sample}. To improve the robustness of the model, lastly a
-  dropout rate of 0.1 was set. GraphSage was run using the different
-  aggregation strategies mean, LSTM and max-pooling. 
+  using an adaptation of algorithm \ref{algo:GraphSage}. Similar as for the 
+  GCN, the training graph is split into 80\% training and 20\% validation using 
+  node masking. The loss is calculated using cross-entropy and the model 
+  parameters are updated using the Adam optimizer with the learning rate set to 
+  0.002 and is an adaptation to the model updating procedure shown in 
+  algorithm \ref{algo:GNN_struct}. The output of the first convolutional layer 
+  is activated using the ReLu function and the output of the second 
+  convolutional layer is activated using the log-softmax function. The model was 
+  trained using a mini-batch size of 50 nodes and the neighborhood function 
+  $\mathcal{N}(v)$ randomly sampled 10 neighbors for each node which are 2-hops 
+  away and randomly sampled 5 hidden node representations which correspond to 
+  the activated output of the first convolutional layer. This corresponds to 
+  the steps shown in figure \ref{fig:GraphSage_sample}. To improve the 
+  robustness of the model, lastly a dropout rate of 0.1 was set. GraphSage was 
+  run using the different aggregation strategies mean, LSTM, max-pooling. In
+  addition, sum-pooling was added as an additional aggregation strategy as
+  suggested by \cite{xu2018powerful}. Sum-pooling aggregation follows the same
+  procedure as max-pooling with the only difference being that element-wise
+  sum-pooling is performed and not max-pooling. The model for each aggregation 
+  strategy was trained using 350 epochs. First the training and validation
+  results using the training graph are presented for every aggregation
+  strategy. In a second step, the models will be applied to a new unseen test 
+  graph consisting of 6'000 nodes. The results of the aggregation strategies on
+  the test graphs will be shown and a comparison to standard machine learning
+  methods will be given. 
+
+  \paragraph{Mean Aggregation}  \mbox{}\\ 
+  In figure \ref{fig:mean_aggregation} the training- and validation loss as
+  well as the accuracy for the mean aggregation model is shown.
+
+  \begin{figure}[h]
+		\centering
+		\includegraphics[width=0.9\textwidth]{graphsage_mean_plots.png}
+		\caption{Mean Aggregation Loss- and Accuracy Plots}
+        \label{fig:mean_aggregation}
+  \end{figure}
+
+  \noindent The model for the epoch which yielded the best validation accuracy 
+  was saved (epoch 151), which will be used for classifying the nodes on the 
+  test graph. The training accuracy of the saved model is 93.01\% and the 
+  validation accuracy is 93.06\%. The loss- and accuracy plots reveal, that the 
+  mean aggregation model is moderately over-fitted. The validation loss and 
+  accuracy start to stagnate after approximately 50 epochs, while the training 
+  loss continues to decrease noticeably until reaching 200 epochs. Further, even 
+  after 200 epochs, the training loss appears to marginally decrease as epochs 
+  continue to increase. The validation loss further begins to marginally 
+  increase, which leads to a small decrease in accuracy as the number of epochs 
+  increases.
+
+  \paragraph{LSTM Aggregation}  \mbox{}\\ 
+  Figure \ref{fig:lstm_aggregation} shows the training- and validation loss
+  and accuracy for LSTM aggregation. 
+
+  \begin{figure}[h]
+		\centering
+		\includegraphics[width=0.9\textwidth]{graphsage_lstm_plots.png}
+		\caption{LSTM Aggregation Loss- and Accuracy Plots}
+        \label{fig:lstm_aggregation}
+  \end{figure}
+
+  \noindent The model with the best validation accuracy was achieved at epoch
+  298. This corresponds with what is shown in figure \ref{fig:lstm_aggregation}
+  where both the training- and validation loss is reduced until epoch 300.
+  Afterwards for both training and validation, the loss and accuracy begins to
+  stagnate and remains approximately constant. The training- and validation
+  accuracy of the saved model was 94.62\% and 94.26\% respectively. 
+
+  \paragraph{Sum-Pooling Aggregation}  \mbox{}\\ 
+  Sum-pooling is shown to provide more consistent results as it prevents the
+  GNN from being confused \citep{xu2018powerful}. This aggregation method
+  appears to provide more solid results as shown in figure 
+  \ref{fig:sum_aggregation}. 
+
+  \begin{figure}[h]
+		\centering
+		\includegraphics[width=0.9\textwidth]{graphsage_sum_plots.png}
+		\caption{Sum-Pooling Aggregation Loss- and Accuracy Plots}
+        \label{fig:sum_aggregation}
+  \end{figure}
+
+  \noindent The plots clearly show the best training behavior of the model thus
+  far. Both training- and validation loss train perfectly and improve steady in 
+  tandem until epoch 200. The model afterwards remains in sync an continues to
+  marginally improve. The best validation accuracy was achieved at epoch 307.
+  The training accuracy is 94.13\% and validation accuracy is 94.52\% for the
+  saved model. 
+
+  \paragraph{Max-Pooling Aggregation}  \mbox{}\\ 
+  The last aggregation method is max-pooling which yielded similar results as
+  sum-pooling. The training- and validation losses also are synced in tandem.
+  The plots however follow a less nice or appealing path. The training- and
+  validation loss as well as the accuracies are shown in figure
+  \ref{fig:max_aggregation}. 
+
+  \begin{figure}[h]
+		\centering
+		\includegraphics[width=0.9\textwidth]{graphsage_max_plots.png}
+		\caption{Max-Pooling Aggregation Loss- and Accuracy Plots}
+        \label{fig:max_aggregation}
+  \end{figure}
+
+  \noindent The best model was achieved at epoch 186 with a validation accuracy
+  of 94.69\% and training accuracy of 94.31\%. 
