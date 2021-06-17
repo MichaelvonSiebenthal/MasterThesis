@@ -1,5 +1,3 @@
-
-  \section{Results}
   
   In this section the results for the US Airline Passenger Dataset are
   presented. First, the model specifications and results of graph
@@ -7,7 +5,7 @@
   learning results are compared to the results of "standard" machine
   learning methods.
 
-  \subsection{Graph Representation Learning}
+  \section{Graph Representation Learning}
 
   The training graph consisting of 6'000 nodes which is a sub-sample of the
   US Airline Passenger training dataset provided on Kaggle \citep{KAGGLE2015}.
@@ -82,7 +80,7 @@
   for predicting the label. The Python code for generating the node embeddings 
   and the subsequent machine learning methods can be found in appendix X. 
 
-  \subsection{Graph Neural Networks}
+  \section{Graph Neural Networks}
 
   This subsection will present the results using graph neural networks. As
   mentioned in section 2, GCN by \cite{kipf2016semi} and
@@ -90,7 +88,7 @@
   satisfaction of the US airline passenger dataset. The model specifications 
   and results are presented in the following subsections.
 
-  \subsubsection{Graph Convolutional Network}
+  \subsection{Graph Convolutional Network}
 
   The GCN was designed using the exact forward propagation function
   previously outlined in equation \ref{eq:GCN_forward}.
@@ -180,7 +178,7 @@
   which is an important ingredient of GraphSage and is introduced as an
   improved and superior GNN method in the following subsection.
 
-  \subsubsection{GraphSage}
+  \subsection{GraphSage}
 
   For GraphSage the exact same data input was used as for the GCN. The 
   GraphSage model included 2 convolutional layers where both have a hidden 
@@ -222,17 +220,14 @@
         \label{fig:mean_aggregation}
   \end{figure}
 
-  \noindent The model for the epoch which yielded the best validation accuracy 
-  was saved (epoch 151), which will be used for classifying the nodes on the 
-  test graph. The training accuracy of the saved model is 93.01\% and the 
-  validation accuracy is 93.06\%. The loss- and accuracy plots reveal, that the 
-  mean aggregation model is moderately over-fitted. The validation loss and 
-  accuracy start to stagnate after approximately 50 epochs, while the training 
-  loss continues to decrease noticeably until reaching 200 epochs. Further, even 
-  after 200 epochs, the training loss appears to marginally decrease as epochs 
-  continue to increase. The validation loss further begins to marginally 
-  increase, which leads to a small decrease in accuracy as the number of epochs 
-  increases.
+  \noindent The training accuracy is 94.9\% and the validation accuracy is 
+  94.55\%. The loss- and accuracy plots reveal, that the mean aggregation model 
+  is moderately over-fitted. The validation loss and accuracy start to stagnate 
+  after approximately 50 epochs, while the training loss continues to decrease 
+  noticeably until reaching 200 epochs. Further, even after 200 epochs, the 
+  training loss appears to marginally decrease as epochs continue to increase. 
+  The validation loss further begins to marginally increase, which leads to a 
+  small decrease in accuracy as the number of epochs increases.
 
   \paragraph{LSTM Aggregation}  \mbox{}\\ 
   Figure \ref{fig:lstm_aggregation} shows the training- and validation loss
@@ -245,12 +240,8 @@
         \label{fig:lstm_aggregation}
   \end{figure}
 
-  \noindent The model with the best validation accuracy was achieved at epoch
-  298. This corresponds with what is shown in figure \ref{fig:lstm_aggregation}
-  where both the training- and validation loss is reduced until epoch 300.
-  Afterwards for both training and validation, the loss and accuracy begins to
-  stagnate and remains approximately constant. The training- and validation
-  accuracy of the saved model was 94.62\% and 94.26\% respectively. 
+  \noindent The training- and validation accuracy of the saved model was 
+  95.67\% and 94.79\% respectively. 
 
   \paragraph{Sum-Pooling Aggregation}  \mbox{}\\ 
   Sum-pooling is shown to provide more consistent results as it prevents the
@@ -265,11 +256,10 @@
         \label{fig:sum_aggregation}
   \end{figure}
 
-  \noindent The plots clearly show the best training behavior of the model thus
-  far. Both training- and validation loss train perfectly and improve steady in 
-  tandem until epoch 200. The model afterwards remains in sync an continues to
-  marginally improve. The best validation accuracy was achieved at epoch 307.
-  The training accuracy is 94.13\% and validation accuracy is 94.52\% for the
+  \noindent The plots show that sum-pooling trains very well. Both training- 
+  and validation loss train perfectly and improve steady in 
+  tandem. The best validation accuracy was achieved at epoch 373.
+  The training accuracy is 94.28\% and validation accuracy is 95.2\% for the
   saved model. 
 
   \paragraph{Max-Pooling Aggregation}  \mbox{}\\ 
@@ -286,5 +276,5 @@
         \label{fig:max_aggregation}
   \end{figure}
 
-  \noindent The best model was achieved at epoch 186 with a validation accuracy
-  of 94.69\% and training accuracy of 94.31\%. 
+  \noindent The training model resulted with a validation accuracy
+  of 95.13\% and training accuracy of 94.71\%. 

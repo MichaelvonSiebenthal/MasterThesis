@@ -1,6 +1,4 @@
 
-	\section{Theory}
-
 	This chapter will cover the necessary theoretical background for this
 	master thesis and consists of following parts:
 
@@ -10,7 +8,7 @@
 		\item Graph Generation
     \end{enumerate}
 
-	\subsection{Graph Theory}
+	\section{Graph Theory}
 
 	This section provides a brief introduction to graph theory, with a focus on
 	the relevant aspects for this master thesis. The theory presented is
@@ -59,7 +57,7 @@
 	vertices present in the graph and $E$ refers to edges present between the 
 	vertices. \\
 
-	\subsubsection{Adjacency Matrix}
+	\subsection{Adjacency Matrix}
 
 	The adjacency matrix $A$ is defined as a $n \times n$ matrix, where $n$ refers
 	to the number of vertices present in the graph. Each vertex is therefore
@@ -99,7 +97,7 @@
 	regarding the adjacency matrix, the book by Mark Newman 
 	\citeyearpar{Newman2010} is highly recommended. 
 
-	\subsubsection{Degree Measures}
+	\subsection{Degree Measures}
 
 	An important measure for graphs are the degrees denoted by $k$ of the
 	vertices. Degrees refer to the number of edges connected to a vertex. The 
@@ -143,7 +141,7 @@
 	$0 \leqslant \rho \leqslant 1$. In addition, for sufficiently large graphs,
 	one can approximate $\rho = \frac{c}{n}$. 
 
-	\subsubsection{Eigenvector Centrality}
+	\subsection{Eigenvector Centrality}
 
 	The degrees of a vertex shown in the previous section already correspond to
 	the simplest form of centrality measures. The issue with this measure
@@ -219,7 +217,7 @@
 		x_i = k_{1}^{-1} \sum_{j} A_{ij}x_j 
 	\end{equation}
 
-	\subsubsection{Closeness Centrality}
+	\subsection{Closeness Centrality}
 
 	Closeness centrality, $C_i$, is defined as the average distance from a vertex to the
 	other vertices. This centrality measure is defined as follows \citep[p.
@@ -234,7 +232,7 @@
 	vertices with low closeness centrality. $l_i$ refers to the average of the 
 	geodesic distances $d_{ij}$ of vertex $i$.
 
-	\subsubsection{Betweenness Centrality}
+	\subsection{Betweenness Centrality}
 
 	This centrality measures to which extent a vertex lies on paths between
 	other vertices. For instance, a bottle neck vertex would exhibit a large
@@ -263,7 +261,7 @@
 	\noindent With this measure, the betweenness centrality is within the range
 	$0\leqslant1$
 
-	\subsection{Machine Learning on Graphs}
+	\section{Machine Learning on Graphs}
 
 	\noindent Graph structures are significantly different compared to
 	traditional types of data usually used for machine learning tasks or
@@ -288,7 +286,7 @@
 	\noindent In the following subsections, methods for both graph machine learning
 	categories will be introduced.
 
-	\subsubsection{Graph Representation Learning}
+	\subsection{Graph Representation Learning}
 
 	The aim of graph representation learning is to embed nodes into a
 	$d$-dimensional vector representation. The resulting vector embeddings can
@@ -340,7 +338,6 @@
 	is a core component of DeepWalk and Node2Vec, the Skip-Gram framework is
 	explained in detail in the following paragraph as it relates to graph
 	representation learning. \\
-
 
 	\noindent In NLP words are one-hot encoded for the Skip-Gram model in which 
 	vector representations for the words are learned. Similarly, nodes in a network 
@@ -429,7 +426,6 @@
 	Both approximation methods are outlined in the paper by
 	\cite{mikolov2013distributed}. \\
 
-
 	\noindent This is in principle the model which will be used to find the node
 	embeddings. In the application, the Node2Vec algorithm by will be employed. 
 	Node2Vec is a generalization of the DeepWalk algorithm and allows for the deployment of
@@ -458,7 +454,7 @@
 	features needs to be defined in terms of feature selection. This is a large
 	advantage and can save a lot of time when working with graphs. 
 
-	\subsubsection{Graph Neural Networks}
+	\subsection{Graph Neural Networks}
 
 	This section will provide an overview regarding the theory about Graph
 	Neural Networks (GNN). Within the family of GNNs, there are a myriad of
@@ -554,17 +550,20 @@
 		\nl $h_{v}^{0} = x_{v},\forall v \in \mathcal{T}$\\
 		\nl \For{Number of epochs}{
 		\nl \For{$k=1\dots K$}{
-		\nl		\ForEach{$v\in V$}{
-		\nl			$h_{v}^{k} =
-		\sigma\left(CONCAT\left(AGGREGATE_k(\{W^{k}\cdot h_{u}^{k-1}, u \in
-		\mathcal{N}(v)\}),B^{k}\cdot h_{v}^{k-1}\right)\right)$
-				}		
+		\nl		\For{$v\in \mathcal{T}$}{
+		\nl			$h_{\mathcal{N}(v)}^{k} \leftarrow AGGREGATE_k\left(
+					{h_{u}^{k-1},\forall u \in\mathcal{N}_{k}(v)}\right)$\;
+		\nl			$h_{v}^{k} \leftarrow\sigma \left(W^{k}\cdot 
+							CONCAT(h_{v}^{k-1},h_{\mathcal{N}(v)}^{k})\right)$\;
+					}		
+		\nl		$h_{v}^{k} \leftarrow h_{v}^{k}/\lVert h_{v}^{k}\rVert_{2},
+										\forall v \in \mathcal{T}$	
    			}
-		\nl $z_v = h_{v}^{K},\forall v \in V$\;
+		\nl $z_v = h_{v}^{K},\forall v \in \mathcal{T}$\;
 		\nl $\mathcal{L}(\Theta)=\sum_{(z_{v},y_{v})\in\mathcal{T}}CE(y_{v},z_{v})$\;
 		\nl $\Theta = \Theta - \alpha\cdot \frac{\partial\mathcal{L}}{\partial\Theta}$
-			}
-		\caption{Typical GNN algorithm}
+		}
+		\caption{Typical GNN algorithm for training data}
 		\label{algo:GNN_struct}
 	\end{algorithm}
 
@@ -606,7 +605,7 @@
 	method of interest is presented. 
 
 
-	\paragraph{Graph Convolutional Networks}\mbox{}\\
+	\subsubsection{Graph Convolutional Networks}
 	
 	\noindent The Graph Convolutional Network (GCN) was introduced by 
 	\cite{kipf2016semi} and makes use of simplified spectral graph
@@ -691,7 +690,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	procedure outlined in algorithm \ref{algo:GNN_struct}. The main distinctive
 	feature for the GCN is the differing forward propagation procedure. 
 
-	\paragraph{GraphSage} \mbox{}\\
+	\subsubsection{GraphSage}
 	
 	\noindent This paragraph introduces GraphSage by
 	\cite{hamilton2017inductive} which can be thought of as the inductive 
@@ -826,7 +825,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	to counter this problem \citep[p. 5]{hamilton2017inductive}. The LSTM
 	parameters are trained along with the other GraphSage model parameters.  
 
-	\subsection{Graph Generation}
+	\section{Graph Generation}
 
 	\noindent As mentioned in the introduction, gathering network data
 	including features is rather difficult task. This is especially true, as

@@ -1,5 +1,5 @@
 
-\documentclass[12pt]{article}
+\documentclass[12pt]{report}
 \usepackage{titlesec}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -83,11 +83,15 @@
 
 
   %%% frontmatter
-  \include{chapters/abstract}
+  \chapter*{Abstract}
+  \input{chapters/abstract}
   
-  \include{chapters/declaration}
-  %\input{chapters/declaration}
+  \chapter*{Declaration}
+  \input{chapters/declaration}
 
+
+  \setcounter{secnumdepth}{3}
+  \setcounter{tocdepth}{3}
   \tableofcontents
   \listoffigures
   \listoftables
@@ -95,21 +99,24 @@
   %%% Main Body
   \onehalfspacing
   
-  % Introduction
-  \include{chapters/introduction}
+  \chapter{Introduction}
+  \input{chapters/introduction}
 
 
   % Theory
-  \include{chapters/theory}
+  \chapter{Theory}
+  \input{chapters/theory}
   \label{section:theory}
  
 
   % Data
-  \include{chapters/data}
+  \chapter{Data}
+  \input{chapters/data}
   \label{section:data}
 
   %Results
-  \include{chapters/results}
+  \chapter{Results}
+  \input{chapters/results}
   \label{section:results}
 
   %%% endmatter
