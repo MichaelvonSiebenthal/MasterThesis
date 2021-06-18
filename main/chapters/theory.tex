@@ -57,12 +57,12 @@
 	vertices present in the graph and $E$ refers to edges present between the 
 	vertices. \\
 
-	\subsection{Adjacency Matrix}
+	\paragraph{Adjacency Matrix} \mbox{}\\  
 
-	The adjacency matrix $A$ is defined as a $n \times n$ matrix, where $n$ refers
-	to the number of vertices present in the graph. Each vertex is therefore
-	recorded by a column and a row in the adjacency matrix. The elements in the
-	adjacency matrix are further typically defined as follows:
+	\noindent The adjacency matrix $A$ is defined as a $n \times n$ matrix, 
+	where $n$ refers to the number of vertices present in the graph. Each 
+	vertex is therefore recorded by a column and a row in the adjacency matrix. 
+	The elements in the adjacency matrix are further typically defined as follows:
 
 	\begin{equation}
 		A_{ij} = 
@@ -97,10 +97,10 @@
 	regarding the adjacency matrix, the book by Mark Newman 
 	\citeyearpar{Newman2010} is highly recommended. 
 
-	\subsection{Degree Measures}
+	\paragraph{Degree Measures} \mbox{}\\
 
-	An important measure for graphs are the degrees denoted by $k$ of the
-	vertices. Degrees refer to the number of edges connected to a vertex. The 
+	\noindent An important measure for graphs are the degrees denoted by $k$ of 
+	the vertices. Degrees refer to the number of edges connected to a vertex. The 
 	degrees of vertex denoted by $i$ can be formulated as \citep[p. 133]{Newman2010}:
 
 	\begin{equation}
@@ -141,12 +141,12 @@
 	$0 \leqslant \rho \leqslant 1$. In addition, for sufficiently large graphs,
 	one can approximate $\rho = \frac{c}{n}$. 
 
-	\subsection{Eigenvector Centrality}
+	\paragraph{Eigenvector Centrality} \mbox{}\\
 
-	The degrees of a vertex shown in the previous section already correspond to
-	the simplest form of centrality measures. The issue with this measure
-	however is, that the every neighbor of vertex $i$ are valued the same. This
-	is a problem, as not all neighbors are of equal importance due to:
+	\noindent The degrees of a vertex shown in the previous section already 
+	correspond to the simplest form of centrality measures. The issue with this 
+	measure however is, that the every neighbor of vertex $i$ are valued the same. 
+	This is a problem, as not all neighbors are of equal importance due to:
 
 	\begin{enumerate}
 		\item Number of neighbors
@@ -217,11 +217,11 @@
 		x_i = k_{1}^{-1} \sum_{j} A_{ij}x_j 
 	\end{equation}
 
-	\subsection{Closeness Centrality}
+	\paragraph{Closeness Centrality} \mbox{}\\
 
-	Closeness centrality, $C_i$, is defined as the average distance from a vertex to the
-	other vertices. This centrality measure is defined as follows \citep[p.
-	182]{Newman2010}:
+	\noindent Closeness centrality, $C_i$, is defined as the average distance 
+	from a vertex to the other vertices. This centrality measure is defined as 
+	follows \citep[p. 182]{Newman2010}:
 
 	\begin{equation}
 		C_i = \frac{1}{l_i} = \frac{n}{\sum_{j}d_{ij}}
@@ -232,13 +232,13 @@
 	vertices with low closeness centrality. $l_i$ refers to the average of the 
 	geodesic distances $d_{ij}$ of vertex $i$.
 
-	\subsection{Betweenness Centrality}
+	\paragraph{Betweenness Centrality} \mbox{}\\
 
-	This centrality measures to which extent a vertex lies on paths between
-	other vertices. For instance, a bottle neck vertex would exhibit a large
-	betweenness centrality as many, if not all nodes must pass through it. More
-	formally, betweenness centrality, $x_i$, is defined as \citep[p.
-	187]{Newman2010}:
+	\noindent This centrality measures to which extent a vertex lies on paths 
+	between other vertices. For instance, a bottle neck vertex would exhibit a 
+	large betweenness centrality as many, if not all nodes must pass through it. 
+	More formally, betweenness centrality, $x_i$, is defined as 
+	\citep[p. 187]{Newman2010}:
 
 	\begin{equation}
 		x_i = \sum_{st} \frac{\eta_{st}^i}{g_{st}}

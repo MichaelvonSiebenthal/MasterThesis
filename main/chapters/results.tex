@@ -202,7 +202,7 @@
   suggested by \cite{xu2018powerful}. Sum-pooling aggregation follows the same
   procedure as max-pooling with the only difference being that element-wise
   sum-pooling is performed and not max-pooling. The model for each aggregation 
-  strategy was trained using 350 epochs. First the training and validation
+  strategy was trained using 400 epochs. First the training and validation
   results using the training graph are presented for every aggregation
   strategy. In a second step, the models will be applied to a new unseen test 
   graph consisting of 6'000 nodes. The results of the aggregation strategies on
@@ -211,7 +211,7 @@
 
   \paragraph{Mean Aggregation}  \mbox{}\\ 
   In figure \ref{fig:mean_aggregation} the training- and validation loss as
-  well as the accuracy for the mean aggregation model is shown.
+  well as the accuracies for the mean aggregation model is shown.
 
   \begin{figure}[h]
 		\centering
@@ -221,17 +221,20 @@
   \end{figure}
 
   \noindent The training accuracy is 94.9\% and the validation accuracy is 
-  94.55\%. The loss- and accuracy plots reveal, that the mean aggregation model 
-  is moderately over-fitted. The validation loss and accuracy start to stagnate 
-  after approximately 50 epochs, while the training loss continues to decrease 
-  noticeably until reaching 200 epochs. Further, even after 200 epochs, the 
-  training loss appears to marginally decrease as epochs continue to increase. 
-  The validation loss further begins to marginally increase, which leads to a 
-  small decrease in accuracy as the number of epochs increases.
+  94.55\% after 400 epochs. The loss- and accuracy plots reveal, that the 
+  mean aggregation model has a good model fit. It is important to note, that
+  depending on the random split of 80\% training data and 20\% validation data,
+  the loss curves can exhibit an over-fit as well as models where the
+  validation loss is smaller than the training loss. A contributing factor for
+  this is the dropout rate of 2\% employed for all layers in the GraphSage
+  model. For that reason, given the specific train- validation split, the
+  validation set can perform better. The learning curves shown for mean
+  aggregation as well as for the upcoming aggregation strategies are however
+  representative of the typical training behavior. 
 
   \paragraph{LSTM Aggregation}  \mbox{}\\ 
   Figure \ref{fig:lstm_aggregation} shows the training- and validation loss
-  and accuracy for LSTM aggregation. 
+  and accuracy using LSTM aggregation. 
 
   \begin{figure}[h]
 		\centering
@@ -240,14 +243,15 @@
         \label{fig:lstm_aggregation}
   \end{figure}
 
-  \noindent The training- and validation accuracy of the saved model was 
-  95.67\% and 94.79\% respectively. 
+  \noindent The training- and validation accuracy after 400 epochs was 95.67\% 
+  and 94.79\% respectively. Here again, we can see that the training behavior
+  is very good with only a small over-fit as of approximately epoch 275 which
+  remains stable. 
 
   \paragraph{Sum-Pooling Aggregation}  \mbox{}\\ 
   Sum-pooling is shown to provide more consistent results as it prevents the
-  GNN from being confused \citep{xu2018powerful}. This aggregation method
-  appears to provide more solid results as shown in figure 
-  \ref{fig:sum_aggregation}. 
+  GNN from being confused \citep{xu2018powerful}. This aggregation method 
+  provides solid results as shown in figure \ref{fig:sum_aggregation}. 
 
   \begin{figure}[h]
 		\centering
@@ -256,18 +260,14 @@
         \label{fig:sum_aggregation}
   \end{figure}
 
-  \noindent The plots show that sum-pooling trains very well. Both training- 
-  and validation loss train perfectly and improve steady in 
-  tandem. The best validation accuracy was achieved at epoch 373.
-  The training accuracy is 94.28\% and validation accuracy is 95.2\% for the
-  saved model. 
+  \noindent The plots show that sum-pooling trains very well. The training 
+  accuracy is 94.28\% and validation accuracy is 95.2\% after the model
+  finished training.
 
   \paragraph{Max-Pooling Aggregation}  \mbox{}\\ 
   The last aggregation method is max-pooling which yielded similar results as
-  sum-pooling. The training- and validation losses also are synced in tandem.
-  The plots however follow a less nice or appealing path. The training- and
-  validation loss as well as the accuracies are shown in figure
-  \ref{fig:max_aggregation}. 
+  sum-pooling. The training- and validation loss as well as the accuracies are 
+  shown in figure \ref{fig:max_aggregation}. 
 
   \begin{figure}[h]
 		\centering
@@ -277,4 +277,10 @@
   \end{figure}
 
   \noindent The training model resulted with a validation accuracy
-  of 95.13\% and training accuracy of 94.71\%. 
+  of 95.13\% and training accuracy of 94.71\%.
+
+  \subsection{Test Dataset Results}
+  
+  The models 
+
+

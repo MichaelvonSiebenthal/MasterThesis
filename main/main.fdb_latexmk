@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1623921858 "main.aux" "main.bbl" "main" 1623922320
+["bibtex main"] 1623997388 "main.aux" "main.bbl" "main" 1623997404
   "/usr/local/texlive/2021/texmf-dist/bibtex/bst/harvard/agsm.bst" 1136766823 25549 e3d0f1ab4ae55e777f7352db30e2c6f7 ""
   "bibliography.bib" 1623589054 19373 d2ec72a23e343770c2484cf8c4480391 ""
-  "main.aux" 1623922319 21207 8263c8b0097b81f48c2e6266615785b0 "pdflatex"
+  "main.aux" 1623997401 21227 7a1ccfa14808024fa8dd806d984b2f08 "pdflatex"
   (generated)
   "main.blg"
   "main.bbl"
-["pdflatex"] 1623922312 "main.tex" "main.pdf" "main" 1623922320
+["pdflatex"] 1623997389 "main.tex" "main.pdf" "main" 1623997404
   "/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -169,8 +169,8 @@
   "chapters/data.tex" 1623904576 31077 b9dbe85bd19abc71c0a6d33fc6eb50c5 ""
   "chapters/declaration.tex" 1623905117 650 25538c8f42f255c29e139c4128494336 ""
   "chapters/introduction.tex" 1623904261 6464 c8cdbca843be3b132377d10074940e47 ""
-  "chapters/results.tex" 1623922300 13647 118491b484d40ea2d07890de42cceb24 ""
-  "chapters/theory.tex" 1623922123 44411 2df17b95d73b5d20df11d70cff86773e ""
+  "chapters/results.tex" 1623997377 13771 32ed3f9ad80369fc449d60d40a18e01a ""
+  "chapters/theory.tex" 1623986757 44521 5dccc24a0d1d0d646d433ecfbd05a256 ""
   "images//GNN.png" 1621223964 124315 736eceb68855c3a8170752aa2c882c6a ""
   "images//MAG.png" 1621926892 237889 99a315aae296589c22f9c4f8d0731546 ""
   "images//Moro_network.png" 1622183555 50568 84b6cd295a2ace53aa1ded115c8fa3b6 ""
@@ -192,18 +192,18 @@
   "images//skip_gram.png" 1621137121 45378 9562574051574eac4595c433c2524cc1 ""
   "images//us_airline_graph.png" 1622789733 51340 af0fe3177278b4ee0965217f84f7e4dd ""
   "images//us_airline_nodes.png" 1622790336 546936 9409711ad73a7f7e40a622f8cc5e5570 ""
-  "main.aux" 1623922319 21207 8263c8b0097b81f48c2e6266615785b0 "pdflatex"
-  "main.bbl" 1623921858 18788 b833dea367c675de26ceaf96a54e56e3 "bibtex main"
-  "main.lof" 1623922319 2362 3f9a221de66bec8eebba548969a59f4d "pdflatex"
-  "main.lot" 1623922319 731 b27b3fc127ee9f7f1f6a11f15fad5892 "pdflatex"
-  "main.out" 1623922319 4615 89e00f88b5102f62b8f76b0573f9074b "pdflatex"
+  "main.aux" 1623997401 21227 7a1ccfa14808024fa8dd806d984b2f08 "pdflatex"
+  "main.bbl" 1623997389 18788 b833dea367c675de26ceaf96a54e56e3 "bibtex main"
+  "main.lof" 1623997401 2362 3f9a221de66bec8eebba548969a59f4d "pdflatex"
+  "main.lot" 1623997401 731 b27b3fc127ee9f7f1f6a11f15fad5892 "pdflatex"
+  "main.out" 1623997401 3983 469ed27c75af6e0d9e92509af0540721 "pdflatex"
   "main.tex" 1623905425 2580 0c0b8ade62702047a7ed29abdebf15ac ""
-  "main.toc" 1623922319 2796 687b413164f46258c8810ffb7ac7abf6 "pdflatex"
+  "main.toc" 1623997401 2772 e95b7597aed21f9f952e531765ab4e26 "pdflatex"
   (generated)
   "main.log"
-  "main.aux"
+  "main.lof"
   "main.toc"
   "main.pdf"
-  "main.lof"
   "main.out"
   "main.lot"
+  "main.aux"
