@@ -1077,6 +1077,11 @@ INPUT ./images//graphsage_max_plots.png
 INPUT images//graphsage_max_plots.png
 INPUT ./images//graphsage_max_plots.png
 INPUT ./images//graphsage_max_plots.png
+INPUT ./images//simulation_results.png
+INPUT ./images//simulation_results.png
+INPUT images//simulation_results.png
+INPUT ./images//simulation_results.png
+INPUT ./images//simulation_results.png
 INPUT ./main.bbl
 INPUT main.bbl
 INPUT ./main.bbl

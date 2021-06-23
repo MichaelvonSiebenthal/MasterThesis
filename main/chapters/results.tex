@@ -192,22 +192,27 @@
   is activated using the ReLu function and the output of the second 
   convolutional layer is activated using the log-softmax function. The model was 
   trained using a mini-batch size of 50 nodes and the neighborhood function 
-  $\mathcal{N}(v)$ randomly sampled 10 neighbors for each node which are 2-hops 
-  away and randomly sampled 5 hidden node representations which correspond to 
-  the activated output of the first convolutional layer. This corresponds to 
-  the steps shown in figure \ref{fig:GraphSage_sample}. To improve the 
-  robustness of the model, lastly a dropout rate of 0.1 was set. GraphSage was 
-  run using the different aggregation strategies mean, LSTM, max-pooling. In
-  addition, sum-pooling was added as an additional aggregation strategy as
-  suggested by \cite{xu2018powerful}. Sum-pooling aggregation follows the same
-  procedure as max-pooling with the only difference being that element-wise
-  sum-pooling is performed and not max-pooling. The model for each aggregation 
-  strategy was trained using 400 epochs. First the training and validation
-  results using the training graph are presented for every aggregation
-  strategy. In a second step, the models will be applied to a new unseen test 
-  graph consisting of 6'000 nodes. The results of the aggregation strategies on
-  the test graphs will be shown and a comparison to standard machine learning
-  methods will be given. 
+  $\mathcal{N}(v)$ randomly sampled 10 neighbors 2-hops away from the target
+  node and randomly sampled 5 nodes at a 1-hop distance from the target node. 
+  This corresponds to the steps shown in figure \ref{fig:GraphSage_sample}. 
+  To improve the robustness of the model, lastly a dropout rate of $p = 0.02$ 
+  was set. GraphSage was run using the different aggregation strategies mean, 
+  LSTM, max-pooling. In addition, sum-pooling was added as an additional 
+  aggregation strategy as suggested by \cite{xu2018powerful}. Sum-pooling 
+  aggregation follows the same procedure as max-pooling with the only difference 
+  being that element-wise sum-pooling is performed and not max-pooling. This 
+  aggregation method has been shown to be more robust for graph neural networks, 
+  as it allows the GNN to better distinguish different graph structures. It is
+  important to note, that the Graphsage sum-pooling strategy employed does not
+  correspond to the Graph Isomorphism Network introduced by 
+  \cite{xu2018powerful}. This article rather provided the inspiration for
+  applying sum-pooling for Graphsage. \\
+  
+  \noindent The model for each aggregation strategy was trained using 400 epochs. 
+  The training- and validation results using the training graph are presented 
+  for every aggregation strategy. In addition, the trained models are applied 
+  to a new unseen graph also consisting of 6'000 nodes to check for the 
+  inductive capability of the Graphsage model. 
 
   \paragraph{Mean Aggregation}  \mbox{}\\ 
   In figure \ref{fig:mean_aggregation} the training- and validation loss as
@@ -221,16 +226,26 @@
   \end{figure}
 
   \noindent The training accuracy is 94.98\% and the validation accuracy is 
-  94.59\% after 400 epochs. The loss- and accuracy plots reveal, that the 
-  mean aggregation model has a good model fit. It is important to note, that
-  depending on the random split of 80\% training data and 20\% validation data,
-  the loss curves can exhibit an over-fit as well as models where the
-  validation loss is smaller than the training loss. A contributing factor for
-  this is the dropout rate of 2\% employed for all layers in the GraphSage
-  model. For that reason, given the specific train- validation split, the
-  validation set can perform better. The learning curves shown for mean
-  aggregation as well as for the upcoming aggregation strategies are however
-  representative of the typical training behavior. 
+  94.59\% after 400 epochs. The model resulted in a test accuracy of 93.38\%
+  with the following confusion matrix shown in table
+  \ref{table:mean_results_test}:
+
+
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|}
+      \hline
+      \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
+      Dissatisfied} & \textbf{Satisfied}\\
+      \hline
+      \textbf{Neutral or Dissatisfied} & 3'262  & 94 \\\hline 
+      \textbf{Satisfied} & 303 & 2'341 \\\hline\hline
+      \textbf{Accuracy} & 93.38\% & \\
+      \hline
+    \end{tabular}
+    \caption{Test Confusion Matrix Mean Aggregation}
+    \label{table:mean_results_test}
+  \end{table}
 
   \paragraph{LSTM Aggregation}  \mbox{}\\ 
   Figure \ref{fig:lstm_aggregation} shows the training- and validation loss
@@ -245,8 +260,24 @@
 
   \noindent The training- and validation accuracy after 400 epochs was 94.44\% 
   and 94.09\% respectively. Here again, we can see that the training behavior
-  is very good with only a small over-fit as of approximately epoch 275 which
-  remains stable. 
+  is relatively good with a small over-fit which remains stable. The results
+  for the test graph are shown in table \ref{table:lstm_results_test}.
+
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|}
+      \hline
+      \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
+      Dissatisfied} & \textbf{Satisfied}\\
+      \hline
+      \textbf{Neutral or Dissatisfied} & 3'259  & 97 \\\hline 
+      \textbf{Satisfied} & 295 & 2'349 \\\hline\hline
+      \textbf{Accuracy} & 93.47\% & \\
+      \hline
+    \end{tabular}
+    \caption{Test Confusion Matrix LSTM Aggregation}
+    \label{table:lstm_results_test}
+  \end{table}
 
   \paragraph{Sum-Pooling Aggregation}  \mbox{}\\ 
   Sum-pooling is shown to provide more consistent results as it prevents the
@@ -261,8 +292,25 @@
   \end{figure}
 
   \noindent The plots show that sum-pooling trains very well. The training 
-  accuracy is 94.33\% and validation accuracy is 94.93\% after the model
-  finished training.
+  accuracy is 94.33\% and validation accuracy is 94.2\% after the model
+  finished training. The results for the test graph are shown in table
+  \ref{table:sum_results_test}.
+
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|}
+      \hline
+      \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
+      Dissatisfied} & \textbf{Satisfied}\\
+      \hline
+      \textbf{Neutral or Dissatisfied} & 3'218  & 138 \\\hline 
+      \textbf{Satisfied} & 212 & 2'432 \\\hline\hline
+      \textbf{Accuracy} & 94.17\% & \\
+      \hline
+    \end{tabular}
+    \caption{Test Confusion Matrix Sum-Pooling}
+    \label{table:sum_results_test}
+  \end{table}
 
   \paragraph{Max-Pooling Aggregation}  \mbox{}\\ 
   The last aggregation method is max-pooling which yielded similar results as
@@ -277,10 +325,129 @@
   \end{figure}
 
   \noindent The training model resulted with a validation accuracy
-  of 93.96\% and training accuracy of 93.84\%.
+  of 93.96\% and training accuracy of 93.84\%. The results for the test graph
+  are shown in table \ref{table:max_results_test}.
 
-  \subsection{Test Dataset Results}
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|}
+      \hline
+      \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
+      Dissatisfied} & \textbf{Satisfied}\\
+      \hline
+      \textbf{Neutral or Dissatisfied} & 3'180  & 176 \\\hline 
+      \textbf{Satisfied} & 196 & 2'448 \\\hline\hline
+      \textbf{Accuracy} & 93.8\% & \\
+      \hline
+    \end{tabular}
+    \caption{Test Confusion Matrix Max-Pooling}
+    \label{table:max_results_test}
+  \end{table}
+
+  \subsection{GraphSage Robustness Simulation}
   
-  The models 
+  The loss- and accuracy plots reveal mostly a relatively good model fit. LSTM
+  aggregation however shows a moderate over-fit and is indicative of a more 
+  general issue shown to be true for all aggregation strategies. Simulations
+  revealed, that for the same graph the trained model would either over-fit,
+  fit perfectly or have a training pattern in which the validation loss was
+  smaller than the training loss. An analysis revealed, that the culprit for
+  this behavior was the dropout rate of 2\% as well as the random assignment of
+  graph nodes into training- and validation data. If the dropout rate was set
+  to 0, the model always tended to over-fit, where the training accuracy would
+  approach 100\% and the validation accuracy would stagnate around 93-94\%.
+  Unfortunately, when applying this model to an unseen test graph, the accuracy
+  results were somewhat lower at 91-92\%. For this reason, a dropout rate at
+  2\% was set to avoid this over-fitting problem which in turn yielded better
+  test results. This has the consequence, that it is more difficult for the
+  model to make predictions for the training data compared to the validation
+  data which uses no dropout rate. This obstacle however has the downside, that
+  it makes the model sensitive to the node assignments during the random
+  train- and validation split. Some nodes are more difficult to learn depending
+  on their features and neighbors. This means, that if the training set
+  includes more difficult nodes on average than the validation set in
+  conjunction with the dropout rate as an additional obstacle for the training
+  set, the validation loss becomes lower than the training loss. The same is
+  true in reverse, which leads to an over-fit. Lastly, the if the nodes in both
+  the training- and validation set are on average of similar difficulty a good
+  model fit is achieved as shown in the loss- and accuracy plots. \\
 
+  \noindent Nevertheless, the training- and validation results shown are 
+  representative for the model in general. In order to show this, a simulation 
+  was run using a training- and validation graph consisting of 6'000 nodes and 
+  a test graph also consisting of 6'000 nodes. For the simulation, max-pooling 
+  aggregation was selected using the same model specifications as previously. 
+  The model was trained during 100 experiments, where for every experiment a 
+  new random training- and validation split node assignment was performed. The
+  trained model was then applied to the test graph where the loss- and accuracy
+  was measured. The average results of the 100 experiments are shown in table
+  \ref{table:simulation_results} and figure \ref{fig:simulation_results}. 
+
+  \begin{table}[h]
+    \centering
+      \begin{tabular}{|l||c|c|c|}
+      \hline
+      \textbf{Metric} & \textbf{Training Set} & \textbf{Validation Set} & 
+      \textbf{Test Set}\\
+      \hline\hline
+      Average Accuracy & 94.37\% & 94.23\% & 93.21\% \\\hline 
+      Average Cross-Entropy Loss & 0.3684 & 0.3693 & 0.3792 \\
+      \hline
+      \end{tabular}
+    \caption{Average Simulation Results}
+    \label{table:simulation_results}
+  \end{table}
+
+
+  \begin{figure}[h]
+		\centering
+		\includegraphics[width=0.9\textwidth]{simulation_results.png}
+		\caption{Simulation Graphs}
+        \label{fig:simulation_results}
+  \end{figure}
+
+  \subsection{Result Comparison}
+
+  The results shown for the three models Node2Vec, GCN and GraphSage are
+  compared to the results using "standard" machine learning methods. This is
+  done to assess to what extent, synthetic graph generation is a useful
+  approach for machine learning. This comparison is an important ingredient for
+  answering the research question. For the comparison, the methods logistic
+  regression \citep{cramer2002origins}, naive bayes \citep{zhang2004bayes},
+  support vector machines (SVM) \citep{platt1999probabilistic,chang2011libsvm},
+  Random Forest Classifier \citep{breiman2001random}, AdaBoost Classifier
+  \citep{freund1997decision,hastie2009multi} and an Artificial Neural Network
+  \citep{mcculloch1943logical} are used. These methods only consider the
+  feature data and do not consider any network connections. These methods are
+  therefore simpler and do not require a graph to be generated. A comparison of
+  the different results is shown in table \ref{table:result_comparison}.
+
+  \begin{table}[h]
+    \centering
+    \scalebox{0.8}{
+      \begin{tabular}{|l||c|c|c|}
+      \hline
+      \textbf{Method} & \textbf{Training Accuracy} & \textbf{Validation
+      Accuracy} & \textbf{Test Accuracy}\\
+      \hline\hline
+      Logistic Regression & 88.16\% & 87.08\% & 86.43\% \\\hline 
+      Naive Bayes & 87.46\% & 85.83\% & 85.6\% \\\hline
+      AdaBoost & 93.54\% & 93.08\% & 92.45\% \\\hline
+      Random Forest & 100\% & 95.08\% & 94.38\% \\\hline
+      SVM & 94.42\% & 93.5\% & 92.45\% \\\hline
+      ANN & 95.99\% & 94.42\% & 93.48\%\\\hline
+      Node2Vec & 77.61\% & 76.58\% & -\\\hline
+      GCN & 83.73\% & 82.85\% & -\\\hline
+      GraphSage (Mean Aggregation) & 94.98\% & 94.59\% & 93.38\% \\\hline
+      GraphSage (LSTM Aggregation) & 94.44\% & 94.09\% & 93.47\% \\\hline
+      GraphSage (Sum-Pooling) & 94.33\% & 94.2\% & 94.17\% \\\hline
+      GraphSage (Max-Pooling) & 93.96\% & 93.84\% & 93.8\% \\
+      \hline
+      \end{tabular}}
+    \caption{Result Comparison}
+    \label{table:result_comparison}
+  \end{table}
+
+  \noindent Table \ref{table:result_comparison} shows, that GraphSage is a
+  serious competitor. 
 
