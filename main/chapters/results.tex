@@ -398,13 +398,19 @@
     \label{table:simulation_results}
   \end{table}
 
-
   \begin{figure}[h]
 		\centering
 		\includegraphics[width=0.9\textwidth]{simulation_results.png}
-		\caption{Simulation Graphs}
+		\caption{Simulation Results Max-Pooling}
         \label{fig:simulation_results}
   \end{figure}
+
+  \noindent Max-pooling was selected as this corresponds to the recommended
+  aggregation strategy \citep[p. 9]{hamilton2017inductive}. For the remaining
+  aggregation strategies, only 10 experiments were run due to time
+  considerations as 100 experiments require approximately 15 hours to complete.
+  The results using only 10 experiments yielded similar results, with test
+  accuracies ranging predominantly from 93-94\%. 
 
   \subsection{Result Comparison}
 
@@ -424,7 +430,7 @@
 
   \begin{table}[h]
     \centering
-    \scalebox{0.8}{
+    \scalebox{0.75}{
       \begin{tabular}{|l||c|c|c|}
       \hline
       \textbf{Method} & \textbf{Training Accuracy} & \textbf{Validation
@@ -435,7 +441,7 @@
       AdaBoost & 93.54\% & 93.08\% & 92.45\% \\\hline
       Random Forest & 100\% & 95.08\% & 94.38\% \\\hline
       SVM & 94.42\% & 93.5\% & 92.45\% \\\hline
-      ANN & 95.99\% & 94.42\% & 93.48\%\\\hline
+      ANN & 96.47\% & 94.67\% & 93.32\%\\\hline
       Node2Vec & 77.61\% & 76.58\% & -\\\hline
       GCN & 83.73\% & 82.85\% & -\\\hline
       GraphSage (Mean Aggregation) & 94.98\% & 94.59\% & 93.38\% \\\hline
@@ -448,6 +454,31 @@
     \label{table:result_comparison}
   \end{table}
 
-  \noindent Table \ref{table:result_comparison} shows, that GraphSage is a
-  serious competitor. 
+  \noindent Table \ref{table:result_comparison} shows, that GCN and Node2Vec
+  are not competitive when using MAG generated graphs. GraphSage is however a 
+  serious competitor and appears to be the second best method overall. The
+  Random Forest classifier is consistently the best method regardless of the
+  training- and validation data as well as the test data used. The GraphSage
+  models are consistently shown to be the second best method. The ANN model
+  performs similarly well in terms of achieving a similar test accuracy.
+  Similar as with the GNNs, it is important to evaluate the model fit to draw a
+  more definitive conclusion which is shown in figure \ref{fig:ANN_fit}.
 
+  \begin{figure}[h]
+		\centering
+		\includegraphics[width=0.9\textwidth]{ANN_Plot.png}
+		\caption{ANN Model Fit}
+        \label{fig:ANN_fit}
+  \end{figure}
+
+  \noindent Figure \ref{fig:ANN_fit} shows, that the ANN model has a relatively
+  strong over-fit compared to the GNN models. This observation is consistent
+  for every ANN model trained. In addition, different number of hidden layers, 
+  hidden layer sizes and dropout rates were tested, which all resulted in a 
+  clear over-fit or bad training behavior. For that reason, the ANN is deemed
+  to be inferior to the GNN, even if the test accuracies are very similar. \\
+
+  \noindent AdaBoost and SVM also are shown to provide very good results,
+  however yield slightly lower test accuracies compared to the previous
+  methods. Lastly, naive bayes and logistic regression clearly yield inferior
+  results. 
