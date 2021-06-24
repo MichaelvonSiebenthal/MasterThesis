@@ -934,6 +934,16 @@ INPUT images//bank_network.jpg
 INPUT ./images//bank_network.jpg
 INPUT ./images//bank_network.jpg
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecsl1200.tfm
+INPUT ./images//overview_datascience.png
+INPUT ./images//overview_datascience.png
+INPUT images//overview_datascience.png
+INPUT ./images//overview_datascience.png
+INPUT ./images//overview_datascience.png
+INPUT ./images//ml_tasks.png
+INPUT ./images//ml_tasks.png
+INPUT images//ml_tasks.png
+INPUT ./images//ml_tasks.png
+INPUT ./images//ml_tasks.png
 INPUT ./chapters/theory.tex
 INPUT ./chapters/theory.tex
 INPUT ./chapters/theory.tex
