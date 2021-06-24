@@ -18,7 +18,8 @@
 	\noindent Graph theory is an old field of mathematics and can be traced back 
 	to Leonhard Euler and the famous "Königsberg Bridge Problem"
 	\citep{euler1741solutio}. The study of graphs has had a recent revival
-	thanks to its useful applications in machine learning. Graphs are special 
+	thanks to its useful applications in areas such as the Google algorithm
+	PageRank \cite{page1999pagerank} and machine learning. Graphs are special 
 	data structures as shown in Figure \ref{fig:graph}. The terms graph and network 
 	are often used interchangeably and have identical meaning for the purpose
 	of this master thesis. Typically, the term graph is used more commonly when 
@@ -33,12 +34,12 @@
 		\label{fig:graph}
 	\end{figure}
 	
-	\noindent The graph shown in Figure \ref{fig:graph} corresponds to an undirected graph
-	in which the connections between the vertexes are mutual. In a directed
-	graph for instance, vertex A could be connected to vertex B, however vertex
-	B need not be connected to vertex A. For the purpose of this thesis, only
-	undirected graphs are considered. Vertexes are often referred to as
-	nodes and the terms will be used interchangeably. Edges refer to the
+	\noindent The graph shown in Figure \ref{fig:graph} corresponds to an 
+	undirected graph in which the connections between the vertexes are mutual. 
+	In a directed graph for instance, vertex A could be connected to vertex B, 
+	however vertex B need not be connected to vertex A. For the purpose of this 
+	thesis, only undirected graphs are considered. Vertexes are often referred 
+	to as nodes and the terms will be used interchangeably. Edges refer to the
 	connections between the vertices. Edges are often also referred to as links
 	and the terms will be used interchangeably as well. Graphs may have
 	additional elements such as multi-edges or self-edges. Self-edges refer to
@@ -55,7 +56,7 @@
 
 	\noindent $G$ refers to the graph as an output. $V$ refers to the set of 
 	vertices present in the graph and $E$ refers to edges present between the 
-	vertices. \\
+	vertices.
 
 	\paragraph{Adjacency Matrix} \mbox{}\\  
 
@@ -72,8 +73,8 @@
 			\end{cases}
 	\end{equation}
 	
-	\noindent For illustration, the adjacency matrix of the graph shown in Figure
-	\ref{fig:graph} is shown as follows:
+	\noindent For illustration, the adjacency matrix of the graph shown in 
+	Figure \ref{fig:graph} is shown as follows:
 
 	\[ A = 
 	\begin{pmatrix}
@@ -84,7 +85,7 @@
 		1 & 0 & 1 & 0 & 0 & 0 \\
 		0 & 0 & 1 & 0 & 0 & 0  
 	\end{pmatrix}
-	\] \\
+	\] 
 	
 	\noindent As one can see, if vertex $i$ and $j$ are connected, this is recorded with
 	1 and 0 otherwise. Note, that all the elements on the $diag(A)$ are equal
@@ -94,8 +95,8 @@
 	undirected network, the adjacency matrix is symmetric. There are many 
 	additional aspects one could mention with regard to the adjacency matrix, 
 	they are however not relevant for this thesis. For additional information 
-	regarding the adjacency matrix, the book by Mark Newman 
-	\citeyearpar{Newman2010} is highly recommended. 
+	regarding the adjacency matrix, the book "Networks: An Introduction" by 
+	Mark Newman \citeyearpar{Newman2010} is highly recommended. 
 
 	\paragraph{Degree Measures} \mbox{}\\
 
@@ -192,7 +193,7 @@
 		x(0) =  \sum_{i}c_{i}v_{i}
 	\end{equation}
 
-	\noindent $v_i$ correspond to the eigenvectors of the adjacency matrix $A$
+	\noindent $v_i$ corresponds to the eigenvectors of the adjacency matrix $A$
 	and $c_i$ corresponds to an appropriately chosen constant. Therefore we can
 	write \citep[p. 170]{Newman2010}:
 
