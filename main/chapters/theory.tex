@@ -264,19 +264,17 @@
 
 	\section{Machine Learning on Graphs}
 
-	\noindent Graph structures are significantly different compared to
-	traditional types of data usually used for machine learning tasks or
-	regression analyses. Graph structures are special in that the data points
-	in a graph have connections with each other. A practical example for this
-	are social networks. In a social network, the profiles of "Peter" and
-	"Paul" might be connected because Peter and Paul are friends. In addition,
-	"Paul" and "Peter" can only ever reach each-other if they are directly or
-	perhaps indirectly connected. This aspect is unique to graph or network data 
-	and provides both additional information and additional complexity to graph 
-	data. This property does not allow for comparing nodes in a graph in terms
-	of euclidean distances as only connected nodes can reach each-other. For
-	the purpose of this thesis, machine learning on graphs will be categorized
-	into two categories:
+	\noindent Graph structures are special in that the data points in a graph 
+	have connections with each other. A practical example for this are social 
+	networks. In a social network, the profiles of "Peter" and "Paul" might be 
+	connected because "Peter" and "Paul" are friends. In addition, "Paul" and 
+	"Peter" can only ever reach each-other if they are directly or perhaps 
+	indirectly connected. This aspect is unique to graph or network data and 
+	provides both additional information as well as additional complexity to 
+	graph data. This property does not allow for comparing nodes in a graph in 
+	terms of euclidean distances as only connected nodes can reach each-other. 
+	For the purpose of this thesis, machine learning on graphs will be 
+	categorized into two categories:
 
 	\begin{enumerate}
 		\item Graph representation learning with subsequent downstream machine
@@ -284,15 +282,26 @@
 		\item Graph neural networks
 	\end{enumerate}
 	
-	\noindent In the following subsections, methods for both graph machine learning
-	categories will be introduced.
+	\noindent Graph representation learning refers to models in which node
+	embeddings of a graph are learned. Specifically, this approach yields
+	vector representations of the nodes in a graph for which distance measures
+	such as Euclidean distances can be measured. These node vector
+	representations can then be used as feature data for standard machine
+	learning methods. Graph neural networks can perform both graph representation
+	learning as well as machine learning tasks within the same model/step. This
+	combination is what makes graph neural networks stand out compared to other
+	graph representation learning methods. \\
+
+	\noindent In the following subsections, the theory for graph representation 
+	learning models as well as graph neural networks are introduced. 
 
 	\subsection{Graph Representation Learning}
 
-	The aim of graph representation learning is to embed nodes into a
-	$d$-dimensional vector representation. The resulting vector embeddings can
-	then be used for "standard" machine learning applications. A graphical
-	representation of this task is shown in figure \ref{fig:embedding}.
+	The aim of graph representation learning is to generate node embeddings in 
+	the form of a $d$-dimensional vector representation. The resulting vector 
+	embeddings can then be used for "standard" machine learning applications. 
+	A graphical representation of this task is shown in figure 
+	\ref{fig:embedding}.
 
 	\begin{figure}[h]
 		\centering
@@ -302,65 +311,52 @@
 		\label{fig:embedding}
 	\end{figure}
 
-	\noindent Figure \ref{fig:embedding} outlines the task of finding an
-	encoder such that nodes which are similar are also embedded close in the
-	embedding space for which distance measures such as Euclidean distances can
-	be calculated. A common measure for similarity is to find vector embeddings 
-	$z$ of nodes $u$ and node $v$ such that \citep{leskovec2021lecture}:
+	\noindent To generate node embeddings of a graph, one has to define an
+	encoder which transforms nodes in a graph into their embedding space as
+	shown in figure \ref{fig:embedding}. The nodes must be embedded in such a
+	manner that similar nodes in the graph are also embedded closely in the 
+	embedding space. A common measure for similarity is to find vector embeddings 
+	$z$ of nodes $u$ and $v$ such that \citep{leskovec2021lecture}:
 
 	\begin{equation}
 		z_u^Tz_v \approx similarity(u,v)
 	\end{equation}
 
-	\noindent The dot product of two node vector embedding should thus
+	\noindent The dot product of the two node embedding vectors should thus
 	approximately equal the similarity of the corresponding nodes in the
-	network. There are different approaches for defining similarity of two
-	nodes which can be applied. An early solution for instance was a graph
-	factorization approach introduced by \cite{ahmed2013distributed}. More
-	recent and successful approaches include methods which make use of random
-	walks. In this context, similarity is defined as follows
-	\citep{leskovec2021lecture}:
+	graph. There are different approaches for defining node similarity. Graph 
+	factorization was introduced as an early solution 
+	\citep{ahmed2013distributed}. More recent and more successful approaches 
+	include methods which make use of random walks. In the context of random
+	walks, similarity is defined as \citep{leskovec2021lecture}:
 
 	\begin{equation}
-		z_u^Tz_v \approx \text{Prob. that node $u$ and $v$ co-occur on a random walk over the network}
+		z_u^Tz_v \approx \text{Probability that node $u$ and $v$
+								co-occur on a random walk over the graph}
+	\label{eq:random_similartiy}
 	\end{equation}
 
-	\noindent This thesis will focus on the methods Deepwalk by
-	\cite{perozzi2014deepwalk} and its generalization Node2Vec by
-	\cite{grover2016node2vec}. There are other noteworthy methods such as LINE
-	by \cite{tang2015line} which could be considered. In order to remain
-	focused these additional methods are not considered. The selected methods
-	are however well suited for the tasks given in this thesis. \\
+	\noindent The methods DeepWalk \citep{perozzi2014deepwalk} and its 
+	generalization Node2Vec \citep{grover2016node2vec} successfully apply the
+	similarity measure shown in equation \ref{eq:random_similartiy}. Another 
+	noteworthy method called LINE \citep{tang2015line} also makes use of random
+	walk co-occurrences as its similarity measure. In order to remain focused,
+	only DeepWalk and Node2Vec are considered for this thesis. These two models
+	are well suited for the given task and are among the most popular graph
+	representation learning methods. \\
 
-	\noindent DeepWalk and Node2Vec make use of methods which originated in 
+	\noindent DeepWalk and Node2Vec make use of methods which have its origin in 
 	natural language processing (NLP). Specifically they makes use of the 
-	Skip-Gram model introduced by
-	\cite{mikolov2013efficient,mikolov2013distributed}. As the Skip-Gram model
-	is a core component of DeepWalk and Node2Vec, the Skip-Gram framework is
-	explained in detail in the following paragraph as it relates to graph
-	representation learning. \\
+	Skip-Gram model \citep{mikolov2013efficient,mikolov2013distributed}. The 
+	Skip-Gram model is a core component of DeepWalk and Node2Vec, which is why 
+	it is explained in detail before proceeding to DeepWalk and Node2Vec. \\
 
-	\noindent In NLP words are one-hot encoded for the Skip-Gram model in which 
-	vector representations for the words are learned. Similarly, nodes in a network 
-	can be thought of as words in a NLP context. A basic overview of the Skip-Gram 
-	model is provided in figure \ref{fig:skip_gram}. The input defined as $X$ corresponds to 
-	a matrix with dimension $N \times N$ of one-hot encoded words or rather nodes. 
-	$N$ corresponds to the number of nodes. The projection $H$ is calculated using 
-	a simple forward propagation of the input times the weight matrix $\Phi$ with 
-	dimension $N \times D$. Here $D$ defines the number of dimensions for the 
-	vector embedding of the words or nodes. The projection $H$ is thereafter 
-	forward propagated again by multiplying it with a second weight matrix $\Psi$ 
-	with dimensions $D \times V$. $V$ refers to the context size a node is being 
-	compared to. For graph representation learning context size is defined by the 
-	number of neighboring nodes a node is being compared to. The output is thereafter 
-	activated using the Softmax activation function and the loss is calculated
-	by comparing the activated output with the actual context node. The
-	aim of the Skip-Gram model is to accurately predict the context of an input
-	node, the neighbors of a given input node. The weights $\Psi$ and 
-	$\Phi$ are thereafter updated using stochastic gradient descent. This procedure is 
-	repeated for several iterations and the Skip-Gram model is therefore a 
-	special form of a artificial neural network. The weight matrix $\Phi$ lastly 
-	corresponds to the node vector embeddings. \\ 
+	\noindent In NLP words are one-hot encoded as inputs for the Skip-Gram model 
+	which learns vector representations of the input words. Similarly, nodes in 
+	a network can be thought of as words in a NLP framework. The aim of the
+	Skip-Gram model is then to predict the context of the input word by
+	predicting its neighboring words in a sentence. A basic overview of the 
+	Skip-Gram model is provided in figure \ref{fig:skip_gram}. 
 
 	\begin{figure}
 		\centering
@@ -370,11 +366,67 @@
 		\label{fig:skip_gram}
 	\end{figure}
 
-	\noindent Based on this logic, the DeepWalk algorithm was developed which was a big
-	breakthrough. The DeepWalk algorithm builds on top of the Skip-Gram model and 
-	uses random walks for learning the node vector embeddings. To provide a 
-	better overview of the DeepWalk algorithm, the pseudo-code is presented in 
-	algorithm \ref{algo:DeepWalk} \& \ref{algo:SkipGram} as defined in its original paper.
+	\noindent The basic layout shown in figure \ref{fig:skip_gram} depicts the
+	high level procedure of the skip-gram model. To make this model more
+	specific, the input corresponds to the one-hot encoded vector at row $t$ of
+	the input matrix $W$ with dimensions $T \times T$, where every row 
+	corresponds to a one-hot encoded word. $W(t)$ is linearly passed to the
+	projection, which involves calculating the dot product of $W(t)$ with the 
+	weight matrix $\Phi$ which has dimensions $T \times D$. $D$ refers to the
+	number of dimensions which are to be included in the projection vector $h$ 
+	and is a hyper parameter. The projection vector $h$ is then linearly passed
+	again with another weight matrix $\Psi$ which has dimensions $D \times T$.
+	This creates the output vector $u$ which is then used to predict the correct
+	context word $c$ from the vocabulary of $C$ number of context words. To do 
+	so, the training target is set to maximize the average $\log$ probability 
+	of the correct context word for every input word $W(t)$. More formally 
+	\citep[p. 2]{mikolov2013distributed}:
+
+	\begin{equation}
+		\frac{1}{T}\sum_{t=1}^{T}\sum_{-c \leqslant j \leqslant c,j\neq0}\log
+		p(w_{t+j}\mid w_{t})
+		\label{eq:skip_traintarget}
+	\end{equation}
+
+	\noindent To calculate the probability of the context word given the input
+	word $W(t)$, the Softmax function is applied to the output layer $u$ in the 
+	manner shown by Mikolov et al. (\citeyear[p. 3]{mikolov2013distributed}). This 
+	calculates a normalized probability for every context word given $W(t)$. To 
+	formalize this in terms of a loss function, the training target shown in 
+	equation \ref{eq:skip_traintarget} can be rewritten as follows:
+
+	\begin{equation}
+		\begin{split}
+			\mathcal{L} =& - \log p(w_{t-c},w_{t-c+1},\dots,w_{t+c-1},w_{t+c}\mid w_{t})\\
+			=& - \log \prod_{c=1}^{C}\frac{\exp(u_{c,j_{c}^{*}})}{\sum_{j'=1}^{T}
+			\exp(u_{j'})}\\
+			=&	- \sum_{c=1}^{C} u_{j_{c}^{*}} + C \cdot \log
+								\sum_{j'=1}^{T} \exp(u_{j'})
+	\end{split}
+	\end{equation}
+
+	\noindent The notation was slightly adjusted, where $u_{j_{c}^{*}}$ refers
+	to the index of the output vector $u$ which corresponds to the actual
+	context word $c$ given the input word $W(t)$. In turn, 
+	$\sum_{j'=1}^{T}\exp(u_{j'})$ is a summation over all exponentiated output 
+	representations $u_{j'}$ of all $T$ number of words given the input word 
+	$W(t)$. The calculated loss is then used to update the trainable model 
+	parameters $\Phi$ and $\Psi$ using gradient descent via a backward 
+	propagation function analogues to what is used for standard neural 
+	networks. The desired output of the Skip-Gram model is the weight matrix
+	$\Phi$ which once the model is sufficiently trained, corresponds to the
+	vector representation or embeddings of the input words. \\
+
+	\noindent The same principle shown in the Skip-Gram model can be applied
+	to graphs in a modified version. First, nodes in graph can be one-hot
+	encoded the same way as words. This means, that nodes can be used as input
+	data in a similar fashion as words. Based on this idea, DeepWalk by
+	\cite{perozzi2014deepwalk} achieved a big breakthrough for graph
+	representation learning. The DeepWalk algorithm builds on top of the 
+	Skip-Gram model and uses fixed-length random walks for learning the node 
+	vector embeddings. To provide a better overview of the DeepWalk algorithm, 
+	the pseudo-code is presented in algorithm \ref{algo:DeepWalk} \& 
+	\ref{algo:SkipGram} \citep[p. 704]{perozzi2014deepwalk}.
 	
 	\begin{algorithm}
 		\scriptsize
@@ -415,13 +467,14 @@
 	
 	\vspace{5mm}
 	
-	\noindent The DeepWalk algorithm generates fixed length random walks for
-	every node. The Skip Gram model is then run for every node on the random
-	walk. In terms of context, the window size determines the neighboring nodes 
-	on the random walk the currently selected node is trying to predict in
-	terms of context. The DeepWalk algorithm is then repeated for a defined
-	number of random walks. In terms of training, the DeepWalk algorithm can
-	lastly be run for a defined number of epochs. Lastly, the DeepWalk
+	\noindent The DeepWalk algorithm shows, that for every node $v\in G$ a
+	fixed length random walk is created. Every node on the random walk is used
+	as a one-hot encoded input for the Skip-Gram model. The context nodes of the
+	input node correspond to the input nodes' neighbors on the random walk 
+	within the window size distance $w$. This procedure is repeated for $\gamma$ 
+	number of random walks which in turn conclude one training epoch. 
+
+	Lastly, the DeepWalk
 	algorithm often uses more efficient approximation methods such as
 	hierarchical Softmax which makes use of a binary tree or negative sampling.
 	Both approximation methods are outlined in the paper by
