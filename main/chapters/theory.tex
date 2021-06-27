@@ -610,7 +610,7 @@
 		\nl $h_{v}^{0} = x_{v},\forall v \in V$\\
 		\nl \For{Number of epochs}{
 		\nl \For{$k=1\dots K$}{
-		\nl		\For{$v\in V$}{
+		\nl		\ForAll{$v\in V$}{
 		\nl			$h_{\mathcal{N}(v)}^{k} \leftarrow AGGREGATE_k\left(
 					{h_{u}^{k-1},\forall u \in\mathcal{N}_{k}(v)}\right)$\;
 		\nl			$h_{v}^{k} \leftarrow\sigma \left(W^{k}\cdot 
@@ -619,8 +619,8 @@
 		\nl		$h_{v}^{k} \leftarrow h_{v}^{k}/\lVert h_{v}^{k}\rVert_{2}$	
    			}
 		\nl $z_v = h_{v}^{K},\forall v \in V$\;
-		\nl $\mathcal{L}^{\text{train}}(\Theta)=\sum_{(z_{v},y_{v})\in\mathcal{T}}CE(y_{v},z_{v})$\;
-		\nl $\mathcal{L}^{\text{validation}}(\Theta)=\sum_{(z_{v},y_{v})\notin\mathcal{T}}CE(y_{v},z_{v})$\;
+		\nl $\mathcal{L}(\Theta)^{\text{train}}=\sum_{(z_{v},y_{v})\in\mathcal{T}}CE(y_{v},z_{v})$\;
+		\nl $\mathcal{L}(\Theta)^{\text{validation}}=\sum_{(z_{v},y_{v})\notin\mathcal{T}}CE(y_{v},z_{v})$\;
 		\nl $\Theta = \Theta - \alpha\cdot\frac{\partial\mathcal{L}^{\text{train}}}{\partial\Theta}$
 		}
 		\caption{Typical GNN algorithm for model training}
@@ -890,104 +890,87 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\cite{kim2012multiplicative}. This model is used to generate
 	semi-synthetic graphs from feature data as mentioned in the introduction. 
 	Originally, the MAG model was introduced for the purpose of generating 
-	realistic random graphs which obey properties of real-world networks. These 
-	properties include the emergence of a giant-connected component and a 
-	power-law or $\log$-normal degree-distribution. While, the creation of a
-	graph which follows real-world network properties would be desirable, it is 
-	not the primary target for this thesis. 
+	realistic graphs from feature data and to show that the resulting graph can 
+	obey properties of real-world networks. To do so, Kim \& Leskovec generated 
+	random feature data for which the model parameters were set in such a 
+	manner, that the resulting graph adheres to a set of real network 
+	properties. These network properties include the emergence of a giant
+	connected component and a power-law or $\log$-normal degree distribution
+	among others. While, the creation of a graph which follows real-world 
+	network properties would be desirable, it is not the primary target for 
+	this thesis. The main goal of the synthetic graph generation will be to 
+	create a graph that provides useful additional information, which can be 
+	exploited using graph machine learning. The MAG model is flexible in this 
+	sense, that it can create graphs which are not constrained to adhere to a 
+	specific set of network properties. Lastly, Kim \& Leskovec 
+	(\citeyear[p. 138-139]{kim2012multiplicative}) present model parameters 
+	which generate graphs that follow real-world network properties. These
+	model parameters can however not be adopted for the task at hand. The
+	parameters were created for a somewhat simpler task, which only involved
+	randomly generated feature data. When working with real feature data, this 
+	task becomes more difficult. \\
 
-
-
-	The MAG model was introduced for
-	random graph generation where the feature data is randomly assigned using a
-	specified strategy such as Bernoulli trials. This was done, as it is the
-	authors aim to find model specifications which create realistic graphs. For
-	the purpose of this thesis, this model will be used where the attributes
-	correspond to the features in a dataset. This is where the application of
-	the model differs in this thesis compared to how it was used in the orginal
-	papear. 
-
-
-	\noindent As mentioned in the introduction, gathering network data
-	including features is rather difficult task. This is especially true, as
-	most databases do not capture relationships. Further, it is very difficult
-	if not impossible to collect network data using standard surveys. This is a 
-	problem for this master thesis for which no perfect solution exists. As
-	outlined, this problem sparked the research question as to whether network
-	data can be generated from cross-sectional data for subsequent and
-	meaningful machine learning tasks. Among the many graph generation 
-	algorithms researched, the Multiplicative Attribute Graph (MAG) model by 
-	\cite{kim2012multiplicative} appears to provide a feasible solution and
-	will be used for this thesis. \\
-
-	\noindent The MAG model makes use of two main inputs which are:
-
-	\begin{enumerate}
-		\item Node attribute vectors $a_i$
-		\item Link-affinity matrices $\Theta_i$
-	\end{enumerate}
-
-	\noindent The node attribute vector $a_i$ is part of the graph node-attribute
-	generation matrix $B^{N \times K}$. For the purpose of graph generation, 
-	only attributes can be considered for which reasonable link-affinity 
-	probabilities can be defined. Therefore $B \subseteq X$ where $X^{N \times F}$ 
-	is the full feature matrix with $N$ observations and $F$ features. The 
-	feature matrix $X$ could for instance be data collected in a survey or a 
-	client database with absent relational information. $F$ could for instance 
-	refer to the number of questions in a survey for which responses were 
-	collected. Every respondent in the survey subsequently is considered as a 
-	node in graph setting and the responses are the corresponding node features. 
-	Note, that the authors refer to node features as attributes. The terms are 
-	used interchangeably for the purpose of this thesis. The $K$ appropriate 
-	features which can be included in $B$ are variables for which reasonable
-	link-affinity probabilities can be defined. A typical example for this 
-	could be age. One could imagine an appropriate setting in which people of 
-	the same age group are more likely to form a connection / become friends in 
-	a social network setting versus people which are in different age groups. 
-	Another example for this could be gender in terms of biological sex which 
-	is a classical binary setting for a link-affinity matrix. An example for 
-	binary attribute link-affinity matrices $\Theta_i$ is given in figure 
-	\ref{fig:link-affinity}.
+	\noindent The starting point of the MAG model is a matrix of feature data, 
+	$X^{N \times F}$, where $N$ refers to the number of observations 
+	and $F$ to the number of features. \cite{kim2012multiplicative} refer to 
+	feature data as attributes and they use the terms interchangeably. For this 
+	thesis a distinction is made, where features correspond to the full set of 
+	feature data and attributes refer to the features used for generating the 
+	graph, $G(V,E)$. The attribute data, $B^{N \times K} \subseteq X^{N \times F}$, 
+	is therefore a subset of the feature data. As a selection criterion,
+	attribute data must be of such a manner for which reasonable link-affinity
+	matrices, $\Theta_{i}$, can be defined. In addition, attribute data must be
+	discrete for the MAG model. For an attribute variable such as age, this
+	would have to be discretized for use in the MAG model. The link-affinity
+	matrix, $\Theta_{i}$, is a probability matrix which is used to estimate the
+	probability of two observations, $(a_{i}(u),a_{i}(v))\in B$, to form a 
+	connection. As an illustration, a reasonable assumption could be to assume, 
+	that people which are of the same age group, are more likely to form a 
+	connection/be friends in a social network, compared to people which are not 
+	of the same age group. Another example for this could be gender in terms of 
+	biological sex which is a classical binary setting for a link-affinity matrix. 
+	Examples for binary attribute link-affinity matrices $\Theta_i$ are given in 
+	figure \ref{fig:link-affinity}.
 
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.8\textwidth]{affinity_matrices.png}
-		\caption{Node-attribute link-affinities}
+		\caption{Attribute Link-Affinities}
 		\cite[p. 118]{kim2012multiplicative}
 		\label{fig:link-affinity}
 	\end{figure}
 
 	\noindent Figure \ref{fig:link-affinity} shows 4 types of link-affinity
-	matrices depending on the relationship between nodes one wants to model.
-	Homophily refers to love of the same which would make a connection between
-	two nodes more likely if they have the same features. Similarly,
-	Heterophily refers to the love of the different where nodes which do not
-	have the same features are more likely form a connection. Core-periphery is
-	a special case which can be used to generate realistic social-networks in
-	terms of network properties \citep[p. 139]{kim2012multiplicative}. For
-	instance one could model a group of people in terms of whether they are
-	members in a football club or not. It would then be reasonable to assume,
-	that members of a football club are very likely to be connected while
-	non-members have a significantly lower probability of forming a
-	connections. Lastly, random graphs can be generated by setting the
-	link-affinity probabilities to 0.5. Given the available data sets, graphs 
-	will be generated using homophily structures. The node-attribute
-	link-affinity matrices $\Theta_i$ are defined for every attribute and can
-	be set for an arbitrary size of categories within an attribute (extends
-	beyond the binary setting). More formally for each node $u \in V$ with $K$
-	categorical attributes of cardinality $d_i$ for $i = 1,2,\dots,K$ and
-	corresponding link-affinity matrices $\Theta_i \in d_i \times d_i$ for
-	$i=1,2,\dots,K$, the probability $P[u,v]$ of an edge between nodes
-	$(u,v)$ is defined as \citep[p. 119]{kim2012multiplicative}:
+	matrices depending on the type of relationship one wants to model. Homophily 
+	refers to love of the same which would make a connection between two
+	observations more likely if they have the same attributes. Similarly,
+	Heterophily refers to the love of the different where observations which do 
+	not have the same attributes are more likely form a connection. 
+	Core-periphery is a special case which can be used to generate realistic 
+	social-networks in terms of network properties 
+	\citep[p. 139]{kim2012multiplicative}. As an example, an attribute could
+	indicate whether a person is a member of the local football club. In a
+	core-periphery setting, members of the local football club are very likely
+	to be connected, while non-members have a significantly lower probability
+	of forming a connection. Lastly, random graphs can be generated by setting the
+	link-affinity probabilities to 0.5. Given the type of attributes available
+	in the data sets, graphs will be generated using homophily structures. The 
+	attribute link-affinity matrices, $\Theta_i$, are defined for every attribute 
+	and can be set for an arbitrary size of categories within an attribute. 
+	More formally for each observation $u \in B$ with $K$ categorical attributes 
+	of cardinality $d_i$ for $i = 1,2,\dots,K$ and corresponding link-affinity 
+	matrices $\Theta_i \in d_i \times d_i$ for $i=1,2,\dots,K$, the probability 
+	$P[u,v]$ of a connection between observations $(u,v)$ is defined as 
+	\citep[p. 119]{kim2012multiplicative}:
 
 	\begin{equation}
 		P[u,v] = \prod_{i=1}^{K}\Theta_{i}[a_{i}(u),a_i(v)]
 		\label{eq:MAG}
 	\end{equation}
 
-	\noindent In equation \ref{eq:MAG} $a_{i}(u)$ refers to the value of the 
-	$i$th attribute of node $u$. A schematic representation of the procedure
-	for a binary link-affinity matrix is shown in figure \ref{fig:MAG}.
+	\noindent In equation \ref{eq:MAG}, $a_{i}(u)$ refers to the value of the 
+	$i$th attribute of observation $u$. A schematic representation of the 
+	procedure for a binary link-affinity matrix is shown in figure \ref{fig:MAG}.
 
 	\begin{figure}[h]
 		\centering
@@ -1006,8 +989,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 			$B\subseteq X^{N \times F}$;}
 		\myinput{node attribute vector $a_i$ with
 			cardinalities $d_i$ for $i=1,2,\dots,K$;}
-		\myinput{link affinity matrices $\Theta_i \in 
-			d_i \times d_i$ for $i= 1,2,\dots,K$;}
+		\myinput{link affinity matrices $\Theta_{i}^{d_i \times d_i}$, for $i= 1,2,\dots,K$;}
 		\KwOut{adjacency Matrix $A^{N\times N}$ for Graph $G(V,E)$} 
 		\nl $B^{K \times N} = B^{T}$ \\
 		\nl \For{$j = 1,2,\dots,N$}{
@@ -1033,18 +1015,30 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 		\label{algo:MAG}
 	\end{algorithm}
 
-	\noindent Algorithm \ref{algo:MAG} generates the adjacency matrix $A$ for
-	constructing the resulting graph $G(V,E)$. The node features $X$ can
-	thereafter be assigned to the corresponding nodes as the node ordering of 
-	the adjacency matrix corresponds to the ordering of the node feature matrix
-	$X$. The resulting graph $G(V,E)$ is therefore constructed by first
-	assigning the probabilities for two node $(u,v)$ to form a connection based 
-	on the link-affinity matrices $\Theta_i$. Once the probabilities are
-	calculated, a connection is formed if the probability for a connection is
-	larger than a randomly drawn value from a standard uniform distribution
-	$\mathcal{U}(0,1)$. If the probability is lower, no connection is formed.
-	As this thesis focuses on undirected graphs with no self-edges, the
-	resulting adjacency matrix $A$ is symmetric with $diag(A) = 0$. In order to
-	ensure this, the upper triangular matrix $U$ of the probability matrix $P$ 
-	is taken and setting the $diag(U)=0$. Tis ensures, that the resulting
-	adjacency matrix is symmetric and contains no self-edges. 
+	\noindent Algorithm \ref{algo:MAG} generates the adjacency matrix $A$ which
+	is then used for constructing the graph, $G(V,E)$. The observations of the
+	dataset, $X$, correspond to the nodes present in the graph. More precisely,
+	the order of the generated adjacency matrix, $A$, corresponds to the
+	ordering of the feature matrix $X$. Therefore the features can be assigned
+	to the nodes of the generated graph. The procedure outlined in algorithm
+	\ref{algo:MAG} can be summarized with following sequential steps:
+
+	\begin{enumerate}
+		\item Calculate the connection probabilities $P$ between every 
+			observation in the attribute matrix $B$ using equation \ref{eq:MAG}. 
+		\item As we only work with undirected graphs, the upper triangular
+			matrix $U$ of $P$ is taken where the $diag(U) = 0$. The diagonal of
+			$U$ is set to 0 to exclude self-loops.
+		\item For every element in $U$, draw a random sample form a standard
+			uniform distribution $\mathcal{U}(0,1)$. If the connection
+			probability $P_{u,v}>\mathcal{U}(0,1)$, a 1 in the
+			preliminary adjacency matrix $\hat A_{u,v}$ is recorded.
+			Otherwise a 0 is recorded.
+		\item The preliminary adjacency matrix $\hat A$ is an upper triangular
+			matrix with $diag(\hat A) = 0$ and all elements in the lower
+			triangular also being equal to 0. As the target is to create an
+			undirected graph, the corresponding adjacency matrix is symmetric
+			which is why the final adjacency matrix can be created using 
+			$A = \hat A + \hat A^{T}$. 
+	\end{enumerate}
+
