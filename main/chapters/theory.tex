@@ -352,8 +352,7 @@
 	it is explained in detail before proceeding to DeepWalk and Node2Vec. \\
 
 	\noindent In NLP words are one-hot encoded as inputs for the Skip-Gram model 
-	which learns vector representations of the input words. Similarly, nodes in 
-	a network can be thought of as words in a NLP framework. The aim of the
+	which learns vector representations of the input words. The aim of the
 	Skip-Gram model is then to predict the context of the input word by
 	predicting its neighboring words in a sentence. A basic overview of the 
 	Skip-Gram model is provided in figure \ref{fig:skip_gram}. 
@@ -367,7 +366,7 @@
 	\end{figure}
 
 	\noindent The basic layout shown in figure \ref{fig:skip_gram} depicts the
-	high level procedure of the skip-gram model. To make this model more
+	high level procedure of the Skip-Gram model. To make this model more
 	specific, the input corresponds to the one-hot encoded vector at row $t$ of
 	the input matrix $W$ with dimensions $T \times T$, where every row 
 	corresponds to a one-hot encoded word. $W(t)$ is linearly passed to the
@@ -379,7 +378,7 @@
 	This creates the output vector $u$ which is then used to predict the correct
 	context word $c$ from the vocabulary of $C$ number of context words. To do 
 	so, the training target is set to maximize the average $\log$ probability 
-	of the correct context word for every input word $W(t)$. More formally 
+	of the correct context word for every input word $w_{t}$. More formally 
 	\citep[p. 2]{mikolov2013distributed}:
 
 	\begin{equation}
@@ -393,24 +392,26 @@
 	manner shown by Mikolov et al. (\citeyear[p. 3]{mikolov2013distributed}). This 
 	calculates a normalized probability for every context word given $W(t)$. To 
 	formalize this in terms of a loss function, the training target shown in 
-	equation \ref{eq:skip_traintarget} can be rewritten as follows:
+	equation \ref{eq:skip_traintarget} can be rewritten as follows for every
+	input word $w_{t}$:
 
 	\begin{equation}
 		\begin{split}
-			\mathcal{L} =& - \log p(w_{t-c},w_{t-c+1},\dots,w_{t+c-1},w_{t+c}\mid w_{t})\\
+		\mathcal{L} =& - \log p(w_{t-c},\dots,w_{t-1},w_{t+1},\dots,w_{t+c}\mid w_{t})\\
 			=& - \log \prod_{c=1}^{C}\frac{\exp(u_{c,j_{c}^{*}})}{\sum_{j'=1}^{T}
 			\exp(u_{j'})}\\
 			=&	- \sum_{c=1}^{C} u_{j_{c}^{*}} + C \cdot \log
 								\sum_{j'=1}^{T} \exp(u_{j'})
+		\label{eq:deepwalk_loss}
 	\end{split}
 	\end{equation}
 
 	\noindent The notation was slightly adjusted, where $u_{j_{c}^{*}}$ refers
 	to the index of the output vector $u$ which corresponds to the actual
-	context word $c$ given the input word $W(t)$. In turn, 
+	context word $c$ given the input word $w_{t}$. In turn, 
 	$\sum_{j'=1}^{T}\exp(u_{j'})$ is a summation over all exponentiated output 
 	representations $u_{j'}$ of all $T$ number of words given the input word 
-	$W(t)$. The calculated loss is then used to update the trainable model 
+	$w_{t}$. The calculated loss is then used to update the trainable model 
 	parameters $\Phi$ and $\Psi$ using gradient descent via a backward 
 	propagation function analogues to what is used for standard neural 
 	networks. The desired output of the Skip-Gram model is the weight matrix
@@ -471,30 +472,35 @@
 	fixed length random walk is created. Every node on the random walk is used
 	as a one-hot encoded input for the Skip-Gram model. The context nodes of the
 	input node correspond to the input nodes' neighbors on the random walk 
-	within the window size distance $w$. This procedure is repeated for $\gamma$ 
-	number of random walks which in turn conclude one training epoch. 
-
-	Lastly, the DeepWalk
-	algorithm often uses more efficient approximation methods such as
-	hierarchical Softmax which makes use of a binary tree or negative sampling.
-	Both approximation methods are outlined in the paper by
+	within the window size $w$. This procedure is repeated for $\gamma$ 
+	number of random walks which in turn concludes one training epoch. The rows
+	of $\Phi$ then correspond to the node embeddings where
+	$\Phi_{u}=z_{u}^{T}$. Lastly, the dot product of any two node embedding
+	vectors, $z_{u}^{T}z_{v}$, approximately equals the probability, that the
+	two nodes co-occur on a random walk as outlined in equation 
+	\ref{eq:random_similartiy}. Please note, that the DeepWalk algorithm often 
+	uses more efficient approximation methods to calculate the loss function
+	shown in equation \ref{eq:deepwalk_loss}. These approximation methods
+	include hierarchical Softmax which makes use of a binary tree or negative 
+	sampling. Both approximation methods are outlined in the paper by 
 	\cite{mikolov2013distributed}. \\
 
 	\noindent This is in principle the model which will be used to find the node
-	embeddings. In the application, the Node2Vec algorithm by will be employed. 
-	Node2Vec is a generalization of the DeepWalk algorithm and allows for the deployment of
-	biased random walks. In particular, it allows to set probabilities as to
-	whether the random walk is biased towards breadth-first (BFS) search or
-	depth-first search (DFS). Depending on the network structure, setting an
-	appropriate bias can greatly improve the quality of the embeddings. If no
-	bias towards BFS or DFS is set, an unbiased random walk is employed which is when
-	the Node2Vec algorithm corresponds to the DeepWalk algorithm. More
-	precisely, this occurs when the search bias $\alpha = 1$ with $p=q=1$ as
-	outlined in the Node2Vec paper \citep[p. 860]{grover2016node2vec}. The results
-	revealed, that an unbiased random walk embedded the nodes very well. For
-	that reason the Node2Vec algorithm is not explained in further detail as
-	the relevant parts are covered by the simpler and reader friendlier 
-	DeepWalk algorithm. \\
+	embeddings of a graph. In the application, the Node2Vec algorithm by
+	\cite{grover2016node2vec} will be employed, which is a generalization of 
+	the DeepWalk algorithm. Node2Vec allows for the deployment of biased random 
+	walks. In particular, it allows to set probabilities as to whether the 
+	random walk is biased towards breadth-first search (BFS) or depth-first 
+	search (DFS). Depending on the network structure, setting an appropriate 
+	bias can greatly improve the quality of the embeddings. If no bias towards 
+	BFS or DFS is set, an unbiased random walk is employed which is when
+	the output of the Node2Vec algorithm corresponds to the output of the 
+	DeepWalk algorithm. More precisely, this occurs when the search bias is set
+	to $\alpha = 1$ with $p=q=1$ as outlined in the Node2Vec paper 
+	\citep[p. 860]{grover2016node2vec}. The results revealed, that an unbiased 
+	random walk embedded the nodes very well. For that reason, the Node2Vec 
+	algorithm is not explained in further detail as the relevant parts are 
+	covered by the simpler and reader friendlier DeepWalk algorithm. \\
 
 	\noindent The resulting node vector embeddings can then be used for downstream
 	machine learning tasks. An additional benefit of graph representation
@@ -510,12 +516,12 @@
 
 	\subsection{Graph Neural Networks}
 
-	This section will provide an overview regarding the theory about Graph
-	Neural Networks (GNN). Within the family of GNNs, there are a myriad of
-	different methods available and every few months new methods are being
-	published. GNNs currently enjoy a large popularity and benefit from a large
-	research output. This thesis will focus on two popular and established GNN
-	approaches which are:
+	This section provides an overview of the theory for Graph Neural Networks
+	(GNN). Within the family of GNNs, there are a myriad of different methods 
+	available and every few months new methods are being published. GNNs 
+	currently enjoy a large popularity and benefit from a large research output. 
+	This thesis will focus on two popular and established GNN approaches which 
+	are:
 
 	\begin{enumerate}
 		\item Graph Convolutional Networks
@@ -527,36 +533,37 @@
 	defined \citep{leskovec2021lecture}:
 
 	\begin{itemize}
+		\setlength\itemsep{0.2em}
 		\item $G(V,E)$ is a graph with a set of vertices and edge connections
 		\item $V$ is a set of vertices
-		\item $A$ is the adjacency matrix graph $G$
-		\item $X \in \mathbb{R}^{\mid V\mid \times F}$ is the matrix of node
-			features
+		\item $A$ is the adjacency matrix of graph $G$
+		\item $X \in \mathbb{R}^{\mid V\mid \times F}$ is a matrix containing
+			the node features
 		\item $v$ is a node $\in V$ and $\mathcal{N}(v)$ is the set of
 			neighbors of $v$
 	\end{itemize}
 
-	\noindent If there are no node features present, $X$ can for instance be
-	defined as a one-hot encoded vector. A naïve approach would be to join the 
-	adjacency matrix with the feature matrix as the input for a artificial
-	neural network. The problem with this approach is, that the input is not order 
-	invariant and the model cannot be applied to graphs of different sizes
-	\citep{leskovec2021lecture}. \\
-
+	\noindent If there are no node features present, $X$ can be defined as a 
+	one-hot encoded vector. A naïve approach for building a GNN would be to
+	append the columns of the adjacency matrix to the feature matrix. This
+	combined matrix would then be used as the input for a standard
+	artificial neural network. The problem with this approach is, that the 
+	input is not order invariant and that the trained model cannot be applied 
+	to graphs of different sizes \citep{leskovec2021lecture}. \\
 
 	\noindent Modern GNNs have overcome this problem by drawing inspiration from 
 	Convolutional Neural Networks (CNN) and its famous filtering mechanism as 
-	outlined by \cite{krizhevsky2012imagenet}.
-	CNNs typically work with grid structured input data such as pixels of
-	images. The convolutional filter then samples the input grid using a
-	filter with a specified size (e.g. $3\times3$ grid filter). Similarly GNN
-	sample a graph using the node neighbors $\mathcal{N}(v)$ of node $v$ as a
-	filter. The filter can then be fine tuned in the sense of how many $k$-hops
-	of neighbors to consider (e.g. 1-hop: immediate neighbors of $v$, 2-hop:
-	include neighbors of $v$'s neighbors etc.). In terms of implementation, the
-	number of $k$-hops is set by the number of graph convolutional layers
-	included in the GNN model. A graphical illustration of this mechanism is 
-	shown in figure \ref{fig:GNN_structure}. \\
+	outlined by \cite{krizhevsky2012imagenet}. CNNs typically work with grid 
+	structured input data such as pixels of images. The convolutional filter 
+	then samples the input grid using a filter with a specified size 
+	(e.g. $3\times3$ grid filter). Similarly GNN sample a graph using the node 
+	neighbors $\mathcal{N}(v)$ of node $v$ as a filter. The filter can then be 
+	fine tuned in the sense of how many $k$-hops of neighbors to consider 
+	(e.g. 1-hop: immediate neighbors of $v$, 2-hop: include neighbors of $v$'s 
+	neighbors etc.). In terms of implementation, the number of $k$-hops is set 
+	by the number of graph convolutional layers included in the GNN model. A 
+	graphical illustration of this mechanism is shown in figure 
+	\ref{fig:GNN_structure}. \\
 
 	\begin{figure}
 		\centering
@@ -566,18 +573,17 @@
 		\label{fig:GNN_structure}
 	\end{figure}
 
-
-	\noindent The GNN Structure outlined shows an example of a 2-hop or 2 layer GNN. 
-	The 1-hop convolutional layer considers the neighboring nodes of the target node A. 
-	The 2-hop layer considers the neighbors of node A's neighbors. Note, that the 
-	target node A is included as an input node in the 2-hop layer. This is reasonable 
-	as node A itself is also a neighboring node to it neighbors. Further, node 
-	A is also a determining factor for its neighbors. Taking the example shown in
-	figure \ref{fig:GNN_structure}, the challenge for the GNN is to find node
-	embeddings based on local network neighborhoods
-	\citep{leskovec2021lecture}. The node embeddings at layer 0 correspond to
-	the features of the input nodes where $X = H^{(0)}$. A typical procedure
-	for a GNN model is outlined in algorithm \ref{algo:GNN_struct}
+	\noindent The GNN structure outlined in figure \ref{fig:GNN_structure} 
+	shows an example of a 2-hop or 2 layer GNN. The 1-hop convolutional layer 
+	considers the neighboring nodes of the target node A. The 2-hop layer 
+	considers the neighbors of node A's neighbors. Note, that the target node A 
+	is included as an input node in the 2-hop layer. This is reasonable as node 
+	A itself is also a neighboring node to its neighbors. Taking the example 
+	shown in figure \ref{fig:GNN_structure}, the challenge for the GNN is to 
+	find node embeddings based on local network neighborhoods \citep{leskovec2021lecture}. 
+	The node embeddings at layer 0 correspond to the features of the input nodes 
+	where $X = H^{(0)}$. A typical procedure for a GNN model is outlined in 
+	algorithm \ref{algo:GNN_struct} 
 	\citep{hamilton2017inductive,leskovec2021lecture,you2020design}.
 	
 
@@ -588,36 +594,36 @@
 		\myinput{input features $\{x_v,\forall v \in V\}$;}
 		\myinput{node labels $\{y_v, \forall v \in V\}$;}
 		\myinput{training set $\mathcal{T}\subseteq V$;}
-		\myinput{depth/layers $K$ with parameters $\Theta^{k} =
-		\{W^{k},B^{k}\},\forall k \in \{1\dots K\}$} 
-		\myinput{non-linearity $\sigma$;}
-		\myinput{differentiable aggregator functions $AGGREGATE_k,\forall k \in
+		\myinput{depth/layers $K$}
+		\myinput{Trainable and layer specific parameters $\Theta^{k}$ where
+		$W^{k}\in\Theta^{k}, \forall k \in
 					\{1,\dots,K\}$;}
-		\myinput{neighborhood function $\mathcal{N}:v\rightarrow 2^{V}$;}
+		\myinput{non-linearity $\sigma$;}
+		\myinput{differentiable aggregator functions $AGGREGATE_{k},\forall k \in
+					\{1,\dots,K\}$;}
+		\myinput{neighborhood function $\mathcal{N}_{k}:v\rightarrow 2^{V},\forall k \in
+					\{1,\dots,K\}$;}
 		\myinput{loss function $\mathcal{L}$ such as cross entropy $CE$;}
 		\myinput{learning rate $\alpha$}
 		\KwOut{Vector representations $z_v, \forall v\in V$}
-		\nl Initialize layer specific $W^{k}$ from $\mathcal{U},\forall k \in 
-			\{1,\dots,K\}$\;
-		\nl Initialize layer specific $B^{k}$ from $\mathcal{U},\forall k \in
-			\{1,\dots,K\}$\;
-		\nl $h_{v}^{0} = x_{v},\forall v \in \mathcal{T}$\\
+		\nl Initialize parameters $\Theta$ from $\mathcal{U}$\;
+		\nl $h_{v}^{0} = x_{v},\forall v \in V$\\
 		\nl \For{Number of epochs}{
 		\nl \For{$k=1\dots K$}{
-		\nl		\For{$v\in \mathcal{T}$}{
+		\nl		\For{$v\in V$}{
 		\nl			$h_{\mathcal{N}(v)}^{k} \leftarrow AGGREGATE_k\left(
 					{h_{u}^{k-1},\forall u \in\mathcal{N}_{k}(v)}\right)$\;
 		\nl			$h_{v}^{k} \leftarrow\sigma \left(W^{k}\cdot 
 							CONCAT(h_{v}^{k-1},h_{\mathcal{N}(v)}^{k})\right)$\;
 					}		
-		\nl		$h_{v}^{k} \leftarrow h_{v}^{k}/\lVert h_{v}^{k}\rVert_{2},
-										\forall v \in \mathcal{T}$	
+		\nl		$h_{v}^{k} \leftarrow h_{v}^{k}/\lVert h_{v}^{k}\rVert_{2}$	
    			}
-		\nl $z_v = h_{v}^{K},\forall v \in \mathcal{T}$\;
-		\nl $\mathcal{L}(\Theta)=\sum_{(z_{v},y_{v})\in\mathcal{T}}CE(y_{v},z_{v})$\;
-		\nl $\Theta = \Theta - \alpha\cdot \frac{\partial\mathcal{L}}{\partial\Theta}$
+		\nl $z_v = h_{v}^{K},\forall v \in V$\;
+		\nl $\mathcal{L}^{\text{train}}(\Theta)=\sum_{(z_{v},y_{v})\in\mathcal{T}}CE(y_{v},z_{v})$\;
+		\nl $\mathcal{L}^{\text{validation}}(\Theta)=\sum_{(z_{v},y_{v})\notin\mathcal{T}}CE(y_{v},z_{v})$\;
+		\nl $\Theta = \Theta - \alpha\cdot\frac{\partial\mathcal{L}^{\text{train}}}{\partial\Theta}$
 		}
-		\caption{Typical GNN algorithm for training data}
+		\caption{Typical GNN algorithm for model training}
 		\label{algo:GNN_struct}
 	\end{algorithm}
 
@@ -637,26 +643,25 @@
 
 	\noindent In terms of interpretation, the output of the first GNN layers in
 	figure \ref{fig:GNN_structure} (gray boxes) corresponds to the hidden layer 
-	representations of the direct neighbors of target node A and the output of 
-	the final GNN layer corresponds to the node embedding of the target node A. 
-	This should sound familiar when comparing this approach to the graph 
-	representation learning approach outlined in the previous section. 
+	representations of the direct neighbors of target node A. The output of 
+	the final GNN layer corresponds to the node embedding $z_{A}$ of the target 
+	node A. This should appear familiar when comparing this approach to the graph 
+	representation learning method outlined in the previous section. 
 	GNNs can indeed be used for unsupervised learning tasks such as finding node 
 	embeddings such that similar nodes are embedded close together. Good
-	examples for this is shown in the papers regarding Graph Convolutional
+	examples for this are shown in the papers regarding Graph Convolutional
 	Networks by \cite{kipf2016semi} and GraphSage by
 	\cite{hamilton2017inductive}. As shown in algorithm \ref{algo:GNN_struct},
-	GNNs can be applied directly to a supervised learning task. In order to
-	avoid redundancy with the graph representation learning strategies
-	introduced previously, the GNNs will be applied in a supervised learning
-	context. GNNs are powerful tools for unsupervised learning for tasks such
-	as clustering or graph representation learning \citep{zhou2020graph}. While
-	GNNs are possibly more efficient for graph representation learning 
-	\citep[p. 12-13]{kipf2016semi}, the results are unlikely to differ 
-	significantly and is not the focus of this thesis. The aim is to use GNNs
-	in a supervised learning setting as it hopefully provides superior results
-	for a given classification task. In the following paragraph the first GNN 
-	method of interest is presented. 
+	GNNs can be applied directly to a supervised learning task such as
+	classification. This is where GNNs are especially powerful, and differ to
+	the Graph Representation Learning algorithms outlined in the previous
+	section. GNNs are flexible tools and can be used in various settings such
+	as graph representation learning, clustering, classification and link
+	prediction tasks among others. \\
+
+	\noindent Having introduced the general functionality of GNNs, the methods
+	Graph Convolutional Networks and GraphSage are introduced in detail in the
+	following two sections. 
 
 
 	\subsubsection{Graph Convolutional Networks}
@@ -666,7 +671,7 @@
 	convolutions. The author Thomas Kipf \citeyearpar{kipf2016online} provides 
 	excellent explanations on his website which is used as inspiration for
 	presenting the theory. As outlined, GNNs typically differ with regards to
-	the type of message passing and aggregation strategy. GCN make us of the
+	the type of message passing and aggregation strategy. GCNs make use of the
 	following forward propagation method \citep[p. 2]{kipf2016semi}:
 
 	\begin{equation}
@@ -678,13 +683,14 @@
 	\noindent The variables in equation \ref{eq:GCN} are defined as follows:
 
 	\begin{itemize}
+		\setlength\itemsep{0.2em}
 		\item $H^{l}\in\mathbb{R}^{N \times D}$ refers to the embedding matrix
 			at layer $l$ where $N$ refers to the number of nodes $\mid V \mid$
 			and $D$ refers to the number of embedding dimensions. The input
 			embedding matrix is set equal to the feature matrix, $H^{(0)}=X$.
 		\item $W^{l}$ refers to the trainable and layer specific weight matrix
 			for the linear message passing employed in the GCN model.
-		\item $\tilde A = A + I_N$ where $A$ is the adjacency matrix of the
+		\item $\tilde A = A + I_N$, where $A$ is the adjacency matrix of the
 			input graph $G$. The identity matrix is added so that self-loops
 			are considered. This is necessary as the target node of every layer
 			is considered in the aggregation process as previously outlined.
@@ -746,22 +752,18 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\subsubsection{GraphSage}
 	
-	\noindent This paragraph introduces GraphSage by
-	\cite{hamilton2017inductive} which can be thought of as the inductive 
-	counterpart and generalization of the GCN presented in the previous paragraph. 
-	Inductive refers to the capability of not only performing machine learning 
-	tasks on the graph used for training but to apply the trained GNN model to 
-	new and unseen graphs. This is a large leap as GCN for instance can only be 
-	used to predict unseen nodes on the graph which was used for training. 
-	This is very limiting for the application of GNN in a practical setting. 
-	GraphSage achieves this by applying different aggregation strategies. 
-	In addition, GraphSage allows for efficiency increases when learning on 
-	large graphs by only considering a sample of the neighborhood 
-	$\mathcal{N}(v)$. In the GraphSage setting only a fixed number of uniformly 
-	sampled neighbors $\in\mathcal{N}(v)$ with depth $K$ are considered. 
-	A graphical example of this procedure is shown in figure 
-	\ref{fig:GraphSage_sample}:
-
+	\noindent This section introduces GraphSage by \cite{hamilton2017inductive} 
+	which can be thought of as the inductive counterpart of the GCN presented 
+	in the previous section. Inductive refers to the capability of not only 
+	performing machine learning tasks on the graph used for training but to 
+	apply the trained GNN model to new and unseen graphs. This is a large leap 
+	as GCN for instance can only be used to predict unseen nodes on the graph 
+	which was used for training. This is very limiting for the application of 
+	GNN in a practical setting. GraphSage achieves this by applying different 
+	aggregation strategies and sampling the neighborhood $\mathcal{N}(v)$.
+	Specifically, the GraphSage model only considers a fixed number of 
+	uniformly random sampled neighbors from $\mathcal{N}(v)$ with depth $K$. A 
+	graphical example of this procedure is shown in figure \ref{fig:GraphSage_sample}:
 
 	\begin{figure}[h]
 		\centering
@@ -773,7 +775,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\noindent The steps shown in figure \ref{fig:GraphSage_sample} are similar
 	to the procedures for GCNs. The pseudo code for the GraphSage forward 
-	propagation layers is given in algorithm \ref{algo:GraphSage} 
+	propagation function is given in algorithm \ref{algo:GraphSage} 
 	\cite[p. 12]{hamilton2017inductive}. \\
 
 
@@ -814,29 +816,32 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\end{algorithm}
 	
 	\noindent Note that algorithm \ref{algo:GraphSage} assumes that the
-	parameters of the $K$ aggregator functions and the weight matrices $W^{k}$
+	parameters of the aggregator functions and the weight matrices $W$
 	are known. Algorithm \ref{algo:GraphSage} thus shows the forward
 	propagation of a trained GraphSage model. The model is trained by
 	optimizing the model parameters for every batch trained during a specified 
 	number of epochs. The training procedure can be implemented by using an
 	adaptation of the general procedure shown in algorithm 
-	\ref{algo:GNN_struct}. In algorithm \ref{algo:GraphSage} $\mathcal{B}$ 
-	refers to the mini-batch training for the set of vertices $V$ of the graph 
-	$G(V,E)$. \\
+	\ref{algo:GNN_struct}. Note, that the parameters of the aggregation
+	functions and the weight matrices $W$ are all layer specific elements of
+	$\Theta$ in algorithm \ref{algo:GNN_struct}. For algorithm
+	\ref{algo:GraphSage}, $\mathcal{B}$ refers to the mini-batches of vertices
+	taken from the set of vertices $V$ of the graph $G(V,E)$. \\
 
 	\noindent There are three aggregator types proposed for GraphSage
 	\citep{hamilton2017inductive}:
 
 	\begin{enumerate}
+		\setlength\itemsep{0.2em}
 		\item Mean aggregation
 		\item Max pooling
-		\item LSTM (Long short-term memory) aggregation
+		\item LSTM (long short-term memory) aggregation
 	\end{enumerate}
 
 	\noindent The three proposed aggregation strategies are briefly introduced
-	as follows: \\
+	as follows:
 
-	\noindent\textbf{Mean Aggregation}:\\
+	\paragraph{Mean Aggregation} \mbox{}\\
 	\noindent This type of aggregation is similar to the GCN and takes the
 	average of the received messages from the message passing process. The 
 	difference to GCN is that mean aggregation does not rely on the full graph 
@@ -850,11 +855,11 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 		\text{MEAN}(\{h_{v}^{k-1}\}\cup\{h_{u}^{k-1},\forall u \in \mathcal{N}(v)\})\right)
 	\end{equation}
 
-	\noindent\textbf{Max Pooling}:\\
+	\paragraph{Max Pooling Aggregation} \mbox{}\\
 	\noindent Max Pooling aggregation refers to the application of an 
 	element-wise $\max$ operator. This means 
-	that of the neighbors, only the largest features are considered. More 
-	formally, max pooling aggregation is defined as follows and is used for the
+	that of the neighbors, only the largest element-wise features are considered. 
+	More formally, max pooling aggregation is defined as follows and is used for the
 	aggregation shown in line 9 of algorithm \ref{algo:GraphSage} 
 	\citep[p. 6]{hamilton2017inductive}:
 
@@ -870,7 +875,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	parameters of max pooling are learned analogues to the other GraphSage
 	model parameters. \\ 
 
-	\noindent\textbf{LSTM}:\\
+	\paragraph{LSTM Aggregation} \mbox{}\\
 	\noindent LSTM is the last aggregation strategy proposed for GraphSage and
 	uses the LSTM recurrent neural network (RNN) first introduced by
 	\cite{hochreiter1997long} as an aggregation strategy. LSTMs are not
@@ -881,8 +886,17 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\section{Graph Generation}
 
+	This section introduces the Multiplicative Attribute Graph (MAG) model by
+	\cite{kim2012multiplicative}. This model is used to generate
+	semi-synthetic graphs from feature data as mentioned in the introduction. 
+	Originally, the MAG model was introduced for the purpose of generating 
+	realistic random graphs which obey properties of real-world networks. These 
+	properties include the emergence of a giant-connected component and a 
+	power-law or $\log$-normal degree-distribution. While, the creation of a
+	graph which follows real-world network properties would be desirable, it is 
+	not the primary target for this thesis. 
 
-NWEWEREWFADSFASDFASFAS --- Rewrite
+
 
 	The MAG model was introduced for
 	random graph generation where the feature data is randomly assigned using a
