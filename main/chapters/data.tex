@@ -456,10 +456,10 @@
   \end{figure}
   
   \noindent The network shown in figure \ref{fig:us_airline_graph} show the
-  emergence of two groups. In addition one can see, that most satisfied airline
-  passengers appear to be somewhat clustered together. To gain a deeper
-  understanding of the dynamics involved in the network formation, the nodes of
-  the network (excluding the edges) are plotted in figure
+  emergence of two primary clusters. In addition one can see, that most satisfied 
+  airline passengers appear to be grouped together in the right cluster. To 
+  gain a deeper understanding of the dynamics involved in the network formation, 
+  the nodes of the network are plotted excluding edges in figure
   \ref{fig:us_airline_nodes}.
 
   \begin{figure}[h]
@@ -470,35 +470,66 @@
   \end{figure}
 
   \noindent Figure \ref{fig:us_airline_nodes} plots the nodes of the network
-  for the label "Satisfaction" and the 5 variables used for the graph
-  generation. The nodes were plotted with $\alpha = 0.6$ to avoid covering
-  nodes during the graph generation process. The node plots reveal interesting
-  relationships. First, we can see that people traveling for business purposes
-  tend to be more satisfied than people traveling for personal reasons. On a
-  second level we can see, that people who flew business class appear to be
-  mostly satisfied and constitute the majority of the cluster with satisfied
-  passengers visible on figures \ref{fig:us_airline_graph} \&
-  \ref{fig:us_airline_nodes}. When comparing to people traveling for personal
-  reasons, "Class" does not appear to be a determining factor for satisfaction.
-  For the variable "Age" we can see that older people tend to fly more business
-  class when on a business trip. In addition, older people traveling for
-  business purposes tend to be loyal customers compared to younger customers.
-  Interestingly, these relationships do appear to be present for passengers
-  traveling for personal reasons. Interestingly, most passenger traveling for
-  personal reasons appear to be loyal customers. This however does not appear
-  to translate into positive satisfaction. Lastly, the variable Gender does not
-  appear to form any distinguishable clusters. For that reason it was
-  considered to omit this variable for the graph generation process. This was
-  tested and the resulting graph yielded similar structures within the graph.
-  The graph was however more spread out and neighborhood structures were less
-  clear. In addition, the graph without gender did not perform as well in the
-  subsequent ML tasks. For those reasons, gender was kept for the graph
-  generation process. \\
+  for the label "Satisfaction" and the 5 attributes used for the graph
+  generation. The transparency of the plot was set to $\alpha = 0.6$ to avoid 
+  covering nodes during the graph plotting process. Figure
+  \ref{fig:us_airline_nodes} reveals interesting associations. First it is
+  shown, that a larger number of people traveling for business purposes are 
+  satisfied compared to people traveling for personal reasons. This association
+  becomes clear when comparing the satisfaction plot with the type of travel
+  plot. In relative terms, only approximately 9.8\% of passengers traveling for 
+  personal reasons were satisfied compared to business travelers with a 57.8\% 
+  satisfaction rate. Interestingly, passengers traveling for business purposes
+  hold somewhat expected characteristics such as:
 
-  \noindent Last but not least, the graph is described using metrics from graph
-  theory. The degree distribution as well as the distributions of the 
-  centrality measures eigenvector centrality, closeness centrality and 
-  betweenness centrality are shown in figure \ref{fig:centrality_measures}.
+  \begin{enumerate}
+    \item Most business class passengers are satisfied. 
+    \item Older passengers appear to be more satisfied which is largely
+      associated with booking more business class tickets. The age plot however 
+      reveals, that older passengers tend to be mostly satisfied even when 
+      booking economy class.
+    \item Most loyal customers book business class. There is some overlap where 
+      loyal customers book economy class tickets. The reverse is true as well, 
+      where a cluster of disloyal customers book business class. 
+  \end{enumerate}
+  
+  \noindent Passengers traveling for personal reasons do not appear to adhere
+  to the characteristics or associations shown for business travelers. The only
+  distinctive character is, that almost all passenger traveling for personal
+  reasons are loyal customers. This fact does however not appear to be
+  associated with satisfaction. This appears to be a rather bizarre finding.
+  Upon further reflection, this could point to a sampling bias of passengers
+  traveling for personal reasons based on following considerations:
+
+  \begin{enumerate}
+    \item It makes sense, that almost only loyal passengers participated, as
+      when traveling, most people do not participate in surveys. This is
+      especially true for disloyal customers. Business travelers for comparison
+      might give feedback due to company policies.
+    \item It is common, that dissatisfied people are more likely to give
+      feedback, while satisfied passengers are less likely to participate in
+      the survey. Again, the data regarding business travelers might be more
+      reliable here due to company mandated survey participation.
+    \item Perhaps business travelers fly more frequently than passengers
+      traveling for personal reasons. This could incentivize frequent business
+      travelers to give feedback as they would benefit most of service
+      improvements. Infrequent personal travelers might be less incentivized,
+      as they are less affected by service improvements. 
+  \end{enumerate}
+
+  \noindent Last but not least, gender does not appear to form any distinguishable 
+  clusters. For that reason, it was considered to omit this attribute for the 
+  graph generation process. This was tested and the resulting graph yielded 
+  a similar graph. The graph was however more spread out and the neighborhood 
+  structures were less clear. In addition, the graph without gender did not 
+  perform as well in the subsequent machine learning tasks. For those reasons, 
+  gender was kept for the graph generation process. \\
+
+  \noindent To provide some more context regarding the graph structure, some
+  graph theoretical metrics are provided. The degree distribution as well as 
+  the distributions of the centrality measures: eigenvector centrality, 
+  closeness centrality and betweenness centrality are shown in 
+  figure \ref{fig:centrality_measures}.
 
   \begin{figure}[h]
 	  \centering
