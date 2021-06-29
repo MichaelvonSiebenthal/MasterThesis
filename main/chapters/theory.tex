@@ -347,8 +347,8 @@
 
 	\noindent DeepWalk and Node2Vec make use of methods which have its origin in 
 	natural language processing (NLP). Specifically they makes use of the 
-	Skip-Gram model \citep{mikolov2013efficient,mikolov2013distributed}. The 
-	Skip-Gram model is a core component of DeepWalk and Node2Vec, which is why 
+	Skip-Gram model introduced by \cite{mikolov2013efficient,mikolov2013distributed}. 
+	The Skip-Gram model is a core component of DeepWalk and Node2Vec, which is why 
 	it is explained in detail before proceeding to DeepWalk and Node2Vec. \\
 
 	\noindent In NLP words are one-hot encoded as inputs for the Skip-Gram model 
@@ -388,9 +388,9 @@
 	\end{equation}
 
 	\noindent To calculate the probability of the context word given the input
-	word $W(t)$, the Softmax function is applied to the output layer $u$ in the 
+	word $w_{t}$, the Softmax function is applied to the output layer $u$ in the 
 	manner shown by Mikolov et al. (\citeyear[p. 3]{mikolov2013distributed}). This 
-	calculates a normalized probability for every context word given $W(t)$. To 
+	calculates a normalized probability for every context word given $w_{t}$. To 
 	formalize this in terms of a loss function, the training target shown in 
 	equation \ref{eq:skip_traintarget} can be rewritten as follows for every
 	input word $w_{t}$:
@@ -593,7 +593,6 @@
 		\KwIn{Graph $G(V,E)$;}
 		\myinput{input features $\{x_v,\forall v \in V\}$;}
 		\myinput{node labels $\{y_v, \forall v \in V\}$;}
-		\myinput{training set $\mathcal{T}\subseteq V$;}
 		\myinput{depth/layers $K$}
 		\myinput{Trainable and layer specific parameters $\Theta^{k}$ where
 		$W^{k}\in\Theta^{k}, \forall k \in
@@ -619,27 +618,26 @@
 		\nl		$h_{v}^{k} \leftarrow h_{v}^{k}/\lVert h_{v}^{k}\rVert_{2}$	
    			}
 		\nl $z_v = h_{v}^{K},\forall v \in V$\;
-		\nl $\mathcal{L}(\Theta)^{\text{train}}=\sum_{(z_{v},y_{v})\in\mathcal{T}}CE(y_{v},z_{v})$\;
-		\nl $\mathcal{L}(\Theta)^{\text{validation}}=\sum_{(z_{v},y_{v})\notin\mathcal{T}}CE(y_{v},z_{v})$\;
-		\nl $\Theta = \Theta - \alpha\cdot\frac{\partial\mathcal{L}^{\text{train}}}{\partial\Theta}$
+		\nl $\mathcal{L}(\Theta)=\sum_{v=1}^{\mid V \mid} CE(y_{v},z_{v})$\;
+		\nl $\Theta = \Theta - \alpha\cdot\frac{\partial\mathcal{L}}{\partial\Theta}$
 		}
 		\caption{Typical GNN algorithm for model training}
 		\label{algo:GNN_struct}
 	\end{algorithm}
 
-
 	\noindent Algorithm \ref{algo:GNN_struct} is not meant to be considered as
 	a complete overview and should be rather regarded as an example of a typical 
-	GNN structure. GNNs are flexible in that a myriad of modifications can be 
-	added to the GNN layers similar to the possibilities of CNNs or ANNs. The 
-	defining features of different GNN methods usually involve the selection of 
-	different message passing methods and aggregation strategies. An excellent 
-	overview regarding the design space for GNNs is provided in the articles by
-	\cite{you2020design} and \cite{zhou2020graph}.
-	Of course there are exceptions and alternative procedures exist. The GNN 
-	methods evaluated in this thesis and most successful GNNs however tend to 
-	follow a variation of the structure shown in algorithm 
-	\ref{algo:GNN_struct}.  \\
+	GNN structure. In addition, one should split the data into training-
+	and validation sets to ensure a good model fit. GNNs are flexible in that a 
+	myriad of modifications can be added to the GNN layers similar to the 
+	possibilities of CNNs or ANNs. The defining features of different GNN 
+	methods usually involve the selection of different message passing methods 
+	and aggregation strategies. An excellent overview regarding the design space 
+	for GNNs is provided in the articles by \cite{you2020design} and 
+	\cite{zhou2020graph}. Of course there are exceptions and alternative 
+	procedures exist. The GNN methods evaluated in this thesis and most 
+	successful GNNs however tend to follow a variation of the structure shown in 
+	algorithm \ref{algo:GNN_struct}.  \\
 
 	\noindent In terms of interpretation, the output of the first GNN layers in
 	figure \ref{fig:GNN_structure} (gray boxes) corresponds to the hidden layer 
@@ -959,12 +957,12 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	and can be set for an arbitrary size of categories within an attribute. 
 	More formally for each observation $u \in B$ with $K$ categorical attributes 
 	of cardinality $d_i$ for $i = 1,2,\dots,K$ and corresponding link-affinity 
-	matrices $\Theta_i \in d_i \times d_i$ for $i=1,2,\dots,K$, the probability 
+	matrices $\Theta_{i}^{d_{i} \times d_{i}}$ for $i=1,2,\dots,K$, the probability 
 	$P[u,v]$ of a connection between observations $(u,v)$ is defined as 
 	\citep[p. 119]{kim2012multiplicative}:
 
 	\begin{equation}
-		P[u,v] = \prod_{i=1}^{K}\Theta_{i}[a_{i}(u),a_i(v)]
+		P[u,v] = \prod_{i=1}^{K}\Theta_{i}\left[a_{i}(u),a_i(v)\right]
 		\label{eq:MAG}
 	\end{equation}
 
@@ -1029,7 +1027,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 		\item As we only work with undirected graphs, the upper triangular
 			matrix $U$ of $P$ is taken where the $diag(U) = 0$. The diagonal of
 			$U$ is set to 0 to exclude self-loops.
-		\item For every element in $U$, draw a random sample form a standard
+		\item For every element in $U$, draw a random number form a standard
 			uniform distribution $\mathcal{U}(0,1)$. If the connection
 			probability $P_{u,v}>\mathcal{U}(0,1)$, a 1 in the
 			preliminary adjacency matrix $\hat A_{u,v}$ is recorded.
