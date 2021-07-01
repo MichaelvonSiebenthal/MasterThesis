@@ -220,7 +220,8 @@
   details as well as the analysis can be found in the appendix. 
 
   \section{Airline Passenger Satisfaction Survey}
-  
+  \label{section:airline_data}
+
   The US airline passenger satisfaction survey was a survey conducted in 2015
   by J.D. Power and the dataset was retrieved on the website Kaggle
   \citep{JDPower2015,KAGGLE2015}. This dataset revealed to be well suited for
@@ -335,10 +336,8 @@
   and other machine learning methods. Lastly, the numerical variables had to be
   normalized. The popular approach of standardizing the entire dataset was 
   unfortunately not possible, because it had to be ensured, that a 0 was 
-  referred to as a missing response. The numerical variables were normalized 
-  between the values 1 - 5, which is possible, as all numerical values are 
-  $\mathbb{R}^{+}$ including 0. Note, that a 0 for the numerical variables does
-  not correspond to a missing value. The normalizing function employed is
+  referred to as a missing response. Note, that a 0 for the numerical variables 
+  does not correspond to a missing value. The normalizing function employed is
   defined as follows:
 
   \begin{equation}
@@ -356,6 +355,7 @@
   Airline Passenger dataset is described in detail.
 
   \subsection{Graph Generation}
+  \label{section:graph_gen}
 
   To create a graph from the US Airline Passenger Dataset, appropriate
   attributes must be selected for the MAG model. The selected attributes must be
@@ -538,19 +538,20 @@
       \label{fig:centrality_measures}
   \end{figure}
 
-  \noindent The network further has a density of approximately 0.0933. This
-  means that 9\% of the maximum number of connections formed in the network.
-  Nevertheless when looking at the degree distribution histogram we can see 
+  \noindent The network has a density of approximately 0.0933. This means that 
+  9\% of the potential number of connections formed in the network.
+  Nevertheless, when looking at the degree distribution histogram we can see, 
   that a all nodes have a large number of connections ranging between 263 -
   828 with an average of 559.63 connections. Further, the distribution has two
-  modes. The eigenvector centrality distribution shows, that all nodes have a
-  very low centrality measure and therefore none of the nodes appear to have a
-  large impact in terms of eigenvector centrality. The closeness centrality
-  distribution shows, that all nodes have an average closeness centrality
-  ranging from 0.51 - 0.53. This means that every node is similarly connected
-  and has an average impact for disseminating information across the network.
-  Lastly, the betweenness centrality distribution reveals that there are no
-  bottle-necks through which information flows. \\
+  modes which likely correspond to the two main clusters shown in figure
+  \ref{fig:us_airline_nodes}. The eigenvector centrality distribution shows, 
+  that all nodes have a very low centrality measure and therefore none of the 
+  nodes appear to have a large impact in terms of eigenvector centrality. The 
+  closeness centrality distribution shows, that all nodes have an average 
+  closeness centrality ranging from 0.51 - 0.53. This means that every node is 
+  similarly connected and has an average impact for disseminating information 
+  across the network. Lastly, the betweenness centrality distribution reveals 
+  that there are no bottle-necks through which information flows. \\
 
   \noindent As a reference point, it is important to compare the properties of
   the created graph to real world graphs. In our case, the most appropriate for
@@ -559,7 +560,7 @@
   kim2012multiplicative}:
 
   \begin{enumerate}
-    \item Degree distributions typically follow a power law distribution
+    \item Degree distributions often follow a power law distribution
     \item Emergence of a giant connected component
     \item Core-periphery structure
   \end{enumerate}
@@ -578,42 +579,41 @@
   this does not correspond to the power law degree distribution and the effect
   this has on the centrality measures observed in real social networks. This
   indicates, that the graph created with the MAG method does not share the
-  properties ovserved in real graphs. In order to generate a graph which
+  properties observed in real social networks. In order to generate a graph which
   shares the properties of real graphs, one would have to adapt the 
   link-affinity properties to the core-periphery setting as shown in figure
   \ref{fig:link-affinity}. Forcing this core-periphery structure is however not
   purposeful for this thesis. Further, the aim of this thesis is not
   necessarily to create realistic graphs rather than to create useful graphs 
-  for graph machine learning. The results revealed that the graph is indeed
-  useful for graph machine learining. In addition, limiting factors of the
-  graph were discovered. These aspects will be discussed further in the results
-  and discussion section. 
-
+  for graph machine learning. The results in chapter \ref{section:results}
+  reveal, that the graph is indeed useful for graph machine learning. For that
+  reason, the generated graph shown in this section is kept for further
+  analysis. 
 
   \subsection{Stochastic vs. Deterministic MAG}
   \label{section:stoch_det}
 
   As addressed in section \ref{section:self_survey}, the question was raised 
   as to whether the MAG should form connections between observations
-  stochastically or whether a deterministic setting yields better results. The 
-  first insight gained when investigating this question lies in the fact that 
-  the probability of two observations is generally very low. When setting the 
-  threshold to 0.5, not a single connection between observations was made. This
-  makes sense as the probability of a connection being formed decreases by
-  design as the number of generation variables increases. This is implicitly
-  shown in equation \ref{eq:MAG} where the product of probabilities is bound to
-  decrease. For this reason, it is suggested to set $K=\rho\log_{2}N$
-  for some constant $\rho$ \citep[p. 122]{kim2012multiplicative}. For the
-  purpose of this thesis, the generation variables were selected such that
-  $K\leqslant\log_{2} N$. The airline passenger satisfaction survey was used
-  for a deterministic graph generation. The threshold probability for a
-  connection was set to 0.2 in the MAG model. The resulting graph consisted of
-  several disconnected sub-graphs which were for the most part clustered
-  according to their group membership. Figure \ref{fig:det_MAG} shows the
-  respective plots of the graph generation variables where the edge connections
-  were removed. The sub-graphs are unfortunately small, however all graphs
-  combined include all 6'000 nodes. The plots are meant to provide a high-level
-  overview of the clusters in the sub-plots. 
+  stochastically or whether a deterministic threshold probability yields better 
+  results. The first insight gained when investigating this question lies in 
+  the fact, that the probability of two observations is generally very low. 
+  When setting the threshold probability for a connection between two 
+  observations $u$ and $v$ to 0.5, not a single connection was made. This makes 
+  sense, as the probability for a connection decreases by design as the number 
+  of attributes increases. This is implicitly shown in equation \ref{eq:MAG}, 
+  where the product of probabilities is bound to decrease. For this reason, it 
+  is suggested to limit the number of attributes to $K=\rho\log_{2}N$ for some 
+  constant $\rho$ \citep[p. 122]{kim2012multiplicative}. The number of 
+  attributes were selected accordingly such that $K\leqslant\log_{2} N$. The 
+  US Airline Passenger dataset was used to generate a deterministic graph. The 
+  threshold probability for a connection was set to 0.2 in the MAG model. The 
+  MAG yielded several disconnected graphs which were for the most part 
+  clustered according to their group memberships. Figure \ref{fig:det_MAG} 
+  shows the graphs for the label and the attributes, where the edges were 
+  removed. The subgraphs are unfortunately plotted small, however all subgraphs 
+  combined include all 6'000 nodes. The plots are meant to provide a high-level 
+  overview of the generated graphs. 
 
   \begin{figure}[h]
 		\centering
@@ -622,19 +622,17 @@
         \label{fig:det_MAG}
   \end{figure}
 
-  \noindent In short, the deterministic graph clustering creates disconnected 
-  sub-graphs which forms clusters based on the nodes similarity to each other.
-  In terms of performance, the performance and loss behavior of both the
-  deterministically and stochastically generated graphs are virtually
-  identical. This was true for the datasets considered for this thesis. For the 
-  purpose of visualization the stochastically generated graph appears
+  \noindent The deterministic MAG model crates disconnected graphs which form 
+  clusters based on node similarities. In terms of performance, the accuracy 
+  and loss behavior of both the deterministic- and stochastic generated graphs 
+  are virtually identical. This was true for all three datasets considered in 
+  this thesis. For the purpose of visualization, stochastic graphs appear
   to be more useful, as one can identify the different cluster on a single
-  connected graph.  For this reason, the stochastic graph generation process is 
+  connected graph. For this reason, the stochastic graph generation process is 
   kept. Nevertheless, deterministic graph generation appears to be useful if 
-  one wants to separate nodes in to more homogeneous sub-graphs. These 
-  sub-graphs or clusters could then be used for subsequent machine learning 
-  tasks with a cluster specific target. The clusters further could reveal 
-  information as to which clusters tend to be more or less satisfied. This is 
-  an area which could be interesting for future research. It is however not 
-  the focus of this thesis which is why it is not further investigated. 
+  one wants to separate nodes in to more homogeneous graphs. These 
+  graphs could then be used for subsequent machine learning tasks with a cluster 
+  specific task in mind. The clusters further could provide information as to 
+  which clusters tend to be more or less satisfied. This is an area which could 
+  be interesting for future research.
   

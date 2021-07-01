@@ -1,52 +1,53 @@
   
-  In this section the results for the US Airline Passenger Dataset are
+  In this chapter the results for the US Airline Passenger Dataset are
   presented. First, the model specifications and results of graph
   representation learning and GNNs are presented. Afterwards, the graph machine
-  learning results are compared to the results of "standard" machine
+  learning results are compared to the results using "standard" machine
   learning methods.
 
   \section{Graph Representation Learning}
 
-  The training graph consisting of 6'000 nodes which is a sub-sample of the
-  US Airline Passenger training dataset provided on Kaggle \citep{KAGGLE2015}.
-  2 Dimensional node representations were learned using the Node2Vec algorithm
-  \citep{grover2016node2vec}. The model settings were defined as follows:
+  The graph generated in section \ref{section:graph_gen} using the MAG method
+  was used for graph representation learning. The Node2Vec algorithm using an
+  unbiased walk was employed for learning the 2-dimensional node representations 
+  of the graph. The Node2Vec algorithm was employed using following model 
+  parameters:
 
-  \begin{itemize}[itemsep=1mm]
-    \item Dimensions: 2
-    \item Random walk length: 8
-    \item Number of random walks: 100
-    \item Window size: 10
+  \begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item Embedding size $d$: 2
+    \item Random walk length $t$: 8
+    \item Number of random walks $\gamma$: 100
+    \item Window size $w$: 10
     \item Node batch size: 2
     \item Return parameter $p=1$
     \item In-out parameter $q=1$
   \end{itemize}
 
-  \noindent With the specified Return- and In-out parameter, the Node2Vec
+  \noindent With the specified return- and in-out parameters, the Node2Vec
   output corresponds to the DeepWalk output. The resulting node embeddings were
-  then used as inputs for standard machine learning methods. An overview of the
-  node embeddings is shown in figure \ref{fig:node2vec}. 
+  then used as inputs for standard machine learning methods. The resulting node 
+  embeddings are shown in figure \ref{fig:node2vec}. 
 
   \begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{node2vec_emb.png}
+		\includegraphics[width=0.9\textwidth]{node2vec_emb.png}
 		\caption{Node2Vec embeddings}
         \label{fig:node2vec}
   \end{figure}
 
-  \noindent The embeddings reveal very interesting insights in term of cluster
-  analysis. First, the observation seen in figure \ref{fig:us_airline_graph}
-  mainly correspond to the observations in figure \ref{fig:node2vec}. The
-  advantage of graph representation learning, is that the nodes plotted using
-  Node2Vec corresponds to a proper scatter plot in Euclidean space. In
-  addition, the nodes are group in a much nicer and more orderly fashion. This
-  makes it possible to infer with a higher level of certainty that for instance
-  business class passengers traveling for business purposes tend to be more
-  satisfied than other passengers on average. The 2 dimensional node embeddings
-  thus provide interesting insights for cluster analysis. \\
+  \noindent The plotted node embeddings in figure \ref{fig:node2vec} reveal 
+  interesting neighborhood structures. First, the nodes are split according to
+  their type of travel. This corresponds to the two main clusters shown in
+  figure \ref{fig:us_airline_graph}. Secondly, the node embeddings are grouped 
+  in a nice and orderly fashion. The node embeddings are part of Euclidean
+  space, which is why the plots shown in figure \ref{fig:node2vec} are proper
+  scatter plots. This allows for direct comparison of nodes and the groups
+  which they belong to. The 2-dimensional node embeddings thus provide 
+  interesting insights via data visualization.\\
 
-  \noindent The node embeddings were used for three standard machine learning
-  methods which are presented in table \ref{table:node2vec_results}.
+  \noindent The node embeddings were used as input data for the three standard 
+  machine learning methods shown in table \ref{table:node2vec_results}.
 
   \begin{table}[h]
     \centering
@@ -65,33 +66,48 @@
   \end{table}
 
   \noindent The results show, that Node2Vec only has very modest success in
-  classifying passengers according to their satisfaction. When looking at the
-  satisfaction scatter plot in figure \ref{fig:node2vec} it becomes obvious why
-  the downstream machine learning tasks only had limited success. For the
-  variables which were used for generating the graph and for which neighborhood
-  clusters emerged, Node2Vec created very good node embeddings. The label
-  variable satisfaction could not be used for the graph generation as this would
-  be unrealistic. Since the label is not considered for the graph generation,
-  Node2Vec does not create embeddings which consider the label. The label is
-  only considered to the extend that the variables used for the graph
-  generation process create structures which are related somehow to the label.
-  For that reason, the success of any downstream machine learning method will
-  be limited to the extent that the node embeddings capture relevant information
-  for predicting the label. The Python code for generating the node embeddings 
-  and the subsequent machine learning methods can be found in appendix X. 
+  classifying passengers according to their satisfaction. Applying the trained
+  models to the test data yielded even more inferior results. When looking at the
+  satisfaction scatter plot in figure \ref{fig:node2vec}, it becomes obvious why
+  the downstream machine learning tasks only had limited success. The
+  attributes used for generating the graph, for which neighborhood
+  clusters emerged, Node2Vec created very good node embeddings. The label 
+  satisfaction could not be used as an attribute for graph generation as this 
+  would be unrealistic. As the label is not considered for graph generation,
+  Node2Vec does not create embeddings which directly consider the label. The 
+  label is only considered to the extend that the attributes create structures 
+  which are related with the label. For that reason, the success of any 
+  downstream machine learning method will be limited to the extent that the node 
+  embeddings capture relevant information for predicting the label. \\
+
+  \noindent Alternative model specifications were tested, which mainly included
+  learning higher dimensional node embeddings. These node embeddings however
+  did not yield better results. Given the almost identical accuracies, the more
+  parsimonious model with 2 dimensions is preferred. As a final test, the node
+  embeddings were joined to the feature data presented in section 
+  \ref{section:airline_data}. This data was then used as the input data for the
+  downstream machine learning models. For the training- and validation data,
+  this approach yielded excellent results with accuracies $\approx 95\%$. 
+  Unfortunately, this did not translate to the test data, which resulted in an 
+  accuracy of approximately 89\%. In addition, the results presented in section
+  \ref{section:result_comp} show, that similar accuracies are achieved
+  only using the feature data. The trained model excluding the node embeddings
+  also performs well for test data. For that reason, joining feature data with 
+  node embeddings is not a recommended approach for the US Airline Passenger
+  dataset.
 
   \section{Graph Neural Networks}
 
-  This subsection will present the results using graph neural networks. As
-  mentioned in section 2, GCN by \cite{kipf2016semi} and
-  GraphSage by \cite{hamilton2017inductive} will be used for classifying the
-  satisfaction of the US airline passenger dataset. The model specifications 
-  and results are presented in the following subsections.
+  This section presents the results using graph neural networks. As
+  mentioned in section \ref{section:GNN_theory}, GCN by \cite{kipf2016semi} and
+  GraphSage by \cite{hamilton2017inductive} are used for classifying the
+  satisfaction of the US airline passengers. The model specifications 
+  and results are presented in the following sections for both methods.
 
   \subsection{Graph Convolutional Network}
 
-  The GCN was designed using the exact forward propagation function
-  previously outlined in equation \ref{eq:GCN_forward}.
+  The GCN was designed using the forward propagation function already shown in 
+  equation \ref{eq:GCN_forward}.
 
   \begin{equation}
 	  Z = f(X,A) = \text{softmax}\left(\hat A \;\text{ReLu}\left(\hat A X
@@ -99,25 +115,22 @@
       \label{eq:GCN_forward_1}
   \end{equation}
 
-  \noindent The node features $X$ correspond to the 21 selected explanatory 
-  variables of the US airline passenger dataset as described in section 3. The
-  node features were standardized due to large differences between the
-  variables in terms of scale. In addition, standardizing yielded significant
-  performance improvements. The hidden layer size for both convolutional layers
-  was set to 21 and the output layer was set to size 2 for the binary
-  classification. The training loss was calculated using cross-entropy loss and 
-  the model parameters were updated using the Adam optimizer
-  \citep{kingma2014adam} with the learning rate set to $0.002$. Essentially,
-  algorithm \ref{algo:GNN_struct} ca be applied by replacing the forward
-  propagation with equation \ref{eq:GCN_forward_1} and the model parameters are
-  updated with the Adam optimizer instead of standard gradient descent.
+  \noindent The node features $X$ include to the 21 explanatory variables of the 
+  US airline passenger dataset as described in section 
+  \ref{section:airline_data}. The categorical variables were dummy coded, which
+  is why the feature matrix includes 24 variables. The hidden layer size of the 
+  convolutional layers was set to 128 and the output layer was set to size 
+  2 for the binary classification task. The training loss was calculated using 
+  cross-entropy loss and the model parameters were updated using the Adam 
+  optimizer \citep{kingma2014adam} with the learning rate set to $0.002$. 
+  Essentially, algorithm \ref{algo:GNN_struct} ca be applied by replacing the 
+  forward propagation with equation \ref{eq:GCN_forward_1} and updating the 
+  model parameters using the Adam optimizer instead of standard gradient descent.
   Different model specification were tested, however the chosen specifications
-  appeared to perform very well. For example, choosing a hidden layer size of
-  100 or 128 yielded virtually identical results. A stronger reduction in
-  hidden layer size however reduces the performance of the GCN. Adding additional
-  convolutional layers decreased the improvements and decreasing the learning
-  rate decreased the performance. This graph convolutional network requires
-  approximately 1'200 epochs to finish training. The loss- and accuracy plots
+  appeared to perform best. The GCN required approximately 1'200 epochs to 
+  finish training. This large number of epochs is due to the full-batch
+  training procedure employed for the GCN. Mini-batch training can
+  unfortunately not be applied for GCNs. The resulting loss- and accuracy plots 
   are shown in figure \ref{fig:gcn_plots}.
 
   \begin{figure}[h]
@@ -127,8 +140,9 @@
         \label{fig:gcn_plots}
   \end{figure}
 
-  \noindent The results are are further presented in table
-  \ref{table:gcn_results_train} \& \ref{table:gcn_results_valid}. 
+  \noindent The resulting confusion matrices and the final accuracies are 
+  further presented in tables \ref{table:gcn_results_train} \& 
+  \ref{table:gcn_results_valid}. 
 
   \begin{table}[h]
     \centering
@@ -412,7 +426,8 @@
   The results using only 10 experiments yielded similar results, with test
   accuracies ranging predominantly from 93-94\%. 
 
-  \subsection{Result Comparison}
+  \section{Result Comparison}
+  \label{section:result_comp}
 
   The results shown for the three models Node2Vec, GCN and GraphSage are
   compared to the results using "standard" machine learning methods. This is
