@@ -3,7 +3,13 @@
   presented. First, the model specifications and results of graph
   representation learning and GNNs are presented. Afterwards, the graph machine
   learning results are compared to the results using "standard" machine
-  learning methods.
+  learning methods. For the comparison, the methods logistic
+  regression \citep{cramer2002origins}, naive bayes \citep{zhang2004bayes},
+  support vector machines (SVM) \citep{platt1999probabilistic,chang2011libsvm},
+  Random Forest Classifier \citep{breiman2001random}, AdaBoost Classifier
+  \citep{freund1997decision,hastie2009multi}, Quadratic Discriminant Analysis
+  (QDA) \citep{tharwat2016linear} and Artificial Neural Networks
+  \citep{mcculloch1943logical} are considered.
 
   \section{Graph Representation Learning}
 
@@ -43,39 +49,44 @@
   in a nice and orderly fashion. The node embeddings are part of Euclidean
   space, which is why the plots shown in figure \ref{fig:node2vec} are proper
   scatter plots. This allows for direct comparison of nodes and the groups
-  which they belong to. The 2-dimensional node embeddings thus provide 
-  interesting insights via data visualization.\\
+  which they belong to. The 2-dimensional node embeddings are thus useful for
+  gaining insights via data visualization.\\
 
   \noindent The node embeddings were used as input data for the three standard 
   machine learning methods shown in table \ref{table:node2vec_results}.
 
   \begin{table}[h]
     \centering
-    \begin{tabular}{|l||l|l|}
+    \scalebox{0.85}{
+    \begin{tabular}{|l||l|l|l|}
       \hline
       \textbf{ML Method} & \textbf{Training Accuracy} & \textbf{Validation
-      Accuracy}\\
+      Accuracy} & \textbf{Test Accuracy}\\
       \hline\hline
-      Logistic Regression & 76.85\% & 75.83\% \\\hline 
-      Support Vector Machine & 76.95\% & 75.66\% \\\hline
-      ANN & 77.61\% & 76.58\% \\
+      Logistic Regression & 77.04\% & 76.16\% & 57.05\%  \\\hline 
+      Support Vector Machine & 76.71\% & 77.00\% & 39.08\% \\\hline
+      ANN & 76.78\% & 78.08\% & 29.48\% \\\hline
+      Random Forest & 100\% & 73.08 \% & 40.63\% \\\hline
+      AdaBoost & 76.96\% & 77.00\% & 58.22\% \\\hline
+      Naive Bayes & 75.73\% & 76.43\% & 56.97\% \\\hline
+      QDA & 75.52\% & 77.33\% & 57.00\% \\
       \hline
-    \end{tabular}
+    \end{tabular}}
     \caption{Node2Vec Classification Results}
     \label{table:node2vec_results}
   \end{table}
 
-  \noindent The results show, that Node2Vec only has very modest success in
+  \noindent The results show, that Node2Vec model was not successful for
   classifying passengers according to their satisfaction. Applying the trained
-  models to the test data yielded even more inferior results. When looking at the
+  models to the test data yielded even poorer results. When looking at the
   satisfaction scatter plot in figure \ref{fig:node2vec}, it becomes obvious why
-  the downstream machine learning tasks only had limited success. The
-  attributes used for generating the graph, for which neighborhood
-  clusters emerged, Node2Vec created very good node embeddings. The label 
-  satisfaction could not be used as an attribute for graph generation as this 
-  would be unrealistic. As the label is not considered for graph generation,
-  Node2Vec does not create embeddings which directly consider the label. The 
-  label is only considered to the extend that the attributes create structures 
+  the downstream machine learning tasks were unsuccessful. Node2Vec generated
+  very good node embeddings for the attributes to the extent that clusters exist
+  within the original graph. The label satisfaction could not be used as an 
+  attribute for generating the graph, as this would be unrealistic in practice. 
+  As the label is not considered for the graph generation process, Node2Vec 
+  does not create embeddings which directly consider the label. The label is 
+  only considered to the extend that the attributes create structures 
   which are related with the label. For that reason, the success of any 
   downstream machine learning method will be limited to the extent that the node 
   embeddings capture relevant information for predicting the label. \\
@@ -87,14 +98,13 @@
   embeddings were joined to the feature data presented in section 
   \ref{section:airline_data}. This data was then used as the input data for the
   downstream machine learning models. For the training- and validation data,
-  this approach yielded excellent results with accuracies $\approx 95\%$. 
-  Unfortunately, this did not translate to the test data, which resulted in an 
-  accuracy of approximately 89\%. In addition, the results presented in section
-  \ref{section:result_comp} show, that similar accuracies are achieved
-  only using the feature data. The trained model excluding the node embeddings
-  also performs well for test data. For that reason, joining feature data with 
-  node embeddings is not a recommended approach for the US Airline Passenger
-  dataset.
+  this approach yielded excellent results with accuracies often being close to 
+  95\%. For some of the models such as the Random Forest classifier, this also
+  translated into good accuracies for the test data. Unfortunately, the results 
+  presented in section \ref{section:result_comp} show, that better accuracies 
+  are achieved only using the feature data. For that reason, joining feature 
+  data with node embeddings is not a recommended approach for the US Airline 
+  Passenger dataset.
 
   \section{Graph Neural Networks}
 
@@ -106,31 +116,35 @@
 
   \subsection{Graph Convolutional Network}
 
-  The GCN was designed using the forward propagation function already shown in 
-  equation \ref{eq:GCN_forward}.
+  The GCN was designed using the forward propagation function similar to the
+  function shown in equation \ref{eq:GCN_forward}. The only difference is, that
+  the output layer is activated using the logSoftmax function instead of the
+  Softmax function. The outputs of both activation functions theoretically the 
+  same. The logSoftmax function is however numerically more stable, as it 
+  internally makes use of the log-sum-exp trick\footnote{See for reference: 
+  \url{https://gregorygundersen.com/blog/2020/02/09/log-sum-exp/}}.
 
   \begin{equation}
-	  Z = f(X,A) = \text{softmax}\left(\hat A \;\text{ReLu}\left(\hat A X
+	  Z = f(X,A) = \text{logSoftmax}\left(\hat A \;\text{ReLU}\left(\hat A X
 	  W^{(0)}\right)W^{(1)}\right)
       \label{eq:GCN_forward_1}
   \end{equation}
 
   \noindent The node features $X$ include to the 21 explanatory variables of the 
   US airline passenger dataset as described in section 
-  \ref{section:airline_data}. The categorical variables were dummy coded, which
-  is why the feature matrix includes 24 variables. The hidden layer size of the 
-  convolutional layers was set to 128 and the output layer was set to size 
-  2 for the binary classification task. The training loss was calculated using 
-  cross-entropy loss and the model parameters were updated using the Adam 
-  optimizer \citep{kingma2014adam} with the learning rate set to $0.002$. 
-  Essentially, algorithm \ref{algo:GNN_struct} ca be applied by replacing the 
+  \ref{section:airline_data}. The categorical variables were one-hot encoded, 
+  which is why the feature matrix includes 24 variables. The hidden layer size 
+  of the convolutional layers was also set to 24 and the output layer was set 
+  to size 2 for the binary classification task. The training loss was 
+  calculated using cross-entropy loss and the model parameters were updated 
+  using the Adam optimizer \citep{kingma2014adam} with the learning rate set to 
+  $0.002$. Essentially, algorithm \ref{algo:GNN_struct} ca be applied by replacing the 
   forward propagation with equation \ref{eq:GCN_forward_1} and updating the 
   model parameters using the Adam optimizer instead of standard gradient descent.
   Different model specification were tested, however the chosen specifications
-  appeared to perform best. The GCN required approximately 1'200 epochs to 
+  appeared to perform best. The GCN required approximately 1'000 epochs to 
   finish training. This large number of epochs is due to the full-batch
-  training procedure employed for the GCN. Mini-batch training can
-  unfortunately not be applied for GCNs. The resulting loss- and accuracy plots 
+  training procedure employed for the GCN. The resulting loss- and accuracy plots 
   are shown in figure \ref{fig:gcn_plots}.
 
   \begin{figure}[h]
@@ -151,9 +165,9 @@
       \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
       Dissatisfied} & \textbf{Satisfied}\\
       \hline
-      \textbf{Neutral or Dissatisfied} & 893 & 143 \\\hline 
-      \textbf{Satisfied} & 148 & 605 \\\hline\hline
-      \textbf{Accuracy} & 83.73\% & \\
+      \textbf{Neutral or Dissatisfied} & 793 & 233 \\\hline 
+      \textbf{Satisfied} & 191 & 562 \\\hline\hline
+      \textbf{Accuracy} & 76.17\% & \\
       \hline
     \end{tabular}
     \caption{Confusion Matrix Training Data}
@@ -167,9 +181,9 @@
       \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
       Dissatisfied} & \textbf{Satisfied}\\
       \hline
-      \textbf{Neutral or Dissatisfied} & 2'004 & 383 \\\hline 
-      \textbf{Satisfied} & 339 & 1'485 \\\hline\hline
-      \textbf{Accuracy} & 82.85\% & \\
+      \textbf{Neutral or Dissatisfied} & 1'866 & 531 \\\hline 
+      \textbf{Satisfied} & 440 & 1'384 \\\hline\hline
+      \textbf{Accuracy} & 77.00\% & \\
       \hline
     \end{tabular}
     \caption{Confusion Matrix Validation Data}
@@ -239,11 +253,10 @@
         \label{fig:mean_aggregation}
   \end{figure}
 
-  \noindent The training accuracy is 94.98\% and the validation accuracy is 
-  94.59\% after 400 epochs. The model resulted in a test accuracy of 93.38\%
+  \noindent The training accuracy is 94.91\% and the validation accuracy is 
+  94.80\% after 400 epochs. The model resulted in a test accuracy of 94.08\%
   with the following confusion matrix shown in table
   \ref{table:mean_results_test}:
-
 
   \begin{table}[h]
     \centering
@@ -252,9 +265,9 @@
       \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
       Dissatisfied} & \textbf{Satisfied}\\
       \hline
-      \textbf{Neutral or Dissatisfied} & 3'262  & 94 \\\hline 
-      \textbf{Satisfied} & 303 & 2'341 \\\hline\hline
-      \textbf{Accuracy} & 93.38\% & \\
+      \textbf{Neutral or Dissatisfied} & 3'278  & 88 \\\hline 
+      \textbf{Satisfied} & 267 & 2'367 \\\hline\hline
+      \textbf{Accuracy} & 94.28\% & \\
       \hline
     \end{tabular}
     \caption{Test Confusion Matrix Mean Aggregation}
@@ -272,8 +285,8 @@
         \label{fig:lstm_aggregation}
   \end{figure}
 
-  \noindent The training- and validation accuracy after 400 epochs was 94.44\% 
-  and 94.09\% respectively. Here again, we can see that the training behavior
+  \noindent The training- and validation accuracy after 400 epochs was 95.75\% 
+  and 95.14\% respectively. Here again, we can see that the training behavior
   is relatively good with a small over-fit which remains stable. The results
   for the test graph are shown in table \ref{table:lstm_results_test}.
 
@@ -284,9 +297,9 @@
       \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
       Dissatisfied} & \textbf{Satisfied}\\
       \hline
-      \textbf{Neutral or Dissatisfied} & 3'259  & 97 \\\hline 
-      \textbf{Satisfied} & 295 & 2'349 \\\hline\hline
-      \textbf{Accuracy} & 93.47\% & \\
+      \textbf{Neutral or Dissatisfied} & 3'288  & 78 \\\hline 
+      \textbf{Satisfied} & 268 & 2'366 \\\hline\hline
+      \textbf{Accuracy} & 94.23\% & \\
       \hline
     \end{tabular}
     \caption{Test Confusion Matrix LSTM Aggregation}
@@ -306,7 +319,7 @@
   \end{figure}
 
   \noindent The plots show that sum-pooling trains very well. The training 
-  accuracy is 94.33\% and validation accuracy is 94.2\% after the model
+  accuracy is 94.60\% and validation accuracy is 94.97\% after the model
   finished training. The results for the test graph are shown in table
   \ref{table:sum_results_test}.
 
@@ -317,9 +330,9 @@
       \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
       Dissatisfied} & \textbf{Satisfied}\\
       \hline
-      \textbf{Neutral or Dissatisfied} & 3'218  & 138 \\\hline 
-      \textbf{Satisfied} & 212 & 2'432 \\\hline\hline
-      \textbf{Accuracy} & 94.17\% & \\
+      \textbf{Neutral or Dissatisfied} & 3'235  & 131 \\\hline 
+      \textbf{Satisfied} & 213 & 2'421 \\\hline\hline
+      \textbf{Accuracy} & 94.27\% & \\
       \hline
     \end{tabular}
     \caption{Test Confusion Matrix Sum-Pooling}
@@ -338,8 +351,8 @@
         \label{fig:max_aggregation}
   \end{figure}
 
-  \noindent The training model resulted with a validation accuracy
-  of 93.96\% and training accuracy of 93.84\%. The results for the test graph
+  \noindent The training model resulted with a training accuracy
+  of 94.43\% and validation accuracy of 94.88\%. The results for the test graph
   are shown in table \ref{table:max_results_test}.
 
   \begin{table}[h]
@@ -349,9 +362,9 @@
       \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Neutral or
       Dissatisfied} & \textbf{Satisfied}\\
       \hline
-      \textbf{Neutral or Dissatisfied} & 3'180  & 176 \\\hline 
-      \textbf{Satisfied} & 196 & 2'448 \\\hline\hline
-      \textbf{Accuracy} & 93.8\% & \\
+      \textbf{Neutral or Dissatisfied} & 3'235  & 131 \\\hline 
+      \textbf{Satisfied} & 212 & 2'422 \\\hline\hline
+      \textbf{Accuracy} & 94.28\% & \\
       \hline
     \end{tabular}
     \caption{Test Confusion Matrix Max-Pooling}
@@ -407,7 +420,7 @@
       Average Accuracy & 94.37\% & 94.23\% & 93.21\% \\\hline 
       Average Cross-Entropy Loss & 0.3684 & 0.3693 & 0.3792 \\
       \hline
-      \end{tabular}
+    \end{tabular}
     \caption{Average Simulation Results}
     \label{table:simulation_results}
   \end{table}
@@ -433,12 +446,7 @@
   compared to the results using "standard" machine learning methods. This is
   done to assess to what extent, synthetic graph generation is a useful
   approach for machine learning. This comparison is an important ingredient for
-  answering the research question. For the comparison, the methods logistic
-  regression \citep{cramer2002origins}, naive bayes \citep{zhang2004bayes},
-  support vector machines (SVM) \citep{platt1999probabilistic,chang2011libsvm},
-  Random Forest Classifier \citep{breiman2001random}, AdaBoost Classifier
-  \citep{freund1997decision,hastie2009multi} and an Artificial Neural Network
-  \citep{mcculloch1943logical} are used. These methods only consider the
+  answering the research question. These methods only consider the
   feature data and do not consider any network connections. These methods are
   therefore simpler and do not require a graph to be generated. A comparison of
   the different results is shown in table \ref{table:result_comparison}.

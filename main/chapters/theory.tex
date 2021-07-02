@@ -671,9 +671,11 @@
 	\cite{kipf2016semi} and makes use of simplified spectral graph
 	convolutions. The author Thomas Kipf \citeyearpar{kipf2016online} provides 
 	excellent explanations on his website which is used as inspiration for
-	presenting the theory. As outlined, GNNs typically differ with regards to
-	the type of message passing and aggregation strategy. GCNs make use of the
-	following forward propagation method \citep[p. 2]{kipf2016semi}:
+	presenting the theory\footnote{Website Thomas Kipf: 
+	\url{https://tkipf.github.io/graph-convolutional-networks/}}. As outlined, 
+	GNNs typically differ with regards to the type of message passing and 
+	aggregation strategy. GCNs make use of the following forward propagation 
+	method \citep[p. 2]{kipf2016semi}:
 
 	\begin{equation}
 		H^{(l+1)} = \sigma\left(\tilde D^{-\frac{1}{2}}\tilde A \tilde
