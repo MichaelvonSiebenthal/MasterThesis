@@ -66,7 +66,7 @@
       Logistic Regression & 77.04\% & 76.16\% & 57.05\%  \\\hline 
       Support Vector Machine & 76.71\% & 77.00\% & 39.08\% \\\hline
       ANN & 76.78\% & 78.08\% & 29.48\% \\\hline
-      Random Forest & 100\% & 73.08 \% & 40.63\% \\\hline
+      Random Forest & 100\% & 73.08\% & 40.63\% \\\hline
       AdaBoost & 76.96\% & 77.00\% & 58.22\% \\\hline
       Naive Bayes & 75.73\% & 76.43\% & 56.97\% \\\hline
       QDA & 75.52\% & 77.33\% & 57.00\% \\
@@ -116,13 +116,14 @@
 
   \subsection{Graph Convolutional Network}
 
-  The GCN was designed using the forward propagation function similar to the
+  The GCN was designed using a similar forward propagation function as the
   function shown in equation \ref{eq:GCN_forward}. The only difference is, that
   the output layer is activated using the logSoftmax function instead of the
-  Softmax function. The outputs of both activation functions theoretically the 
-  same. The logSoftmax function is however numerically more stable, as it 
-  internally makes use of the log-sum-exp trick\footnote{See for reference: 
-  \url{https://gregorygundersen.com/blog/2020/02/09/log-sum-exp/}}.
+  Softmax function. The outputs of both activation functions are theoretically 
+  the same. The logSoftmax function is however numerically more stable, as it 
+  internally makes use of the log-sum-exp trick. A good explanation of this
+  trick is given on the website by \cite{gundersen2020}\footnote{Website 
+  Gregory Gundersen: \\\url{https://gregorygundersen.com/blog/2020/02/09/log-sum-exp/}}.
 
   \begin{equation}
 	  Z = f(X,A) = \text{logSoftmax}\left(\hat A \;\text{ReLU}\left(\hat A X
@@ -141,11 +142,9 @@
   $0.002$. Essentially, algorithm \ref{algo:GNN_struct} ca be applied by replacing the 
   forward propagation with equation \ref{eq:GCN_forward_1} and updating the 
   model parameters using the Adam optimizer instead of standard gradient descent.
-  Different model specification were tested, however the chosen specifications
-  appeared to perform best. The GCN required approximately 1'000 epochs to 
-  finish training. This large number of epochs is due to the full-batch
-  training procedure employed for the GCN. The resulting loss- and accuracy plots 
-  are shown in figure \ref{fig:gcn_plots}.
+  Different model specifications were tested, for which the chosen specifications
+  performed best. The GCN required approximately 1'000 epochs to finish training. 
+  The resulting loss- and accuracy plots are shown in figure \ref{fig:gcn_plots}.
 
   \begin{figure}[h]
 		\centering
@@ -155,7 +154,7 @@
   \end{figure}
 
   \noindent The resulting confusion matrices and the final accuracies are 
-  further presented in tables \ref{table:gcn_results_train} \& 
+  shown in tables \ref{table:gcn_results_train} \& 
   \ref{table:gcn_results_valid}. 
 
   \begin{table}[h]
@@ -196,33 +195,34 @@
   the data was used for validation. This is done by masking the nodes in the
   graph which are part of the validations dataset. The masked nodes are 
   considered in the in the neighborhood function $\mathcal{N}(v)$, they are 
-  however not considered as target nodes. Therefore, masked nodes are not use
+  however not considered as target nodes. Therefore, masked nodes are not used
   for updating the model parameters. The fact, that GCNs cannot be used in an
-  inductive setting is very limiting. Further, the GCN requires over 1'200
-  epochs to start finish training and yields only mediocre results in terms of
-  accuracy and model fit. A reason for this could be that only a full-batch
+  inductive setting is very limiting. Further, the GCN requires 1'000
+  epochs to finish training and yields only mediocre results in terms of
+  accuracy and model fit. A reason for this could be, that only a full-batch
   implementation for GCN was introduced. In addition, GCNs always consider the
-  entire neighborhood set. Sampling the neighborhood and mini-batch training 
-  which is an important ingredient of GraphSage and is introduced as an
-  improved and superior GNN method in the following subsection.
+  entire neighborhood set. GraphSage can be considered as the inductive counter
+  part which was specifically designed with mini-batch training in mind and
+  makes use of neighborhood sampling. The results for GraphSage are presented
+  in the following section. 
 
   \subsection{GraphSage}
 
   For GraphSage the exact same data input was used as for the GCN. The 
-  GraphSage model included 2 convolutional layers where both have a hidden 
-  layer size of 128 and the output layer is of size 2. The model is defined
-  using an adaptation of algorithm \ref{algo:GraphSage}. Similar as for the 
-  GCN, the training graph is split into 80\% training and 20\% validation using 
-  node masking. The loss is calculated using cross-entropy and the model 
-  parameters are updated using the Adam optimizer with the learning rate set to 
-  0.002 and is an adaptation to the model updating procedure shown in 
-  algorithm \ref{algo:GNN_struct}. The output of the first convolutional layer 
-  is activated using the ReLu function and the output of the second 
-  convolutional layer is activated using the log-softmax function. The model was 
-  trained using a mini-batch size of 50 nodes and the neighborhood function 
-  $\mathcal{N}(v)$ randomly sampled 10 neighbors 2-hops away from the target
-  node and randomly sampled 5 nodes at a 1-hop distance from the target node. 
-  This corresponds to the steps shown in figure \ref{fig:GraphSage_sample}. 
+  GraphSage model included 2 convolutional layers with a hidden layer size of
+  24 and an output layer size of 2. The model is defined using an adaptation of 
+  algorithm \ref{algo:GraphSage}. Specifically, the hidden layer is activated 
+  using the ReLU function with subsequent L2-normalization. The output of the 
+  second layer is activated using the logSoftmax function. Normalization is 
+  skipped for the final output. The training data was split into 80\% training 
+  and 20\% validation using node masking. The loss is calculated using 
+  cross-entropy and the model parameters are updated using the Adam optimizer 
+  with the learning rate set to 0.002. The GraphSage model employed is thus an
+  adaptation of the algorithm shown in algorithm \ref{algo:GNN_struct}. The 
+  model was trained using a mini-batch size of 50 nodes and the neighborhood 
+  function $\mathcal{N}(v)$ randomly sampled 10 neighbors 2-hops away from the 
+  target node and randomly sampled 5 nodes at a 1-hop distance from the target 
+  node. This corresponds to the steps shown in figure \ref{fig:GraphSage_sample}. 
   To improve the robustness of the model, lastly a dropout rate of $p = 0.02$ 
   was set. GraphSage was run using the different aggregation strategies mean, 
   LSTM, max-pooling. In addition, sum-pooling was added as an additional 
@@ -267,7 +267,7 @@
       \hline
       \textbf{Neutral or Dissatisfied} & 3'278  & 88 \\\hline 
       \textbf{Satisfied} & 267 & 2'367 \\\hline\hline
-      \textbf{Accuracy} & 94.28\% & \\
+      \textbf{Accuracy} & 94.08\% & \\
       \hline
     \end{tabular}
     \caption{Test Confusion Matrix Mean Aggregation}
@@ -373,25 +373,23 @@
 
   \subsection{GraphSage Robustness Simulation}
   
-  The loss- and accuracy plots reveal mostly a relatively good model fit. LSTM
-  aggregation however shows a moderate over-fit and is indicative of a more 
-  general issue shown to be true for all aggregation strategies. Simulations
-  revealed, that for the same graph the trained model would either over-fit,
-  fit perfectly or have a training pattern in which the validation loss was
-  smaller than the training loss. An analysis revealed, that the culprit for
-  this behavior was the dropout rate of 2\% as well as the random assignment of
-  graph nodes into training- and validation data. If the dropout rate was set
-  to 0, the model always tended to over-fit, where the training accuracy would
-  approach 100\% and the validation accuracy would stagnate around 93-94\%.
-  Unfortunately, when applying this model to an unseen test graph, the accuracy
-  results were somewhat lower at 91-92\%. For this reason, a dropout rate at
-  2\% was set to avoid this over-fitting problem which in turn yielded better
-  test results. This has the consequence, that it is more difficult for the
-  model to make predictions for the training data compared to the validation
-  data which uses no dropout rate. This obstacle however has the downside, that
-  it makes the model sensitive to the node assignments during the random
-  train- and validation split. Some nodes are more difficult to learn depending
-  on their features and neighbors. This means, that if the training set
+  The loss- and accuracy plots reveal mostly a relatively good model fit.
+  Repeatedly training the GraphSage models revealed, that models would either
+  over-fit, fit perfectly or have a training pattern in which the validation
+  loss was lower than the training loss. An analysis revealed, that the culprit 
+  for this behavior was the dropout rate of 2\% as well as the random assignment 
+  of graph nodes into training- and validation data. If the dropout rate was set
+  to 0, the model tended to over-fit, where the training accuracy would approach 
+  100\% and the validation accuracy would stagnate around 93-94\%.
+  Unfortunately, when applying the model with no dropout rate to an unseen test 
+  graph, the accuracy results were somewhat lower at 91-92\%. For this reason, 
+  a dropout rate of 2\% was set to avoid this over-fitting problem which in turn 
+  yielded better test results. This has the consequence, that it is more 
+  difficult for the model to make predictions for the training data compared to 
+  the validation data which uses no dropout rate. This obstacle has the downside, 
+  that it makes the model sensitive to the node assignments during the 
+  random train- and validation split. Some nodes are more difficult to learn 
+  depending on their features and neighbors. This means, that if the training set
   includes more difficult nodes on average than the validation set in
   conjunction with the dropout rate as an additional obstacle for the training
   set, the validation loss becomes lower than the training loss. The same is
@@ -417,8 +415,10 @@
       \textbf{Metric} & \textbf{Training Set} & \textbf{Validation Set} & 
       \textbf{Test Set}\\
       \hline\hline
-      Average Accuracy & 94.37\% & 94.23\% & 93.21\% \\\hline 
-      Average Cross-Entropy Loss & 0.3684 & 0.3693 & 0.3792 \\
+      Average Accuracy & 95.01\% & 94.82\% & 93.80\% \\\hline 
+                       & (0.36\%) & (0.71\%) & (0.47\%) \\\hline
+      Average Cross-Entropy Loss & 0.3684 & 0.3693 & 0.3792 \\\hline
+                                 & (0.0078) & (0.0182) & (0.0151) \\
       \hline
     \end{tabular}
     \caption{Average Simulation Results}
@@ -459,18 +459,19 @@
       \textbf{Method} & \textbf{Training Accuracy} & \textbf{Validation
       Accuracy} & \textbf{Test Accuracy}\\
       \hline\hline
-      Logistic Regression & 88.16\% & 87.08\% & 86.43\% \\\hline 
-      Naive Bayes & 87.46\% & 85.83\% & 85.6\% \\\hline
-      AdaBoost & 93.54\% & 93.08\% & 92.45\% \\\hline
-      Random Forest & 100\% & 95.08\% & 94.38\% \\\hline
-      SVM & 94.42\% & 93.5\% & 92.45\% \\\hline
-      ANN & 96.47\% & 94.67\% & 93.32\%\\\hline
-      Node2Vec & 77.61\% & 76.58\% & -\\\hline
-      GCN & 83.73\% & 82.85\% & -\\\hline
-      GraphSage (Mean Aggregation) & 94.98\% & 94.59\% & 93.38\% \\\hline
-      GraphSage (LSTM Aggregation) & 94.44\% & 94.09\% & 93.47\% \\\hline
-      GraphSage (Sum-Pooling) & 94.33\% & 94.2\% & 94.17\% \\\hline
-      GraphSage (Max-Pooling) & 93.96\% & 93.84\% & 93.8\% \\
+      Logistic Regression & 87.94\% & 87.17\% & 86.77\% \\\hline 
+      Naive Bayes & 87.50\% & 86.17\% & 85.82\% \\\hline
+      QDA & 70.5\% & 70.00\% & 69.23\% \\\hline
+      AdaBoost & 94.06\% & 92.33\% & 93.00\% \\\hline
+      Random Forest & 100\% & 94.42\% & 94.55\% \\\hline
+      SVM & 94.65\% & 92.25\% & 92.73\% \\\hline
+      ANN & 96.51\% & 94.58\% & 93.48\%\\\hline
+      Node2Vec (Logistic Regression) & 77.04\% & 76.16\% & 57.06\% \\\hline
+      GCN & 76.17\% & 77.00\% & -\\\hline
+      GraphSage (Mean Aggregation) & 94.91\% & 94.80\% & 94.08\% \\\hline
+      GraphSage (LSTM Aggregation) & 95.75\% & 95.14\% & 94.23\% \\\hline
+      GraphSage (Sum-Pooling) & 94.60\% & 94.97\% & 94.27\% \\\hline
+      GraphSage (Max-Pooling) & 94.43\% & 94.88\% & 94.28\% \\
       \hline
       \end{tabular}}
     \caption{Result Comparison}
