@@ -907,6 +907,7 @@ INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm1
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 OUTPUT main.toc
+INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecsl1200.tfm
 INPUT ./main.lof
 INPUT main.lof
 INPUT main.lof
@@ -933,7 +934,6 @@ INPUT ./images//bank_network.jpg
 INPUT images//bank_network.jpg
 INPUT ./images//bank_network.jpg
 INPUT ./images//bank_network.jpg
-INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/ecsl1200.tfm
 INPUT ./images//overview_datascience.png
 INPUT ./images//overview_datascience.png
 INPUT images//overview_datascience.png
@@ -1139,6 +1139,20 @@ INPUT ./chapters/appendix.tex
 INPUT ./chapters/appendix.tex
 INPUT ./chapters/appendix.tex
 INPUT chapters/appendix.tex
+INPUT ./images//sum_100_sim.png
+INPUT ./images//sum_100_sim.png
+INPUT images//sum_100_sim.png
+INPUT ./images//sum_100_sim.png
+INPUT ./images//sum_100_sim.png
+INPUT ./images//mean_simulation.png
+INPUT ./images//mean_simulation.png
+INPUT images//mean_simulation.png
+INPUT ./images//mean_simulation.png
+INPUT ./images//mean_simulation.png
+INPUT ./images//mean_simulation.png
+INPUT ./images//mean_simulation.png
+INPUT images//mean_simulation.png
+INPUT ./images//mean_simulation.png
 INPUT ./images//pariplot_feature_data.png
 INPUT ./images//pariplot_feature_data.png
 INPUT images//pariplot_feature_data.png
