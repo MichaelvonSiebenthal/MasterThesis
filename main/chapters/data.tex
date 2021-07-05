@@ -27,7 +27,7 @@
    packages used for the analysis are thankfully referenced in the following 
    section.
 
-  \section{Software}
+  \section{Software \& Code}
 
   The entire thesis was evaluated using the Python 3.8.10 programming
   language \citep{vanRossum2009}. In addition, following open-source python
@@ -38,7 +38,21 @@
   \citep{pedregosa2011scikit}, Tensorflow 2.4.0 \citep{abadi2016tensorflow}, 
   Pytorch 1.7.0 \citep{paszke2019pytorch}, deep graph library (dgl) 0.6.1 
   \citep{wang2019deep}, tqdm 4.61.1 \citep{da2021tqdm} and Node2Vec 0.4.3 
-  \citep{Cohen2021}. 
+  \citep{Cohen2021}. \\
+
+  \noindent The data sets as well as the Python code used for creating and 
+  analyzing the data can be found in a public GitHub repository\footnote{GitHub
+  repository: \url{https://github.com/MichaelvonSiebenthal/MasterThesis.git}}. 
+  The Github repository also includes the Python code for the results shown in
+  chapter \ref{section:results}. In general any data, analysis and results
+  referenced or presented as part of this master thesis can be found in the
+  GitHub repository. This is meant to be a general reference to the data and
+  Python code used for this thesis and will not be referenced individually for
+  every analysis or result presented. The GitHub repository includes a read me
+  file which describes what information can be found in which folder and
+  document. In addition, the Python Code is written in Jupyter Notebooks which
+  allows for detailed descriptions of the used codes using markdown. The GitHub
+  repository can thus be considered as a form of appendix for this thesis.
 
   \section{Self Launched Survey}
   \label{section:self_survey} 
@@ -52,12 +66,12 @@
   unsure). The variables used for the graph creation using the MAG model
   included mostly demographic data. Additional data was collected by assessing
   the financial knowledge and behavioral profile of the survey participants by 
-  using questions from the financial literacy report of the OECD \citep{OECD2017}.
-  The idea was, that demographic data coupled with the financial literacy
-  questions should be provide a suitable database for the bank client
-  classification task. This hypothesis was based on the professional experience 
-  of the author of this thesis having worked for over 10 years as a client adviser
-  for a large Swiss bank. \\
+  using questions from the financial literacy report of the OECD
+  (\citeyear{OECD2017}). The idea was, that demographic data coupled with the 
+  financial literacy questions should be provide a suitable database for the bank 
+  client classification task. This hypothesis was based on the professional 
+  experience of the author of this thesis having worked for over 10 years as a 
+  client adviser for a large Swiss bank. \\
 
   \noindent Unfortunately, only $n=113$ people participated in the survey which 
   in general is very small for a machine learning task.
@@ -89,6 +103,7 @@
   found in the appendix. 
 
   \section{Bank Telemarketing Dataset}
+  \label{section:bank_data}
 
   The bank telemarketing dataset first introduced by 
   \cite{moro2011using,moro2014data} was considered as a banking related back-up 
@@ -347,9 +362,10 @@
 
   \noindent In equation \ref{eq:norm}, $x$ refers to the unnormalized 
   variable and $x'$ refers to resulting normalized variable. $a$ defines 
-  the lower bound of the normalization range and $b$ is the upper bound. Now,
-  all variables are within a similar range and different scaling should no
-  longer lead to a biasing behavior. \\
+  the lower bound of the normalization range and $b$ is the upper bound. The
+  numerical variables were normalized withing the range 1-5 using equation
+  \ref{eq:norm}. Now, all variables are within a similar range and different 
+  scaling should no longer lead to a biasing behavior. \\
 
   \noindent In the following section, the graph generation process for the US
   Airline Passenger dataset is described in detail.
@@ -387,7 +403,7 @@
     \centering
     \begin{tabular}{|l||L|}
       \hline
-      \textbf{Variable Name} & \textbf{Link-Affinity Probabilities}\\
+      \textbf{Attribute Name} & \textbf{Link-Affinity Probabilities}\\
       \hline\hline
       Gender & 0.6, 0.4; 0.4, 0.6  \\\hline 
       Customer Type & 0.8, 0.5; 0.5, 0.8 \\\hline
@@ -617,7 +633,7 @@
 
   \begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{deterministic_MAG.png}
+		\includegraphics[width=1.0\textwidth]{deterministic_MAG.png}
 		\caption{Deterministic MAG graph}
         \label{fig:det_MAG}
   \end{figure}
