@@ -1,35 +1,38 @@
   
   This chapter introduces the datasets used for this thesis. Several approaches
   and datasets were considered for evaluating the success of graph machine
-  learning on semi-synthetic graphs. In particular, three datasets were 
+  learning on semi-synthetic graphs. In particular, three datasets are 
   considered with varying degrees of success which are:
 
   \begin{enumerate}
     \item Self launched survey
-    \item Bank telemarketing dataset
-    \item US Airline passenger satisfaction survey
+    \item Bank Telemarketing dataset
+    \item US Airline Passenger dataset
   \end{enumerate}
 
-  \noindent The datasets are introduced to the extent that they were successful 
+  \noindent The datasets are introduced to the extent that they are successful 
   or useful within the framework of this thesis. In particular, the self 
-  launched survey and the bank telemarketing dataset showed to be problematic 
-  for different reasons. They however provide valuable insights as
-  to when graph machine learning can be successful. These two datasets are 
-  therefore only briefly introduced with the focus lying on providing the
+  launched survey and the Bank Telemarketing dataset showed to be problematic 
+  for different reasons. They however provide valuable insights as to when 
+  graph machine learning can be successful. These two datasets are therefore 
+  only briefly introduced with the focus lying on providing the relevant 
   insights gained from these "failed" datasets. The detailed introduction and
-  analysis of these datasets is skipped and is deferred to the appendix. The
-  airline passenger satisfaction dataset will be presented in detail, as good
-  results were achieved using graph machine learning. This dataset will also be
-  used for comparing graph machine learning to the standard machine learning
-  methods. \\
+  analysis of these datasets is therefore skipped. The data and the analyses of
+  these two datasets are provided in the GitHub repository referenced in
+  section \ref{section:software}. The airline passenger satisfaction dataset 
+  will be presented in detail, as good results are achieved using graph machine 
+  learning. This dataset will also be used for comparing graph machine learning 
+  to the standard machine learning models. \\
 
   \noindent Before introducing the datasets, the programming language and the
-   packages used for the analysis are thankfully referenced in the following 
-   section.
+   packages used for the analyses are thankfully referenced in the following 
+   section. In additon, the GitHub repository containing the datasets and code
+   is referenced.
 
   \section{Software \& Code}
+  \label{section:software}
 
-  The entire thesis was evaluated using the Python 3.8.10 programming
+  The entire master's thesis was evaluated using the Python 3.8.10 programming
   language \citep{vanRossum2009}. In addition, following open-source python
   packages were thankfully used which are Numpy 1.20.2 \citep{harris2020array},
   Matplotlib 3.3.4 \citep{Hunter2007}, NetworkX 2.5.1 \citep{hagberg2008exploring}, 
@@ -44,15 +47,12 @@
   analyzing the data can be found in a public GitHub repository\footnote{GitHub
   repository: \url{https://github.com/MichaelvonSiebenthal/MasterThesis.git}}. 
   The Github repository also includes the Python code for the results shown in
-  chapter \ref{section:results}. In general any data, analysis and results
-  referenced or presented as part of this master thesis can be found in the
-  GitHub repository. This is meant to be a general reference to the data and
-  Python code used for this thesis and will not be referenced individually for
-  every analysis or result presented. The GitHub repository includes a read me
-  file which describes what information can be found in which folder and
-  document. In addition, the Python Code is written in Jupyter Notebooks which
-  allows for detailed descriptions of the used codes using markdown. The GitHub
-  repository can thus be considered as a form of appendix for this thesis.
+  chapter \ref{section:results}. The GitHub repository serves as a general 
+  reference for the data and Python code used for this thesis and will not be 
+  referenced individually for every analysis and/or result presented. The GitHub 
+  repository includes a read me file which describes which files can be 
+  found in which folders. In addition, the Python Code is written in 
+  Jupyter Notebooks which include descriptions of the used codes using markdown.
 
   \section{Self Launched Survey}
   \label{section:self_survey} 

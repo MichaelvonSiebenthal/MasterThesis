@@ -898,45 +898,59 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	such a manner, that the resulting graph adheres to a set of real network 
 	properties. These network properties include the emergence of a giant
 	connected component and a power-law or $\log$-normal degree distribution
-	among others \citep{kim2012multiplicative}. While, the creation of a 
+	among others \citep[p. 113]{kim2012multiplicative}. While, the creation of a 
 	graph which follows real-world network properties would be desirable, it is 
-	not the primary target for this thesis. The main goal of the semi-synthetic graph 
-	generation will be to create a graph that provides useful additional 
+	not the primary target for this thesis. The main goal of the semi-synthetic 
+	graph generation is to create a graph that provides useful additional 
 	information, which can be exploited using graph machine learning. The MAG 
 	model is flexible in this sense, that it can create graphs which are not 
 	constrained to adhere to a specific set of network properties. Lastly, 
-	Kim \& Leskovec \citeyearpar[p. 138-139]{kim2012multiplicative} present 
-	model parameters which generate graphs that follow real-world network 
-	properties. These model parameters can however not be adopted for the task 
-	at hand. The parameters were created for a somewhat simpler task, which 
-	only involved randomly generated feature data. When working with real 
-	feature data, this task becomes more difficult. \\
+	\citeauthor{kim2012multiplicative} 
+	\citeyearpar[p. 138-139]{kim2012multiplicative} present model parameters 
+	which generate graphs that follow real-world network properties. These model 
+	parameters can however not be adopted for the task at hand. The parameters 
+	were created for a somewhat simpler task which "only" involved randomly 
+	generated feature data. These randomly generate features do not correspond
+	to any specific features. For that reason, the model parameters can be
+	chosen freely such that the generated network follows real world network
+	properties. The aim of \citeauthor{kim2012multiplicative} was primarily to
+	create random graphs that can adhere to said network properties. For this
+	thesis, the same MAG model will applied using real feature data. This makes
+	the task of defining the model parameters more difficult as they cannot be
+	freely assigned. In addition, the generated graph will be used for machine
+	learning which is not an application the authors had considered. In this 
+	regard the reason and aim for using the MAG model differs for this thesis 
+	compared to the original paper. \\
 
 	\noindent The starting point of the MAG model is a matrix of feature data, 
 	$X^{N \times F}$, where $N$ refers to the number of observations 
-	and $F$ to the number of features. \cite{kim2012multiplicative} refer to 
-	feature data as attributes and they use the terms interchangeably. For this 
+	and $F$ to the number of features. \citeauthor{kim2012multiplicative} refer 
+	to feature data as attributes and they use the terms interchangeably. For this 
 	thesis a distinction is made, where features correspond to the full set of 
-	feature data and attributes refer to the features used for generating the 
-	graph, $G(V,E)$. The attribute data, $B^{N \times K} \subseteq X^{N \times F}$, 
-	is therefore a subset of the feature data. As a selection criterion,
-	attribute data must be of such a manner for which reasonable link-affinity
-	matrices, $\Theta_{i}$, can be defined. In addition, attribute data must be
-	discrete for the MAG model. For an attribute variable such as age, this
-	would have to be discretized for use in the MAG model. The link-affinity
-	matrix, $\Theta_{i}$, is a probability matrix which is used to estimate the
-	probability of two observations, $(a_{i}(u),a_{i}(v))\in B$, to form a 
-	connection. As an illustration, a reasonable assumption could be to assume, 
-	that people which are of the same age group, are more likely to form a 
-	connection/be friends in a social network, compared to people which are not 
-	of the same age group. Another example for this could be gender in terms of 
-	biological sex which is a classical binary setting for a link-affinity matrix. 
-	Examples for binary attribute link-affinity matrices $\Theta_i$ are given in 
+	feature data and attributes refer to the $K$ number of features used for 
+	generating the graph, $G(V,E)$. The attribute data, 
+	$B^{N \times K} \subseteq X^{N \times F}$, is therefore a subset of the 
+	feature data. As a selection criterion, attribute data must be of such a 
+	manner that reasonable link-affinity matrices, $\Theta_{i}$, can be 
+	defined. In addition, attribute data must be discrete. For practical
+	reasons, the cardinality of the attributes should not be too large.
+	Attributes such as age might have to be discretized into 4 or 5 discrete
+	age categories. The link-affinity matrix, $\Theta_{i}$, is a matrix
+	containing probabilities which are used to estimate the probability of two 
+	observations in the dataset $(u,v)$ to form a connection. More specifically, 
+	the probability for a connection is calculated given the attributes $a_i$ of 
+	observation $u$ and $v$ where $(a_{i}(u),a_{i}(v))\in B$. For example, a 
+	reasonable assumption could be to assume, that people which are of the same 
+	age group, are more likely to be similar and thus form a connection 
+	compared to people which are not of the same age group. Another example for 
+	this could be gender in terms of biological sex which is a classical binary 
+	setting for a link-affinity matrix. Examples of binary attribute 
+	link-affinity matrices $\Theta_i$ are given in 
 	figure \ref{fig:link-affinity}.
 
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.8\textwidth]{affinity_matrices.png}
+		\includegraphics[width=0.9\textwidth]{affinity_matrices.png}
 		\caption{Attribute Link-Affinities}
 		\cite[p. 118]{kim2012multiplicative}
 		\label{fig:link-affinity}
@@ -977,13 +991,12 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.8\textwidth]{MAG.png}
-		\caption{Schematic representation of the 
-			multiplicative attribute graphs (MAG) model}
+		\caption{Schematic Representation of the 
+			Multiplicative Attribute Graphs (MAG) Model}
 		\cite[p. 120]{kim2012multiplicative}
 		\label{fig:MAG}
 	\end{figure}
 	
-
 	\begin{algorithm}[h]
 		\scriptsize
 		\SetAlgoLined
@@ -1012,18 +1025,19 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 				}
 			}
 		\nl $A = \hat A + \hat A^{T}$
-
 		\caption{Multiplicative Attribute Graph Model}
 		\label{algo:MAG}
 	\end{algorithm}
 
-	\noindent Algorithm \ref{algo:MAG} generates the adjacency matrix $A$ which
-	is then used for constructing the graph, $G(V,E)$. The observations of the
-	dataset, $X$, correspond to the nodes present in the graph. More precisely,
-	the order of the generated adjacency matrix, $A$, corresponds to the
-	ordering of the feature matrix $X$. Therefore the features can be assigned
-	to the nodes of the generated graph. The procedure outlined in algorithm
-	\ref{algo:MAG} can be summarized with following sequential steps:
+	\noindent The pseudo-code of the MAG model is depicted in algorithm 
+	\ref{algo:MAG} and generates the adjacency matrix $A$ which is then used 
+	for constructing the graph $G(V,E)$. The observations of the feature data 
+	$X$ which contains the attributes are used as inputs and correspond to the 
+	nodes in the resulting graph. More precisely, the order of the generated 
+	adjacency matrix $A$, corresponds to the ordering of the feature matrix $X$. 
+	Therefore the features can be assigned to the nodes of the generated graph. 
+	The procedure outlined in algorithm \ref{algo:MAG} can be summarized with 
+	the following sequential steps:
 
 	\begin{enumerate}
 		\item Calculate the connection probabilities $P$ between every 
@@ -1044,3 +1058,5 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 			$A = \hat A + \hat A^{T}$. 
 	\end{enumerate}
 
+	\noindent This concludes the required theoretical background for this
+	thesis. 

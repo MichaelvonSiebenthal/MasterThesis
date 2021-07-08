@@ -8,13 +8,24 @@
 \usepackage{graphicx}
 \graphicspath{{images/}}
 \usepackage{float}
+%\usepackage{tocloft}
 
 \usepackage{diagbox}
 \usepackage{enumitem}
 
 
 \usepackage{natbib}
-\bibliographystyle{agsm}  
+\bibliographystyle{agsm}
+
+\usepackage[acronym]{glossaries}
+\makeglossaries
+\newacronym{gnn}{GNN}{Graph Neural Network}
+\newacronym{gcn}{GCN}{Graph Convolutional Network}
+\newacronym{mag}{MAG}{Multiplicative Attribute Graph}
+\newacronym{gat}{GAT}{Graph Attention Network}
+\newacronym{gin}{GIN}{Graph Isomorphism Network}
+\newacronym{ann}{ANN}{Artificial Neural Network}
+\newacronym{cnn}{CNN}{Convolutional Neural Network}
 
 
 \usepackage[hidelinks]{hyperref} 
@@ -99,6 +110,8 @@
   \tableofcontents
   \listoffigures
   \listoftables
+  \listofalgocfs
+  \printglossary[type=\acronymtype]
 
   %%% Main Body
   \onehalfspacing
