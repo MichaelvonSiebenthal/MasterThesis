@@ -164,9 +164,10 @@
   learning methods. The results further confirm that the results using Graph
   Representation Learning and the GCN are not competitive. GraphSage is shown
   to be the second best method behind the Random Forest classifier. The ANN
-  model on average tends to yield marginally inferior test accuracy results. In
+  model on average tends to yield marginally inferior test accuracy results as
+  shown in the simulation results shown in appendix \ref{App:ann_sim}. In
   addition, the ANN is more prone to over-fitting as shown in figure
-  \ref{fig:ANN_fit}. ANNNNNNNN TBD. With regard to other standard machine
+  \ref{fig:ANN_fit}. With regard to the other standard machine
   learning methods, GraphSage clearly outperformed these methods. \\
 
   \noindent As shown, the GraphSage model is a competitive method for 
@@ -182,7 +183,20 @@
   they yield similar/identical results compared to more complex methods.
   GraphSage using semi-synthetic graphs is most definitely the most complex 
   method shown in table \ref{table:result_comparison}. For that reason certainly 
-  the Random Forest Classifier as well as the ANN are preferred to GraphSage.  
+  the Random Forest Classifier is preferred as it yields better accuracies and
+  is a more simple model compared to GraphSage. In addition, one could argue
+  that the ANN, SVM and AdaBoost are preferential to the GraphSage model as
+  well, as they are simpler models with only marginally inferior results. For
+  the evaluation one needs to also consider the context of the classification
+  task. In a medical context, accuracies are of utmost importance where one is
+  willing to use more complex methods to receive marginal accuracy improvements. 
+  For the purpose of gaining customer insights, the consequences for having
+  marginally higher- or lower accuracies are less severe. In such a setting,
+  the principle of Occam's razor can be more fully embraced which is why the
+  ANN, SVM and AdaBoost might be preferred as they are simpler and more
+  practical for application in a real-world setting. Nevertheless, GraphSage
+  yielded the second best accuracies and could be the preferred method for a
+  different setting.  
 
 
 

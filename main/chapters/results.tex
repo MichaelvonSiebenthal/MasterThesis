@@ -229,12 +229,12 @@
   improve the robustness of the model, a dropout rate of $p = 0.02$ was set. 
   GraphSage was run using the aggregation strategies mean, LSTM, max-pooling. 
   In addition, sum-pooling was added as an additional aggregation strategy 
-  as suggested by \cite{xu2018powerful}. \\
+  as suggested by \cite{xu2019powerful}. \\
 
   \noindent The sum-pooling applied in the GraphSage setting follows 
   the same procedure as max-pooling. The only difference is that element-wise 
   sum-pooling is performed instead of element-wise max-pooling. 
-  \cite{xu2018powerful} show that certain graph structures can confuse 
+  \cite{xu2019powerful} show that certain graph structures can confuse 
   aggregation strategies such as mean aggregation or max-pooling. The issue with 
   these aggregation strategies is, that they are not injective functions. 
   Different input nodes (with different graph structures) in a mean- or 
@@ -248,10 +248,10 @@
   \begin{figure}[h]
 		\centering
 		\includegraphics[width=0.9\textwidth]{mean_max_fail.png}
-		\caption{Examples of graph structures that mean and max aggregators 
-        fail to distinguish.}
+		\caption{Examples of Graph Structures that Mean and Max Aggregators 
+        Gail to Distinguish.}
         \label{fig:graph_structures}
-        \cite[p. 6]{xu2018powerful}
+        \cite[p. 6]{xu2019powerful}
   \end{figure}
 
   \noindent The node coloring shown in figure \ref{fig:graph_structures}
@@ -259,7 +259,7 @@
   correspond to different node representations, which mean- and/or max
   aggregation fail to distinguish from each other (hence the same node coloring). 
   Given one-hot encoded nodes with no feature data, sum aggregation is shown to 
-  be an injective function \citep[p. 5]{xu2018powerful}. For the US Airline
+  be an injective function \citep[p. 5]{xu2019powerful}. For the US Airline
   Passenger dataset with its many features, sum aggregation is unfortunately not 
   an injective function. It however sparked the interest in sum aggregation,
   which is why it was added as an aggregation strategy of interest for the

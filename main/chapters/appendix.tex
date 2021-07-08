@@ -62,7 +62,7 @@
 
   \begin{figure}[h]
 		\centering
-		\includegraphics[width=0.9\textwidth]{mean_simulation.png}
+		\includegraphics[width=0.9\textwidth]{lstm_sim.png}
 		\caption{Simulation Results LSTM Aggregation}
         \label{fig:lstm_sim}
   \end{figure}
@@ -74,10 +74,10 @@
       \textbf{Metric} & \textbf{Training Set} & \textbf{Validation Set} & 
       \textbf{Test Set}\\
       \hline\hline
-      Average Accuracy & 94.92\% & 94.82\% & 93.89\% \\\hline 
-                       & (0.34\%) & (0.74\%) & (0.20\%) \\\hline
-      Average Cross-Entropy Loss & 0.1289 & 0.1359 & 0.1584 \\\hline
-                                 & (0.0063) & (0.0121) & (0.0063) \\
+      Average Accuracy & 95.64\% & 94.62\% & 93.75\% \\\hline 
+                       & (0.20\%) & (0.69\%) & (0.32\%) \\\hline
+      Average Cross-Entropy Loss & 0.1130 & 0.1407 & 0.1630 \\\hline
+                                 & (0.0047) & (0.0120) & (0.0084) \\
       \hline
     \end{tabular}
     \caption{Simulation Results LSTM Aggregation}
@@ -97,3 +97,35 @@
 		\caption{Pairplot Feature Data US Airline Passenger Data Set}
         \label{fig:pairplot_feature}
   \end{figure}
+
+  \section{ANN Simulation}
+  \label{App:ann_sim}
+
+  The results for the ANN were simulated using 10 experiments which trained the
+  model for 400 epochs. The results are shown in figure \ref{fig:ann_sim} and 
+  table \ref{table:ann_sim}. 
+
+  \begin{figure}[h]
+		\centering
+		\includegraphics[width=0.9\textwidth]{ANN_sim.png}
+		\caption{ANN Simulation Results}
+        \label{fig:ann_sim}
+  \end{figure}
+
+  \begin{table}[h]
+    \centering
+      \begin{tabular}{|l||c|c|c|}
+      \hline
+      \textbf{Metric} & \textbf{Training Set} & \textbf{Validation Set} & 
+      \textbf{Test Set}\\
+      \hline\hline
+      Average Accuracy & 95.28\% & 94.74\% & 92.93\% \\\hline 
+                       & (0.61\%) & (1.73\%) & (1.07\%) \\\hline
+      Average Cross-Entropy Loss & 0.1760 & 0.1433 & 0.2087 \\\hline
+                                 & (0.0268) & (0.0647) & (0.0569) \\
+      \hline
+    \end{tabular}
+    \caption{ANN Simulation Results}
+    \label{table:ann_sim}
+  \end{table}
+

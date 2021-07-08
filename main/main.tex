@@ -63,19 +63,25 @@
   \begin{titlepage}
     \begin{center}
       \vspace{1em}
-	  \large{Master Thesis}\\
+	  \large{Master's Thesis}\\
 	  \huge Gaining Customer Insights with Machine Learning on Graphs \\ 
 	  \large \vspace{1em}
 	  University of Basel\\
 	  \vspace{4em} 
 	  \large
+      Degree Program: \\
+      Master of Science (MSc) in Business and Economics \\
+      \vspace{2em}
+      Major: \\
+      Quantitative Methods \\
+      \vspace{4em}
 	  Author: \\
 	  Michael von Siebenthal\\
 	  \vspace{2em}
 	  Supervisor: \\
 	  Prof. Dr. Dietmar Maringer\\
-	  \vspace{2em}
-	  \today
+	  \vspace{4em}
+	  Submission Date: \\\today
 	  \vspace{3em}
     \end{center}
   \end{titlepage} 
@@ -85,10 +91,6 @@
   %%% frontmatter
   \chapter*{Abstract}
   \input{chapters/abstract}
-  
-  \chapter*{Declaration}
-  \input{chapters/declaration}
-
 
   \setcounter{secnumdepth}{3}
   \setcounter{tocdepth}{3}
@@ -121,14 +123,17 @@
   
   %Discussion
   \chapter{Discussion}
-  \label{section:conclusion}
+  \label{section:discussion}
   \input{chapters/discussion.tex}
 
   %Conclusion \& Outlook
-  \chapter{Conclusion \& Outlook}
+  \chapter{Conclusion and Outlook}
+  \label{section:conclusion_outlook}
   \input{chapters/conclusion.tex}
 
-  
+  \chapter*{Declaration}
+  \input{chapters/declaration}
+
   %%% endmatter
   \bibliography{bibliography.bib} 
 
