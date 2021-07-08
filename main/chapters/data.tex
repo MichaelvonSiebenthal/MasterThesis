@@ -68,10 +68,8 @@
   the financial knowledge and behavioral profile of the survey participants by 
   using questions from the financial literacy report of the OECD
   (\citeyear{OECD2017}). The idea was, that demographic data coupled with the 
-  financial literacy questions should be provide a suitable database for the bank 
-  client classification task. This hypothesis was based on the professional 
-  experience of the author of this thesis having worked for over 10 years as a 
-  client adviser for a large Swiss bank. \\
+  financial literacy questions should provide a suitable database for the bank 
+  client classification task. \\
 
   \noindent Unfortunately, only $n=113$ people participated in the survey which 
   in general is very small for a machine learning task.
@@ -79,9 +77,9 @@
   the stochastic element present in the MAG model, the resulting graphs could
   differ dramatically. This lead to significant performance differences for the
   different machine learning methods applied to the resulting graphs.
-  Classification accuracies ranged between accuracies of 40 - 95 \%. A remedy
-  for this problem could be to assign a fixed probability threshold such as 0.5
-  in the MAG model. Using a fixed threshold probability, the MAG model would 
+  Classification accuracies ranged between 40 - 95 \%. A remedy for this 
+  problem could be to assign a fixed probability threshold such as 0.5 in the 
+  MAG model. Using a fixed threshold probability, the MAG model would 
   generate deterministic graphs, which are always the same. The downside however 
   is, that this makes the graph generation process less realistic. In a
   homophily setting this would assume that a connection is formed with any node 
@@ -105,16 +103,17 @@
   \section{Bank Telemarketing Dataset}
   \label{section:bank_data}
 
-  The bank telemarketing dataset first introduced by 
+  The Bank Telemarketing dataset first introduced by 
   \cite{moro2011using,moro2014data} was considered as a banking related back-up 
-  dataset in case that the self made survey did not yield a sufficient number of 
-  responses. The bank telemarketing dataset is based on a marketing campaign at 
-  a Portuguese bank. The dataset includes demographic data, data regarding the 
-  bank client's wealth, contact success during previous campaigns etc. The
-  dataset further provides label data which indicates whether a client invested
-  in a short-term deposit after having been contacted. The dataset is therefore
-  set-up for a binary classification task. The MAG graph generated from the
-  bank telemarketing dataset is shown in figure \ref{fig:Moro}.
+  dataset for the case that the self made survey did not yield a sufficient 
+  number of responses. The Bank Relemarketing dataset is based on a marketing 
+  campaign at a Portuguese bank. The dataset includes demographic data, data 
+  regarding the bank client's wealth, contact success during previous campaigns
+  among others. The dataset further provides label data which indicates whether 
+  a client invested in a short-term deposit after having been contacted by the
+  callcenter of the bank. The dataset is therefore set-up for a binary 
+  classification task. The MAG graph generated from the Bank Telemarketing 
+  dataset is shown in figure \ref{fig:Moro}.
  
 	\begin{figure}[h]
 		\centering
@@ -126,7 +125,7 @@
   \noindent The red dots in figure \ref{fig:Moro} mark the clients which
   decided to invest in the short-term deposit and the blue dots did not invest.
   This figure masks some of the blue nodes due to the figure generation
-  process, the general pattern however is apparent. The red nodes are randomly 
+  process. The general pattern however is apparent. The red nodes are randomly 
   placed in the network which suggests, that graph machine learning will be of
   limited use. The graph further shows, that only a relatively small number of 
   clients appear to have invested in the short-term deposit. To be more precise, 
@@ -138,7 +137,7 @@
   which did invest. Due to the unbalanced data, it is loss optimizing for the
   GNN to predict most nodes as non-investors rather than learning the true
   label. Table \ref{table:Moro_conf} shows the confusion matrix of the 
-  classification results for the validation dataset (20\%) using a GraphSage GNN.
+  classification results for the validation dataset (20\%) using GraphSage.
 
   \begin{table}[h]
     \centering
@@ -169,20 +168,18 @@
   approach has its own problems as dropping a large number of observations 
   discards a lot of potentially valuable information. It could also put in 
   question the external validity of the model. These comments point to a 
-  separate field of research and could be interesting for a future project. 
-  These approaches were not researched in detail and should be taken as 
-  suggestions. \\
+  separate field of research and could be interesting for a future project. \\
 
   \noindent The failure using graph machine learning methods for this dataset
-  reveals, that GNNs are not an easy remedy for unbalanced data. Perhaps if the
+  reveals, that GNNs are not an easy remedy for unbalanced data. Perhaps, if the
   network structure provided clusters which corresponded to the labels, GNNs
   could provide superior results. Given the variables available in the dataset
   and the limitations of using the MAG method, this was not possible. In order
   to check, whether network structure could indeed remedy the unbalanced label
-  problem, the label of the bank telemarketing dataset was used for the MAG 
-  network generation process. The label is normally not included as an
-  attribute for the MAG model, as the label data is usually unknown outside of
-  the training dataset. The link-affinity probabilities for the label was set
+  problem, the label of the bank telemarketing dataset was used as an
+  additional attribute for the MAG model. The label is normally not included as 
+  an attribute for the MAG model, as the label data is usually unknown outside 
+  of the training dataset. The link-affinity probabilities for the label was set
   as follows:
 
   \[ \Theta_{label} = 
@@ -190,10 +187,10 @@
         0.95 & 0.25 \\
 		0.25 & 0.95 \\
 	\end{pmatrix}
-	\] \\
+	\] 
   
-  \noindent The resulting MAG graph when considering the label is shown in figure
-  \ref{fig:Moro_bias}.
+  \noindent The resulting MAG graph when considering the label as an attribute 
+  is shown in figure \ref{fig:Moro_bias}.
 
   \begin{figure}[h]
 		\centering
@@ -217,8 +214,8 @@
   necessarily be as clearly separated as shown in figure \ref{fig:Moro_bias}. A
   graph which contains local neighborhood clusters which correspond to the same
   label could yield similar good results. In such a setting, one would have to be
-  careful when defining the number of layers, $K$, and neighborhood
-  sampling function $\mathcal{N}_{k}$. A network structure which corresponds to
+  careful when defining the number of $K$ layers and neighborhood sampling 
+  function $\mathcal{N}_{k}$. A network structure which corresponds to
   the label could perhaps also be generated without the label to an extent. This 
   would require the attribute data used in the MAG model to be related with the
   label. The attributes would have to be substitutes for generating a network
@@ -234,18 +231,17 @@
   the desired result. For that reason, this dataset was also discarded. The
   dataset and the performed analyses can be found in the GitHub repository. 
 
-  \section{Airline Passenger Satisfaction Survey}
+  \section{US Airline Passenger Dataset}
   \label{section:airline_data}
 
-  The US airline passenger satisfaction survey was a survey conducted in 2015
-  by J.D. Power and the dataset was retrieved on the website Kaggle
-  \citep{JDPower2015,KAGGLE2015}. This dataset revealed to be well suited for
-  applying graph machine learning tasks via the MAG method. It further showed
+  The US Airline Passenger dataset is a survey which was conducted in 2015
+  by J.D. Power \citeyearpar{JDPower2015}. The dataset was retrieved on the 
+  website Kaggle \citeyearpar{KAGGLE2015}. This dataset is well suited for 
+  applying graph machine learning tasks following the MAG method. It further shows
   to be a competitive dataset for classic machine learning methods. This makes
   this dataset a suitable candidate for a fair comparison of graph machine 
-  learning methods vs standard machine learning strategies. This dataset will be
-  presented in detail as it will be used for the results shown in chapter 
-  \ref{section:results}. \\
+  learning vs standard machine learning. This dataset is presented in detail as 
+  it is used for the results presented in chapter \ref{section:results}. \\
 
   \noindent An overview of the US Airline Passenger dataset is shown in table
   \ref{table:airline_summary}. The correlation heatmap of the dataset is
@@ -255,15 +251,22 @@
   missing observations, this variable is dropped in favor of "Departure Delay 
   in Minutes". The heatmap and its corresponding correlation matrix reveal,
   that "Gender" is approximately uncorrelated with any of the other variables.
-  Further, "Departure Delay in Minutes" appears to be approximately
+  Further, "Departure Delay in Minutes" appears to be approximately 
   uncorrelated with any of the other variables. For that reason, it was tested
   whether both variables could be excluded. The results however revealed, that
-  the machine learning models performed better if these variables were included 
+  the machine learning models performed better if these variables are included 
   in the model. The data shown in table \ref{table:airline_summary} and 
   figure \ref{fig:corr_heatmap} corresponds to a random sample of 6’000 
   observations from the training dataset consisting of 103’904 observations.
-  The training graph will be created using this sample of 6'000 observations due
+  The training graph is created using this sample of 6'000 observations due
   to computational time considerations. 
+
+  \begin{figure}[h]
+	  \centering
+	  \includegraphics[width=1.0\textwidth]{corr_heatmap.png}
+	  \caption{Correlation Heatmap of US Airline Passenger Dataset}
+      \label{fig:corr_heatmap}
+  \end{figure}
 
   \begin{landscape}
   \pagestyle{empty}
@@ -314,19 +317,12 @@
       Cleanliness & Satisfaction level of cleanliness & - & 0 - 5 \\
       \hline
     \end{tabular}
-    \caption{Airline Dataset overview}
+    \caption{Airline Dataset Overview}
     \label{table:airline_summary}
   \end{table}
   \end{landscape}
 
-  \begin{figure}[h]
-	  \centering
-	  \includegraphics[width=0.8\textwidth]{corr_heatmap.png}
-	  \caption{Correlation Heatmap of US Airline Passenger Dataset}
-      \label{fig:corr_heatmap}
-  \end{figure}
-
-  \noindent The variables of the dataset are classified as follows:
+  \noindent The variables of the dataset are categorized as follows:
 
   \begin{itemize}
     \item \textbf{Categorical Variables:} Gender, Customer Type, Type of 
@@ -339,21 +335,21 @@
       Minutes
   \end{itemize}
 
-  \noindent The categorical variables were dummy coded and the ordinal variable
-  Class was recorded as shown in table \ref{table:airline_summary}. The
-  remaining ordinal variables which measure different satisfaction levels were
-  recorded using a Likert scale ranging from $1 - 5$. Many passengers did not
-  answer all satisfaction level questions. These responses were recorded
-  with a 0. Therefore, the range of values for the satisfaction level variables
-  range from $0 - 5$. This encoding works well, as a 0 input in a linear pass
-  function of a (graph) neural network will result in a 0 output value. This
-  type of encoding allows us to deal with missing values for neural networks
-  and other machine learning methods. Lastly, the numerical variables had to be
-  normalized. The popular approach of standardizing the entire dataset was 
-  unfortunately not possible, because it had to be ensured, that a 0 was 
-  referred to as a missing response. Note, that a 0 for the numerical variables 
-  does not correspond to a missing value. The normalizing function employed is
-  defined as follows:
+  \noindent The categorical variables are dummy coded and the ordinal variable
+  Class is coded as shown in table \ref{table:airline_summary}. The remaining 
+  ordinal variables which measure different satisfaction levels are recorded 
+  using a Likert scale ranging from $1 - 5$. Many passengers did not answer all 
+  satisfaction level questions. These responses are recorded with a 0. Therefore, 
+  the range of values for the satisfaction level variables range from $0 - 5$. 
+  This encoding works well, as a 0 input in a linear pass function of a (graph) 
+  neural network will result in a 0 output value. This type of encoding allows 
+  for dealing with missing values for neural networks and other machine learning 
+  methods. Lastly, the numerical variables had to be normalized. The popular 
+  approach of standardizing the entire dataset was unfortunately not possible.
+  Due to the missing values prevalent in the satisfaction level variables, it
+  must be ensured, that a 0 refers to as a missing response. Note, that a
+  recorded 0 for the numerical variables does not correspond to a missing value. 
+  The normalizing function applied is defined as follows:
 
   \begin{equation}
     x' = a + \frac{(x - \min(x))(b - a)}{\max(x) - \min(x)}
@@ -363,9 +359,9 @@
   \noindent In equation \ref{eq:norm}, $x$ refers to the unnormalized 
   variable and $x'$ refers to resulting normalized variable. $a$ defines 
   the lower bound of the normalization range and $b$ is the upper bound. The
-  numerical variables were normalized withing the range 1-5 using equation
-  \ref{eq:norm}. Now, all variables are within a similar range and different 
-  scaling should no longer lead to a biasing behavior. \\
+  numerical variables are normalized to be within the range 1-5. Now, all 
+  variables are within a similar range and different scaling should no longer 
+  lead to biasing behavior. \\
 
   \noindent In the following section, the graph generation process for the US
   Airline Passenger dataset is described in detail.
@@ -373,7 +369,7 @@
   \subsection{Graph Generation}
   \label{section:graph_gen}
 
-  To create a graph from the US Airline Passenger Dataset, appropriate
+  To create a graph from the US Airline Passenger dataset, appropriate
   attributes must be selected for the MAG model. The selected attributes must be
   of the type such that realistic probabilities can be assigned. As an example, 
   it is difficult to assign link-affinity probabilities for people who gave 
@@ -395,9 +391,9 @@
       can be asymmetric for directed graphs)
   \end{itemize}
  
-  \noindent The attributes were selected using the above mentioned 
-  considerations. The selected attributes with the corresponding link-affinity 
-  probabilities are shown in table \ref{table:link_aff}.
+  \noindent The attributes are selected using the above mentioned considerations. 
+  The selected attributes with the corresponding link-affinity probabilities are 
+  shown in table \ref{table:link_aff}.
 
   \begin{table}[h]
     \centering
@@ -430,39 +426,39 @@
 	\end{pmatrix}
   \] 
 
-  \noindent Age was not only selected as an example as it is the largest
-  link-affinity matrix, it also required some additional data transformation.
-  The MAG model can only consider discrete variables which is why age had to be
-  binned into discrete categories. Age was binned into 4 bins with 0 if age $<$ 
+  \noindent Age is not only selected as an example as it is the largest
+  link-affinity matrix. It also requires some additional data transformation.
+  It is difficult to use attributes with large cardinalities for the MAG model.
+  For that reason, age is binned into 4 categories with 0 if age $<$ 
   26, 1 if 26 $\leqslant$ age $<$ 39, 2 if 39 $\leqslant$ age $<$ 50 and 3 if age
-  $\geqslant$ 50. These bins were chosen according to the interquartile lengths 
+  $\geqslant$ 50. These bins are chosen according to the interquartile lengths 
   present in the distribution of the variable age. \\
 
-  \noindent For assigning link-affinity probabilities there exist no clear rules 
-  as to how these are to be defined. The article by Kim \& Leskovec 
-  (\citeyear[p. 118]{kim2012multiplicative}) shows the 4 common structures of 
-  homophily, heterophily, core-periphery and random for creating graphs. Given 
-  the selected attribute data, the homophily setting was most appropriate for 
-  all link-affinity matrices. In this setting, observations which are similar 
-  have a higher probability of forming a connection compared to dissimilar 
-  observations. The probabilities were assigned based on personal intuition and 
-  trial and error. Several graphs were created using different probabilities, 
-  where the probabilities shown in table \ref{table:link_aff} generated the most 
-  reasonable graphs. There is however no exact science or selection criteria 
-  which can be applied for selecting attributes and defining the link-affinity 
-  probabilities. \\
+  \noindent There exist no clear rules for assigning link-affinity
+  probabilities. \citeauthor{kim2012multiplicative} 
+  \citeyearpar[p. 118]{kim2012multiplicative} presented the 4 common 
+  link-affinity matrix structures of homophily, heterophily, core-periphery and 
+  random for creating graphs. Given the selected attribute data, the homophily 
+  setting is most appropriate for all link-affinity matrices. In this setting, 
+  observations which are similar have a higher probability of forming a 
+  connection compared to dissimilar observations. The probabilities are 
+  assigned based on personal intuition and trial and error. Several graphs were 
+  created using different probabilities, where the probabilities shown in table 
+  \ref{table:link_aff} generate the best graphs. There is however no exact 
+  science or selection criteria which can be applied for selecting attributes 
+  and defining the link-affinity probabilities. \\
 
   \noindent As mentioned in the previous section, a sub-sample of 6'000 
   observations was retrieved from the training dataset consisting of 103’904 
   observations. With this random sub-sample and the attributes shown in table
   \ref{table:link_aff}, the adjacency matrix for the 
-  resulting graph, $G(V,E)$ was generated using algorithm \ref{algo:MAG}. The 
-  random sub-sample was retrieved due to the computational cost involved for 
-  applying algorithm \ref{algo:MAG}. Simulations involving creating graphs with 
-  different random sub-samples suggest, that the random sub-samples are 
-  representative for the entire dataset. This suggestion is supported when
-  comparing the summary statistics of the sub-sample with the full-dataset. The
-  generated graph is shown in figure \ref{fig:us_airline_graph}.
+  resulting graph, $G(V,E)$ is generated using algorithm \ref{algo:MAG}. The 
+  random sub-sample is retrieved due to the computational cost of running 
+  algorithm \ref{algo:MAG}. Simulations involving creating graphs with different 
+  random sub-samples suggest, that the random sub-samples are representative for 
+  the entire dataset. This suggestion is supported when comparing the summary 
+  statistics of the sub-samples with the full-dataset. The generated graph is 
+  shown in figure \ref{fig:us_airline_graph}.
 
   \begin{figure}[h]
 	  \centering
@@ -471,11 +467,11 @@
       \label{fig:us_airline_graph}
   \end{figure}
   
-  \noindent The network shown in figure \ref{fig:us_airline_graph} show the
+  \noindent The network in figure \ref{fig:us_airline_graph} shows the 
   emergence of two primary clusters. In addition one can see, that most satisfied 
   airline passengers appear to be grouped together in the right cluster. To 
   gain a deeper understanding of the dynamics involved in the network formation, 
-  the nodes of the network are plotted excluding edges in figure
+  the nodes of the network are plotted excluding the edges in figure
   \ref{fig:us_airline_nodes}.
 
   \begin{figure}[h]
