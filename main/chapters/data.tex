@@ -21,7 +21,7 @@
   these two datasets are provided in the GitHub repository referenced in
   section \ref{section:software}. The airline passenger satisfaction dataset 
   is presented in detail, as good results are achieved using graph machine 
-  learning. This dataset is also be used for comparing graph machine learning 
+  learning. This dataset is also used for comparing graph machine learning 
   to the standard machine learning models. \\
 
   \noindent Before introducing the datasets, the programming language and the
@@ -76,7 +76,7 @@
   the stochastic element present in the MAG model, the resulting graphs could
   differ dramatically. This lead to significant performance differences for the
   different machine learning methods applied to the resulting graphs.
-  Classification accuracies ranged between 40 - 95 \%. A remedy for this 
+  Classification accuracies ranged between 40 - 95\%. A remedy for this 
   problem could be to assign a fixed probability threshold such as 0.5 in the 
   MAG model. Using a fixed threshold probability, the MAG model would 
   generate deterministic graphs which are always the same. The downside however 
@@ -162,7 +162,7 @@
   \noindent Unbalanced datasets are part of a larger and common problem in 
   machine learning. Possible remedies might include using loss functions which 
   penalize false classifications harsher than the standard cross-entropy loss 
-  function used for the GNNs. Alternatively, one could also reduce the data set 
+  function used for the GNNs. Alternatively, one could also reduce the dataset 
   by dropping observations such that the remaining dataset is balanced. This 
   approach has its own problems as dropping a large number of observations 
   discards a lot of potentially valuable information. It could also put in 
@@ -534,12 +534,12 @@
 
   \noindent Last but not least, gender does not appear to form any distinguishable 
   clusters. For that reason, it was considered to omit this attribute for the 
-  graph generation process. This was tested and the resulting graph yielded 
-  a similar graph. The graph was however more spread out and the neighborhood 
-  structures were less clear. In addition, the graph without gender did not 
-  perform as well in the subsequent machine learning tasks. Gender appears to
-  provide some useful network information which is why the attribute is kept
-  for the graph generation process. \\
+  graph generation process. This was tested and the resulting graph was similar
+  to the one shown in figure \ref{fig:us_airline_graph}. The graph was however 
+  more spread out and the neighborhood structures were less clear. In addition, 
+  the graph without gender did not perform as well in the subsequent machine 
+  learning tasks. Gender appears to provide some useful network information 
+  which is why the attribute is kept for the graph generation process. \\
 
   \noindent To provide some more context regarding the graph structure, some
   graph theoretical metrics are provided. The degree distribution as well as 
