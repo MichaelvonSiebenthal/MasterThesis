@@ -2,7 +2,7 @@
   This chapter presents the results for the US Airline Passenger dataset. First, 
   the model specifications and the results using graph representation learning 
   and GNNs are presented. Afterwards, the graph machine learning results are 
-  compared to the results using "standard" machine learning models. For the 
+  compared to the results using standard machine learning models. For the 
   comparison, the methods logistic regression \citep{cramer2002origins}, naive 
   bayes \citep{zhang2004bayes}, support vector machines (SVM) 
   \citep{platt1999probabilistic,chang2011libsvm}, Random Forest Classifier 
@@ -203,7 +203,7 @@
   mediocre results in terms of accuracy and model fit. A reason for this could 
   be, that only a full-batch implementation for GCN was introduced. In addition, 
   GCNs always consider the entire neighborhood set. GraphSage for comparison 
-  are specifically designed with mini-batch training and neighborhood sampling
+  is specifically designed with mini-batch training and neighborhood sampling
   in mind. The results for GraphSage are presented in the following section. 
 
   \subsection{GraphSage}
@@ -319,7 +319,7 @@
   \end{figure}
 
   \noindent The training- and validation accuracy after 400 epochs is 95.75\% 
-  and 95.14\% respectively. Here again, is is shown that the training behavior
+  and 95.14\% respectively. Here again, it is shown that the training behavior
   is relatively good. The model is however prone to over-fit as shown in figure 
   \ref{fig:lstm_aggregation}. Fortunately, the over-fit is small and remains 
   stable. The results for the test graph are shown in table 
@@ -421,15 +421,15 @@
   \subsection{GraphSage Robustness Simulation}
   \label{section:graphsage_simulation}
   
-  The loss- and accuracy plots reveal mostly a relatively good model fit.
-  Repeatedly training the GraphSage models revealed, that there is some
-  non-negligible variation in the performance of the trained models. In
+  The loss- and accuracy plots using the GraphSage model reveal mostly a 
+  relatively good model fit. Repeatedly training the GraphSage models revealed, 
+  that there is some non-negligible variation in the performance of the trained models. In
   particular, depending on how the data is randomly split into 80\% training
   data and 20\% validation data, the model results could differ significantly.
   Simulations reveal, that the random assignment of training- and validation
   data is not the sole culprit for the observed variation in model performance. 
   The dropout rate of 2\% employed in the GraphSage model is just as responsible. 
-  Simulations show, that if the dropout rate is set to 0, taht the model tends
+  Simulations show, that if the dropout rate is set to 0, that the model tends
   to over-fit significantly. In this setting, the training accuracy approaches
   98\% while the validation accuracy stagnates around 92-93\%. The trained model 
   accordingly does not translate well to the test graph for which the accuracy
@@ -515,7 +515,7 @@
   machine learning models are used for comparison as for the downstream 
   machine learning task for Graph Representation Learning shown in section 
   \ref{section:result_n2v}. For the comparison, the standard machine learning 
-  model consider the same features as inputs as the GNNs. The comparison is 
+  models consider the same features as inputs as the GNNs. The comparison is 
   done to assess to what extent, semi-synthetic graphs are useful for graph 
   machine learning. This comparison thus provides the key results for answering
   the research question and assessing the hypotheses stated in section 

@@ -21,13 +21,13 @@
 	\section{Relevance to Economics}
 
 	\noindent From a business \& economics perspective, graphs are particularly
-	interesting if one wants to for instance model the interactions between
-	institutions. An example for this is a study published by
+	interesting if one wants model the interactions between institutions. An 
+	example for this is shown in an article published by 
 	\cite{schweitzer2009economic} which created a graph showing the 
-	interdependencies or interactions of international banks as a network shown 
-	in figure \ref{fig:bank_network}. This is a useful representation of 
-	such interdependencies and provides important information for making the
-	banking system more robust and resilient. 
+	interdependencies of international banks as a network shown in figure 
+	\ref{fig:bank_network}. Graphs can be useful tool for illustrating such 
+	interdependencies and provides important information for making the banking 
+	system more robust and resilient. 
 
 	\begin{figure}[h]
 		\centering
@@ -63,7 +63,7 @@
 	are lacking features and can thus only provide limited information for 
 	gaining customer insights. This is an issue in terms of data access and is 
 	a frustrating reality which also affects this master's thesis. It however 
-	motivated the research topic of this thesis which is presented in section
+	motivates the research topic of this thesis which is presented in section
 	\ref{section:research_topics}. First, a general overview of machine
 	learning is given in the following section.
 	
@@ -117,7 +117,7 @@
 	\citep{platt1999probabilistic}, random forest classifiers
 	\citep{breiman2001random}, AdaBoost \citep{freund1997decision} and
 	artificial neural networks \citep{mcculloch1943logical}. This is an
-	incomplete list of popular machine learning methods that can be used for
+	incomplete list of popular machine learning models that can be used for
 	classification tasks. Classification tasks can be applied for various
 	settings such as predicting whether a customer is satisfied or whether to
 	grant a mortgage to a client among many others. The aforementioned machine
@@ -132,13 +132,13 @@
 	network depth does not necessarily improve the model and can be even 
 	counter-productive. Within graph machine learning, there are two main
 	approaches. The first approach focuses on learning vector representations
-	of graphs which are used for downstream machine learning and makes use of
-	the standard machine learning models presented previously. This graph
-	representation learning approach includes models such as DeepWalk 
+	of graphs which are used for downstream machine learning. The downstream
+	machine learning models include the standard models presented previously. 
+	Graph representation learning approach includes models such as DeepWalk 
 	\citep{perozzi2014deepwalk} or Node2Vec \citep{grover2016node2vec} among 
 	others. The second approach involves the application of graph neural 
 	networks for which there exist many different approaches. These approaches 
-	include models such as graph convolutional networks \citep{kipf2016semi} or 
+	include models such as Graph Convolutional Networks \citep{kipf2016semi} or 
 	GraphSage \citep{hamilton2017inductive} and many more. \\
 
 	\noindent The detailed theoretical background for the considered graph
@@ -162,20 +162,20 @@
 	makes use of existing feature data for the graph generation process. 
 	\cite{kim2012multiplicative} developed the Multiplicative Attribute 
 	Graph (MAG) method. This model makes use of randomly generated feature data 
-	which is referred to as attribute data by the authors to generate random 
-	graphs which can adhere to observed real world network properties. An 
-	analysis of the MAG model revealed, that it could also be a useful model 
-	for creating semi-synthetic graphs using existing feature data. For that
-	reason, the MAG model is selected for generating semi-synthetic graphs.
-	This model will be introduced in detail in section
-	\ref{section:theory_graphgen}. \\
+	which is referred to as attribute data by the authors. The model is shown
+	to be capable of generating random graphs which can adhere to observed real 
+	world network properties. An analysis of the MAG model reveals, that it 
+	could also be a useful model for creating semi-synthetic graphs using 
+	existing feature data. For that reason, the MAG model is selected for 
+	generating semi-synthetic graphs. This model will be introduced in detail 
+	in section \ref{section:theory_graphgen}. \\
 
 	\noindent More recently, researchers have focused their attention to
 	generative graph models. These models create graphs with features using
 	real graphs as a training input. Examples for such models are Graph
 	Recurrent Neural Networks \citep{you2018graphrnn} and deep generative graph
 	models \citep{li2018learning}. These are very fascinating models which can
-	be used to recreated or scale graph data. For the purpose of this thesis,
+	be used to recreate or scale graph data. For the purpose of this thesis,
 	these methods were not purposeful, as it requires an existing graph with
 	features to be available. Such a graph is unfortunately not available for
 	this thesis. Nevertheless, this is an interesting current topic for graph 
@@ -202,10 +202,9 @@
 	could however be competitive if not superior to the results of standard 
 	machine learning models which cannot consider network information. To assess 
 	the these hypotheses, the results using graph machine learning will be 
-	compared to standard machine learning approaches. To provide a better 
-	overview, a high level overview of machine learning is provided in the 
-	following section. To close this section, the research question as well as
-	the hypotheses of this thesis are presented formally as follows. 
+	compared to standard machine learning approaches. To close this section, 
+	the research question as well as the hypotheses of this thesis are 
+	presented formally as follows. 
 
 	\paragraph{Research Question}\mbox{}
 

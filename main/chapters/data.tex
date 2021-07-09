@@ -20,8 +20,8 @@
   analysis of these datasets is therefore skipped. The data and the analyses of
   these two datasets are provided in the GitHub repository referenced in
   section \ref{section:software}. The airline passenger satisfaction dataset 
-  will be presented in detail, as good results are achieved using graph machine 
-  learning. This dataset will also be used for comparing graph machine learning 
+  is presented in detail, as good results are achieved using graph machine 
+  learning. This dataset is also be used for comparing graph machine learning 
   to the standard machine learning models. \\
 
   \noindent Before introducing the datasets, the programming language and the
@@ -43,7 +43,7 @@
   \citep{wang2019deep}, tqdm 4.61.1 \citep{da2021tqdm} and Node2Vec 0.4.3 
   \citep{Cohen2021}. \\
 
-  \noindent The data sets as well as the Python code used for creating and 
+  \noindent The datasets as well as the Python code used for creating and 
   analyzing the data can be found in a public GitHub repository\footnote{GitHub
   repository: \url{https://github.com/MichaelvonSiebenthal/MasterThesis.git}}. 
   The Github repository also includes the Python code for the results shown in
@@ -63,13 +63,12 @@
   would be interested in investing or not. The second classification task
   involved classifying clients according to their investment preferences in
   terms of products (single securities like stocks or bonds, funds, ETFs,
-  unsure). The variables used for the graph creation using the MAG model
-  included mostly demographic data. Additional data was collected by assessing
-  the financial knowledge and behavioral profile of the survey participants by 
-  using questions from the financial literacy report of the OECD
-  (\citeyear{OECD2017}). The idea was, that demographic data coupled with the 
-  financial literacy questions should provide a suitable database for the bank 
-  client classification task. \\
+  etc.). The attributes used for creating the MAG graph included mostly 
+  demographic data. Additional data was collected which assessed the financial 
+  knowledge and behavioral profile of the survey participants by using questions 
+  from the financial literacy report of the OECD \citeyearpar{OECD2017}. The 
+  idea was, that demographic data coupled with the financial literacy questions 
+  should provide a suitable database for the bank client classification task. \\
 
   \noindent Unfortunately, only $n=113$ people participated in the survey which 
   in general is very small for a machine learning task.
@@ -80,7 +79,7 @@
   Classification accuracies ranged between 40 - 95 \%. A remedy for this 
   problem could be to assign a fixed probability threshold such as 0.5 in the 
   MAG model. Using a fixed threshold probability, the MAG model would 
-  generate deterministic graphs, which are always the same. The downside however 
+  generate deterministic graphs which are always the same. The downside however 
   is, that this makes the graph generation process less realistic. In a
   homophily setting this would assume that a connection is formed with any node 
   where $P[u,v]>0.5$. It is unclear without testing, what impact this would
@@ -90,13 +89,13 @@
   the generation of stochastic graphs. The main priority is however to create
   graphs which provide additional information that can be exploited via graph
   machine learning. Having this objective in mind, it warrants further
-  investigation for which the results will be presented in section 
+  investigation for which the results are presented in section 
   \ref{section:stoch_det}. \\
 
   \noindent The self-launched survey could not be used for any meaningful
-  analysis due to the small sample size. Nevertheless, it provided an
-  interesting follow-up question regarding the question of generating
-  stochastic- versus deterministic graphs. The dataset was discarded for
+  analysis due to the small sample size. Nevertheless, it provides an
+  interesting follow-up question regarding the generating of
+  stochastic- versus deterministic graphs. The dataset is discarded for
   further analysis and the survey data as well as the performed analyses can be
   found in the GitHub repository. 
 
@@ -104,14 +103,14 @@
   \label{section:bank_data}
 
   The Bank Telemarketing dataset first introduced by 
-  \cite{moro2011using,moro2014data} was considered as a banking related back-up 
-  dataset for the case that the self made survey did not yield a sufficient 
-  number of responses. The Bank Relemarketing dataset is based on a marketing 
+  \cite{moro2011using,moro2014data} is considered as a banking related back-up 
+  dataset for the case that the self made survey does not yield a sufficient 
+  number of responses. The Bank Telemarketing dataset is based on a marketing 
   campaign at a Portuguese bank. The dataset includes demographic data, data 
   regarding the bank client's wealth, contact success during previous campaigns
   among others. The dataset further provides label data which indicates whether 
   a client invested in a short-term deposit after having been contacted by the
-  callcenter of the bank. The dataset is therefore set-up for a binary 
+  call center of the bank. The dataset is therefore set-up for a binary 
   classification task. The MAG graph generated from the Bank Telemarketing 
   dataset is shown in figure \ref{fig:Moro}.
  
@@ -131,11 +130,11 @@
   clients appear to have invested in the short-term deposit. To be more precise, 
   only approximately 12\% of bank clients invested in the short-term deposit. 
   The dataset is unbalanced which makes the classification task difficult. Graph 
-  representation learning using Node2Vec did not provide any useful results and 
-  the GNNs also performed rather poorly. In particular, GNNs tended to classify 
-  most clients as non-investors and struggled to accurately classify clients 
+  representation learning using Node2Vec does not provide any useful results and 
+  the GNNs also perform rather poorly. In particular, GNNs tend to classify 
+  most clients as non-investors and struggle to accurately classify clients 
   which did invest. Due to the unbalanced data, it is loss optimizing for the
-  GNN to predict most nodes as non-investors rather than learning the true
+  GNNs to predict most nodes as non-investors rather than learning the true
   label. Table \ref{table:Moro_conf} shows the confusion matrix of the 
   classification results for the validation dataset (20\%) using GraphSage.
 
@@ -154,15 +153,15 @@
     \label{table:Moro_conf}
   \end{table}
 
-  \noindent The resulting confusion matrix corresponds to an accuracy of
-  approximately 87.67\%. The MAG generation process was repeated multiple times
+  \noindent The confusion matrix corresponds to an accuracy of approximately 
+  87.67\%. The MAG generation process was repeated multiple times
   for which the GraphSage accuracies ranged between 87 - 90\%. Similar results
-  were observed for both graph based methods and standard machine learning 
+  are observed for both graph based methods and standard machine learning 
   methods such as ANNs or support vector machines (SVM). \\
 
   \noindent Unbalanced datasets are part of a larger and common problem in 
   machine learning. Possible remedies might include using loss functions which 
-  penalize false classifications harsher than the standard cross entropy loss 
+  penalize false classifications harsher than the standard cross-entropy loss 
   function used for the GNNs. Alternatively, one could also reduce the data set 
   by dropping observations such that the remaining dataset is balanced. This 
   approach has its own problems as dropping a large number of observations 
@@ -174,12 +173,12 @@
   reveals, that GNNs are not an easy remedy for unbalanced data. Perhaps, if the
   network structure provided clusters which corresponded to the labels, GNNs
   could provide superior results. Given the variables available in the dataset
-  and the limitations of using the MAG method, this was not possible. In order
+  and the limitations of using the MAG method, this is not possible. In order
   to check, whether network structure could indeed remedy the unbalanced label
   problem, the label of the bank telemarketing dataset was used as an
   additional attribute for the MAG model. The label is normally not included as 
   an attribute for the MAG model, as the label data is usually unknown outside 
-  of the training dataset. The link-affinity probabilities for the label was set
+  of the training dataset. The link-affinity probabilities for the label is set
   as follows:
 
   \[ \Theta_{label} = 
@@ -203,14 +202,14 @@
   clustered according to their label. The GNN method GraphSage achieved an 
   accuracy of over 95\% for this graph using otherwise identical feature data
   and model specifications as before. This is of course a form of cheating, as 
-  we cannot assume to know the labels of the graph outside of the training 
+  one cannot assume to know the labels of the graph outside of the training 
   setting. In a real-world application, the model would be trained using label
-  data and then applied to new data which does not contain the label. We would
-  however require the label for the graph generation procedure which makes this
-  not a viable approach. Nevertheless, this result shows extremely well when
-  graph machine learning can yield superior results compared to standard
-  machine learning methods. The key lies in generating a graph with a network
-  structure that corresponds to the label. The network structure need not
+  data and then applied to new data which does not contain the label. This
+  approach would however require the label for the graph generation procedure 
+  which makes this not a viable approach. Nevertheless, this result shows 
+  extremely well when graph machine learning can yield superior results compared 
+  to standard machine learning methods. The key lies in generating a graph with 
+  a network structure that corresponds to the label. The network structure need not
   necessarily be as clearly separated as shown in figure \ref{fig:Moro_bias}. A
   graph which contains local neighborhood clusters which correspond to the same
   label could yield similar good results. In such a setting, one would have to be
@@ -228,32 +227,36 @@
   appropriate attributes and defining the link-affinity probabilities is not a
   trivial task and requires a lot of trial and error. Unfortunately, for this
   dataset no appropriate attributes and link-affinities were found that yielded
-  the desired result. For that reason, this dataset was also discarded. The
-  dataset and the performed analyses can be found in the GitHub repository. 
+  the desired result. For that reason, this dataset is also discarded for
+  further analysis. The dataset and the performed analyses can be found in the 
+  GitHub repository. 
 
   \section{US Airline Passenger Dataset}
   \label{section:airline_data}
 
   The US Airline Passenger dataset is a survey which was conducted in 2015
   by J.D. Power \citeyearpar{JDPower2015}. The dataset was retrieved on the 
-  website Kaggle \citeyearpar{KAGGLE2015}. This dataset is well suited for 
-  applying graph machine learning tasks following the MAG method. It further shows
-  to be a competitive dataset for classic machine learning methods. This makes
-  this dataset a suitable candidate for a fair comparison of graph machine 
-  learning vs standard machine learning. This dataset is presented in detail as 
-  it is used for the results presented in chapter \ref{section:results}. \\
+  website Kaggle \citeyearpar{KAGGLE2015} and is well suited for 
+  applying graph machine learning following the MAG generation procedure. 
+  The dataset focuses on classifying satisfied- and neutral or 
+  dissatisfied passengers. The dataset is thus set up for a standard binary 
+  classification task. The dataset further proves to be a competitive dataset 
+  for standard machine learning models. This makes this dataset a suitable 
+  candidate for a fair comparison of graph machine learning vs standard machine 
+  learning. This dataset is presented in detail as it is used for the results 
+  presented in chapter \ref{section:results}. \\
 
   \noindent An overview of the US Airline Passenger dataset is shown in table
   \ref{table:airline_summary}. The correlation heatmap of the dataset is
   further shown in figure \ref{fig:corr_heatmap}. The correlation heatmap
-  revealed, that the variables "Departure Delay in Minutes" and "Arrival Delay
+  reveals, that the variables "Departure Delay in Minutes" and "Arrival Delay
   in Minutes" are highly correlated. As "Arrival Delay in Minutes" has some
   missing observations, this variable is dropped in favor of "Departure Delay 
   in Minutes". The heatmap and its corresponding correlation matrix reveal,
   that "Gender" is approximately uncorrelated with any of the other variables.
   Further, "Departure Delay in Minutes" appears to be approximately 
   uncorrelated with any of the other variables. For that reason, it was tested
-  whether both variables could be excluded. The results however revealed, that
+  whether both variables could be excluded. The results however reveal, that
   the machine learning models performed better if these variables are included 
   in the model. The data shown in table \ref{table:airline_summary} and 
   figure \ref{fig:corr_heatmap} corresponds to a random sample of 6’000 
@@ -379,7 +382,7 @@
   the wifi-service being similar as well? Further, how do we assign 
   probabilities for people who are dissimilar? These considerations make the 
   selection of appropriate attributes difficult. It is therefore important to 
-  select attributes for which realistic variables for all of the following
+  select attributes for which realistic probabilities for all of the following
   three settings can be assigned:
 
   \begin{itemize}
@@ -483,16 +486,16 @@
 
   \noindent Figure \ref{fig:us_airline_nodes} plots the nodes of the network
   for the label "Satisfaction" and the 5 attributes used for the graph
-  generation. The transparency of the plot was set to $\alpha = 0.6$ to avoid 
+  generation. The transparency of the plot is set to $\alpha = 0.6$ to avoid 
   covering nodes during the graph plotting process. Figure
   \ref{fig:us_airline_nodes} reveals interesting associations. First it is
   shown, that a larger number of people traveling for business purposes are 
   satisfied compared to people traveling for personal reasons. This association
   becomes clear when comparing the Satisfaction plot with the Type of Travel
   plot. In relative terms, only approximately 9.8\% of passengers traveling for 
-  personal reasons were satisfied compared to business travelers with a 57.8\% 
+  personal reasons are satisfied compared to business travelers with a 57.8\% 
   satisfaction rate. Interestingly, passengers traveling for business purposes
-  adhere somewhat expected characteristics such as:
+  adhere to somewhat expected characteristics such as:
 
   \begin{enumerate}
     \item Most business class passengers are satisfied. 
@@ -524,7 +527,7 @@
       reliable here due to company mandated survey participation.
     \item Perhaps business travelers fly more frequently than passengers
       traveling for personal reasons. This could incentivize frequent business
-      travelers to give feedback as they would benefit most of service
+      travelers to give feedback as they would benefit most from service
       improvements. Infrequent personal travelers might be less incentivized,
       as they benefit less from service improvements. 
   \end{enumerate}
@@ -622,7 +625,7 @@
   attributes are selected accordingly such that $K\leqslant\log_{2} N$. The 
   US Airline Passenger dataset was used to generate a deterministic graph. The 
   threshold probability for a connection was set to 0.2 in the MAG model. The 
-  MAG yielded several disconnected graphs which were for the most part 
+  MAG yielded several disconnected graphs which are for the most part 
   clustered according to their group memberships. Figure \ref{fig:det_MAG} 
   shows the graphs for the label and the attributes, where the edges are 
   removed. The subgraphs are unfortunately plotted very small, however all 
@@ -639,7 +642,7 @@
   \noindent The deterministic MAG model crates disconnected graphs which form 
   clusters based on node similarities. In terms of performance, the accuracy 
   and loss behavior of both the deterministic- and stochastic generated graphs 
-  are virtually identical. This was true for all three datasets considered in 
+  are virtually identical. This is true for all three datasets considered in 
   this thesis. For the purpose of visualization, stochastic graphs are more 
   useful, as one can identify the different cluster and their relationships to 
   one another on a single connected graph. For this reason, the stochastic graph 

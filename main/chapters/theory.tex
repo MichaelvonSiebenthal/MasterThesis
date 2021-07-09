@@ -19,7 +19,7 @@
 	to Leonhard Euler and the famous "Königsberg Bridge Problem"
 	\citep{euler1741solutio}. The study of graphs has had a recent revival
 	thanks to its useful applications in areas such as the Google algorithm
-	PageRank \cite{page1999pagerank} and graph machine learning. Graphs are 
+	PageRank \citep{page1999pagerank} and graph machine learning. Graphs are 
 	special data structures as shown in Figure \ref{fig:graph}. The terms graph 
 	and network are often used interchangeably and have the identical meaning 
 	for the purpose of this master's thesis. Typically, the term graph is used 
@@ -45,9 +45,8 @@
 	elements such as multi-edges or self-edges. Self-edges refer to
 	nodes which have a looped link to themselves. This can be considered as a
 	form of feedback loop of a node on to itself. Lastly, multi-edges refer to 
-	direct node connections with multiple paths. \\
-
-	\noindent For mathematical notation, graphs are typically defined as follows:
+	direct node connections with multiple paths. For notation purposes, graphs 
+	are typically defined as follows:
 
 	\begin{equation}
 		G(V,E)
@@ -91,16 +90,16 @@
 	in figure \ref{fig:graph}. Nodes with self-loops would have a 1 recorded on 
 	the corresponding diagonal element of the adjacency matrix. As this is an 
 	undirected network, the adjacency matrix is symmetric. There are many 
-	additional aspects one could mention with regard to the adjacency matrix, 
-	they are however not relevant for this thesis. For additional information 
-	regarding the adjacency matrix, the book "Networks: An Introduction" by 
-	Mark Newman \citeyearpar{Newman2010} is highly recommended. 
+	additional aspects one could mention with regard to the adjacency matrix. 
+	These aspects are however not relevant for this thesis. For additional 
+	information regarding the adjacency matrix, the book "Networks: An 
+	Introduction" by Mark Newman \citeyearpar{Newman2010} is highly recommended. 
 
 	\paragraph{Degree Measures} \mbox{}\\
 
 	\noindent An important measure for graphs are the degrees denoted by $k$ of 
 	the vertices. Degrees refer to the number of edges connected to a vertex. The 
-	degrees of vertex denoted by $i$ can be formulated as \citep[p. 133]{Newman2010}:
+	degrees of vertex $i$ can be formulated as \citep[p. 133]{Newman2010}:
 
 	\begin{equation}
 		k_i = \sum_{j=1}^{n} A_{ij}
@@ -108,7 +107,7 @@
 
 	\noindent For an undirected graph, edges have two ends. This is due to the 
 	fact that vertices connected by an edge are mutually connected. In terms of 
-	the sum of the degrees of all vertices, we can therefore write for an
+	the sum of the degrees of all vertices, one can therefore write for an
 	undirected graph with $m$ edges \citep[p. 133]{Newman2010}:
 
 	\begin{equation}
@@ -289,7 +288,7 @@
 	For these vector representations distance measures such as Euclidean 
 	distances can be measured. The node embeddings can thus be used for
 	downstream machine learning using standard methods. Graph neural networks 
-	can also generate node embeddings as well as directly applying graphs to a 
+	can also generate node embeddings as well as directly apply graphs to a 
 	given machine learning task such as classification. The capability of
 	directly applying graphs for machine learning tasks, makes graph neural 
 	networks especially promising. \\
@@ -508,7 +507,7 @@
 	article by Grover \& Leskovec (\citeyear[p. 859]{grover2016node2vec}). \\
 
 	\noindent The resulting node embeddings can then be used for downstream
-	machine learning tasks using standard methods. An additional benefit of 
+	machine learning tasks using standard models. An additional benefit of 
 	graph representation learning is that the nodes can be encoded into an 
 	arbitrary number of dimensions. In this sense, graph representation 
 	learning can be used as a powerful dimensionality reduction strategy. 
@@ -522,7 +521,7 @@
 	\subsection{Graph Neural Networks}
 	\label{section:GNN_theory}
 
-	This section provides an overview of the theory for Graph Neural Networks
+	This section provides an overview of the theory for graph neural networks
 	(GNN). Within the family of GNNs, there are a myriad of different models 
 	available and every few months new models are published. GNNs are currently 
 	very popular and benefit from a large research output. This thesis will 
@@ -557,7 +556,7 @@
 	to graphs of different sizes \citep{leskovec2021lecture}. \\
 
 	\noindent Modern GNNs have overcome this problem by drawing inspiration from 
-	Convolutional Neural Networks (CNN) and its famous filtering mechanism as 
+	convolutional neural networks (CNN) and its famous filtering mechanism as 
 	outlined by \cite{krizhevsky2012imagenet}. CNNs typically work with grid 
 	structured input data such as pixels of images. The convolutional filter 
 	then samples the input grid using a filter with a specified size 
@@ -654,7 +653,7 @@
 	and GraphSage by \cite{hamilton2017inductive}. As shown in algorithm 
 	\ref{algo:GNN_struct}, GNNs can directly be applied for machine learning
 	tasks such as customer classification. This is where GNNs are especially 
-	powerful, and differ to the Graph Representation Learning algorithms 
+	powerful and differ to the Graph Representation Learning algorithms 
 	outlined in the previous section. GNNs are flexible tools and can be used 
 	in various settings such as graph representation learning, clustering, 
 	classification and link prediction tasks among others \citep{zhou2020graph}. \\
@@ -910,7 +909,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	which generate graphs that follow real-world network properties. These model 
 	parameters can however not be adopted for the task at hand. The parameters 
 	were created for a somewhat simpler task which "only" involved randomly 
-	generated feature data. These randomly generate features do not correspond
+	generated feature data. These randomly generated features do not correspond
 	to any specific features. For that reason, the model parameters can be
 	chosen freely such that the generated network follows real world network
 	properties. The aim of \citeauthor{kim2012multiplicative} was primarily to
@@ -935,7 +934,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	defined. In addition, attribute data must be discrete. For practical
 	reasons, the cardinality of the attributes should not be too large.
 	Attributes such as age might have to be discretized into 4 or 5 discrete
-	age categories. The link-affinity matrix, $\Theta_{i}$, is a matrix
+	age categories. The link-affinity matrix $\Theta_{i}$ is a matrix
 	containing probabilities which are used to estimate the probability of two 
 	observations in the dataset $(u,v)$ to form a connection. More specifically, 
 	the probability for a connection is calculated given the attributes $a_i$ of 
@@ -971,7 +970,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	of forming a connection. Lastly, random graphs can be generated by setting the
 	link-affinity probabilities to 0.5. Given the type of attributes available
 	in the data sets, graphs will be generated using homophily structures. The 
-	attribute link-affinity matrices, $\Theta_i$, are defined for every attribute 
+	attribute link-affinity matrices $\Theta_i$ are defined for every attribute 
 	and can be set for an arbitrary size of categories within an attribute. 
 	More formally for each observation $u \in B$ with $K$ categorical attributes 
 	of cardinality $d_i$ for $i = 1,2,\dots,K$ and corresponding link-affinity 
@@ -1042,7 +1041,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\begin{enumerate}
 		\item Calculate the connection probabilities $P$ between every 
 			observation in the attribute matrix $B$ using equation \ref{eq:MAG}. 
-		\item As we only work with undirected graphs, the upper triangular
+		\item As only undirected graphs are considered, the upper triangular
 			matrix $U$ of $P$ is taken where the $diag(U) = 0$. The diagonal of
 			$U$ is set to 0 to exclude self-loops.
 		\item For every element in $U$, draw a random number form a standard
@@ -1057,6 +1056,4 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 			which is why the final adjacency matrix can be created using 
 			$A = \hat A + \hat A^{T}$. 
 	\end{enumerate}
-
-	\noindent This concludes the required theoretical background for this
-	thesis. 
+ 
