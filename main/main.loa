@@ -1,9 +1,9 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {algocf}{\numberline {1}{\ignorespaces DeepWalk($G,w,d,\gamma ,t$)}}{22}{algocf.1}%
-\contentsline {algocf}{\numberline {2}{\ignorespaces SkipGram($\Phi ,\mathcal {W}_{vi},w$)}}{22}{algocf.2}%
-\contentsline {algocf}{\numberline {3}{\ignorespaces Typical GNN algorithm for model training}}{25}{algocf.3}%
-\contentsline {algocf}{\numberline {4}{\ignorespaces GraphSAGE minibatch forward propagation algorithm}}{29}{algocf.4}%
+\contentsline {algocf}{\numberline {1}{\ignorespaces DeepWalk}}{22}{algocf.1}%
+\contentsline {algocf}{\numberline {2}{\ignorespaces SkipGram}}{22}{algocf.2}%
+\contentsline {algocf}{\numberline {3}{\ignorespaces Typical GNN Algorithm for Model Training}}{25}{algocf.3}%
+\contentsline {algocf}{\numberline {4}{\ignorespaces GraphSAGE Minibatch Forward Propagation Algorithm}}{29}{algocf.4}%
 \contentsline {algocf}{\numberline {5}{\ignorespaces Multiplicative Attribute Graph Model}}{33}{algocf.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

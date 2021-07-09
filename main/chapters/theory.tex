@@ -452,7 +452,7 @@
 		\nl			SkipGram($\Phi,\mathcal{W}_{vi}, w$)
 				}
 			}
-		\caption{DeepWalk($G,w,d,\gamma,t$)}
+		\caption[DeepWalk]{DeepWalk($G,w,d,\gamma,t$)}
 		\label{algo:DeepWalk}
 	\end{algorithm}
 	
@@ -465,7 +465,7 @@
 		\nl			$\Phi = \Phi - \alpha * \frac{\partial J}{\partial \Phi}$
 				}
 			}
-		\caption{SkipGram($\Phi,\mathcal{W}_{vi},w$)}
+		\caption[SkipGram]{SkipGram($\Phi,\mathcal{W}_{vi},w$)}
 		\label{algo:SkipGram}
 	\end{algorithm}
 	
@@ -624,7 +624,7 @@
 		\nl $\mathcal{L}(\Theta)=\sum_{v=1}^{\mid V \mid} CE(y_{v},z_{v})$\;
 		\nl $\Theta = \Theta - \alpha\cdot\frac{\partial\mathcal{L}}{\partial\Theta}$
 		}
-		\caption{Typical GNN algorithm for model training}
+		\caption{Typical GNN Algorithm for Model Training}
 		\label{algo:GNN_struct}
 	\end{algorithm}
 
@@ -812,7 +812,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 				}		
 			}
 		\nl $z_v \leftarrow h_{u}^{K},\forall u \in \mathcal{B}$
-		\caption{GraphSAGE minibatch forward propagation algorithm}
+		\caption{GraphSAGE Minibatch Forward Propagation Algorithm}
 		\label{algo:GraphSage}
 	\end{algorithm}
 	

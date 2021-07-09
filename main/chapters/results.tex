@@ -1,23 +1,23 @@
   
-  In this chapter the results for the US Airline Passenger Dataset are
-  presented. First, the model specifications and results of graph
-  representation learning and GNNs are presented. Afterwards, the graph machine
-  learning results are compared to the results using "standard" machine
-  learning methods. For the comparison, the methods logistic
-  regression \citep{cramer2002origins}, naive bayes \citep{zhang2004bayes},
-  support vector machines (SVM) \citep{platt1999probabilistic,chang2011libsvm},
-  Random Forest Classifier \citep{breiman2001random}, AdaBoost Classifier
+  This chapter presents the results for the US Airline Passenger dataset. First, 
+  the model specifications and the results using graph representation learning 
+  and GNNs are presented. Afterwards, the graph machine learning results are 
+  compared to the results using "standard" machine learning models. For the 
+  comparison, the methods logistic regression \citep{cramer2002origins}, naive 
+  bayes \citep{zhang2004bayes}, support vector machines (SVM) 
+  \citep{platt1999probabilistic,chang2011libsvm}, Random Forest Classifier 
+  \citep{breiman2001random}, AdaBoost Classifier 
   \citep{freund1997decision,hastie2009multi}, Quadratic Discriminant Analysis
-  (QDA) \citep{tharwat2016linear} and Artificial Neural Networks
+  (QDA) \citep{tharwat2016linear} and Artificial Neural Networks (ANN)
   \citep{mcculloch1943logical} are considered.
 
   \section{Graph Representation Learning}
   \label{section:result_n2v}
 
   The graph generated in section \ref{section:graph_gen} using the MAG method
-  was used for graph representation learning. The Node2Vec algorithm using an
-  unbiased walk was employed for learning the 2-dimensional node representations 
-  of the graph. The Node2Vec algorithm was employed using following model 
+  is used for graph representation learning. The Node2Vec algorithm using an
+  unbiased walk is employed for learning the 2-dimensional node representations 
+  of the graph. The Node2Vec algorithm is employed using following model 
   parameters:
 
   \begin{itemize}
@@ -32,14 +32,14 @@
   \end{itemize}
 
   \noindent With the specified return- and in-out parameters, the Node2Vec
-  output corresponds to the DeepWalk output. The resulting node embeddings were
-  then used as inputs for standard machine learning methods. The resulting node 
-  embeddings are shown in figure \ref{fig:node2vec}. 
+  output corresponds to the DeepWalk output. The resulting node embeddings are
+  then used as inputs for standard machine learning methods. The node embeddings 
+  are shown in figure \ref{fig:node2vec}. 
 
   \begin{figure}[h]
 		\centering
 		\includegraphics[width=0.9\textwidth]{node2vec_emb.png}
-		\caption{Node2Vec embeddings}
+		\caption{Node2Vec Embeddings}
         \label{fig:node2vec}
   \end{figure}
 
@@ -53,8 +53,8 @@
   which they belong to. The 2-dimensional node embeddings are thus useful for
   gaining insights via data visualization.\\
 
-  \noindent The node embeddings were used as input data for the three standard 
-  machine learning methods shown in table \ref{table:node2vec_results}.
+  \noindent The node embeddings are used as input data for the standard machine 
+  learning methods and are shown in table \ref{table:node2vec_results}.
 
   \begin{table}[h]
     \centering
@@ -77,14 +77,14 @@
     \label{table:node2vec_results}
   \end{table}
 
-  \noindent The results show, that Node2Vec model was not successful for
+  \noindent The results show, that the Node2Vec model is not successful for
   classifying passengers according to their satisfaction. Applying the trained
-  models to the test data yielded even poorer results. When looking at the
+  models to the test data yields even poorer results. When looking at the
   satisfaction scatter plot in figure \ref{fig:node2vec}, it becomes obvious why
-  the downstream machine learning tasks were unsuccessful. Node2Vec generated
+  the downstream machine learning tasks are unsuccessful. Node2Vec generates
   very good node embeddings for the attributes to the extent that clusters exist
   within the original graph. The label satisfaction could not be used as an 
-  attribute for generating the graph, as this would be unrealistic in practice. 
+  attribute for generating the graph. This would be unrealistic in practice. 
   As the label is not considered for the graph generation process, Node2Vec 
   does not create embeddings which directly consider the label. The label is 
   only considered to the extend that the attributes create structures 
@@ -102,10 +102,10 @@
   this approach yielded excellent results with accuracies often being close to 
   95\%. For some of the models such as the Random Forest classifier, this also
   translated into good accuracies for the test data. Unfortunately, the results 
-  presented in section \ref{section:result_comp} show, that better accuracies 
-  are achieved only using the feature data. For that reason, joining feature 
-  data with node embeddings is not a recommended approach for the US Airline 
-  Passenger dataset.
+  presented in section \ref{section:result_comp} show, that better accuracies
+  for the test data are achieved only using the feature data. For that reason, 
+  joining feature data with node embeddings is not a recommended approach for 
+  the US Airline Passenger dataset.
 
   \section{Graph Neural Networks}
 
@@ -118,11 +118,11 @@
   \subsection{Graph Convolutional Network}
   \label{section:GCN_results}
 
-  The GCN was designed using a similar forward propagation function as the
+  The GCN is designed using a similar forward propagation function as the
   function shown in equation \ref{eq:GCN_forward}. The only difference is, that
   the output layer is activated using the logSoftmax function instead of the
   Softmax function. The outputs of both activation functions are theoretically 
-  the same. The logSoftmax function is however numerically more stable, as it 
+  identical. The logSoftmax function is however numerically more stable, as it 
   internally makes use of the log-sum-exp trick. A good explanation of this
   trick is given on the website by \cite{gundersen2020}\footnote{Website 
   Gregory Gundersen: \\\url{https://gregorygundersen.com/blog/2020/02/09/log-sum-exp/}}.
@@ -133,20 +133,21 @@
       \label{eq:GCN_forward_1}
   \end{equation}
 
-  \noindent The node features $X$ include to the 21 explanatory variables of the 
-  US airline passenger dataset as described in section 
-  \ref{section:airline_data}. The categorical variables were one-hot encoded, 
+  \noindent The node features $X$ include the 21 explanatory variables of the 
+  US Airline Passenger dataset as described in section 
+  \ref{section:airline_data}. The categorical variables are one-hot encoded, 
   which is why the feature matrix includes 24 variables. The hidden layer size 
-  of the convolutional layers was also set to 24 and the output layer was set 
-  to size 2 for the binary classification task. The training loss was 
-  calculated using cross-entropy loss and the model parameters were updated 
-  using the Adam optimizer \citep{kingma2014adam} with the learning rate set to 
-  $0.002$. Essentially, algorithm \ref{algo:GNN_struct} ca be applied by replacing the 
-  forward propagation with equation \ref{eq:GCN_forward_1} and updating the 
-  model parameters using the Adam optimizer instead of standard gradient descent.
-  Different model specifications were tested, for which the chosen specifications
-  performed best. The GCN required approximately 1'000 epochs to finish training. 
-  The resulting loss- and accuracy plots are shown in figure \ref{fig:gcn_plots}.
+  of the convolutional layers is also set to 24 and the output layer is set to 
+  2 for the binary classification task. The training loss is calculated using 
+  cross-entropy loss and the model parameters are updated using the Adam 
+  optimizer \citep{kingma2014adam} with the learning rate set to $0.002$. 
+  Essentially, algorithm \ref{algo:GNN_struct} ca be applied by replacing the 
+  forward propagation procedure with the function shown in equation 
+  \ref{eq:GCN_forward_1}. In addition, the model parameters are updated using 
+  the Adam optimizer instead of standard gradient descent. Different model 
+  specifications were tested, for which the chosen specifications perform best. 
+  The GCN requires approximately 1'000 epochs to finish training. The resulting 
+  loss- and accuracy plots are shown in figure \ref{fig:gcn_plots}.
 
   \begin{figure}[h]
 		\centering
@@ -155,9 +156,8 @@
         \label{fig:gcn_plots}
   \end{figure}
 
-  \noindent The resulting confusion matrices and the final accuracies are 
-  shown in tables \ref{table:gcn_results_train} \& 
-  \ref{table:gcn_results_valid}. 
+  \noindent The confusion matrices and the final accuracies are shown in tables 
+  \ref{table:gcn_results_train} \& \ref{table:gcn_results_valid}. 
 
   \begin{table}[h]
     \centering
@@ -171,7 +171,7 @@
       \textbf{Accuracy} & 76.17\% & \\
       \hline
     \end{tabular}
-    \caption{Confusion Matrix Training Data}
+    \caption{Confusion Matrix Training Data GCN}
     \label{table:gcn_results_train}
   \end{table}
 
@@ -187,48 +187,46 @@
       \textbf{Accuracy} & 77.00\% & \\
       \hline
     \end{tabular}
-    \caption{Confusion Matrix Validation Data}
+    \caption{Confusion Matrix Validation Data GCN}
     \label{table:gcn_results_valid}
   \end{table}
 
   \noindent Graph convolutional networks are designed to be used in a
   transductive setting and the model cannot be applied to new and unseen
-  graphs. In this setting 30\% of the dataset was used for training and 70\% of
-  the data was used for validation. This is done by masking the nodes in the
+  graphs. In this setting 30\% of the dataset are used for training and 70\% of
+  the data is used for validation. This is done by masking the nodes in the
   graph which are part of the validations dataset. The masked nodes are 
-  considered in the in the neighborhood function $\mathcal{N}(v)$, they are 
-  however not considered as target nodes. Therefore, masked nodes are not used
-  for updating the model parameters. The fact, that GCNs cannot be used in an
-  inductive setting is very limiting. Further, the GCN requires 1'000
-  epochs to finish training and yields only mediocre results in terms of
-  accuracy and model fit. A reason for this could be, that only a full-batch
-  implementation for GCN was introduced. In addition, GCNs always consider the
-  entire neighborhood set. GraphSage can be considered as the inductive counter
-  part which was specifically designed with mini-batch training in mind and
-  makes use of neighborhood sampling. The results for GraphSage are presented
-  in the following section. 
+  considered in the neighborhood function $\mathcal{N}(v)$, they are just not 
+  considered as target nodes for learning and updating the model parameters. 
+  The fact, that GCNs cannot be used in an inductive setting is very limiting. 
+  Further, the GCN requires 1'000 epochs to finish training and yields only 
+  mediocre results in terms of accuracy and model fit. A reason for this could 
+  be, that only a full-batch implementation for GCN was introduced. In addition, 
+  GCNs always consider the entire neighborhood set. GraphSage for comparison 
+  are specifically designed with mini-batch training and neighborhood sampling
+  in mind. The results for GraphSage are presented in the following section. 
 
   \subsection{GraphSage}
   \label{section:graphsage_results}
 
-  For GraphSage the exact same data input was used as for the GCN. The 
-  GraphSage model included 2 convolutional layers with a hidden layer size of
+  For GraphSage the exact same data input is used as for the GCN. The 
+  GraphSage model includes 2 convolutional layers with a hidden layer size of
   24 and an output layer size of 2. The model is defined using an adaptation of 
   algorithm \ref{algo:GraphSage}. Specifically, the hidden layer is activated 
   using the ReLU function with subsequent L2-normalization. The output of the 
   second layer is activated using the logSoftmax function. Normalization is 
-  skipped for the final output. The training data was split into 80\% training 
+  skipped for the final output. The training data is split into 80\% training 
   and 20\% validation using node masking. The loss is calculated using 
   cross-entropy and the model parameters are updated using the Adam optimizer 
   with the learning rate set to 0.002. The GraphSage model employed is thus an
   adaptation of the algorithm shown in algorithm \ref{algo:GNN_struct}. The 
-  model was trained using a mini-batch size of 50 nodes and the neighborhood 
-  function $\mathcal{N}(v)$ randomly sampled 10 neighbors at a 2-hop distance
-  from the target node and randomly sampled 5 nodes at a 1-hop distance. This 
+  model is trained using a mini-batch size of 50 nodes and the neighborhood 
+  function $\mathcal{N}(v)$ randomly samples 10 neighbors at a 2-hop distance
+  from the target node and randomly samples 5 nodes at a 1-hop distance. This 
   corresponds to the steps shown in figure \ref{fig:GraphSage_sample}. To 
-  improve the robustness of the model, a dropout rate of $p = 0.02$ was set. 
-  GraphSage was run using the aggregation strategies mean, LSTM, max-pooling. 
-  In addition, sum-pooling was added as an additional aggregation strategy 
+  improve the robustness of the model, a dropout rate of $p = 0.02$ is set. 
+  GraphSage is run using the aggregation strategies mean, LSTM and max-pooling. 
+  In addition, sum-pooling is added as an additional aggregation strategy 
   as suggested by \cite{xu2019powerful}. \\
 
   \noindent The sum-pooling applied in the GraphSage setting follows 
@@ -240,8 +238,8 @@
   Different input nodes (with different graph structures) in a mean- or 
   max aggregation setting can yield an identical output. Given an 
   identical output, the GNN would classify the two identical outputs as the 
-  same node representation even though they are the result of different input 
-  nodes. This is an area where GNNs can fail to distinguish graph structures. 
+  same node representation even though they are the result of different graph
+  structures. This is an area where GNNs can fail to distinguish graph structures. 
   Examples of where sum aggregation succeeds and mean- and/or max aggregation 
   fails is shown in figure \ref{fig:graph_structures}:
 
@@ -262,17 +260,16 @@
   be an injective function \citep[p. 5]{xu2019powerful}. For the US Airline
   Passenger dataset with its many features, sum aggregation is unfortunately not 
   an injective function. It however sparked the interest in sum aggregation,
-  which is why it was added as an aggregation strategy of interest for the
+  which is why it is added as an aggregation strategy of interest for the
   GraphSage model. \\
   
-  \noindent The model for each aggregation strategy was trained using 400 epochs. 
+  \noindent The model for each aggregation strategy is trained using 400 epochs. 
   The training- and validation results using the training graph are presented 
   for every aggregation strategy. In addition, the trained models are applied 
-  to a new unseen test graph which also consists of 6'000 nodes. Both the
-  training- and validation graph as well as the test graph were created from
-  the training data set and the test data respectively using the MAG method.
-  The results for all aggregation strategies are presented in the following
-  paragraphs. 
+  to a new unseen test graph which also consists of 6'000 nodes. The test graph
+  is created analogues to the training- and validation graph using a separarte
+  test feature dataset. The results for all aggregation strategies are 
+  presented in the following paragraphs. 
 
   \paragraph{Mean Aggregation}  \mbox{}\\ 
   In figure \ref{fig:mean_aggregation} the training- and validation losses as
@@ -309,10 +306,10 @@
 
   \paragraph{LSTM Aggregation}  \mbox{}\\ 
   Figure \ref{fig:lstm_aggregation} shows the training- and validation loss
-  and accuracy using LSTM aggregation. The model yielded very good results for
-  the training- and validation data sets. The LSTM model is however
-  significantly slower compared to the other aggregations methods which is an
-  inconvenient short-coming.
+  and the accuracy using LSTM aggregation. The model yields very good results 
+  for the training- and validation data sets. The LSTM model is however 
+  significantly slower for training purposes compared to the other aggregation 
+  methods. This is an inconvenient short-coming.
 
   \begin{figure}[h]
 		\centering
@@ -321,11 +318,11 @@
         \label{fig:lstm_aggregation}
   \end{figure}
 
-  \noindent The training- and validation accuracy after 400 epochs was 95.75\% 
-  and 95.14\% respectively. Here again, we can see that the training behavior
-  is relatively good. The model on average is however prone to over-fit as
-  shown in figure \ref{fig:lstm_aggregation}. Fortunately, the over-fit is
-  small and remains stable. The results for the test graph are shown in table 
+  \noindent The training- and validation accuracy after 400 epochs is 95.75\% 
+  and 95.14\% respectively. Here again, is is shown that the training behavior
+  is relatively good. The model is however prone to over-fit as shown in figure 
+  \ref{fig:lstm_aggregation}. Fortunately, the over-fit is small and remains 
+  stable. The results for the test graph are shown in table 
   \ref{table:lstm_results_test}. The results reveal, that the accuracies of >
   95\% for the training- and validation datasets do not transfer to the test
   graph. While this is to be expected, the decrease in accuracy for the test
@@ -349,14 +346,14 @@
   \end{table}
 
   \paragraph{Sum-Pooling Aggregation}  \mbox{}\\ 
-  Sum-pooling was added for the reasons previously outlined. It is of
-  particular interest to assess, whether sum aggregation can provide some added
-  value compared to the other aggregation strategies. Given the present feature
-  data, sum aggregation is unfortunately not injective. For that reason, it is
-  not expected to necessarily dominate the other strategies. Nevertheless, it
-  is of interest to assess, whether sum aggregation is competitive if not
-  superior even in a non-injective setting. The training- and validation
-  results are shown in figure \ref{fig:sum_aggregation}. 
+  Sum-pooling is added for the reasons previously outlined. It is of particular 
+  interest to assess, whether sum-pooling can provide some added value compared 
+  to the other aggregation strategies. Given the feature data, sum aggregation 
+  is unfortunately not injective. For that reason, it is not expected to 
+  necessarily dominate the other strategies. Nevertheless, it is of interest to 
+  assess, whether sum aggregation is competitive if not superior even in a 
+  non-injective setting. The training- and validation results are shown in 
+  figure \ref{fig:sum_aggregation}. 
 
   \begin{figure}[H]
 		\centering
@@ -369,7 +366,8 @@
   loss curves are however not as smooth compared to the other aggregation
   strategies. After training for 400 epochs, the training accuracy is at 94.60\% 
   and validation accuracy is  94.97\%. The results for the test graph are shown 
-  in table \ref{table:sum_results_test}.
+  in table \ref{table:sum_results_test}. Sum-pooling yields competitive results,
+  it does however not dominate the other aggregation strategies.
 
   \begin{table}[h]
     \centering
@@ -400,7 +398,9 @@
 
   \noindent After 400 epochs, the model arrived at a training accuracy of 94.43\% 
   and a validation accuracy of 94.88\%. The results for the test graph are shown 
-  in table \ref{table:max_results_test}.
+  in table \ref{table:max_results_test}. Max-pooling yields the best results and
+  corresponds to the recommended method by \citeauthor{hamilton2017inductive} 
+  \citeyearpar[p. 9]{hamilton2017inductive}.
 
   \begin{table}[h]
     \centering
@@ -422,22 +422,21 @@
   \label{section:graphsage_simulation}
   
   The loss- and accuracy plots reveal mostly a relatively good model fit.
-  Repeatedly training the GraphSage models revealed, that there was some
+  Repeatedly training the GraphSage models revealed, that there is some
   non-negligible variation in the performance of the trained models. In
-  particular, depending on how the data was randomly split into 80\% training
-  data and 20\% validation data, the model could differ significantly.
-  Simulations revealed, that the random assignment of training- and validation
+  particular, depending on how the data is randomly split into 80\% training
+  data and 20\% validation data, the model results could differ significantly.
+  Simulations reveal, that the random assignment of training- and validation
   data is not the sole culprit for the observed variation in model performance. 
   The dropout rate of 2\% employed in the GraphSage model is just as responsible. 
-  Simulations showed, that if the dropout rate was set to 0, the model tended
-  over-fit significantly. In this setting, the training accuracy would approach
-  98\% while the validation accuracy would stagnate around 92-93\%. The model
-  accordingly did not translate well to the test graph for which the accuracy
-  was approximately 91\%. This training behavior was observed regardless of the
+  Simulations show, that if the dropout rate is set to 0, taht the model tends
+  to over-fit significantly. In this setting, the training accuracy approaches
+  98\% while the validation accuracy stagnates around 92-93\%. The trained model 
+  accordingly does not translate well to the test graph for which the accuracy
+  is approximately 91\%. This training behavior is observed regardless of the
   random train- and validation data set assignment. For that reason, a dropout 
-  rate of 2\% was set to avoid this over-fitting problem which in turn also 
-  yielded better test results as shown in section
-  \ref{section:graphsage_results}. \\
+  rate of 2\% is set to avoid this over-fitting problem which in turn also 
+  yields better test results as shown in section \ref{section:graphsage_results}. \\
 
   \noindent Setting a dropout rate introduces an additional obstacle
   for training the model. While training the model, the dropout rate is
@@ -452,18 +451,18 @@
   data. The same can be true in reverse, where an over-fit occurs if the
   training data includes mostly nodes which are more simple to classify than
   the validation data. Lastly, a good model fit is also frequently observed as
-  shown in the previous section. \\
+  shown in the results presented in the previous section. \\
 
   \noindent Due to this observed variation in model fit and performance, a
-  simulation was performed with 100 experiments. Every experiment made use of
-  the same training \& validation graph and test graph. For every experiment
-  the training- and validation set was randomly assigned using a 80/20 split.
-  Afterwards, the model was trained using 400 epochs and applied to the
+  simulation is performed with 100 experiments. Every experiment makes use of
+  the same training \& validation graph and test graph. For every experiment,
+  the training- and validation set is randomly assigned using a 80/20 split.
+  Afterwards, the model is trained using 400 epochs and is then applied to the
   test graph. The loss and accuracy for the training, validation and test data
-  was then collected for every experiment. These experiments were conducted to
+  is collected for every experiment. These experiments are conducted to
   ensure, that the results shown in section \ref{section:graphsage_results} are
   representative. The results of the 100 experiments using GraphSage with
-  max-pooling are shown in table \ref{table:simulation_results} and figure 
+  max-pooling is shown in table \ref{table:simulation_results} and figure 
   \ref{fig:simulation_results}. 
 
   \begin{table}[h]
@@ -490,35 +489,36 @@
         \label{fig:simulation_results}
   \end{figure}
 
-  \noindent Max-pooling was selected as this corresponds to the recommended
+  \noindent Max-pooling is selected as it corresponds to the recommended
   aggregation strategy \citep[p. 9]{hamilton2017inductive}. The same simulation
-  using 100 experiments was also performed for sum-pooling. The results were
+  using 100 experiments is also performed for sum-pooling. The results are
   almost identical, where max-pooling is marginally more successful. For the 
-  remaining aggregation strategies, only 10 experiments were run due to time
+  remaining aggregation strategies, only 10 experiments are run due to time
   considerations as 100 experiments require approximately 15 hours to complete.
   The required time for the simulation could most definitely be shortened using
-  graphical processing units (GPU). Unfortunately, a GPU was not available for
+  graphical processing units (GPU). Unfortunately, a GPU is not available for
   conducting the simulations. If available, this would be highly recommended to
-  speed up the simulation. The results using only 10 experiments yielded similar 
-  results, with test accuracies ranging mostly between 93-94\%. The simulation
-  results for mean, lstm and sum aggregation are shown in appendix 
-  \ref{App:sim_results}. The results shown in section 
-  \ref{section:graphsage_results} are therefore representative results, even if 
-  admittedly on the more positive side. 
+  shorten the required time for completing the simulations. The results using 
+  only 10 experiments yields similar results, with test accuracies ranging 
+  mostly between 93-94\%. The simulation results for mean, lstm and sum 
+  aggregation are shown in appendix \ref{App:sim_results}. The results shown in 
+  section \ref{section:graphsage_results} are therefore representative results, 
+  even if admittedly on the more positive side. 
 
+  \newpage
   \section{Result Comparison}
   \label{section:result_comp}
 
   This section compares the results of the three models Node2Vec, GCN and
   GraphSage. In addition the graph based machine learning methods are compared
-  to the standard machine learning methods. More precisely, the same standard
-  machine learning methods will be used for comparison as were used for the
-  downstream machine learning task for Graph Representation Learning shown in 
-  section \ref{section:result_n2v}. For the comparison, the standard machine
-  learning methods will consider the same features as inputs as the GNNs. The 
-  comparison is done to assess to what extent, semi-synthetic graphs are useful
-  for graph machine learning. This comparison will thus provide an important 
-  ingredient for answering the research question stated in section 
+  to the standard machine learning models. More precisely, the same standard
+  machine learning models are used for comparison as for the downstream 
+  machine learning task for Graph Representation Learning shown in section 
+  \ref{section:result_n2v}. For the comparison, the standard machine learning 
+  model consider the same features as inputs as the GNNs. The comparison is 
+  done to assess to what extent, semi-synthetic graphs are useful for graph 
+  machine learning. This comparison thus provides the key results for answering
+  the research question and assessing the hypotheses stated in section 
   \ref{section:research_topics}. The comparison of the results is shown in table 
   \ref{table:result_comparison}.
 
@@ -554,15 +554,15 @@
   \ref{section:result_n2v}, \ref{section:GCN_results} and 
   \ref{section:graphsage_results}. For Graph Representation Learning
   (Node2Vec), the results using logistic regression for downstream machine
-  learning are shown. This method was selected, as it showed the best overall 
+  learning are shown. This method is selected, as it provides the best overall 
   results in terms of accuracy and model simplicity. \\
 
-  \noindent The comparison shown in table \ref{table:result_comparison} reveal,
-  that GCN and Node2Vec are not competitive strategies for US Airline Passenger
-  data set. Fortunately GraphSage is shown to be a serious competitor and is the
+  \noindent The comparison shown in table \ref{table:result_comparison} reveals,
+  that GCN and Node2Vec are not competitive strategies for the US Airline 
+  Passenger dataset. GraphSage is shown to be a serious competitor and is the
   second best method. The Random Forest classifier is consistently the best 
-  method regardless of the training- and validation data split and test data. 
-  The ANN is the third best model and is only marginally inferior to the
+  method regardless of the training- and validation data split and used test 
+  data. The ANN is the third best model and is only marginally inferior to the
   GraphSage models. Similarly as for GNNs, it is important to evaluate the 
   model fit of the ANN to draw a more definitive conclusion. The loss- and
   accuracy plots of the ANN are shown in figure \ref{fig:ANN_fit}.
@@ -574,20 +574,21 @@
         \label{fig:ANN_fit}
   \end{figure}
 
+  \newpage
   \noindent The ANN has an input layer size of 24, a hidden layer size of 15
-  and an output layer with size 2. The output of the first layer was activated
-  using the ReLU function and the output of the second layer was activated
-  using the Softmax function. The loss was calculated using cross-entropy and
-  the model parameters were updated using the Adam optimizer with a learning
-  rate of $\alpha=0.002$. The dropout rate was set to $p=0.01$. Without setting 
-  the dropout rate, the ANN exhibited what could be described as wild training 
-  behavior. The presented model settings correspond to the ones which performed 
-  best for the ANN. Figure \ref{fig:ANN_fit} shows, that the ANN model starts 
-  over-fitting after approximately 200 epochs. When comparing the GraphSage 
-  training plots with the ANN, the GraphSage model appears to exhibit preferable 
-  training behavior. \\
+  and an output layer with size 2. The output of the first layer is activated
+  using the ReLU function and the output of the second layer is activated
+  using the Softmax function. The loss is calculated using cross-entropy and
+  the model parameters are updated using the Adam optimizer with a learning
+  rate of $\alpha=0.002$. The dropout rate is set to $p=0.01$. Without setting 
+  the dropout rate, the ANN is prone to significant over-fitting. The presented 
+  model settings correspond to the ones which performed best for the ANN. Figure 
+  \ref{fig:ANN_fit} shows, that the ANN model starts over-fitting after 
+  approximately 200 epochs. When comparing the GraphSage training plots with the 
+  ANN, the GraphSage model appears to exhibit preferable training behavior on
+  average. \\
 
   \noindent AdaBoost and SVM also are shown to yield good results. The test
   accuracies are however not as competitive compared to the previously
-  mentioned methods. Lastly, naive bayes, QDA and logistic regression clearly
+  mentioned methods. Lastly naive bayes, QDA and logistic regression clearly
   yield inferior results. 

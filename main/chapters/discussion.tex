@@ -13,86 +13,82 @@
   \section{Informativeness of Semi-Synthetic Graphs}
   
   The graph generated for the US Airline Passenger data set presented in section
-  \ref{section:airline_data} provided interesting results in term of cluster
-  analysis. The MAG model was successfully used for generating a graph that
-  captured useful neighborhood structures as shown in figure
-  \ref{fig:us_airline_nodes}. Specifically, similar nodes were grouped together 
-  based on their similarity given the selected attributes for the MAG model. 
-  Especially appealing is that neighborhoods are also consistent within 
-  neighborhoods. To illustrate this, one can observe that all nodes are
-  clustered together based on their similarity even within the two main
-  clusters which formed based on the attribute type of travel. This
-  observation is consistent for several additional levels. For instance, nodes
-  form neighborhoods based on age within the cluster of business class
-  passengers which is part of the cluster of passenger which are traveling for
-  business purposes. The only attribute for which no significant clusters
-  emerged is the attribute gender. The reason for this is, that the
-  link-affinity matrix formed a connection with probability of 0.6 for
-  observations with the same gender and 0.4 if they were of the opposite
-  gender. These probabilities were set based on the assumption that
+  \ref{section:airline_data} provided interesting results for cluster analysis. 
+  The MAG model was successfully used for generating a graph that captured 
+  useful neighborhood structures as shown in figure \ref{fig:us_airline_nodes}. 
+  Specifically, similar nodes were grouped together based on their similarity 
+  given the selected attributes for the MAG model. Especially appealing is that 
+  neighborhoods are also consistent within neighborhoods. To illustrate this, 
+  one can observe that all nodes are clustered together based on their 
+  similarity even within the two main clusters which formed based on the 
+  attribute type of travel. This observation is consistent for several 
+  additional levels. For instance, nodes form neighborhoods based on age within 
+  the cluster of business class passengers which is part of the cluster of 
+  passenger which are traveling for business purposes. The only attribute for 
+  which no significant clusters emerged is the attribute gender. The reason for 
+  this is, that the link-affinity matrix formed a connection with probability 
+  of 0.6 for observations with the same gender and 0.4 if they were of the 
+  opposite gender. These probabilities were set based on the assumption that
   observations of the same gender are more similar than the opposite gender. It
   is however not assumed, that the passenger experience for women would be
   significantly different to the one for men. In addition, one needs to be
   careful when assigning link-affinity probabilities. The data is almost
   perfectly 50/50 split into male and female observations. If one assigns very
-  low- or high probabilities, this will significantly alter the graph
-  generation of all nodes. This was for instance done for the attribute type of 
-  travel which split the graph into two main clusters. This is less of a concern 
-  for variables with multiple categories such as age. Nevertheless, the
-  attribute gender did generate some mild clustering within the network, which 
-  could be exploited for graph machine learning. One can observe this mild
-  clustering in the graph, the effect is however not pronounced enough to draw
-  any conclusions from visual observations. The graphs shown in figure
-  \ref{fig:us_airline_nodes} thus provide very useful insights for better
-  understanding the relationships within the data. This is a welcome bi-product
-  of the MAG model and it is surprising to see how informative the resulting 
-  graph is for analyzing the data. In fact, it provided vastly superior 
-  insights than what a standard scatter plot could reveal given the available 
-  feature data. For reference, the pairplot of the feature data can be found in 
-  appendix \ref{App:pairplot}. In this regard, the MAG model is very exciting for visually
-  analyzing data. \\
+  low- or high probabilities, this will significantly alter the graph. This is 
+  for instance done for the attribute type of travel which split the graph into
+  the two main clusters. This aspect is less of a concern for attributes with 
+  multiple categories such as age. Nevertheless, the attribute gender did 
+  generate some mild clustering within the network, which could be exploited for 
+  graph machine learning. One can observe this mild clustering in the graph, the 
+  effect is however not pronounced enough to draw any conclusions from visual 
+  observations. The graphs shown in figure \ref{fig:us_airline_nodes} thus 
+  provide very useful insights for better understanding the relationships within 
+  the data. This is a welcome bi-product of the MAG model and it is surprising 
+  to see how informative the resulting graph is for analyzing the data. In fact, 
+  it provides vastly superior insights compared to what a standard scatter plot 
+  can reveal given the available feature data. For reference, the pairplot of 
+  the feature data can be found in appendix \ref{App:pairplot}. In this regard, 
+  the MAG model is very exciting for visually analyzing data. \\
 
-  \noindent Applying methods such as Node2Vec further allow to create
-  2-dimensional node embeddings which can be used to create scatter plots. The
+  \noindent Applying methods such as Node2Vec further allows for the creation
+  of 2-dimensional node embeddings which can be used to create scatter plots. The
   scatter plots shown figure \ref{fig:node2vec} show the node embeddings of the
   graph shown in figure \ref{fig:us_airline_nodes}. The scatter plot further
   helps to solidify the insights gained from the graph. A limitation of the
   graph for visual interpretation is, that one technically would need to
   consider the node connections. The large size of the graph however makes it
-  impossible to follow the node connections for interpretation. Node2Vec
+  impossible to visually follow the node connections for interpretation. Node2Vec
   considers the node connections/edges of the network and removes the mentioned
-  limitation of visually interpreting the graph. Figure \ref{fig:node2vec}
+  limitation for visually interpreting the graph. Figure \ref{fig:node2vec}
   shows, that the visual insights gained from the graph are still valid after
-  considering node connections. The Node2Vec algorithm is a beautiful
+  considering the node connections. The Node2Vec algorithm is a beautiful
   dimensionality reduction technique, which successfully reduced the complexity
   of the graph shown in figures \ref{fig:us_airline_graph} \& 
   \ref{fig:us_airline_nodes}. In this sense, the MAG model in combination with
   Graph Representation Learning such as Node2Vec can be used as powerful
-  clustering tools.
+  cluster analysis tools.
   
   \section{Appropriateness of Semi-Synthetic Graphs for Machine Learning}
   \label{section:gml_performance}
 
-  The discussion in the previous section revealed, that semi-synthetic graphs
+  The discussion in the previous section shows, that semi-synthetic graphs
   themselves can provide valuable visual insights. In this section it is
   discussed to what extent semi-synthetic graphs are appropriate for graph
   machine learning. The perhaps most instructive evidence is provided by the Bank
   Telemarketing data set presented in section \ref{section:bank_data}. Graph
-  machine learning failed to perform well on the graph generated form this
-  dataset. It was shown, that the attributes chosen for the MAG were
+  machine learning fails to perform well on the graph generated form this
+  dataset. It is shown, that the attributes chosen for the MAG model are
   unsuccessful for generating network structures that provided useful additional
-  information which could be exploited using graph machine learning. The Bank
-  Telemarketing data set is notoriously difficult due to the unbalanced
+  information which then could be exploited using graph machine learning. The 
+  Bank Telemarketing dataset is notoriously difficult due to the unbalanced
   distribution of the label. The dataset consist of approximately 90\% of
-  observations which did not invest in the long-term deposit compared to only 
+  observations which did not invest in the short-term deposit compared to only 
   10\% of the observations which did invest. For graph machine learning and
-  also the standard machine learning methods, it was loss optimizing to
+  also the standard machine learning methods, it is loss optimizing to
   classify most if not all observations as non-investors. When generating the
   biased graph shown in figure \ref{fig:Moro_bias}, a classification accuracy
-  of > 95\% was achieved which is remarkable improvement compared to the
-  accuracies using the unbiased graph shown in figure \ref{fig:Moro} and the
-  standard machine learning methods which ranged between 87-89\%. As outlined
-  in section \ref{section:bank_data}, the biased graph which includes the label
+  of > 95\% is achieved which is a remarkable improvement. As mentioned in 
+  section \ref{section:bank_data}, the biased graph which includes the label
   as an attribute cannot be used in a practical setting and is a form of
   cheating. Nevertheless it shows, that if a network structure can be generated
   which captures the label well, the problem of unbalanced label data can be
@@ -102,38 +98,36 @@
   overcoming the problem presented by unbalanced label data is a relevant issue
   for machine learning. \\
 
-  \noindent The US Airline Passenger data set yielded very good results in
-  terms of graph generation and subsequent use for graph machine learning. The 
-  reasons for its success are in line with the previous discussion regarding
-  the Bank Telemarketing data set. The attributes used for the MAG model
-  generated network structures which were in part predictive for the label
-  satisfaction of the US Airline Passenger data set. This is shown when looking
-  at the satisfaction plots in figures \ref{fig:us_airline_nodes} \&
-  \ref{fig:node2vec}. \\ 
+  \noindent The US Airline Passenger dataset is shown to be well suited for 
+  graph machine learning. The reasons for its success are in line with the 
+  previous discussion regarding the Bank Telemarketing data set. The attributes 
+  used for the MAG model generated network structures which are in part 
+  predictive for the label satisfaction of the US Airline Passenger data set. 
+  This is shown when looking at the satisfaction plots in figures 
+  \ref{fig:us_airline_nodes} \& \ref{fig:node2vec}. \\ 
 
-  \noindent The graph structure alone yielded poor results when looking at the 
-  results shown in section \ref{section:result_n2v} using Graph Representation 
-  learning. Taking a step back with a more generous perspective, it is 
-  nevertheless impressive that an accuracy of approximately 76\% could be 
-  achieved for the training- and validation dataset which only considers 
-  2-dimensional node embeddings. This however did not translate to the test 
-  graph for which the best accuracy was at only approximately 58\%. In this 
-  sense, the model was only marginally more successful at the classification 
-  task than randomly guessing the classification. \\
+  \noindent The graph structure alone yields poor results when looking at the 
+  results shown in section \ref{section:result_n2v} using Node2Vec. Taking a 
+  step back with a more generous perspective, it is nevertheless impressive that 
+  an accuracy of approximately 76\% could be achieved for the training- and 
+  validation dataset which only considers 2-dimensional node embeddings. This 
+  however did not translate to the test graph for which the best accuracy was at 
+  only approximately 58\%. In this sense, the model is only marginally more 
+  successful at the classification task than randomly guessing the 
+  classification. \\
 
-  \noindent Graph Convolutional Networks also achieved a classification 
+  \noindent Graph Convolutional Networks also achieve a classification 
   accuracy of approximately 76\%. This result is even worse when comparing it
-  to Graph Representation Learning using Node2Vec. The GCN considers the
-  network structure as well as the node features and should therefore be
-  capable of outperforming Node2Vec. The GCN model clearly fails here and has
-  the serious limitation that it cannot be applied in an inductive setting to
-  unseen graphs. GCN is a breakthrough model as it is one of the first
-  successful Graph Neural Networks. Nevertheless, it performed poorly for the
-  given datasets and is surpassed in terms of performance by more modern GNN
-  methods such as GraphSage. \\
+  to Node2Vec. The GCN considers the network structure as well as the node 
+  features and should therefore be capable of outperforming Node2Vec. The GCN 
+  model clearly fails here and has the serious limitation that it cannot be 
+  applied in an inductive setting to unseen graphs. GCN is a breakthrough model 
+  as it is one of the first successful Graph Neural Networks. Nevertheless, it 
+  performed poorly for the given datasets and is surpassed in terms of 
+  performance by more modern GNN methods such as GraphSage. \\
 
-  \noindent The Final graph machine learning method applied was GraphSage. This
-  method yielded very good results as shown in section
+  \noindent The Final graph machine learning method tested is GraphSage. This
+  method yields very good results as shown in section 
   \ref{section:graphsage_results}. GraphSage is capable of training models
   which have a test accuracy of > 94\%. The aggregation strategies used for the
   GraphSage model further are successful in the order max-pooling $\geqslant$ 
@@ -142,51 +136,49 @@
   results shown in section \ref{section:graphsage_simulation} and appendix
   \ref{App:sim_results}. 
   When comparing the two main aggregation strategies of interest, max-pooling 
-  and sum-pooling, bot methods almost yielded identical test results. For the
-  results shown in section \ref{section:graphsage_results} max-pooling was only 
+  and sum-pooling, both methods almost yield identical test results. For the
+  results shown in section \ref{section:graphsage_results} max-pooling is only 
   more successful in classifying 1 more passenger as satisfied compared to
   sum-pooling. The test results are otherwise identical as shown in tables 
   \ref{table:max_results_test} \& \ref{table:sum_results_test}. The simulation
   results with 100 experiments for both max-pooling and sum-pooling confirm,
   that max-pooling yields marginally better results for the test graph with an
   average accuracy of 93.80\% compared to 93.76\% for sum-pooling. Sum-pooling
-  is however more consistent, whereas max-pooling has a larger variance
-  regarding the variance of the test accuracy. In addition, max-pooling
-  suffered from two large negative outliers in terms test accuracy. Sum-pooling
-  also suffered from two negative outliers, which were however less pronounced.
-  The GraphSage results show, that semi-synthetic graphs can indeed be
-  appropriate for graph machine learning.
+  is however more consistent, whereas max-pooling has a larger variance 
+  regarding the test accuracy. In addition, max-pooling suffered from two large 
+  negative test accuracy outliers during the simulation. Sum-pooling also 
+  suffered from two negative test accuracy outliers, which were however less 
+  pronounced. The GraphSage results show, that semi-synthetic graphs can indeed 
+  be appropriate for graph machine learning.
 
   \section{Graph Machine Learning Versus Standard Machine Learning}
 
-  The overview shown in table \ref{table:result_comparison} shows that the
-  results using GraphSage are competitive in comparison to the standard machine
-  learning methods. The results further confirm that the results using Graph
-  Representation Learning and the GCN are not competitive. GraphSage is shown
-  to be the second best method behind the Random Forest classifier. The ANN
-  model on average tends to yield marginally inferior test accuracy results as
-  shown in the simulation results shown in appendix \ref{App:ann_sim}. In
-  addition, the ANN is more prone to over-fitting as shown in figure
-  \ref{fig:ANN_fit}. With regard to the other standard machine
-  learning methods, GraphSage clearly outperformed these methods. \\
+  The overview table \ref{table:result_comparison} shows that the results using 
+  GraphSage are competitive in comparison to the standard machine learning
+  models. The results further confirm that the results using Node2Vec and the 
+  GCN are not competitive. GraphSage is shown to be the second best method 
+  behind the Random Forest classifier. The ANN model on average tends to yield 
+  marginally inferior test accuracy results as shown in the simulation results 
+  shown in appendix \ref{App:ann_sim}. In addition, the ANN is more prone to 
+  over-fitting as shown in figure \ref{fig:ANN_fit}. With regard to the other 
+  standard machine learning methods, GraphSage clearly outperformed these methods. \\
 
-  \noindent As shown, the GraphSage model is a competitive method for 
-  classifying the US Airline Passenger dataset. This shows, that semi-synthetic
-  graphs can be used for graph machine learning in a competitive setting. The
-  accuracy improvements one would hope for considering the rather tedious and
-  difficult graph generation procedure was however not achieved. As shown in
-  table \ref{table:result_comparison}, a simpler method such as the Random
-  Forest Classifier consistently outperformed the GraphSage model. In addition
-  a simple standard ANN yields very similar results as GraphSage. In machine 
+  \noindent This shows, that semi-synthetic graphs can be used for graph 
+  machine learning in a competitive setting. The accuracy improvements one would 
+  hope for considering the rather tedious and difficult graph generation 
+  procedure is however not achieved. As shown in table 
+  \ref{table:result_comparison}, a simpler method such as the Random Forest 
+  Classifier consistently outperforms the GraphSage model. In addition, a
+  simpler standard ANN yields very similar results as GraphSage. In machine 
   learning the principle of Occam's razor is often referred to for choosing 
-  appropriate methods. Following this principle, simpler models are preferred if 
+  appropriate models. Following this principle, simpler models are preferred if 
   they yield similar/identical results compared to more complex methods.
   GraphSage using semi-synthetic graphs is most definitely the most complex 
-  method shown in table \ref{table:result_comparison}. For that reason certainly 
+  method shown in table \ref{table:result_comparison}. For that reason, certainly 
   the Random Forest Classifier is preferred as it yields better accuracies and
   is a more simple model compared to GraphSage. In addition, one could argue
   that the ANN, SVM and AdaBoost are preferential to the GraphSage model as
-  well, as they are simpler models with only marginally inferior results. For
+  well. These models are simpler with only marginally inferior results. For
   the evaluation one needs to also consider the context of the classification
   task. In a medical context, accuracies are of utmost importance where one is
   willing to use more complex methods to receive marginal accuracy improvements. 
@@ -194,9 +186,9 @@
   marginally higher- or lower accuracies are less severe. In such a setting,
   the principle of Occam's razor can be more fully embraced which is why the
   ANN, SVM and AdaBoost might be preferred as they are simpler and more
-  practical for application in a real-world setting. Nevertheless, GraphSage
-  yielded the second best accuracies and could be the preferred method for a
-  different setting.  
+  practical for application in a real-world setting. This is a subjective 
+  assessment and depending on the context might differ. Nevertheless, GraphSage
+  yields the second best accuracies and remains a competitive model.  
 
 
 

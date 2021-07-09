@@ -452,13 +452,13 @@
   observations was retrieved from the training dataset consisting of 103’904 
   observations. With this random sub-sample and the attributes shown in table
   \ref{table:link_aff}, the adjacency matrix for the 
-  resulting graph, $G(V,E)$ is generated using algorithm \ref{algo:MAG}. The 
+  resulting graph $G(V,E)$ is generated using algorithm \ref{algo:MAG}. The 
   random sub-sample is retrieved due to the computational cost of running 
-  algorithm \ref{algo:MAG}. Simulations involving creating graphs with different 
-  random sub-samples suggest, that the random sub-samples are representative for 
-  the entire dataset. This suggestion is supported when comparing the summary 
-  statistics of the sub-samples with the full-dataset. The generated graph is 
-  shown in figure \ref{fig:us_airline_graph}.
+  algorithm \ref{algo:MAG}. Simulations which involved creating graphs with 
+  different random sub-samples show, that the random sub-samples are 
+  representative for the entire dataset. This is further supported when 
+  comparing the summary statistics of the sub-samples with the full-dataset. 
+  The generated graph is shown in figure \ref{fig:us_airline_graph}.
 
   \begin{figure}[h]
 	  \centering
@@ -488,11 +488,11 @@
   \ref{fig:us_airline_nodes} reveals interesting associations. First it is
   shown, that a larger number of people traveling for business purposes are 
   satisfied compared to people traveling for personal reasons. This association
-  becomes clear when comparing the satisfaction plot with the type of travel
+  becomes clear when comparing the Satisfaction plot with the Type of Travel
   plot. In relative terms, only approximately 9.8\% of passengers traveling for 
   personal reasons were satisfied compared to business travelers with a 57.8\% 
   satisfaction rate. Interestingly, passengers traveling for business purposes
-  hold somewhat expected characteristics such as:
+  adhere somewhat expected characteristics such as:
 
   \begin{enumerate}
     \item Most business class passengers are satisfied. 
@@ -501,23 +501,23 @@
       reveals, that older passengers tend to be mostly satisfied even when 
       booking economy class.
     \item Most loyal customers book business class. There is some overlap where 
-      loyal customers book economy class tickets. The reverse is true as well, 
-      where a cluster of disloyal customers book business class. 
+      loyal customers also book economy class tickets. The reverse is true as 
+      well, where a cluster of disloyal customers book business class. 
   \end{enumerate}
   
   \noindent Passengers traveling for personal reasons do not appear to adhere
   to the characteristics or associations shown for business travelers. The only
   distinctive character is, that almost all passenger traveling for personal
   reasons are loyal customers. This fact does however not appear to be
-  associated with satisfaction. This appears to be a rather bizarre finding.
-  Upon further reflection, this could point to a sampling bias of passengers
-  traveling for personal reasons based on following considerations:
+  associated with satisfaction. At first, this seems like a rather bizarre 
+  finding. Upon further reflection, this could point to a sampling bias of 
+  passengers traveling for personal reasons due to following considerations:
 
   \begin{enumerate}
-    \item It makes sense, that almost only loyal passengers participated, as
-      when traveling, most people do not participate in surveys. This is
-      especially true for disloyal customers. Business travelers for comparison
-      might give feedback due to company policies.
+    \item It is reasonable that almost only loyal passengers participated. When 
+      traveling, most people do not participate in surveys. This is especially 
+      true for disloyal customers. Business travelers for comparison might give
+      routine feedback due to company policies.
     \item It is common, that dissatisfied people are more likely to give
       feedback, while satisfied passengers are less likely to participate in
       the survey. Again, the data regarding business travelers might be more
@@ -526,7 +526,7 @@
       traveling for personal reasons. This could incentivize frequent business
       travelers to give feedback as they would benefit most of service
       improvements. Infrequent personal travelers might be less incentivized,
-      as they are less affected by service improvements. 
+      as they benefit less from service improvements. 
   \end{enumerate}
 
   \noindent Last but not least, gender does not appear to form any distinguishable 
@@ -534,8 +534,9 @@
   graph generation process. This was tested and the resulting graph yielded 
   a similar graph. The graph was however more spread out and the neighborhood 
   structures were less clear. In addition, the graph without gender did not 
-  perform as well in the subsequent machine learning tasks. For those reasons, 
-  gender was kept for the graph generation process. \\
+  perform as well in the subsequent machine learning tasks. Gender appears to
+  provide some useful network information which is why the attribute is kept
+  for the graph generation process. \\
 
   \noindent To provide some more context regarding the graph structure, some
   graph theoretical metrics are provided. The degree distribution as well as 
@@ -554,7 +555,7 @@
   9\% of the potential number of connections formed in the network.
   Nevertheless, when looking at the degree distribution histogram we can see, 
   that a all nodes have a large number of connections ranging between 263 -
-  828 with an average of 559.63 connections. Further, the distribution has two
+  828 with an average of 559.63 connections. The distribution has two
   modes which likely correspond to the two main clusters shown in figure
   \ref{fig:us_airline_nodes}. The eigenvector centrality distribution shows, 
   that all nodes have a very low centrality measure and therefore none of the 
@@ -566,9 +567,9 @@
   that there are no bottle-necks through which information flows. \\
 
   \noindent As a reference point, it is important to compare the properties of
-  the created graph to real world graphs. In our case, the most appropriate for
-  comparison is a social network. Common structures of social networks are
-  \citep{watts1998collective,newman2006structure,Newman2010,
+  the created graph to real world graphs. For this thesis, the most appropriate
+  networks for comparison are a social networks. Common structures of social 
+  networks include \citep{watts1998collective,newman2006structure,Newman2010,
   kim2012multiplicative}:
 
   \begin{enumerate}
@@ -577,30 +578,31 @@
     \item Core-periphery structure
   \end{enumerate}
 
-  \noindent This power law degree distribution and emergence of a giant
+  \noindent The power law degree distribution and the emergence of a giant
   connected component creates network structures that have an onion
   (core-periphery) structure \citep[p. 121]{kim2012multiplicative}. This
   indicates, that most social networks have a few very highly connected nodes
   and many nodes with few connections. This creates a right skewed degree 
   distribution which also lead to a right skewed eigenvector centrality and
-  closeness centrality distribution. For the betweenness centrality, we would
-  also expect, that more central nodes in a core-periphery network structure
+  closeness centrality distribution. For the betweenness centrality, it is 
+  also expected, that more central nodes in a core-periphery network structure
   would exhibit some bottle-neck properties for the central nodes. For that
-  reason we would expect central nodes to have a higher betweenness centrality.
-  When we look at the distributions in figure \ref{fig:centrality_measures}
-  this does not correspond to the power law degree distribution and the effect
-  this has on the centrality measures observed in real social networks. This
-  indicates, that the graph created with the MAG method does not share the
-  properties observed in real social networks. In order to generate a graph which
-  shares the properties of real graphs, one would have to adapt the 
-  link-affinity properties to the core-periphery setting as shown in figure
-  \ref{fig:link-affinity}. Forcing this core-periphery structure is however not
-  purposeful for this thesis. Further, the aim of this thesis is not
-  necessarily to create realistic graphs rather than to create useful graphs 
-  for graph machine learning. The results in chapter \ref{section:results}
-  reveal, that the graph is indeed useful for graph machine learning. For that
-  reason, the generated graph shown in this section is kept for further
-  analysis. 
+  reason one would expect central nodes to have a higher betweenness centrality.
+  When looking at the distributions in figure \ref{fig:centrality_measures},
+  this does not correspond to a power law degree distribution. The centrality 
+  measures further do not correspond to the centralities frequently observed in 
+  real social networks. The graph created with the MAG method does therefore 
+  not share the properties observed in real social networks. In order to 
+  generate a graph which shares the properties of real networks, one would have 
+  to adapt the link-affinity properties to the core-periphery setting as shown 
+  in figure \ref{fig:link-affinity}. This was tested and indeed an onion shaped
+  network was created using the same attributes. Forcing this core-periphery 
+  structure is however not purposeful for this thesis. Further, the aim of this 
+  thesis is not necessarily to create realistic graphs rather than to create 
+  useful graphs for graph machine learning. The results in chapter 
+  \ref{section:results} reveal, that the graph is indeed useful for machine 
+  learning. For that reason, the generated graph shown in this section is kept 
+  for further analysis. 
 
   \subsection{Stochastic vs. Deterministic MAG}
   \label{section:stoch_det}
@@ -611,21 +613,21 @@
   results. The first insight gained when investigating this question lies in 
   the fact, that the probability of two observations is generally very low. 
   When setting the threshold probability for a connection between two 
-  observations $u$ and $v$ to 0.5, not a single connection was made. This makes 
-  sense, as the probability for a connection decreases by design as the number 
+  observations $u$ and $v$ to 0.5, not a single connection is made. This
+  follows, as the probability for a connection decreases by design as the number 
   of attributes increases. This is implicitly shown in equation \ref{eq:MAG}, 
   where the product of probabilities is bound to decrease. For this reason, it 
   is suggested to limit the number of attributes to $K=\rho\log_{2}N$ for some 
   constant $\rho$ \citep[p. 122]{kim2012multiplicative}. The number of 
-  attributes were selected accordingly such that $K\leqslant\log_{2} N$. The 
+  attributes are selected accordingly such that $K\leqslant\log_{2} N$. The 
   US Airline Passenger dataset was used to generate a deterministic graph. The 
   threshold probability for a connection was set to 0.2 in the MAG model. The 
   MAG yielded several disconnected graphs which were for the most part 
   clustered according to their group memberships. Figure \ref{fig:det_MAG} 
-  shows the graphs for the label and the attributes, where the edges were 
-  removed. The subgraphs are unfortunately plotted small, however all subgraphs 
-  combined include all 6'000 nodes. The plots are meant to provide a high-level 
-  overview of the generated graphs. 
+  shows the graphs for the label and the attributes, where the edges are 
+  removed. The subgraphs are unfortunately plotted very small, however all 
+  subgraphs combined include all 6'000 nodes. The plots are meant to provide a 
+  high-level overview of the generated subgraphs. 
 
   \begin{figure}[h]
 		\centering
@@ -638,13 +640,13 @@
   clusters based on node similarities. In terms of performance, the accuracy 
   and loss behavior of both the deterministic- and stochastic generated graphs 
   are virtually identical. This was true for all three datasets considered in 
-  this thesis. For the purpose of visualization, stochastic graphs appear
-  to be more useful, as one can identify the different cluster on a single
-  connected graph. For this reason, the stochastic graph generation process is 
-  kept. Nevertheless, deterministic graph generation appears to be useful if 
-  one wants to separate nodes in to more homogeneous graphs. These 
-  graphs could then be used for subsequent machine learning tasks with a cluster 
-  specific task in mind. The clusters further could provide information as to 
-  which clusters tend to be more or less satisfied. This is an area which could 
-  be interesting for future research.
+  this thesis. For the purpose of visualization, stochastic graphs are more 
+  useful, as one can identify the different cluster and their relationships to 
+  one another on a single connected graph. For this reason, the stochastic graph 
+  generation process is kept. Nevertheless, deterministic graph generation 
+  appears to be useful if one wants to separate nodes in to more homogeneous 
+  subgraphs. These subgraphs could then be used for subsequent machine learning 
+  tasks with a cluster specific task in mind. The clusters further could 
+  provide information as to which clusters tend to be more or less satisfied. 
+  This is an area which could be interesting for future research.
   
