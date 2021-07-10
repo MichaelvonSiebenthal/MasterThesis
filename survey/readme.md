@@ -11,7 +11,10 @@ analysis. This folder contains following files:
     Google forms and the row headers contain the questions and the answers below.
 
 2. The survey_impl.ipynb file contains the model implementations and analyses of 
-    self-made survey. 
+    self-made survey.
+
+3. The embeddings file contains the node embeddings generated from the Node2Vec
+    algorithm.
 
 Due to the small sample size of only n=113 responses, this dataset cannot be considered
 for any serious analysis and machine learning task. It however sparked the question of 
