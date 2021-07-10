@@ -14,7 +14,8 @@ files.
     scripts. Due to the large file size of the generated adjacency matrices, these 
     could not be uploaded to GitHub due to file size limitations.
 
-4. main_script.ipynb is the main Python script used for generating the results.
+4. main_script.ipynb is the main Python script used for analyzing the graphs and 
+    generating the machine learning results.
 
 5. Node2Vec.ipynb is the script used for the Node2Vec results. 
 
