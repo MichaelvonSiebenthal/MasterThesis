@@ -13,3 +13,9 @@ files.
     dataset is run first to generate the required data for the subsequent Python 
     scripts. Due to the large file size of the generated adjacency matrices, these 
     could not be uploaded to GitHub due to file size limitations.
+
+4. main_script.ipynb is the main Python script used for generating the results.
+
+5. Node2Vec.ipynb is the script used for the Node2Vec results. 
+
+6. Simulation.ipynb is used for running the GraphSage robustness simulations.
