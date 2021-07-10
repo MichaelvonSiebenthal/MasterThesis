@@ -7,7 +7,7 @@ plt.style.use('ggplot')
 import networkx as nx
 import dgl
 import dgl.nn as dglnn
-import torch
+import torchs
 import torch.nn as nn
 import torch.nn.functional as F
 from sklearn.preprocessing import StandardScaler
@@ -139,8 +139,8 @@ def Simulation(nExp,G,x_wd,features):
             num_workers=0
         )
 
-        #model = SumSAGE(n_features, len(x_var.T), n_labels, 2) #n_layers
-        model = SAGE(n_features, len(x_wd.T), n_labels, 2) #n_layers
+        model = SumSAGE(n_features, len(x_wd.T), n_labels, 2) #n_layers
+        #model = SAGE(n_features, len(x_wd.T), n_labels, 2) #n_layers
         opt = torch.optim.Adam(model.parameters(),lr=0.002)
 
 
@@ -205,28 +205,29 @@ def Simulation(nExp,G,x_wd,features):
         val_acc_exp.append(valid_acc[-1])
         exp_losses_train.append(epoch_losses_train[-1])
         exp_losses_val.append(plot_loss_valid[-1])
+        print('Experiment: {}'.format(n))
 
     return (train_acc_exp, val_acc_exp, exp_losses_train, exp_losses_val)
 
 
 # %% Run Experiments
 
-nExp = 100
+nExp = 10
 train_acc_exp, val_acc_exp, exp_losses_train, exp_losses_val = Simulation(nExp,G,x_wd,features)
 
-fig = plt.subplots(figsize=(15,5))
+plt.subplots(figsize=(15,5))
 
 plt.subplot(121)
 plt.plot(exp_losses_train, label='Training Loss')
 plt.plot(exp_losses_val, label='Validation Loss')
-plt.xlabel('Epochs')
+plt.xlabel('Number of Experiments')
 plt.ylabel('Cross-Entropy Loss')
 plt.legend()
 
 plt.subplot(122)
 plt.plot(train_acc_exp, label='Training Accuracy')
 plt.plot(val_acc_exp, label='Validation Accuracy')
-plt.xlabel('Epochs')
+plt.xlabel('Number of Experiments')
 plt.ylabel('Accuracy')
 plt.legend()
 
