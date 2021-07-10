@@ -21,6 +21,11 @@ analysis. This folder contains following files:
     Node2Vec for the self-made survey. This file contains the most relevant analyses 
     for the self-made survey.
 
+5. The GAT.ipynb file contains an implementation for graph attention networks for the 
+    self-made survey. The GAT model is not considered for the master's thesis, which 
+    is why the file is not further commented. The GAT file contains a model implementation 
+    and is kept for completeness. 
+
 Due to the small sample size of only n=113 responses, this dataset cannot be considered
 for any serious analysis and machine learning task. It however sparked the question of 
 whether stochastic or deterministic MAG graphs should be created. Given the limited use 
