@@ -4,12 +4,11 @@
   and GNNs are presented. Afterwards, the graph machine learning results are 
   compared to the results using standard machine learning models. For the 
   comparison, the methods logistic regression \citep{cramer2002origins}, naive 
-  bayes \citep{zhang2004bayes}, support vector machines (SVM) 
-  \citep{platt1999probabilistic,chang2011libsvm}, Random Forest Classifier 
-  \citep{breiman2001random}, AdaBoost Classifier 
-  \citep{freund1997decision,hastie2009multi}, Quadratic Discriminant Analysis
-  (QDA) \citep{tharwat2016linear} and Artificial Neural Networks (ANN)
-  \citep{mcculloch1943logical} are considered.
+  bayes \citep{zhang2004bayes}, support vector machine (SVM) 
+  \citep{platt1999probabilistic,chang2011libsvm}, random forest classifier 
+  \citep{breiman2001random}, AdaBoost classifier 
+  \citep{freund1997decision,hastie2009multi}, \ac{qda} \citep{tharwat2016linear} 
+  and artificial neural networks (ANNs) \citep{mcculloch1943logical} are considered.
 
   \section{Graph Representation Learning}
   \label{section:result_n2v}
@@ -496,14 +495,13 @@
   remaining aggregation strategies, only 10 experiments are run due to time
   considerations as 100 experiments require approximately 15 hours to complete.
   The required time for the simulation could most definitely be shortened using
-  graphical processing units (GPU). Unfortunately, a GPU is not available for
-  conducting the simulations. If available, this would be highly recommended to
-  shorten the required time for completing the simulations. The results using 
-  only 10 experiments yields similar results, with test accuracies ranging 
-  mostly between 93-94\%. The simulation results for mean, lstm and sum 
-  aggregation are shown in appendix \ref{App:sim_results}. The results shown in 
-  section \ref{section:graphsage_results} are therefore representative results, 
-  even if admittedly on the more positive side. 
+  \acp{gpu}. Unfortunately, a GPU is not available for conducting the simulations. 
+  If available, this would be highly recommended to shorten the required time for 
+  completing the simulations. The results using only 10 experiments yields similar 
+  results, with test accuracies ranging mostly between 93-94\%. The simulation 
+  results for mean, LSTM and sum aggregation are shown in appendix \ref{App:sim_results}. 
+  The results shown in section \ref{section:graphsage_results} are therefore 
+  representative results, even if admittedly on the more positive side. 
 
   \newpage
   \section{Result Comparison}

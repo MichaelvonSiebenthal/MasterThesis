@@ -287,7 +287,7 @@
 	representations of the nodes in a graph given a specified similarity measure. 
 	For these vector representations distance measures such as Euclidean 
 	distances can be measured. The node embeddings can thus be used for
-	downstream machine learning using standard methods. Graph neural networks 
+	downstream machine learning using standard methods. A \ac{gnn} 
 	can also generate node embeddings as well as directly apply graphs to a 
 	given machine learning task such as classification. The capability of
 	directly applying graphs for machine learning tasks, makes graph neural 
@@ -348,12 +348,13 @@
 	representation learning methods. \\
 
 	\noindent DeepWalk and Node2Vec make use of methods which have its origin in 
-	natural language processing (NLP). Specifically they makes use of the 
-	Skip-Gram model introduced by \cite{mikolov2013efficient,mikolov2013distributed}. 
+	\ac{nlp}. Specifically they makes use of the Skip-Gram model introduced by 
+	\cite{mikolov2013efficient,mikolov2013distributed}. 
 	The Skip-Gram model is a core component of DeepWalk and Node2Vec, which is why 
-	it is explained in detail before proceeding to DeepWalk and Node2Vec. \\
+	it is explained in detail before proceeding to the graph representation
+	leraning models. \\
 
-	\noindent In NLP words are one-hot encoded as inputs for the Skip-Gram model 
+	\noindent In \ac{nlp} words are one-hot encoded as inputs for the Skip-Gram model 
 	which learns vector representations of the input words. The aim of the
 	Skip-Gram model is then to predict the context of the input word by
 	predicting the neighboring words in a sentence. A basic overview of the 
@@ -492,17 +493,16 @@
 	\cite{grover2016node2vec} will be employed, which is a generalization of 
 	the DeepWalk algorithm. Node2Vec allows for the deployment of biased random 
 	walks. In particular, it allows to set probabilities as to whether the 
-	random walk is biased towards breadth-first search (BFS) or depth-first 
-	search (DFS). Depending on the network structure, setting an appropriate 
-	bias can greatly improve the quality of the embeddings. If no bias towards 
-	BFS or DFS is set, an unbiased random walk is employed which is when
-	the output of the Node2Vec algorithm corresponds to the output of the 
-	DeepWalk algorithm. More precisely, this occurs when the search bias is set
-	to $\alpha = 1$ with $p=q=1$ as outlined in the Node2Vec paper 
-	\citep[p. 860]{grover2016node2vec}. The results revealed, that an unbiased 
-	random walk embedded the nodes very well. For that reason, the Node2Vec 
-	algorithm is not explained in further detail as the relevant parts are 
-	covered by the simpler and reader friendlier DeepWalk algorithm. If
+	random walk is biased towards \ac{bfs} or \ac{dfs}. Depending on the network 
+	structure, setting an appropriate bias can greatly improve the quality of the 
+	embeddings. If no bias towards \ac{bfs} or \ac{dfs} is set, an unbiased 
+	random walk is employed which is when the output of the Node2Vec algorithm 
+	corresponds to the output of the DeepWalk algorithm. More precisely, this 
+	occurs when the search bias is set to $\alpha = 1$ with $p=q=1$ as outlined 
+	in the Node2Vec paper \citep[p. 860]{grover2016node2vec}. The results revealed, 
+	that an unbiased random walk embedded the nodes very well. For that reason, 
+	the Node2Vec algorithm is not explained in further detail as the relevant 
+	parts are covered by the simpler and reader friendlier DeepWalk algorithm. If
 	interested, the pseudo-code for the Node2Vec algorithm is provided in the 
 	article by Grover \& Leskovec (\citeyear[p. 859]{grover2016node2vec}). \\
 
@@ -521,11 +521,11 @@
 	\subsection{Graph Neural Networks}
 	\label{section:GNN_theory}
 
-	This section provides an overview of the theory for graph neural networks
-	(GNN). Within the family of GNNs, there are a myriad of different models 
-	available and every few months new models are published. GNNs are currently 
-	very popular and benefit from a large research output. This thesis will 
-	focus on two popular and established GNN approaches which are:
+	This section provides an overview of the theory for \acl{gnn}s. Within the 
+	family of \acs{gnn}s, there are a myriad of different models 
+	available and every few months new models are published. \acs{gnn}s are 
+	currently very popular and benefit from a large research output. This thesis will 
+	focus on two popular and established \acs{gnn} approaches which are:
 
 	\begin{enumerate}
 		\item Graph Convolutional Networks
@@ -533,7 +533,7 @@
 	\end{enumerate}
 	
 	\noindent Before presenting the two above mentioned methods, a general
-	overview of the GNN framework is given. First the required setup is
+	overview of the \acs{gnn} framework is given. First the required setup is
 	defined \citep{leskovec2021lecture}:
 
 	\begin{itemize}
@@ -548,25 +548,25 @@
 	\end{itemize}
 
 	\noindent If there are no node features present, $X$ can be defined as a 
-	one-hot encoded vector. A naive approach for building a GNN would be to
+	one-hot encoded vector. A naive approach for building a \acs{gnn} would be to
 	append the columns of the adjacency matrix to the feature matrix. This
 	combined matrix would then be used as the input for a standard
 	artificial neural network. The problem with this approach is, that the 
 	input is not order invariant and that the trained model cannot be applied 
 	to graphs of different sizes \citep{leskovec2021lecture}. \\
 
-	\noindent Modern GNNs have overcome this problem by drawing inspiration from 
-	convolutional neural networks (CNN) and its famous filtering mechanism as 
-	outlined by \cite{krizhevsky2012imagenet}. CNNs typically work with grid 
+	\noindent Modern \acs{gnn}s have overcome this problem by drawing inspiration 
+	from \ac{cnn} and its famous filtering mechanism as outlined by 
+	\cite{krizhevsky2012imagenet}. \acs{cnn}s typically work with grid 
 	structured input data such as pixels of images. The convolutional filter 
 	then samples the input grid using a filter with a specified size 
-	(e.g. $3\times3$ grid filter). Similarly, GNNs sample a graph using the node 
+	(e.g. $3\times3$ grid filter). Similarly, \acs{gnn}s sample a graph using the node 
 	neighbors $\mathcal{N}(v)$ of node $v$ as a filter. The filter can then be 
 	fine tuned in the sense of how many $k$-hops of neighbors to consider 
 	(e.g. 1-hop: immediate neighbors of $v$, 2-hop: include neighbors of $v$'s 
 	neighbors etc.). In terms of implementation, the number of $k$-hops is set 
-	by the number of graph convolutional layers included in the GNN model. An 
-	illustration of this mechanism is shown in figure \ref{fig:GNN_structure}. \\
+	by the number of graph convolutional layers included in the \acs{gnn} model. 
+	An illustration of this mechanism is shown in figure \ref{fig:GNN_structure}. \\
 
 	\begin{figure}[h]
 		\centering
@@ -576,16 +576,16 @@
 		\label{fig:GNN_structure}
 	\end{figure}
 
-	\noindent The GNN structure outlined in figure \ref{fig:GNN_structure} 
-	shows an example of a 2-hop or 2 layer GNN. The 1-hop convolutional layer 
+	\noindent The \acs{gnn} structure outlined in figure \ref{fig:GNN_structure} 
+	shows an example of a 2-hop or 2 layer \acs{gnn}. The 1-hop convolutional layer 
 	considers the neighboring nodes of the target node A. The 2-hop layer 
 	considers the neighbors of node A's neighbors. Note, that the target node A 
 	is included as an input node in the 2-hop layer. This is reasonable as node 
 	A itself is also a neighboring node to its neighbors. Taking the example 
-	shown in figure \ref{fig:GNN_structure}, the challenge for the GNN is to 
+	shown in figure \ref{fig:GNN_structure}, the challenge for the \acs{gnn} is to 
 	find node embeddings based on local network neighborhoods \citep{leskovec2021lecture}. 
 	The node embeddings at layer 0 correspond to the features of the input nodes 
-	where $X = H^{(0)}$. A typical procedure for a GNN model is outlined in the
+	where $X = H^{(0)}$. A typical procedure for a \acs{gnn} model is outlined in the
 	pseudo-code shown in algorithm \ref{algo:GNN_struct} 
 	\citep{hamilton2017inductive,leskovec2021lecture,you2020design}.	
 
@@ -629,49 +629,47 @@
 
 	\noindent Algorithm \ref{algo:GNN_struct} is not meant to be considered as
 	a complete overview and should be rather regarded as an example of a typical 
-	GNN structure. In addition, one should split the data into training-
-	and validation sets to ensure a good model fit. GNNs are flexible in that a 
-	myriad of modifications can be added to the GNN layers similar to the 
-	possibilities of CNNs or ANNs. The defining features of different GNN 
-	methods usually involve the selection of different message passing methods 
+	\acs{gnn} structure. In addition, one should split the data into training-
+	and validation sets to ensure a good model fit. \acs{gnn}s are flexible in that a 
+	myriad of modifications can be added to the \acs{gnn} layers similar to the 
+	possibilities of a \acs{cnn} or a \ac{ann}. The defining features of
+	different \acs{gnn} models usually involve the selection of different message passing methods 
 	and aggregation strategies. An excellent overview regarding the design space 
-	for GNNs is provided in the articles by \cite{you2020design} and 
+	for \acs{gnn}s is provided in the articles by \cite{you2020design} and 
 	\cite{zhou2020graph} as a reference. Of course there are exceptions and 
-	alternative procedures exist. The GNN methods evaluated in this thesis and 
-	most successful GNNs however tend to follow a variation of the structure 
+	alternative procedures exist. The \acs{gnn} methods evaluated in this thesis and 
+	most successful \acs{gnn}s however tend to follow a variation of the structure 
 	shown in algorithm \ref{algo:GNN_struct}.  \\
 
-	\noindent In terms of interpretation, the output of the first GNN layers in
+	\noindent In terms of interpretation, the output of the first \acs{gnn} layers in
 	figure \ref{fig:GNN_structure} (gray boxes) corresponds to the hidden layer 
 	representations of the direct neighbors of the target node A. The output of 
-	the final GNN layer corresponds to the node embedding $z_{A}$ of the target 
+	the final \acs{gnn} layer corresponds to the node embedding $z_{A}$ of the target 
 	node A. This should appear familiar when comparing this approach to the graph 
 	representation learning method outlined in the previous section. 
 	GNNs can indeed be used for unsupervised learning tasks such as learning 
 	node embeddings. Good examples for generating node embeddings are shown in 
 	the articles regarding Graph Convolutional Networks by \cite{kipf2016semi} 
 	and GraphSage by \cite{hamilton2017inductive}. As shown in algorithm 
-	\ref{algo:GNN_struct}, GNNs can directly be applied for machine learning
-	tasks such as customer classification. This is where GNNs are especially 
+	\ref{algo:GNN_struct}, \acs{gnn}s can directly be applied for machine learning
+	tasks such as customer classification. This is where \acs{gnn}s are especially 
 	powerful and differ to the Graph Representation Learning algorithms 
-	outlined in the previous section. GNNs are flexible tools and can be used 
+	outlined in the previous section. \acs{gnn}s are flexible tools and can be used 
 	in various settings such as graph representation learning, clustering, 
 	classification and link prediction tasks among others \citep{zhou2020graph}. \\
 
-	\noindent Having introduced the general functionality of GNNs, the models
-	Graph Convolutional Networks and GraphSage are introduced in detail in the
-	following two sections. 
+	\noindent Having introduced the general functionality of \acs{gnn}s, the models
+	\ac{gcn} and GraphSage are introduced in detail in the following two sections. 
 
 	\subsubsection{Graph Convolutional Networks}
 	
-	\noindent The Graph Convolutional Network (GCN) was introduced by 
-	\cite{kipf2016semi} and makes use of simplified spectral graph
-	convolutions. The author Thomas Kipf \citeyearpar{kipf2016online} provides 
-	excellent explanations on his website which is used as inspiration for
-	presenting the theory\footnote{Website Thomas Kipf: 
+	\noindent The \acl{gcn} was introduced by \cite{kipf2016semi} and makes use 
+	of simplified spectral graph convolutions. The author Thomas Kipf 
+	\citeyearpar{kipf2016online} provides excellent explanations on his website 
+	which is used as inspiration for presenting the theory\footnote{Website Thomas Kipf: 
 	\url{https://tkipf.github.io/graph-convolutional-networks/}}. As outlined, 
-	GNNs typically differ with regards to the type of message passing and 
-	aggregation strategy applied. GCNs make use of the following forward 
+	\acs{gnn}s typically differ with regards to the type of message passing and 
+	aggregation strategy applied. \acs{gcn}s make use of the following forward 
 	propagation function \citep[p. 2]{kipf2016semi}:
 
 	\begin{equation}
@@ -689,7 +687,7 @@
 			and $D$ refers to the number of embedding dimensions. The input
 			embedding matrix is set equal to the feature matrix, $H^{(0)}=X$.
 		\item $W^{l}$ refers to the trainable and layer specific weight matrix
-			for the linear message passing employed in the GCN model.
+			for the linear message passing employed in the \acs{gcn} model.
 		\item $\tilde A = A + I_N$, where $A$ is the adjacency matrix of the
 			input graph $G$. The identity matrix is added so that self-loops
 			are considered. This is necessary as the target node of every layer
@@ -702,8 +700,8 @@
 	\end{itemize}
 
 	\noindent To provide a better overview, the compact notation shown in 
-	equation \ref{eq:GCN} is expanded in the following equation for one GCN
-	layer \citep{Dubois2019}:
+	equation \ref{eq:GCN} is expanded in the following equation for one
+	\acs{gcn} layer \citep{Dubois2019}:
 
 	\begin{equation}
 		h_{ij}^{(l)} = \sigma\left(\sum_{(i,j)\in
@@ -834,8 +832,8 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\begin{enumerate}
 		\setlength\itemsep{0.2em}
 		\item Mean aggregation
-		\item Max pooling
-		\item LSTM (long short-term memory) aggregation
+		\item Max-pooling
+		\item Long short-term memory (\acs{lstm}) aggregation
 	\end{enumerate}
 
 	\noindent The three proposed aggregation strategies are briefly introduced
@@ -876,26 +874,25 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	model parameters. \\ 
 
 	\paragraph{LSTM Aggregation} \mbox{}\\
-	\noindent LSTM is the last aggregation strategy proposed for GraphSage and
-	uses the LSTM recurrent neural network (RNN) first introduced by
-	\cite{hochreiter1997long} as an aggregation strategy. LSTMs are not
+	\noindent Long short-term memory (\acs{lstm}) is the last aggregation strategy 
+	proposed for GraphSage and uses the \acs{lstm} \acs{rnn} first introduced by
+	\cite{hochreiter1997long} as an aggregation strategy. \acsp{lstm} are not
 	permutation invariant which is a requirement for the aggregation strategy.
 	The authors propose using a random permutation of the set of node neighbors 
-	to counter this problem \citep[p. 5]{hamilton2017inductive}. The LSTM
+	to counter this problem \citep[p. 5]{hamilton2017inductive}. The \acs{lstm}
 	parameters are trained along with the other GraphSage model parameters.  
 
 	\section{Graph Generation}
 	\label{section:theory_graphgen} 
 
-	This section introduces the Multiplicative Attribute Graph (MAG) model by
-	\cite{kim2012multiplicative}. This model is used to generate
-	semi-synthetic graphs from feature data as mentioned in the introduction. 
-	Originally, the MAG model was introduced for the purpose of generating 
-	realistic graphs from feature data and to show that the resulting graph can 
-	obey properties of real-world networks. To show this, Kim \& Leskovec 
-	generated random feature data for which the model parameters were set in 
-	such a manner, that the resulting graph adheres to a set of real network 
-	properties. These network properties include the emergence of a giant
+	This section introduces the \acl{mag} model by \cite{kim2012multiplicative}. 
+	This model is used to generate semi-synthetic graphs from feature data as 
+	mentioned in the introduction. Originally, the MAG model was introduced for 
+	the purpose of generating realistic graphs from feature data and to show that 
+	the resulting graph can obey properties of real-world networks. To show this, 
+	Kim \& Leskovec generated random feature data for which the model parameters 
+	were set in such a manner, that the resulting graph adheres to a set of real 
+	network properties. These network properties include the emergence of a giant
 	connected component and a power-law or $\log$-normal degree distribution
 	among others \citep[p. 113]{kim2012multiplicative}. While the creation of a 
 	graph which follows real-world network properties would be desirable, it is 

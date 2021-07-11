@@ -1,4 +1,5 @@
 
+
 \documentclass[12pt]{report}
 \usepackage{titlesec}
 \usepackage[utf8]{inputenc}
@@ -17,15 +18,26 @@
 \usepackage{natbib}
 \bibliographystyle{agsm}
 
-\usepackage[acronym]{glossaries}
-\makeglossaries
-\newacronym{gnn}{GNN}{Graph Neural Network}
-\newacronym{gcn}{GCN}{Graph Convolutional Network}
-\newacronym{mag}{MAG}{Multiplicative Attribute Graph}
-\newacronym{gat}{GAT}{Graph Attention Network}
-\newacronym{gin}{GIN}{Graph Isomorphism Network}
-\newacronym{ann}{ANN}{Artificial Neural Network}
-\newacronym{cnn}{CNN}{Convolutional Neural Network}
+\usepackage{acro}
+\DeclareAcronym{gnn}{short=GNN,long=graph neural network,tag=abbrev}
+\DeclareAcronym{gcn}{short=GCN,long=graph convolutional network,tag=abbrev}
+\DeclareAcronym{mag}{short=MAG,long=multiplicative attribute graph,tag=abbrev}
+\DeclareAcronym{gat}{short=GAT,long=graph attention network,tag=abbrev}
+\DeclareAcronym{gin}{short=GIN,long=graph isomorphism network,tag=abbrev}
+\DeclareAcronym{ann}{short=ANN,long=artificial neural network,tag=abbrev}
+\DeclareAcronym{cnn}{short=CNN,long=convolutional neural network,tag=abbrev}
+\DeclareAcronym{rnn}{short=RNN,long=recurrent neural network,tag=abbrev}
+\DeclareAcronym{nlp}{short=NLP,long=natural language processing,tag=abbrev}
+\DeclareAcronym{bfs}{short=BFS,long=breadth-first search,tag=abbrev}
+\DeclareAcronym{dfs}{short=DFS,long=depth-first search,tag=abbrev}
+\DeclareAcronym{lstm}{short=LSTM,long=long short-term memory,tag=abbrev}
+\DeclareAcronym{oecd}{short=OECD,long=Organisation for Economic Co-operation
+                        and Development,tag=abbrev}
+\DeclareAcronym{etf}{short=ETF,long=exchange traded fund,tag=abbrev}
+\DeclareAcronym{svm}{short=SVM,long=Support Vector Machine,tag=abbrev}
+\DeclareAcronym{us}{short=US,long=United States of America,tag=abbrev}
+\DeclareAcronym{qda}{short=QDA,long=quadratic discriminant analysis,tag=abbrev}
+\DeclareAcronym{gpu}{short=GPU,long=graphical processing unit,tag=abbrev}
 
 
 \usepackage[hidelinks]{hyperref} 
@@ -110,7 +122,7 @@
   \listoffigures
   \listoftables
   \listofalgocfs 
-  \printglossary[type=\acronymtype]
+  \printacronyms[include=abbrev,name=Abbreviations]
 
   %%% Main Body
   \onehalfspacing
