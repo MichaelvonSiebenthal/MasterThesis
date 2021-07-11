@@ -20,7 +20,7 @@ files.
 5. Node2Vec.ipynb is the script used for the Node2Vec results. For this script, the 
     data files embeddings, embeddings_test, DataFrame, clean_data, Test_DF are required.
     All these datasets were generated using the airline_data.ipynb file. Note, that 
-    for the Node2Vec model, these files are provided in this repository can be used for the analysis. The mentioned 
+    for the Node2Vec model, these files are provided in this repository and can be used for the analysis. The mentioned 
     files are also used for the GCN and GraphSage models in the main_script.ipynb. 
     Unfortunately, the matching adjacency matrices could not be added to the github 
     repositories due to file size constraint. For that reason, all the mentioned files 
