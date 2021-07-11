@@ -17,11 +17,16 @@ files.
 4. main_script.ipynb is the main Python script used for analyzing the graphs and 
     generating the machine learning results.
 
-5. Node2Vec.ipynb is the script used for the Node2Vec results. 
+5. Node2Vec.ipynb is the script used for the Node2Vec results. For this script, the 
+    data files embeddings, embeddings_test, DataFrame, clean_data, Test_DF are required.
+    All these datasets were generated using the airline_data.ipynb file. Note, that 
+    for the Node2Vec model, these files are provided in this repository can be used for the analysis. The mentioned 
+    files are also used for the GCN and GraphSage models in the main_script.ipynb. 
+    Unfortunately, the matching adjacency matrices could not be added to the github 
+    repositories due to file size constraint. For that reason, all the mentioned files 
+    here must be first generated in the airline_data.ipynb script for use in the main_script.ipynb.
+    To make things simpler and considering the time it takes to generate node embeddings, 
+    the datasets are provided for re-creating the Node2Vec results. Of course, one can also 
+    recreate all datasets with the airline_data.ipynb file. This will however take up some time. 
 
-6. Simulation.ipynb is used for running the GraphSage robustness simulations.
-
-7. sage.py contains the script/package for using sum-pooling for the GraphSage
-    model. The script is based on the source code of the dgl package for GraphSage. 
-    The only modification includes adjusting max-pooling to sum-pooling. The script 
-    must be imported into the main_script.ipynb to use sum-pooling.
+6. Simulation.ipynb is used for running the GraphSage robustness simulation.
