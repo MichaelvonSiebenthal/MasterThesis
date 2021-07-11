@@ -10,5 +10,5 @@ The repository contains 4 main folders which are:
 - US Airline Passenger dataset including the code
 - Latex files for creating the master's thesis
 
-The descriptions of the datasets as well as the annotated can be found in the 
-respective folders. 
+The descriptions of the datasets as well as the Python code used for the analysis 
+can be found in the respective folders. 

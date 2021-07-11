@@ -20,3 +20,8 @@ files.
 5. Node2Vec.ipynb is the script used for the Node2Vec results. 
 
 6. Simulation.ipynb is used for running the GraphSage robustness simulations.
+
+7. sage.py contains the script/package for using sum-pooling for the GraphSage
+    model. The script is based on the source code of the dgl package for GraphSage. 
+    The only modification includes adjusting max-pooling to sum-pooling. The script 
+    must be imported into the main_script.ipynb to use sum-pooling.
