@@ -9,24 +9,33 @@ files.
 2. description.txt contains the description of the dataset.
 
 3. airline_data.ipynb is the Python script used to generate the graph and all the 
-    data and is the starting point for the analysis. It is important, that this 
-    dataset is run first to generate the required data for the subsequent Python 
-    scripts. Due to the large file size of the generated adjacency matrices, these 
-    could not be uploaded to GitHub due to file size limitations.
+    data and is the starting point for the analysis. All datasets are generated with this
+    script using the train.csv and test.csv datasets. For convenience, all the generated
+    datasets from this script are provided separately in this repository. That way, all scripts 
+    can be run individually and there are not interdependencies. Please note, that the adjacency
+    matrices are currently compressed in a .zip file. These need to be first extracted for the 
+    scripts to run properly. Each script will indicate at the beginning of the file which datasets 
+    are required for the analysis.
 
-4. main_script.ipynb is the main Python script used for analyzing the graphs and 
+4. The file DataFrame contains the raw subsample used as the training data.
+
+5. The file TEST_DF is used for the Node2Vec.ipynb script and the Simulation.ipynb script. 
+    This file contains the subsample of 6'000 nodes used as the test data.
+
+6. adjacency_matrices.zip contains the adjacency matrix 'adjacency_matrix.csv' which 
+    is the adjacency matrix of the training graph. It further contains the adjacency matrix
+    'adjacency_matrix_test_graph.csv' which is the adjacency matrix of the test graph. 
+    These .csv files must first be unpacked before they can be used.
+
+7. The file clean_data contains the cleaned training data generated from the airline_data.ipynb file.
+
+8. embeddings contain the 2-dimensional node embeddings of the training graph which were generated using Node2Vec.
+
+9. embeddings_test contain the 2-dimensional node embeddings of the test graph which were generated using Node2Vec.
+
+10. main_script.ipynb is the main Python script used for analyzing the graphs and 
     generating the machine learning results.
 
-5. Node2Vec.ipynb is the script used for the Node2Vec results. For this script, the 
-    data files embeddings, embeddings_test, DataFrame, clean_data, Test_DF are required.
-    All these datasets were generated using the airline_data.ipynb file. Note, that 
-    for the Node2Vec model, these files are provided in this repository and can be used for the analysis. The mentioned 
-    files are also used for the GCN and GraphSage models in the main_script.ipynb. 
-    Unfortunately, the matching adjacency matrices could not be added to the github 
-    repositories due to file size constraint. For that reason, all the mentioned files 
-    here must be first generated in the airline_data.ipynb script for use in the main_script.ipynb.
-    To make things simpler and considering the time it takes to generate node embeddings, 
-    the datasets are provided for re-creating the Node2Vec results. Of course, one can also 
-    recreate all datasets with the airline_data.ipynb file. This will however take up some time. 
+11. Node2Vec.ipynb is the script used for the Node2Vec results. 
 
-6. Simulation.ipynb is used for running the GraphSage robustness simulation.
+12. Simulation.ipynb is used for running the GraphSage robustness simulation.
