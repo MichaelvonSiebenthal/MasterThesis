@@ -26,7 +26,7 @@
 
   \noindent Before introducing the datasets, the programming language and the
    packages used for the analyses are thankfully referenced in the following 
-   section. In additon, the GitHub repository containing the datasets and code
+   section. In addition, the GitHub repository containing the datasets and code
    is referenced.
 
   \section{Software \& Code}
@@ -46,13 +46,15 @@
   \noindent The datasets as well as the Python code used for creating and 
   analyzing the data can be found in a public GitHub repository\footnote{GitHub
   repository: \url{https://github.com/MichaelvonSiebenthal/MasterThesis.git}}. 
-  The Github repository also includes the Python code for the results shown in
-  chapter \ref{section:results}. The GitHub repository serves as a general 
-  reference for the data and Python code used for this thesis and will not be 
-  referenced individually for every analysis and/or result presented. The GitHub 
-  repository includes readme files which describe which files can be 
-  found in which folders. In addition, the Python Code is written in 
-  Jupyter Notebooks which include descriptions of the code.
+  The GitHub repository also includes the Python code for the results shown in
+  chapter \ref{section:results}. The repository serves as a general reference 
+  for the data and Python code used for this thesis and will not be referenced 
+  individually for every analysis and/or result presented. Every folder of the
+  GitHub repository includes a readme file which describes the files present in
+  the folder. In addition, the Python Code is written in Jupyter Notebooks which 
+  include descriptions of the code. The implementation of the GraphSage model
+  is partially derived from the tutorial given at the \acs{kdd} conference
+  \citep{kdd2020}.
 
   \section{Self Launched Survey}
   \label{section:self_survey} 
@@ -116,7 +118,7 @@
  
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{Moro_network.png}
+		\includegraphics[width=0.5\textwidth]{Moro_network.png}
 		\caption{MAG graph of bank telemarketing dataset}
         \label{fig:Moro}
 	\end{figure}
@@ -145,8 +147,8 @@
       \diagbox{\textbf{Label}}{\textbf{Predicted}} & \textbf{Did not invest} &
       \textbf{Invested} \\
       \hline
-      \textbf{Did not invest} & 1'026 & 30 \\\hline 
-      \textbf{Invested} & 119 & 33 \\
+      \textbf{Did not invest} & 1'000 & 55 \\\hline 
+      \textbf{Invested} & 104 & 54 \\
       \hline
     \end{tabular}
     \caption{Confusion Matrix Validation Bank Telemarketing Data}
@@ -154,8 +156,8 @@
   \end{table}
 
   \noindent The confusion matrix corresponds to an accuracy of approximately 
-  87.67\%. The MAG generation process was repeated multiple times
-  for which the GraphSage accuracies ranged between 87 - 90\%. Similar results
+  86.89\%. The MAG generation process was repeated multiple times
+  for which the GraphSage accuracies ranged between 86 - 90\%. Similar results
   are observed for both graph based methods and standard machine learning 
   methods such as \acsp{ann} or \acp{svm}. \\
 
@@ -163,7 +165,7 @@
   machine learning. Possible remedies might include using loss functions which 
   penalize false classifications harsher than the standard cross-entropy loss 
   function used for the GNNs. Alternatively, one could also reduce the dataset 
-  by dropping observations such that the remaining dataset is balanced. This 
+  by dropping observations so that the remaining dataset is balanced. This 
   approach has its own problems as dropping a large number of observations 
   discards a lot of potentially valuable information. It could also put in 
   question the external validity of the model. These comments point to a 
@@ -193,7 +195,7 @@
 
   \begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\textwidth]{Moro_network_bias.png}
+		\includegraphics[width=0.5\textwidth]{Moro_network_bias.png}
 		\caption{Biased MAG graph of bank telemarketing dataset}
         \label{fig:Moro_bias}
   \end{figure}
@@ -279,24 +281,24 @@
       \hline
       \textbf{Variable} & \textbf{Description} & \textbf{Mean} & \textbf{Range} \\
       \hline
-      Gender & Gender of the passengers (Male:0, Female:1) & 0.5076 & 0 - 1
+      Satisfaction (label) & Satisfaction: Airline satisfaction level (satisfied:1, 
+      neutral or dissatisfied:0) & 0.4295 & 0 - 1 \\\hline
+      Gender & Gender of the passengers (male:0, female:1) & 0.5076 & 0 - 1
       \\\hline 
       Customer Type & The customer type (loyal customer:0, disloyal customer:1) 
       & 0.18 & 0 - 1 \\\hline
       Age & The actual age of the passengers & 39.101 & 7 - 85 \\\hline
       Type of Travel & Purpose of the flight of the passengers
-      (Personal Travel:0, Business Travel:1) & 0.6891 & 0 - 1 \\\hline
+      (personal travel:0, business travel:1) & 0.6891 & 0 - 1 \\\hline
       Flight Distance & The flight distance of this journey &
       1'197.438 & 67 - 4'963 \\\hline
       Departure Delay in Minutes & Minutes delayed when departure & 14.808 & 0 - 595 \\\hline
       Arrival Delay in Minutes & Minutes delayed when arrival & 15.159 & 0 -
       589 \\\hline
-      Satisfied & Satisfaction: Airline satisfaction level(Satisfied, 
-      Neutral or Dissatisfaction) & 0.4295 & 0 - 1 \\\hline
       Class & Travel class in the plane of the passengers (Eco:1, Eco Plus:2, 
       Business:3) & - & 1 - 3 \\\hline
       Inflight WiFi service & Satisfaction level of the inflight WiFi service
-      (0:Not Applicable;1-5) & - & 0 - 5 \\\hline
+      (0:not applicable;1-5) & - & 0 - 5 \\\hline
       Ease of Online booking & Satisfaction level of online booking & - & 0 - 5
       \\\hline
       Gate location & Satisfaction level of gate location & - & 0 - 5 \\\hline
@@ -429,9 +431,8 @@
 	\end{pmatrix}
   \] 
 
-  \noindent Age is not only selected as an example as it is the largest
-  link-affinity matrix. It also requires some additional data transformation.
-  It is difficult to use attributes with large cardinalities for the MAG model.
+  \noindent The attribute age furhter requires some additional data transformation.
+  Age has a rather large cardinality, which makes it difficult to use for the MAG model.
   For that reason, age is binned into 4 categories with 0 if age $<$ 
   26, 1 if 26 $\leqslant$ age $<$ 39, 2 if 39 $\leqslant$ age $<$ 50 and 3 if age
   $\geqslant$ 50. These bins are chosen according to the interquartile lengths 
@@ -465,7 +466,7 @@
 
   \begin{figure}[h]
 	  \centering
-	  \includegraphics[width=0.7\textwidth]{us_airline_graph.png}
+	  \includegraphics[width=0.5\textwidth]{us_airline_graph.png}
 	  \caption{Graph of US Airline Passenger Dataset}
       \label{fig:us_airline_graph}
   \end{figure}
@@ -557,7 +558,7 @@
   \noindent The network has a density of approximately 0.0933. This means that 
   9\% of the potential number of connections formed in the network.
   Nevertheless, when looking at the degree distribution histogram we can see, 
-  that a all nodes have a large number of connections ranging between 263 -
+  that all nodes have a large number of connections ranging between 263 -
   828 with an average of 559.63 connections. The distribution has two
   modes which likely correspond to the two main clusters shown in figure
   \ref{fig:us_airline_nodes}. The eigenvector centrality distribution shows, 
