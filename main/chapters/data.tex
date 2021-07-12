@@ -48,13 +48,12 @@
   repository: \url{https://github.com/MichaelvonSiebenthal/MasterThesis.git}}. 
   The GitHub repository also includes the Python code for the results shown in
   chapter \ref{section:results}. The repository serves as a general reference 
-  for the data and Python code used for this thesis and will not be referenced 
-  individually for every analysis and/or result presented. Every folder of the
-  GitHub repository includes a readme file which describes the files present in
-  the folder. In addition, the Python Code is written in Jupyter Notebooks which 
-  include descriptions of the code. The implementation of the GraphSage model
-  is partially derived from the tutorial given at the \acs{kdd} conference
-  \citep{kdd2020}.
+  for the datasets and the Python code used for this thesis. For every folder 
+  in the GitHub repository, there is a readme file  which describes the files 
+  present in the corresponding folder. In addition, the Python Code is written 
+  in Jupyter Notebooks which include descriptions of the code. Last but not
+  least, the implementation of the GraphSage model is partially derived from 
+  the tutorial given at the \acs{kdd} 2020 conference \citep{kdd2020}.
 
   \section{Self Launched Survey}
   \label{section:self_survey} 
@@ -331,13 +330,13 @@
 
   \begin{itemize}
     \item \textbf{Categorical Variables:} Gender, Customer Type, Type of 
-      Travel, Satisfaction
+      Travel, and Satisfaction
     \item \textbf{Ordinal Variables:} Class, Inflight WiFi Service, Ease of Online
       Booking, Gate Location, Food and Drink, Online Boarding, Seat Comfort,
       Inflight Entertainment, On-Board Service, Leg Room Service, Baggage
-      Handling, Check-in Service, Inflight Service, Cleanliness
-    \item \textbf{Numerical Variables:} Age, Flight Distance, Departure Delay in
-      Minutes
+      Handling, Check-in Service, Inflight Service, and Cleanliness
+    \item \textbf{Numerical Variables:} Age, Flight Distance, and 
+      Departure Delay in Minutes
   \end{itemize}
 
   \noindent The categorical variables are dummy coded and the ordinal variable
@@ -376,7 +375,7 @@
 
   To create a graph from the US Airline Passenger dataset, appropriate
   attributes must be selected for the MAG model. The selected attributes must be
-  of the type such that realistic probabilities can be assigned. As an example, 
+  of a type such that realistic probabilities can be assigned. As an example, 
   it is difficult to assign link-affinity probabilities for people who gave 
   ratings regarding the "inflight wifi service". In this case one could assign 
   a probability that people who gave high ratings are more similar with 
@@ -431,17 +430,18 @@
 	\end{pmatrix}
   \] 
 
-  \noindent The attribute age furhter requires some additional data transformation.
-  Age has a rather large cardinality, which makes it difficult to use for the MAG model.
-  For that reason, age is binned into 4 categories with 0 if age $<$ 
-  26, 1 if 26 $\leqslant$ age $<$ 39, 2 if 39 $\leqslant$ age $<$ 50 and 3 if age
-  $\geqslant$ 50. These bins are chosen according to the interquartile lengths 
-  present in the distribution of the variable age. \\
+  \noindent The attribute age has a rather large cardinality which makes it 
+  difficult to use for the MAG model. For that reason, age is binned into 4 
+  categories with 0 if age $<$ 26, 1 if 26 $\leqslant$ age $<$ 39, 2 if 39 
+  $\leqslant$ age $<$ 50 and 3 if age $\geqslant$ 50. These bins are chosen 
+  according to the interquartile lengths present in the distribution of the 
+  variable age. The transformed variable now contains 4 categories and now
+  matches the link-affinity matrix shown above.\\
 
   \noindent There exist no clear rules for assigning link-affinity
   probabilities. \citeauthor{kim2012multiplicative} 
   \citeyearpar[p. 118]{kim2012multiplicative} presented the 4 common 
-  link-affinity matrix structures of homophily, heterophily, core-periphery and 
+  link-affinity matrix structures of homophily, heterophily, core-periphery, and 
   random for creating graphs. Given the selected attribute data, the homophily 
   setting is most appropriate for all link-affinity matrices. In this setting, 
   observations which are similar have a higher probability of forming a 
@@ -645,10 +645,10 @@
   and loss behavior of both the deterministic- and stochastic generated graphs 
   are virtually identical. This is true for all three datasets considered in 
   this thesis. For the purpose of visualization, stochastic graphs are more 
-  useful, as one can identify the different cluster and their relationships to 
+  useful, as one can identify the different clusters and their relationships to 
   one another on a single connected graph. For this reason, the stochastic graph 
   generation process is kept. Nevertheless, deterministic graph generation 
-  appears to be useful if one wants to separate nodes in to more homogeneous 
+  appears to be useful if one wants to separate nodes into more homogeneous 
   subgraphs. These subgraphs could then be used for subsequent machine learning 
   tasks with a cluster specific task in mind. The clusters further could 
   provide information as to which clusters tend to be more or less satisfied. 

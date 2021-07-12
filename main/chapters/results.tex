@@ -86,21 +86,21 @@
   attribute for generating the graph. This would be unrealistic in practice. 
   As the label is not considered for the graph generation process, Node2Vec 
   does not create embeddings which directly consider the label. The label is 
-  only considered to the extend that the attributes create structures 
+  only considered to the extent that the attributes create structures 
   which are related with the label. For that reason, the success of any 
   downstream machine learning method will be limited to the extent that the node 
   embeddings capture relevant information for predicting the label. \\
 
   \noindent Alternative model specifications were tested, which mainly included
   learning higher dimensional node embeddings. These node embeddings however
-  did not yield better results. Given the almost identical accuracies, the more
-  parsimonious model with 2 dimensions is preferred. As a final test, the node
-  embeddings were joined to the feature data presented in section 
+  did not yield better results. Given that the accuracies were almost identical, 
+  the more parsimonious model with 2 dimensions is preferred. As a final test, 
+  the node embeddings were joined to the feature data presented in section 
   \ref{section:airline_data}. This data was then used as the input data for the
   downstream machine learning models. For the training- and validation data,
   this approach yielded excellent results with accuracies often being close to 
   95\%. For some of the models such as the Random Forest classifier, this also
-  translated into good accuracies for the test data. Unfortunately, the results 
+  translated into a good accuracy for the test data. Unfortunately, the results 
   presented in section \ref{section:result_comp} show, that better accuracies
   for the test data are achieved only using the feature data. For that reason, 
   joining feature data with node embeddings is not a recommended approach for 
@@ -109,16 +109,17 @@
   \section{Graph Neural Networks}
 
   This section presents the results using graph neural networks. As
-  mentioned in section \ref{section:GNN_theory}, GCN by \cite{kipf2016semi} and
-  GraphSage by \cite{hamilton2017inductive} are used for classifying the
-  satisfaction of the US airline passengers. The model specifications 
-  and results are presented in the following sections for both methods.
+  mentioned in section \ref{section:GNN_theory}, the models GCN 
+  \citep{kipf2016semi} and GraphSage \citep{hamilton2017inductive} are used 
+  for classifying the satisfaction of the US airline passengers. The model 
+  specifications and results are presented in the following sections for both 
+  methods.
 
   \subsection{Graph Convolutional Network}
   \label{section:GCN_results}
 
   The GCN is designed using a similar forward propagation function as the
-  function shown in equation \ref{eq:GCN_forward}. The only difference is, that
+  one shown in equation \ref{eq:GCN_forward}. The only difference is, that
   the output layer is activated using the logSoftmax function instead of the
   Softmax function. The outputs of both activation functions are theoretically 
   identical. The logSoftmax function is however numerically more stable, as it 

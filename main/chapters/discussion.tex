@@ -23,26 +23,31 @@
   similarity even within the two main clusters which formed based on the 
   attribute type of travel. This observation is consistent for several 
   additional levels. For instance, nodes form neighborhoods based on age within 
-  the cluster of business class passengers which is part of the cluster of 
-  passenger which are traveling for business purposes. The only attribute for 
-  which no significant clusters emerged is the attribute gender. The reason for 
-  this is, that the link-affinity matrix formed a connection with probability 
-  of 0.6 for observations with the same gender and 0.4 if they were of the 
-  opposite gender. These probabilities were set based on the assumption that
-  observations of the same gender are more similar than the opposite gender. It
-  is however not assumed, that the passenger experience for women would be
-  significantly different to the one for men. In addition, one needs to be
-  careful when assigning link-affinity probabilities. The data is almost
-  perfectly 50/50 split into male and female observations. If one assigns very
-  low- or high probabilities, this will significantly alter the graph. This is 
-  for instance done for the attribute type of travel which split the graph into
-  the two main clusters. This aspect is less of a concern for attributes with 
-  multiple categories such as age. Nevertheless, the attribute gender did 
-  generate some mild clustering within the network, which could be exploited for 
-  graph machine learning. One can observe this mild clustering in the graph, the 
-  effect is however not pronounced enough to draw any conclusions from visual 
-  observations. The graphs shown in figure \ref{fig:us_airline_nodes} thus 
-  provide very useful insights for better understanding the relationships within 
+  the cluster of passengers traveling for business purposes. The only attribute 
+  for which no significant clusters emerged is gender. The values in the 
+  link-affinity matrix for gender were set, so that a connection between the
+  same gender is formed with a probability of 0.6. For observations of the
+  opposite gender, the probability of a connection is 0.4. These probabilities 
+  were set based on the assumption, that observations of the same gender are 
+  more similar than those of the opposite gender. It is however not assumed, 
+  that the passenger experience for women would be significantly different to 
+  the one for men. For that reason, the resulting gender based clusters are
+  only marginally pronounced to the point that no visual interpretations can be
+  made. In addition, one needs to consider the distribution of gender. The
+  attribute is almost perfectly 50/50 split into male and female observations.
+  Assigning more extreme link-affinity probabilities would strongly alter the
+  entire graph. Most likely, the graph would be further split according to
+  gender. In comparison, attributes with more categories can have more extreme
+  values assigned to them. Larger cardinalities have the consequence, that each
+  category affects less nodes. For that reason, one can be less vigilant when
+  assigning link-affinity probabilities for these attributes. Having discussed
+  that, gender did generated some mild clustering within the network. This 
+  contributed to the network structure and was successfully exploited using 
+  graph machine learning. If gender was not considered for generating the graph, 
+  the accuracy of the GraphSage model was slightly decreased. \\
+
+  \noindent The graphs shown in figure \ref{fig:us_airline_nodes} thus provide 
+  very useful insights for better understanding the relationships within 
   the data. This is a welcome bi-product of the MAG model and it is surprising 
   to see how informative the resulting graph is for analyzing the data. In fact, 
   it provides vastly superior insights compared to what a standard scatter plot 
@@ -50,10 +55,10 @@
   the feature data can be found in appendix \ref{App:pairplot}. In this regard, 
   the MAG model is very exciting for visually analyzing data. \\
 
-  \noindent Applying methods such as Node2Vec further allows for the creation
+  \noindent Applying methods such as Node2Vec further allow for the creation
   of 2-dimensional node embeddings which can be used to create scatter plots. The
-  scatter plots shown figure \ref{fig:node2vec} show the node embeddings of the
-  graph shown in figure \ref{fig:us_airline_nodes}. The scatter plot further
+  scatter plots illustrated in figure \ref{fig:node2vec} show the node embeddings 
+  of the graph shown in figure \ref{fig:us_airline_nodes}. The scatter plot further
   helps to solidify the insights gained from the graph. A limitation of the
   graph for visual interpretation is, that one technically would need to
   consider the node connections. The large size of the graph however makes it
@@ -81,26 +86,25 @@
   unsuccessful for generating network structures that provided useful additional
   information which then could be exploited using graph machine learning. The 
   Bank Telemarketing dataset is notoriously difficult due to the unbalanced
-  distribution of the label. The dataset consist of approximately 90\% of
+  distribution of the label. The dataset consists of approximately 90\% of
   observations which did not invest in the short-term deposit compared to only 
   10\% of the observations which did invest. For graph machine learning and
   also the standard machine learning methods, it is loss optimizing to
-  classify most if not all observations as non-investors. When generating the
-  biased graph shown in figure \ref{fig:Moro_bias}, a classification accuracy
-  of > 95\% is achieved which is a remarkable improvement. As mentioned in 
-  section \ref{section:bank_data}, the biased graph which includes the label
-  as an attribute cannot be used in a practical setting and is a form of
+  classify most observations as non-investors. When generating the biased graph 
+  shown in figure \ref{fig:Moro_bias}, a classification accuracy of > 95\% is 
+  achieved which is a remarkable improvement. As mentioned in section 
+  \ref{section:bank_data}, the biased graph which includes the label as an 
+  attribute cannot be used in a practical setting and is a form of
   cheating. Nevertheless it shows, that if a network structure can be generated
   which captures the label well, the problem of unbalanced label data can be
   overcome. In particular it shows, that the attributes must be capable of
   generating network structures that are at least in part predictive of the
-  label. This is an interesting topic and warrants further research, as
-  overcoming the problem presented by unbalanced label data is a relevant issue
-  for machine learning. \\
+  label. Overcoming the problem presented by unbalanced label data is a relevant 
+  issue for machine learning and warrant further research. \\
 
   \noindent The US Airline Passenger dataset is shown to be well suited for 
   graph machine learning. The reasons for its success are in line with the 
-  previous discussion regarding the Bank Telemarketing data set. The attributes 
+  previous discussion regarding the Bank Telemarketing dataset. The attributes 
   used for the MAG model generated network structures which are in part 
   predictive for the label satisfaction of the US Airline Passenger data set. 
   This is shown when looking at the satisfaction plots in figures 
@@ -130,7 +134,7 @@
   method yields very good results as shown in section 
   \ref{section:graphsage_results}. GraphSage is capable of training models
   which have a test accuracy of > 94\%. The aggregation strategies used for the
-  GraphSage model further are successful in the order max-pooling $\geqslant$ 
+  GraphSage model are successful in the order max-pooling $\geqslant$ 
   sum-pooling > LSTM > mean. This ordering is based on the results presented in 
   section \ref{section:graphsage_results} and is confirmed by the simulation 
   results shown in section \ref{section:graphsage_simulation} and appendix
@@ -156,11 +160,11 @@
   The overview table \ref{table:result_comparison} shows that the results using 
   GraphSage are competitive in comparison to the standard machine learning
   models. The results further confirm that the results using Node2Vec and the 
-  GCN are not competitive. GraphSage is shown to be the second best method 
+  GCN are not competitive. GraphSage is proven to be the second best method 
   behind the Random Forest classifier. The ANN model on average tends to yield 
-  marginally inferior test accuracy results as shown in the simulation results 
+  marginally inferior test accuracy results as presented in the simulation results 
   shown in appendix \ref{App:ann_sim}. In addition, the ANN is more prone to 
-  over-fitting as shown in figure \ref{fig:ANN_fit}. With regard to the other 
+  over-fitting as illustrated in figure \ref{fig:ANN_fit}. With regard to the other 
   standard machine learning methods, GraphSage clearly outperformed these methods. \\
 
   \noindent This shows, that semi-synthetic graphs can be used for graph 
@@ -187,8 +191,8 @@
   the principle of Occam's razor can be more fully embraced which is why the
   ANN, SVM and AdaBoost might be preferred as they are simpler and more
   practical for application in a real-world setting. This is a subjective 
-  assessment and depending on the context might differ. Nevertheless, GraphSage
-  yields the second best accuracies and remains a competitive model.  
+  assessment and depending on the context, it might differ. Nevertheless, 
+  GraphSage yields the second best accuracies and remains a competitive model.  
 
 
 
