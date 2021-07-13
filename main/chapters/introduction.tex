@@ -1,33 +1,99 @@
 	
-	This thesis investigates models for gaining customer insights using graph
-	machine learning. Graph machine learning is a current frontier in machine 
-	learning and has many successful applications in many areas such as recently 
-	shown by the success of AlphaFold \citep{senior2020improved}. AlphaFold made 
-	a breakthrough for predicting protein structures where they made use of the 
-	observation that a folded protein can be considered as a spatial graph 
-	\citep{AlphaFoldTeam2020}. More generally, there are a vast range of 
-	applications for graph machine learning in the fields of natural science, 
-	social science and many more as shown by the excellent overview given by 
-	\cite{zhou2020graph}. Graphs are especially useful as they allow for the 
-	consideration of relationships between observations. Graph machine learning 
-	has for that reason become a promising field as it allows for the use of
-	richer data. This thesis will focus on graph machine learning for the
-	purpose of customer classification. In particular, it is investigated to
-	what extent semi-synthetic graphs can be used for graph machine learning.
-	To provide a better overview as to how this topic relates to business \& 
-	economics related fields such as gaining customer insights, some motivating
-	examples are provided in the following section. 
-	
-	\section{Relevance to Economics}
+	This introduction chapter is meant to provide a general overview of the
+	topic and includes following sections:
 
-	\noindent From a business \& economics perspective, graphs are particularly
+	\begin{enumerate}
+		\item General Outline
+		\item Motivation
+		\item Machine Learning Overview
+		\item Research Topic
+	\end{enumerate}
+
+	\noindent First, the general outline for this master's thesis is given in
+	the following section.
+	
+	\section{General Outline}
+
+	The main target of this thesis is to investigate graph machine learning for
+	the purpose of gaining customer insights. Within this general context, an
+	emphasis is placed on the following three topics:
+
+	\begin{enumerate}
+		\item Semi-synthetic graph generation
+		\item Graph machine learning models
+		\item A comparison of the graph machine learning results with standard
+			models.
+	\end{enumerate}
+
+	\noindent Graph machine learning is a currently very popular approach 
+	thanks to breakthrough successes of models such as AlphaFold 
+	\citep{senior2020improved}. The people working at DeepMind successfully
+	predicted protein structures with a previously unseen accuracy using the 
+	AlphaFold model. For solving the protein folding problem, the authors of
+	AlphaFold made use of the fact, that a folded protein can be considered as
+	a spatial graph \citep{AlphaFoldTeam2020}. This is just an example of an
+	area where graph machine learning can be successfully applied. More
+	generally, graph machine learning can be used in many different fields
+	such as natural science, social science, and many more. An excellent
+	overview of methods and applications for graph machine learning is given in
+	the article by \cite{zhou2020graph}. This article provides a very good
+	introduction to graph machine learning and is highly recommended to anyone
+	unfamiliar with the topic. \\
+
+	\noindent What makes graphs special is their capability of capturing
+	relationships between observations. The nodes in a graph, which correspond
+	to the observations, may further include feature data such as labels and
+	demographic data. Graph machine learning therefore allows for the
+	consideration of richer data. In this context, the focus of this thesis is 
+	placed on using graph machine learning for gaining customer insights. In
+	particular, the aim is to accurately classify customers according to their
+	type. \\
+
+	\noindent Generating or gaining access to graphs which contain feature data 
+	is very difficult. For that reason it is investigated to what extent
+	semi-synthetically generated graphs can be successfully used for machine 
+	learning. To assess the success of semi-synthetic graphs, different
+	graph-based models are tested and compared to standard machine learning
+	models. The specific research question is outlined in section
+	\ref{section:research_topics}. \\
+
+	\noindent This master's thesis investigates many different models and
+	datasets. For that reason it is important to provide a general overview of
+	the chapters present in this thesis:
+
+	\begin{itemize}[leftmargin=1.0in] 
+		\item[\textbf{Chapter 1:}] Contains the introduction for the thesis and defines
+			the research topic.
+		\item[\textbf{Chapter 2:}] The required theory for understanding
+			graphs, graph machine learning, and graph generation are presented
+			in this chapter.
+		\item[\textbf{Chapter 3:}] This chapter presents the datasets and the graphs.
+			This chapter also contains some key insights gained from the 
+			datasets which are not considered in chapter 4.
+		\item[\textbf{Chapter 4:}] Presents the machine learning results of the US Airline 
+			Passenger dataset. This dataset showed to be best suited for a
+			fair comparison of machine learning models. This dataset is 
+			introduced in chapter 3 along the other datasets.
+		\item[\textbf{Chapter 5:}]  Contains the discussion of the insights gained in
+			chapters 3 and 4.
+		\item[\textbf{Chapter 6:}] Provides the conclusion and an outlook for future
+			research.
+	\end{itemize}
+
+	\noindent In the following section, the motivation for the topic and its
+	relationship to business \& economics is given. 
+
+	\section{Motivation}
+
+	\noindent From a business \& economics perspective graphs are particularly
 	interesting if one wants to model the interactions between institutions. An 
 	example for this is shown in an article published by 
 	\cite{schweitzer2009economic} which created the graph shown in figure
-	\ref{fig:bank_network}. This graph depicts the interdependencies of 
-	international banks. Such graphs can be useful tools for analyzing such 
-	interdependencies and to provide important information for making the banking 
-	system more robust and resilient. 
+	\ref{fig:bank_network}. This graph depicts the relationships between 
+	international banks. Creating such a network can be a useful tool for 
+	analyzing the interdependencies between banks. In particular, it can 
+	provide important information for making the banking system more robust and 
+	resilient. 
 
 	\begin{figure}[h]
 		\centering
@@ -37,38 +103,51 @@
 		\label{fig:bank_network}
 	\end{figure} 
 
-	\noindent Another interesting application of graphs is to model social 
-	interactions. While there are many different areas of interest which make
-	use of social connections, the focus of this thesis is placed on gaining 
-	customer insights. Indeed, this is one of the main areas where social network 
-	companies such as Facebook or search providers like Google make their
-	revenue. Those companies mainly generate their revenue by providing customer 
-	insights or selling targeted advertising \citep{Facebook2021,Alphabet2021}. 
-	Both Facebook and Google have the advantage, that their businesses naturally 
-	capture relational or more generally network data. Most researchers and 
-	companies however do not have access to such data. Companies for instance 
-	may have access to large amounts of customer data. This data however 
-	typically does not contain relational information (e.g. which client is 
-	connected with which other clients). The same is true for researchers, where 
-	social scientists often collect data via anonymous surveys. This makes the 
-	collection of network data basically impossible. For that reason, most 
-	companies and researchers are limited to working with data such as 
-	cross-sectional data that contain no network information. It is important 
-	to mention, that there is a lot of network data available online. This 
-	network data however typically only contains the network connections. The 
-	important feature data such as demographic data, topic specific variables 
-	and labels are however typically not available. Without feature data, graphs 
-	provide rather limited information for gaining customer insights. 
-	This is a data access and data collection problem and is a frustrating 
-	reality which also affects this master's thesis. It however motivates the 
-	research topic which is presented in section \ref{section:research_topics}. 
-	First, a general overview of machine learning is given in the following 
-	section.
+	\noindent Modeling social interactions is another interesting application
+	of graphs in the field of business \& economics. Social interactions can be
+	modeled as social networks and provide valuable information for analyzing
+	consumer behavior. This thesis will focus on gaining customer insights,
+	which is an important and more business flavored application. Gaining
+	customer insights has become an important topic and increasingly relies on
+	graph machine learning. An example for this are social network companies 
+	such as Facebook or search providers like Google. Those companies mainly 
+	generate their revenue by providing customer insights or selling targeted 
+	advertising to their clients \citep{Facebook2021,Alphabet2021}. Both 
+	Facebook and Google have the advantage, that their businesses naturally 
+	capture network- and feature data. It is for this reason, that these
+	companies are ideally positioned to exploit the data on their platforms
+	using graph machine learning. \\
+
+	\noindent Most researchers and companies do not have access to datasets which
+	include network information and feature data. In a practical setting,
+	companies may have access to large amounts of customer data. This data
+	however rarely contains any network information (e.g. which client is
+	connect with which other clients). This scenario is similar for researchers
+	and is especially true for social scientists which often have to collect 
+	data via anonymous surveys. This makes the collection of network information 
+	practically impossible. For that reason, companies and researchers are 
+	typically confined to working with datasets which do not contain network 
+	information. At this point it is important to mention, that there is a lot 
+	of network data available online. This network data however typically does 
+	not contain any feature data. This has the consequence, that researchers and 
+	companies have to choose between network data or feature data. For the 
+	purpose of gaining customer insights, feature data is more important. 
+	Therefore, the most practical approach is to discard network information 
+	and to focus on using feature data. This data access problem prevents many 
+	researchers and companies to make use of potentially superior graph based 
+	machine learning models. This problem motivates this master's thesis to find
+	alternatives which at least in part remove the barrier for graph machine 
+	learning. For that reason, alternative graph generation procedures are
+	investigated and are presented along with the research topic in section 
+	\ref{section:research_topics}. \\
+
+	\noindent First, a general overview of the machine learning models used in
+	this thesis is given in the following section.
 	
-	\section{Overview Machine Learning}
+	\section{Machine Learning Overview}
 
 	This section provides a high-level overview of machine learning and
-	specifies the type of machine learning task used for this thesis. To
+	specifies the type of machine learning task used in this thesis. To
 	start, it is important to correctly categorize machine learning. There are
 	many related big topics such as data science, big data or artificial
 	intelligence and it is often not clear what exactly is meant. An overview
@@ -78,12 +157,12 @@
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.7\textwidth]{overview_datascience.png}
-		\caption{Overview Machine Learning}
+		\caption{Machine Learning Overview}
 		\citep{Frauenhofer2021}
 		\label{fig:ml_overview}
 	\end{figure} 
 
-	\noindent Figure \ref{fig:ml_overview} shows well, how these different
+	\noindent Figure \ref{fig:ml_overview} depicts well, how these different
 	terms are related with each other. Machine learning in particular is
 	mostly ascribed to the domain of artificial intelligence. It however also 
 	has a shared domain with data science and big data. It is thus at the
@@ -111,47 +190,45 @@
 	because it allows for a nice comparison of different machine learning models. 
 	Well known standard machine learning models used for classification tasks 
 	include logistic regression \citep{cramer2002origins}, naive bayes 
-	\citep{zhang2004bayes}, support vector machines 
-	\citep{platt1999probabilistic}, random forest classifiers
-	\citep{breiman2001random}, AdaBoost \citep{freund1997decision} and
-	artificial neural networks \citep{mcculloch1943logical}. This is an
-	incomplete list of popular machine learning models that can be used for
-	classification tasks. Popular applications of classification tasks include 
-	predicting whether a customer is satisfied, whether to grant a mortgage 
-	to a client and many more. The aforementioned machine learning models
-	have in common, that they can only consider feature data. It is in
-	general not possible to make use of network information for these models. \\
+	\citep{zhang2004bayes}, \acp{svm} \citep{platt1999probabilistic}, 
+	random forest classifiers \citep{breiman2001random}, AdaBoost 
+	\citep{freund1997decision}, \ac{qda} \citep{tharwat2016linear} and 
+	\acp{ann} \citep{mcculloch1943logical,werbos1974beyond}. This is an 
+	incomplete list of popular machine learning models that can be used for 
+	classification tasks. Well-known applications of classification tasks include 
+	predicting whether a customer is satisfied, whether to grant a mortgage to 
+	a client, and many more. The aforementioned machine learning models have in 
+	common, that they can only consider feature data. It is in general not 
+	possible to directly make use of network information for these models. \\
 
-	\noindent Graph machine learning methods are different in that they consider 
-	both feature data as well as network information. If one wants to categorize 
-	graph machine learning within the framework shown in figure 
-	\ref{fig:ml_overview}, it is probably best categorized as a special form of 
-	neural network. It is however not a deep neural network, as network depth 
-	does not necessarily improve the model and can be even counter-productive. 
-	Within graph machine learning, there are two main approaches. The first 
-	approach focuses on learning vector representations of graphs which are 
-	used for downstream machine learning. The downstream machine learning models 
-	include the standard models presented previously. Graph representation 
-	learning approaches include models such as DeepWalk 
-	\citep{perozzi2014deepwalk} and Node2Vec \citep{grover2016node2vec} among 
-	others. The second approach involves the application of graph neural 
-	networks for which there exist many different models. These networks 
-	include models such as Graph Convolutional Networks \citep{kipf2016semi}, 
-	GraphSage \citep{hamilton2017inductive} and many more. \\
-
-	\noindent The detailed theoretical background for the considered graph
-	machine learning models is provided in chapter 2.
+	\noindent Graph machine learning methods are special because they can 
+	consider both feature data as well as network information. Using the
+	overview shown in figure \ref{fig:ml_overview}, graph machine learning is
+	probably best categorized as a special form of neural network. It is 
+	however not a deep neural network, as network depth does not necessarily 
+	improve the model and can be even counter-productive. Within graph machine 
+	learning there are two main approaches. The first approach focuses on 
+	learning vector representations of graphs which are then used for downstream 
+	machine learning. The downstream machine learning models involve the standard 
+	models presented previously. Graph representation learning approaches include 
+	models such as DeepWalk \citep{perozzi2014deepwalk} and Node2Vec 
+	\citep{grover2016node2vec} among others. The second approach involves the 
+	application of \acp{gnn} for which there exist many different 
+	models. Popular and established models include \acp{gcn}
+	\citep{kipf2016semi} and GraphSage \citep{hamilton2017inductive}. The detailed 
+	theoretical background for the considered graph machine learning models is 
+	provided in chapter 2.
 
 	\section{Research Topic}
 	\label{section:research_topics}
 
-	\noindent The difficult access to graphs which also contain features, 
-	motivate the search for alternatives. A review of the literature revealed, 
+	\noindent The difficult access to graphs which also contain features 
+	motivates the search for alternatives. A review of the literature revealed, 
 	that a form of synthetic graph generation could provide a solution to the data 
-	access problem. Classic graph generation procedures include the famous 
+	access problem. Classic graph generation models include the famous 
 	Erdös-Rényi graphs \citeyearpar{erdos1959random}, the small-world model by 
 	\cite{watts1998collective}, the well-known model by 
-	\cite{barabasi1999emergence} and more recently Kronecker Graphs by
+	\cite{barabasi1999emergence}, and more recently Kronecker graphs by
 	\cite{leskovec2010kronecker}. These models are all very instructive
 	regarding the graph generation process and for understanding graph
 	properties. These networks however all have the short-coming, that they do 
@@ -162,50 +239,51 @@
 	use of randomly generated feature data which is referred to as attribute data 
 	by the authors. The model is shown to be capable of generating random graphs 
 	which can adhere to observed real world network properties. An analysis of 
-	the \ac{mag} model reveals, that it could also be a useful model for 
+	the \ac{mag} model revealed, that it could also be a useful model for 
 	creating semi-synthetic graphs using existing feature data. For that reason, 
-	the \ac{mag} model is selected for generating semi-synthetic graphs. This 
+	the \acs{mag} model is selected for generating semi-synthetic graphs. This 
 	model is introduced in detail in section \ref{section:theory_graphgen}. \\
 
-	\noindent More recently, researchers have focused their attention to
+	\noindent More recently, researchers have focused their attention on deep 
 	generative graph models. These models create graphs with features using
 	real graphs as a training input. Examples for such models are graph
-	\ac{rnn} \citep{you2018graphrnn} and deep generative graph
+	\aclp{rnn} \citep{you2018graphrnn} and deep generative graph
 	models \citep{li2018learning}. These are very fascinating models which can
 	be used to recreate or scale graph data. For the purpose of this thesis,
-	these models are not purposeful, as it requires an existing graph with
-	features to be available. Such a graph is unfortunately not available for
-	this thesis. Nevertheless, this is an interesting current topic for graph 
-	generation which was considered. \\ 
+	these models are not useful as it requires an existing graph with
+	features to be available. Such a graph was unfortunately not available for
+	writing this master's thesis. Nevertheless, this is an interesting current 
+	topic for graph generation which was considered. \\ 
 
-	\noindent The access problem to graphs which include feature data might be 
-	resolved using the \ac{mag} model as previously mentioned. This model is 
-	interesting as most researchers and companies have access to large amounts 
-	of feature data such as customer databases or survey data. It would be of
-	great benefit, if the available feature data could be used for generating
-	semi-synthetic graphs. The \acs{mag} model provides a solution for
-	generating such graphs. Semi-synthetic graph refers to the fact, that the 
-	graph is generated using real feature data. Fully synthetic graphs on the 
-	other hand are generated exclusively using artificial data. The goal of the
-	semi-synthetic graph is to generate connections between the observations in 
-	a given dataset. These connections should enhance the information present
-	in the dataset. Graph machine learning should then be capable of exploiting
-	these additional connections and hopefully provide competitive if not
-	superior results compared to standard machine learning models. This thesis 
-	therefore investigates to what extent semi-synthetic graphs can be used for 
-	graph machine learning. Of course, semi-synthetic graphs are unlikely to be
-	capable of fully substituting the performance of real graphs for machine 
-	learning. Nevertheless, semi-synthetic graphs provide additional and 
-	hopefully useful network information. To assess these hypotheses, the 
-	results using graph machine learning are compared to standard machine 
-	learning models. To close this section, the research question as well as the 
-	hypotheses of this thesis are presented formally as follows. 
-
+	\noindent The \acs{mag} model is interesting as it could allow for the 
+	creation of semi-synthetic graphs using feature data. Semi-synthetic refers
+	to the fact, that the graph is generated using real feature data. A fully
+	synthetic graph would be generated using completely artificial data. Many
+	companies and researchers have access to large feature datasets. These
+	datasets include customer databases or collected survey data. For that
+	reason it would be of great benefit, if the \acs{mag} model could generate
+	useful semi-synthetic graphs. The usefulness of a graph is determined to
+	the extent, that the graph can be used for machine learning and yield a 
+	high accuracy for a given classification task. It is not expected, that the 
+	semi-synthetic graphs can fully substitute real graphs. Real world networks
+	often capture connections, which are difficult to formalize and thus
+	recreate using a model such as the \acs{mag}. Nevertheless, the
+	semi-synthetic graphs could be capable of generating useful network
+	information. If this holds true, the semi-synthetic graph contains richer
+	data which can then be exploited using graph machine learning. To assess
+	the viability of this approach, the results using semi-synthetic graphs
+	should be able to outperform or at least compete with the results using
+	standard machine learning models. Therefore to assess these hypotheses,
+	the results using graph machine learning are compared to the results using 
+	standard machine learning models. To close this section and chapter, the 
+	research question as well as the hypotheses of this thesis are presented 
+	formally as follows.
+	\newpage
 	\paragraph{Research Question}\mbox{}
 
 	\noindent To what extent are semi-synthetic graphs based on real 
-				feature data useful for a classification task using machine
-				learning?
+				feature data useful for a classification task using graph 
+				machine learning?
 
 	\paragraph{Hypotheses}\mbox{}
 
@@ -217,7 +295,3 @@
 	a competitive strategy compared to the results of standard machine
 	learning for a given classification task.\\
 
-
-	\noindent The required theoretical background for this thesis which
-	includes graph machine learning, graph generation and graph theory in
-	general is provided in chapter 2.

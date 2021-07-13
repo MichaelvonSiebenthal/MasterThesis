@@ -1,10 +1,10 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {algocf}{\numberline {1}{\ignorespaces DeepWalk}}{23}{algocf.1}%
-\contentsline {algocf}{\numberline {2}{\ignorespaces SkipGram}}{23}{algocf.2}%
-\contentsline {algocf}{\numberline {3}{\ignorespaces Typical GNN Algorithm for Model Training}}{26}{algocf.3}%
-\contentsline {algocf}{\numberline {4}{\ignorespaces GraphSAGE Minibatch Forward Propagation Algorithm}}{30}{algocf.4}%
-\contentsline {algocf}{\numberline {5}{\ignorespaces Multiplicative Attribute Graph Model}}{34}{algocf.5}%
+\contentsline {algocf}{\numberline {1}{\ignorespaces DeepWalk}}{25}{algocf.1}%
+\contentsline {algocf}{\numberline {2}{\ignorespaces SkipGram}}{25}{algocf.2}%
+\contentsline {algocf}{\numberline {3}{\ignorespaces Typical GNN Algorithm for Model Training}}{28}{algocf.3}%
+\contentsline {algocf}{\numberline {4}{\ignorespaces GraphSAGE Minibatch Forward Propagation Algorithm}}{31}{algocf.4}%
+\contentsline {algocf}{\numberline {5}{\ignorespaces Multiplicative Attribute Graph Model}}{36}{algocf.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
