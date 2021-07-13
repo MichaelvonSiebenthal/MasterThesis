@@ -14,9 +14,9 @@
 	
 	\section{General Outline}
 
-	The main target of this thesis is to investigate graph machine learning for
-	the purpose of gaining customer insights. Within this general context, an
-	emphasis is placed on the following three topics:
+	The main target of this thesis is to investigate \ac{gml} for the purpose 
+	of gaining customer insights. Within this general context, an emphasis is 
+	placed on the following three topics:
 
 	\begin{enumerate}
 		\item Semi-synthetic graph generation
@@ -25,37 +25,35 @@
 			models.
 	\end{enumerate}
 
-	\noindent Graph machine learning is a currently very popular approach 
+	\noindent \Acl{gml} is a currently very popular approach 
 	thanks to breakthrough successes of models such as AlphaFold 
 	\citep{senior2020improved}. The people working at DeepMind successfully
 	predicted protein structures with a previously unseen accuracy using the 
 	AlphaFold model. For solving the protein folding problem, the authors of
 	AlphaFold made use of the fact, that a folded protein can be considered as
 	a spatial graph \citep{AlphaFoldTeam2020}. This is just an example of an
-	area where graph machine learning can be successfully applied. More
-	generally, graph machine learning can be used in many different fields
-	such as natural science, social science, and many more. An excellent
-	overview of methods and applications for graph machine learning is given in
-	the article by \cite{zhou2020graph}. This article provides a very good
-	introduction to graph machine learning and is highly recommended to anyone
-	unfamiliar with the topic. \\
+	area where \acs{gml} can be successfully applied. More generally, \acs{gml} 
+	can be used in many different fields such as natural science, social science, 
+	and many more. An excellent overview of methods and applications for
+	\acs{gml} is given in the article by \cite{zhou2020graph}. This article 
+	provides a very good introduction to \acs{gml} and is highly recommended to 
+	anyone unfamiliar with the topic. \\
 
 	\noindent What makes graphs special is their capability of capturing
 	relationships between observations. The nodes in a graph, which correspond
 	to the observations, may further include feature data such as labels and
-	demographic data. Graph machine learning therefore allows for the
+	demographic data. \Acl{gml} therefore allows for the
 	consideration of richer data. In this context, the focus of this thesis is 
-	placed on using graph machine learning for gaining customer insights. In
+	placed on using \acs{gml} for gaining customer insights. In
 	particular, the aim is to accurately classify customers according to their
 	type. \\
 
 	\noindent Generating or gaining access to graphs which contain feature data 
 	is very difficult. For that reason it is investigated to what extent
-	semi-synthetically generated graphs can be successfully used for machine 
-	learning. To assess the success of semi-synthetic graphs, different
-	graph-based models are tested and compared to standard machine learning
-	models. The specific research question is outlined in section
-	\ref{section:research_topics}. \\
+	semi-synthetically generated graphs can be successfully used for \ac{ml}. 
+	To assess the success of semi-synthetic graphs, different graph based models 
+	are tested and compared to standard \acs{ml} models. The specific 
+	research question is outlined in section \ref{section:research_topics}. \\
 
 	\noindent This master's thesis investigates many different models and
 	datasets. For that reason it is important to provide a general overview of
@@ -109,14 +107,14 @@
 	consumer behavior. This thesis will focus on gaining customer insights,
 	which is an important and more business flavored application. Gaining
 	customer insights has become an important topic and increasingly relies on
-	graph machine learning. An example for this are social network companies 
+	\acs{gml}. An example for this are social network companies 
 	such as Facebook or search providers like Google. Those companies mainly 
 	generate their revenue by providing customer insights or selling targeted 
 	advertising to their clients \citep{Facebook2021,Alphabet2021}. Both 
 	Facebook and Google have the advantage, that their businesses naturally 
 	capture network- and feature data. It is for this reason, that these
 	companies are ideally positioned to exploit the data on their platforms
-	using graph machine learning. \\
+	using \acs{gml}. \\
 
 	\noindent Most researchers and companies do not have access to datasets which
 	include network information and feature data. In a practical setting,
@@ -135,26 +133,25 @@
 	Therefore, the most practical approach is to discard network information 
 	and to focus on using feature data. This data access problem prevents many 
 	researchers and companies to make use of potentially superior graph based 
-	machine learning models. This problem motivates this master's thesis to find
-	alternatives which at least in part remove the barrier for graph machine 
-	learning. For that reason, alternative graph generation procedures are
-	investigated and are presented along with the research topic in section 
+	\acs{ml} models. This problem motivates this master's thesis to find
+	alternatives which at least in part remove the barrier for \acs{gml}. For 
+	that reason, alternative graph generation procedures are investigated and 
+	are presented along with the research topic in section 
 	\ref{section:research_topics}. \\
 
-	\noindent First, a general overview of the machine learning models used in
-	this thesis is given in the following section.
+	\noindent Before presenting the research topic, a general overview of the 
+	\acs{ml} models used in this thesis is given in the following section.
 	
 	\section{Machine Learning Overview}
 
 	This section provides a high-level overview of machine learning and
-	specifies the type of machine learning task used in this thesis. To
-	start, it is important to correctly categorize machine learning. There are
-	many related big topics such as data science, big data or artificial
-	intelligence and it is often not clear what exactly is meant. An overview
-	of how these different terms can be categorized is shown in figure 
-	\ref{fig:ml_overview}.
+	specifies the type of \acs{ml} task used in this thesis. To start, it is 
+	important to correctly categorize \acs{ml}. There are many related 
+	big topics such as data science, big data, and artificial intelligence and 
+	it is often not clear what exactly is meant. An overview of how these 
+	different terms can be categorized is shown in figure \ref{fig:ml_overview}.
 
-	\begin{figure}[h]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.7\textwidth]{overview_datascience.png}
 		\caption{Machine Learning Overview}
@@ -163,17 +160,16 @@
 	\end{figure} 
 
 	\noindent Figure \ref{fig:ml_overview} depicts well, how these different
-	terms are related with each other. Machine learning in particular is
+	terms are related with each other. \acs{ml} in particular is
 	mostly ascribed to the domain of artificial intelligence. It however also 
 	has a shared domain with data science and big data. It is thus at the
-	intersection of these three interrelated fields. Machine learning models 
+	intersection of these three interrelated fields. \acs{ml} models 
 	such as neural networks and deep neural networks are specific models within
-	machine learning and are often referred to separately due to their
-	popularity. In this thesis, differentiating between machine learning and
-	neural networks is not necessary, as the considered machine learning models
-	are used for the same task. Machine learning can be applied for various
-	tasks and is again best presented visually as shown in figure 
-	\ref{fig:ml_tasks}.
+	\acs{ml} and are often referred to separately due to their popularity. In 
+	this thesis, differentiating between \acs{ml} and neural networks is not 
+	necessary, as the considered \acs{ml} models are used for the same task. 
+	\acs{ml} can be applied for various tasks and is again best 
+	presented visually as shown in figure \ref{fig:ml_tasks}.
 
 	\begin{figure}[h]
 		\centering
@@ -184,39 +180,38 @@
 	\end{figure} 
 
 	\noindent It is shown in figure \ref{fig:ml_tasks}, that the main tasks for
-	machine learning involve classification, regression, reinforcement
-	learning, clustering and dimensionality reduction. This thesis focuses on 
+	\acs{ml} involve classification, regression, reinforcement
+	learning, clustering, and dimensionality reduction. This thesis focuses on 
 	classification tasks. This task is chosen given the available data and 
-	because it allows for a nice comparison of different machine learning models. 
-	Well known standard machine learning models used for classification tasks 
+	because it allows for a nice comparison of different \acs{ml} models. 
+	Well known standard \acs{ml} models used for classification tasks 
 	include logistic regression \citep{cramer2002origins}, naive bayes 
 	\citep{zhang2004bayes}, \acp{svm} \citep{platt1999probabilistic}, 
 	random forest classifiers \citep{breiman2001random}, AdaBoost 
 	\citep{freund1997decision}, \ac{qda} \citep{tharwat2016linear} and 
 	\acp{ann} \citep{mcculloch1943logical,werbos1974beyond}. This is an 
-	incomplete list of popular machine learning models that can be used for 
+	incomplete list of popular \acs{ml} models that can be used for 
 	classification tasks. Well-known applications of classification tasks include 
 	predicting whether a customer is satisfied, whether to grant a mortgage to 
-	a client, and many more. The aforementioned machine learning models have in 
+	a client, and many more. The aforementioned \acs{ml} models have in 
 	common, that they can only consider feature data. It is in general not 
 	possible to directly make use of network information for these models. \\
 
 	\noindent Graph machine learning methods are special because they can 
 	consider both feature data as well as network information. Using the
-	overview shown in figure \ref{fig:ml_overview}, graph machine learning is
-	probably best categorized as a special form of neural network. It is 
-	however not a deep neural network, as network depth does not necessarily 
-	improve the model and can be even counter-productive. Within graph machine 
-	learning there are two main approaches. The first approach focuses on 
-	learning vector representations of graphs which are then used for downstream 
-	machine learning. The downstream machine learning models involve the standard 
-	models presented previously. Graph representation learning approaches include 
-	models such as DeepWalk \citep{perozzi2014deepwalk} and Node2Vec 
-	\citep{grover2016node2vec} among others. The second approach involves the 
-	application of \acp{gnn} for which there exist many different 
-	models. Popular and established models include \acp{gcn}
-	\citep{kipf2016semi} and GraphSage \citep{hamilton2017inductive}. The detailed 
-	theoretical background for the considered graph machine learning models is 
+	overview shown in figure \ref{fig:ml_overview}, \acs{gml} is probably best 
+	categorized as a special form of neural network. It is however not a deep 
+	neural network, as network depth does not necessarily improve the model and 
+	can be even counter-productive. Within \acs{gml} there are two main 
+	approaches. The first approach focuses on learning vector representations of 
+	graphs which are then used for downstream machine learning. The downstream 
+	\acs{ml} models involve the standard models presented previously. 
+	\Ac{grl} approaches include models such as DeepWalk 
+	\citep{perozzi2014deepwalk} and Node2Vec \citep{grover2016node2vec} among 
+	others. The second approach involves the application of \acp{gnn} for which 
+	there exist many different models. Popular and established models include 
+	\acp{gcn} \citep{kipf2016semi} and GraphSage \citep{hamilton2017inductive}. 
+	The detailed theoretical background for the considered \acs{gml} models is 
 	provided in chapter 2.
 
 	\section{Research Topic}
@@ -263,22 +258,21 @@
 	datasets include customer databases or collected survey data. For that
 	reason it would be of great benefit, if the \acs{mag} model could generate
 	useful semi-synthetic graphs. The usefulness of a graph is determined to
-	the extent, that the graph can be used for machine learning and yield a 
-	high accuracy for a given classification task. It is not expected, that the 
+	the extent, that the graph can be used for \acs{ml} and yield a high 
+	accuracy for a given classification task. It is not expected, that the 
 	semi-synthetic graphs can fully substitute real graphs. Real world networks
 	often capture connections, which are difficult to formalize and thus
-	recreate using a model such as the \acs{mag}. Nevertheless, the
+	recreate using approaches such as the \acs{mag} model. Nevertheless, the
 	semi-synthetic graphs could be capable of generating useful network
 	information. If this holds true, the semi-synthetic graph contains richer
-	data which can then be exploited using graph machine learning. To assess
+	data which can then be exploited using \acs{gml}. To assess
 	the viability of this approach, the results using semi-synthetic graphs
 	should be able to outperform or at least compete with the results using
-	standard machine learning models. Therefore to assess these hypotheses,
-	the results using graph machine learning are compared to the results using 
-	standard machine learning models. To close this section and chapter, the 
-	research question as well as the hypotheses of this thesis are presented 
-	formally as follows.
-	\newpage
+	standard \acs{ml} models. Therefore to assess these hypotheses, the results 
+	using \acs{gml} are compared to the results using standard \acs{ml} models. 
+	To close this section and chapter, the research question as well as the 
+	hypotheses of this thesis are presented formally as follows.
+
 	\paragraph{Research Question}\mbox{}
 
 	\noindent To what extent are semi-synthetic graphs based on real 

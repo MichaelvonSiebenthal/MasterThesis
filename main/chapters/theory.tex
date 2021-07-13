@@ -11,20 +11,21 @@
 	\section{Graph Theory}
 
 	This section provides a brief introduction to graph theory with a focus on
-	the relevant aspects for this master's thesis. The theory presented is
-	primarily taken from the book "Networks: An Introduction" by Mark Newman
-	\citeyearpar{Newman2010}. \\
+	the relevant aspects for this master's thesis. The theory presented in this
+	section is primarily taken from the book "Networks: An Introduction" by 
+	Mark Newman \citeyearpar{Newman2010}. \\
 
 	\noindent Graph theory is an old field of mathematics and can be traced back 
 	to Leonhard Euler and the famous "Königsberg Bridge Problem"
 	\citep{euler1741solutio}. The study of graphs has had a recent revival
 	thanks to its useful applications in areas such as the Google algorithm
 	PageRank \citep{page1999pagerank} and graph machine learning. Graphs are 
-	special data structures as shown in Figure \ref{fig:graph}. The terms graph 
-	and network are often used interchangeably and have the identical meaning 
-	for the purpose of this master's thesis. Typically, the term graph is used 
-	more commonly for the mathematical analysis of graphs and the term network 
-	is more commonly used for data science purposes. \\
+	special data structures for which an example is shown in Figure 
+	\ref{fig:graph}. The terms graph and network are often used interchangeably 
+	and have the identical meaning for the purpose of this master's thesis. 
+	Typically, the term graph is used more commonly for the mathematical 
+	analysis of graphs and the term network is more commonly used in data
+	science.  
 
 	\begin{figure}[h]
 		\centering
@@ -40,9 +41,9 @@
 	however vertex B need not be connected to vertex A. For the purpose of this 
 	thesis, only undirected graphs are considered. Vertices are often referred 
 	to as nodes and the terms are used interchangeably. Edges refer to the
-	connections between the vertices. Edges are often also referred to as links
-	and the terms are used interchangeably as well. Graphs may have additional 
-	elements such as multi-edges or self-edges. Self-edges refer to
+	connections between the vertices. The term links is also often used to
+	refer to edges and the terms are used interchangeably as well. Graphs may have 
+	additional elements such as multi-edges or self-edges. Self-edges refer to
 	nodes which have a looped link to themselves. This can be considered as a
 	form of feedback loop of a node on to itself. Lastly, multi-edges refer to 
 	direct node connections with multiple paths. For notation purposes, graphs 
@@ -52,13 +53,17 @@
 		G(V,E)
 	\end{equation}
 
-	\noindent $G$ denotes the graph. $V$ refers to the set of vertices present 
-	in the graph and $E$ refers to edges present between the vertices.
+	\noindent $G$ denotes the graph, $V$ refers to the set of vertices present 
+	in the graph, and $E$ refers to edges present between the vertices. \\
+
+	\noindent This concludes the basic setup of graphs. The following 
+	paragraphs give an introduction to the adjacency matrix, node degrees, and 
+	centrality measures which are used in this thesis.
 
 	\paragraph{Adjacency Matrix} \mbox{}\\  
 
-	\noindent The adjacency matrix $A$ is defined as a $N \times N$ matrix, 
-	where $N$ refers to the number of vertices present in the graph. Each 
+	\noindent The adjacency matrix $A$ is defined as a $n \times n$ matrix, 
+	where $n$ refers to the number of vertices present in the graph. Each 
 	vertex is therefore recorded by a column and a row in the adjacency matrix. 
 	The elements in the adjacency matrix are further typically defined as follows:
 
@@ -70,7 +75,7 @@
 			\end{cases}
 	\end{equation}
 	
-	\noindent For illustration, the adjacency matrix of the graph shown in 
+	\noindent For illustration, the adjacency matrix of the graph depicted in 
 	Figure \ref{fig:graph} is shown as follows:
 
 	\[ A = 
@@ -84,21 +89,25 @@
 	\end{pmatrix}
 	\] 
 	
-	\noindent As one can see, if vertex $i$ and $j$ are connected, this is 
-	recorded with 1 and 0 otherwise. Note, that all the elements on the 
-	$diag(A)$ are equal to 0. This is because there are no self-edges present 
-	in figure \ref{fig:graph}. Nodes with self-loops would have a 1 recorded on 
-	the corresponding diagonal element of the adjacency matrix. As this is an 
-	undirected network, the adjacency matrix is symmetric. There are many 
-	additional aspects one could mention with regard to the adjacency matrix. 
-	These aspects are however not relevant for this thesis. For additional 
-	information regarding the adjacency matrix, the book "Networks: An 
-	Introduction" by Mark Newman \citeyearpar{Newman2010} is highly recommended. 
+	\noindent As one can see in the adjacency matrix, if vertex $i$ and $j$ are 
+	connected, this is recorded with 1 and 0 otherwise. Note, that all of the 
+	elements on the $diag(A)$ are equal to 0. This is because there are no 
+	self-edges present in figure \ref{fig:graph}. Nodes with self-loops would 
+	have a 1 recorded on the corresponding diagonal element of the adjacency 
+	matrix. In addition, multi-edges can be recorded with the number of edges
+	present between two vertices. For example, vertices which are connected by
+	two edges would be recorded with a 2 in the adjacency matrix. The graph
+	shown in figure \ref{fig:graph} is an undirected network. For that reason, 
+	the adjacency matrix is symmetric. The adjacency matrix can further be used 
+	for representing different types of graphs such as weighted networks. These 
+	aspects are however not relevant for this thesis. For additional information 
+	regarding the adjacency matrix, again the book by Mark Newman 
+	\citeyearpar{Newman2010} is highly recommended. 
 
 	\paragraph{Degree Measures} \mbox{}\\
 
-	\noindent An important measure for graphs are the degrees denoted by $k$ of 
-	the vertices. Degrees refer to the number of edges connected to a vertex. The 
+	\noindent An important measure for graphs are the vertex degrees denoted by 
+	$k$. Degrees refer to the number of edges connected to a vertex. The 
 	degrees of vertex $i$ can be formulated as \citep[p. 133]{Newman2010}:
 
 	\begin{equation}
@@ -106,9 +115,10 @@
 	\end{equation}
 
 	\noindent For an undirected graph, edges have two ends. This is due to the 
-	fact that vertices connected by an edge are mutually connected. In terms of 
-	the sum of the degrees of all vertices, one can therefore write for an
-	undirected graph with $m$ edges \citep[p. 133]{Newman2010}:
+	fact, that vertices connected by an edge are mutually connected. To
+	calculate the sum of the degrees of all vertices, one can therefore write 
+	for an undirected graph with $m$ edges and $n$ vertices 
+	\citep[p. 133]{Newman2010}:
 
 	\begin{equation}
 		2m = \sum_{i=1}^{n} k_i	
@@ -143,24 +153,24 @@
 	\noindent The degrees of a vertex shown in the previous section correspond 
 	to the simplest form of a centrality measure. The issue with this measure 
 	is, that the every neighbor of vertex $i$ is valued the same. This is a 
-	problem, as not all neighbors are of equal importance due to the:
+	problem, as not all neighbors are of equal importance due to:
 
 	\begin{enumerate}
-		\item Number of neighbors
-		\item Importance of neighbors
+		\item The number of the neighbor's neighbors
+		\item The importance of the neighbor
 		\item Both
 	\end{enumerate}
 
 	\noindent There are many different alternative centrality measures which
 	can consider the factors listed above such as eigenvector centrality, Katz
-	centrality or PageRank
-	\citep{katz1953new,page1999pagerank,landau1895relativen,Newman2010}. As
-	this thesis only considers simple undirected graphs, eigenvector centrality 
-	will suffice. \\
+	centrality, and PageRank
+	\citep{landau1895relativen,katz1953new,page1999pagerank}. For analyzing 
+	undirected graphs, eigenvector centrality is sufficient and is presented in 
+	more detail.\\
 
-	\noindent Eigenvector centrality gives all vertices a score which is 
-	proportional to the sum of the scores of the vertices neighbors. This is a 
-	procedure in which typically the initial centrality $x_i$ of vertex $i$ is 
+	\noindent Eigenvector centrality gives all vertices a centrality score which 
+	is proportional to the sum of the scores of the vertices' neighbors. This is 
+	a procedure in which typically the initial centrality $x_i$ of vertex $i$ is 
 	guessed to be 1, $\forall i$. This can be used to calculate the 
 	centralities of the neighbors of $i$ which is denoted as $x_{i}'$. One can 
 	thus write \citep[p. 169]{Newman2010}:
@@ -168,7 +178,7 @@
 	\begin{equation}
 		x_i' = \sum_{j}A_{ij}x_j
 	\end{equation}
-
+	\newpage
 	\noindent In matrix notation:
 
 	\begin{equation}
@@ -182,16 +192,16 @@
 		x(t) =  A^tx(0)
 	\end{equation}
 
-	\noindent $x(0)$ denotes the linear combination of 
+	\noindent Where $x(0)$ denotes the linear combination of 
 	\citep[p. 170]{Newman2010}:
 
 	\begin{equation}
 		x(0) =  \sum_{i}c_{i}v_{i}
 	\end{equation}
 
-	\noindent $v_i$ corresponds to the eigenvectors of the adjacency matrix $A$
-	and $c_i$ corresponds to an appropriately chosen constant. Therefore one can
-	write \citep[p. 170]{Newman2010}:
+	\noindent The variable $v_i$ denotes the eigenvectors of the adjacency 
+	matrix $A$ and $c_i$ corresponds to an appropriately chosen constant. 
+	Therefore one can write \citep[p. 170]{Newman2010}:
 
 	\begin{equation}
 		x(t) =  A^t \sum_{i}c_{i}v_{i} = \sum_{i} c_i k_i^t v_i = 
@@ -210,7 +220,8 @@
 		Ax = k_1 x	
 	\end{equation}
 
-	\noindent Lastly, the eigenvector centrality is defined as \citep[p. 170]{Newman2010}:
+	\noindent Thus, the eigenvector centrality is defined as 
+	\citep[p. 170]{Newman2010}:
 
 	\begin{equation}
 		x_i = k_{1}^{-1} \sum_{j} A_{ij}x_j 
@@ -218,26 +229,28 @@
 
 	\paragraph{Closeness Centrality} \mbox{}\\
 
-	\noindent Closeness centrality, $C_i$, is defined as the average distance 
-	of a vertex to the other vertices in the graph. This centrality measure is 
-	defined as follows \citep[p. 182]{Newman2010}:
+	\noindent The closeness centrality $C_i$ of vertex $i$ is defined as the 
+	average distance to the other vertices in the graph. This centrality 
+	measure is defined as follows \citep[p. 182]{Newman2010}:
 
 	\begin{equation}
 		C_i = \frac{1}{l_i} = \frac{n}{\sum_{j}d_{ij}}
 	\end{equation}
 
 	\noindent For this measure, central vertices exhibit high closeness 
-	centrality and are therefore more closely connected to other vertices 
-	compared to vertices with low closeness centrality. $l_i$ refers to the 
-	average of the geodesic distances $d_{ij}$ of vertex $i$.
+	centrality and are therefore more closely connected to the other vertices 
+	compared to vertices with low closeness centrality. The variable $l_i$
+	denotes the average geodesic distance $d_{ij}$ of vertex $i$. The range of
+	the closeness centrality lies within the range $0\leqslant
+	C_{i}\leqslant1$.
 
 	\paragraph{Betweenness Centrality} \mbox{}\\
 
-	\noindent This centrality measures to which extent a vertex lies on paths 
-	between other vertices. For instance, a bottle neck vertex would exhibit a 
-	large betweenness centrality as many, if not all nodes must pass through it. 
-	More formally, betweenness centrality $x_i$ is defined as 
-	\citep[p. 187]{Newman2010}:
+	\noindent This centrality measures to which extent a vertex $i$ lies on 
+	a geodesic path between two other vertices. For instance, a bottle neck 
+	vertex would exhibit a large betweenness centrality if many nodes must pass 
+	through it to reach their destination. More formally, betweenness 
+	centrality $x_i$ is defined as \citep[p. 187]{Newman2010}:
 
 	\begin{equation}
 		x_i = \sum_{st} \frac{\eta_{st}^i}{g_{st}}
@@ -249,59 +262,64 @@
 	Further, $g_{st}$ is defined as the number of geodesic paths between vertex 
 	$s$ and $t$. \\
 
-	\noindent In order to allow for better comparison of betweenness
+	\noindent In order to allow for a better comparison of betweenness
 	centralities, it is often standardized by the number of connected vertex
-	pairs $s$ and $t$ denoted as  $\eta^2$. The betweenness centrality
-	can therefore be rewritten as \citep[p.190]{Newman2010}:
+	pairs $s$ and $t$ denoted by $\eta^2$. The betweenness centrality in its
+	standardized form can thus be written as \citep[p.190]{Newman2010}:
 
 	\begin{equation}
 		x_i = \frac{1}{\eta^2}\sum_{st} \frac{\eta_{st}^i}{g_{st}}
 	\end{equation}
 
 	\noindent With this measure, the betweenness centrality is within the range
-	$0\leqslant1$.
+	$0\leqslant x_{i}\leqslant1$.
 
 	\section{Machine Learning on Graphs}
 
-	\noindent Graph structures are special in that the datapoints in a graph 
-	have connections with each other. A practical example for this are social 
+	\noindent Graphs are special because the nodes/datapoints in a graph are 
+	linked with each other. A practical example for this are social 
 	networks. In a social network, the profiles of "Peter" and "Paul" might be 
 	connected because "Peter" and "Paul" are friends. In addition, "Paul" and 
-	"Peter" can only ever reach each-other if they are directly or perhaps 
+	"Peter" can only ever reach each other, if they are directly or perhaps 
 	indirectly connected via a mutual friend. This aspect is unique to network 
 	data and provides interesting additional information as well as added
-	complexity. This property does not allow for comparing nodes in a graph in 
-	terms of euclidean distances as only connected nodes can reach each-other.
-	For that reason, graphs cannot be directly plotted as scatter plots since
-	standard distance measures cannot be applied. The graph machine learning 
-	methods used for this thesis can be categorized into the following two 
-	categories:
+	complexity. This property does not allow for comparing nodes in a graph
+	using common distance measures such as Euclidean distances. The edges
+	connecting the nodes only indicate that two nodes are connected. It
+	however does not indicate whether two connected nodes are more- or less 
+	similar compared to two other connected nodes. In addition, how similar are 
+	indirectly connected nodes? Further, how similar or dissimilar are these 
+	nodes compared to other indirectly connected nodes? This rapidly becomes a 
+	very complex question. The challenge is thus to develop a model which can 
+	accurately measure the similarities of the nodes present in a graph. 
+	\acs{gml} provides solutions to this problem and can be grouped into the 
+	following two main categories:
 
 	\begin{enumerate}
-		\item Graph Representation Learning
-		\item Graph Neural Networks
+		\item Graph representation learning
+		\item Graph neural networks
 	\end{enumerate}
 	
 	\noindent Graph representation learning refers to models which generate node
 	embeddings of a given graph. Specifically, this approach creates vector 
-	representations of the nodes in a graph given a specified similarity measure. 
-	For these vector representations distance measures such as Euclidean 
-	distances can be measured. The node embeddings can thus be used for
-	downstream machine learning using standard methods. A \ac{gnn} 
-	can also generate node embeddings as well as directly apply graphs to a 
-	given machine learning task such as classification. The capability of
-	directly applying graphs for machine learning tasks, makes graph neural 
-	networks especially promising. \\
+	representations of the nodes in a graph given a defined similarity measure. 
+	For these node vector representations, distance measures such as Euclidean 
+	distances can be measured. The generated node embeddings can thus be used for
+	downstream machine learning using standard machine learning models. A 
+	\acs{gnn} can also generate node embeddings as well as directly using graphs 
+	for a given classification task among others. The capability of
+	directly applying graphs for machine learning, makes graph neural networks 
+	especially promising. \\
 
-	\noindent In the following subsections, the theory for graph representation 
-	learning and graph neural networks is introduced. 
+	\noindent In the following subsections, the theory for \acs{grl} and
+	\acsp{gnn} is introduced. 
 
 	\subsection{Graph Representation Learning}
 
 	The aim of graph representation learning is to generate node embeddings in 
 	the form of $d$-dimensional vector representations. The resulting node 
-	embeddings can then be used for standard machine learning applications. 
-	A graphical representation of this task is shown in figure 
+	embeddings can then be used for standard \acs{ml} applications. A graphical 
+	representation of this task is shown in figure 
 	\ref{fig:embedding}.
 
 	\begin{figure}[h]
@@ -344,32 +362,31 @@
 	noteworthy model called LINE \citep{tang2015line} also makes use of random
 	walk co-occurrences as its similarity measure. In order to remain focused,
 	only DeepWalk and Node2Vec are considered for this thesis. These two models
-	are well suited for the given task and are among the most popular graph
-	representation learning methods. \\
+	are well suited for the given task and are among the most popular \acs{grl} 
+	models. \\
 
 	\noindent DeepWalk and Node2Vec make use of methods which have its origin in 
-	\ac{nlp}. Specifically they makes use of the Skip-Gram model introduced by 
+	\ac{nlp}. Specifically they makes use of the Skip-gram model introduced by 
 	\cite{mikolov2013efficient,mikolov2013distributed}. 
-	The Skip-Gram model is a core component of DeepWalk and Node2Vec, which is why 
-	it is explained in detail before proceeding to the graph representation
-	leraning models. \\
+	The Skip-gram model is a core component of DeepWalk and Node2Vec, which is why 
+	it is explained in detail before proceeding to the \acs{grl} models. \\
 
-	\noindent In \ac{nlp} words are one-hot encoded as inputs for the Skip-Gram model 
-	which learns vector representations of the input words. The aim of the
-	Skip-Gram model is then to predict the context of the input word by
+	\noindent In \ac{nlp} words are one-hot encoded as inputs for the Skip-gram 
+	model which learns vector representations of the input words. The aim of the
+	Skip-gram model is then to predict the context of the input word by
 	predicting the neighboring words in a sentence. A basic overview of the 
-	Skip-Gram model is provided in figure \ref{fig:skip_gram}. 
+	Skip-gram model is provided in figure \ref{fig:skip_gram}. 
 
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.4\textwidth]{skip_gram.png}
-		\caption{Skip-Gram Architecture}
+		\caption{Skip-gram Architecture}
 		\cite[p. 5]{mikolov2013efficient}
 		\label{fig:skip_gram}
 	\end{figure}
 
 	\noindent The basic layout shown in figure \ref{fig:skip_gram} depicts the
-	high-level procedure of the Skip-Gram model. To make this model more
+	high-level procedure of the Skip-gram model. To make this model more
 	specific, the input corresponds to the one-hot encoded vector at row $t$ of
 	the input matrix $W$ with dimensions $T \times T$, where every row 
 	corresponds to a one-hot encoded word. $W(t)$ is linearly passed to the
@@ -381,8 +398,8 @@
 	This creates the output vector $u$ which is then used to predict the correct
 	context word $c$ from the vocabulary of $C$ number of context words. To do 
 	so, the training target is set to maximize the average $\log$ probability 
-	of the correct context word for every input word $w_{t}$. More formally 
-	\citep[p. 2]{mikolov2013distributed}:
+	of the correct context word for every input word $w_{t}$. The $\log$
+	probability is more formally defined by \citep[p. 2]{mikolov2013distributed}:
 
 	\begin{equation}
 		\frac{1}{T}\sum_{t=1}^{T}\sum_{-c \leqslant j \leqslant c,j\neq0}\log
@@ -391,12 +408,14 @@
 	\end{equation}
 
 	\noindent To calculate the probability of the context word given the input
-	word $w_{t}$, the Softmax function is applied to the output layer $u$ in the 
-	manner shown by Mikolov et al. \citeyearpar[p. 3]{mikolov2013distributed}. 
-	This calculates a normalized probability for every context word given $w_{t}$. To 
-	formalize this in terms of a loss function, the training target shown in 
-	equation \ref{eq:skip_traintarget} can be rewritten as follows for every
-	input word $w_{t}$:
+	word $w_{t}$, the softmax function
+	\citep{bridle1990probabilistic,bridle1990training} is applied to the output 
+	layer $u$ in the manner shown by Mikolov et al. 
+	\citeyearpar[p. 3]{mikolov2013distributed}. This calculates a normalized 
+	probability for every context word given $w_{t}$. To formalize this in 
+	terms of a loss function, the training target shown in equation 
+	\ref{eq:skip_traintarget} can be rewritten as follows for every input word 
+	$w_{t}$: 
 
 	\begin{equation}
 		\begin{split}
@@ -416,21 +435,22 @@
 	representations $u_{j'}$ of all $T$ number of words given the input word 
 	$w_{t}$. The calculated loss is then used to update the trainable model 
 	parameters $\Phi$ and $\Psi$ using gradient descent via a backward 
-	propagation function analogues to what is used for standard neural 
-	networks. The desired output of the Skip-Gram model is the weight matrix
-	$\Phi$ which once the model is sufficiently trained, corresponds to the
+	propagation function \citep{werbos1974beyond} analogues to what is used for 
+	standard neural networks. The desired output of the Skip-gram model is the 
+	weight matrix $\Phi$ which once the model is sufficiently trained, 
+	corresponds to the
 	vector representation or embeddings of the input words. \\
 
-	\noindent The same principle shown in the Skip-Gram model can be applied
+	\noindent The same principle shown in the Skip-gram model can be applied
 	to graphs in a modified version. First, nodes in a graph can be one-hot
 	encoded the same way as words. This means, that nodes can be used as input
 	data in a similar fashion as words. Based on this idea, DeepWalk by
-	\cite{perozzi2014deepwalk} achieved a big breakthrough for graph
-	representation learning. The DeepWalk algorithm builds on top of the 
-	Skip-Gram model and uses fixed-length random walks for learning the node 
-	embeddings. To provide a better overview of the DeepWalk algorithm, 
-	the pseudo-code is presented in algorithm \ref{algo:DeepWalk} \& 
-	\ref{algo:SkipGram} \citep[p. 704]{perozzi2014deepwalk}.
+	\cite{perozzi2014deepwalk} achieved a big breakthrough for \acs{grl}. The 
+	DeepWalk algorithm builds on top of the Skip-gram model and uses 
+	fixed-length random walks for learning the node embeddings. To provide a 
+	better overview of the DeepWalk algorithm, the pseudo-code is presented in 
+	algorithm \ref{algo:DeepWalk} \& \ref{algo:SkipGram} 
+	\citep[p. 704]{perozzi2014deepwalk}.
 	
 	\begin{algorithm}[h]
 		\scriptsize
@@ -467,13 +487,11 @@
 			}
 		\caption[SkipGram]{SkipGram($\Phi,\mathcal{W}_{vi},w$)}
 		\label{algo:SkipGram}
-	\end{algorithm}
-	
-	\vspace{5mm}
+	\end{algorithm}	
 	
 	\noindent The DeepWalk algorithm shows, that for every node $v\in G$ a
 	fixed length random walk is created. Every node on the random walk is used
-	as a one-hot encoded input for the Skip-Gram model. The context nodes of the
+	as a one-hot encoded input for the Skip-gram model. The context nodes of the
 	input node correspond to the input nodes' neighbors on the random walk 
 	within the window size $w$. This procedure is repeated for $\gamma$ 
 	number of random walks which in turn concludes one training epoch. The rows
@@ -484,7 +502,7 @@
 	\ref{eq:random_similartiy}. Please note, that the DeepWalk algorithm often 
 	uses more efficient approximation methods to calculate the loss function
 	shown in equation \ref{eq:deepwalk_loss}. These approximation methods
-	include hierarchical Softmax which makes use of a binary tree or negative 
+	include hierarchical softmax which makes use of a binary tree or negative 
 	sampling. Both approximation methods are outlined in the paper by 
 	\cite{mikolov2013distributed}. \\
 
@@ -507,12 +525,11 @@
 	article by Grover \& Leskovec (\citeyear[p. 859]{grover2016node2vec}). \\
 
 	\noindent The resulting node embeddings can then be used for downstream
-	machine learning tasks using standard models. An additional benefit of 
-	graph representation learning is that the nodes can be encoded into an 
-	arbitrary number of dimensions. In this sense, graph representation 
-	learning can be used as a powerful dimensionality reduction strategy. 
-	The node embeddings correspond to the features used for downstream 
-	machine learning tasks. The features were thus learned automatically using 
+	\acs{ml} tasks using standard models. An additional benefit of \acs{grl} is 
+	that the nodes can be encoded into an arbitrary number of dimensions. In 
+	this sense, \acs{grl} can be used as a powerful dimensionality reduction 
+	strategy. The node embeddings correspond to the feature data used for the 
+	downstream \acs{ml} tasks. The features were thus learned automatically using 
 	the DeepWalk or Node2Vec algorithm. This approach directly takes care of the 
 	otherwise at times tedious feature selection process. With this approach, 
 	only the number of features need to be defined for feature selection. This 
@@ -521,10 +538,10 @@
 	\subsection{Graph Neural Networks}
 	\label{section:GNN_theory}
 
-	This section provides an overview of the theory for \acl{gnn}s. Within the 
-	family of \acs{gnn}s, there are a myriad of different models 
-	available and every few months new models are published. \acs{gnn}s are 
-	currently very popular and benefit from a large research output. This thesis will 
+	This section provides an overview of the theory for \aclp{gnn}. Within the 
+	family of \acsp{gnn}, there are a myriad of different models available and 
+	every few months new models are published. \acsp{gnn} are currently very 
+	popular and benefit from a large research output. This thesis will 
 	focus on two popular and established \acs{gnn} approaches which are:
 
 	\begin{enumerate}
@@ -533,8 +550,11 @@
 	\end{enumerate}
 	
 	\noindent Before presenting the two above mentioned methods, a general
-	overview of the \acs{gnn} framework is given. First the required setup is
-	defined \citep{leskovec2021lecture}:
+	overview of the \acs{gnn} framework is given. The general framework
+	presented here is largely inspired by the CS224W lecture\footnote{CS224W website:
+	\url{http://web.stanford.edu/class/cs224w/}} at Stanford University given 
+	by Prof. Dr. Jure Leskovec \citeyearpar{leskovec2021lecture}. First, the 
+	required setup is defined:
 
 	\begin{itemize}
 		\setlength\itemsep{0.2em}
@@ -550,19 +570,19 @@
 	\noindent If there are no node features present, $X$ can be defined as a 
 	one-hot encoded vector. A naive approach for building a \acs{gnn} would be to
 	append the columns of the adjacency matrix to the feature matrix. This
-	combined matrix would then be used as the input for a standard
-	artificial neural network. The problem with this approach is, that the 
-	input is not order invariant and that the trained model cannot be applied 
-	to graphs of different sizes \citep{leskovec2021lecture}. \\
+	combined matrix would then be used as the input for a standard \acs{ann}. 
+	The problem with this approach is, that the input is not order invariant and 
+	that the trained model cannot be applied to graphs of different sizes 
+	\citep{leskovec2021lecture}. \\
 
-	\noindent Modern \acs{gnn}s have overcome this problem by drawing inspiration 
-	from \ac{cnn} and its famous filtering mechanism as outlined by 
-	\cite{krizhevsky2012imagenet}. \acs{cnn}s typically work with grid 
+	\noindent Modern \acsp{gnn} have overcome this problem by drawing inspiration 
+	from \acp{cnn} and its famous filtering mechanism as outlined by 
+	\cite{krizhevsky2012imagenet}. \acsp{cnn} typically work with grid 
 	structured input data such as pixels of images. The convolutional filter 
 	then samples the input grid using a filter with a specified size 
-	(e.g. $3\times3$ grid filter). Similarly, \acs{gnn}s sample a graph using the node 
-	neighbors $\mathcal{N}(v)$ of node $v$ as a filter. The filter can then be 
-	fine tuned in the sense of how many $k$-hops of neighbors to consider 
+	(e.g. $3\times3$ grid filter). Similarly, \acsp{gnn} sample a graph using 
+	the node neighbors $\mathcal{N}(v)$ of node $v$ as a filter. The filter can 
+	then be fine tuned in the sense of how many $k$-hops of neighbors to consider 
 	(e.g. 1-hop: immediate neighbors of $v$, 2-hop: include neighbors of $v$'s 
 	neighbors etc.). In terms of implementation, the number of $k$-hops is set 
 	by the number of graph convolutional layers included in the \acs{gnn} model. 
@@ -585,8 +605,8 @@
 	shown in figure \ref{fig:GNN_structure}, the challenge for the \acs{gnn} is to 
 	find node embeddings based on local network neighborhoods \citep{leskovec2021lecture}. 
 	The node embeddings at layer 0 correspond to the features of the input nodes 
-	where $X = H^{(0)}$. A typical procedure for a \acs{gnn} model is outlined in the
-	pseudo-code shown in algorithm \ref{algo:GNN_struct} 
+	where $X = H^{(0)}$. A typical procedure for a \acs{gnn} model is outlined 
+	in the pseudo-code shown in algorithm \ref{algo:GNN_struct} 
 	\citep{hamilton2017inductive,leskovec2021lecture,you2020design}.	
 
 	\begin{algorithm}[h]
@@ -630,47 +650,49 @@
 	\noindent Algorithm \ref{algo:GNN_struct} is not meant to be considered as
 	a complete overview and should be rather regarded as an example of a typical 
 	\acs{gnn} structure. In addition, one should split the data into training-
-	and validation sets to ensure a good model fit. \acs{gnn}s are flexible in that a 
-	myriad of modifications can be added to the \acs{gnn} layers similar to the 
-	possibilities of a \acs{cnn} or a \ac{ann}. The defining features of
-	different \acs{gnn} models usually involve the selection of different message passing methods 
-	and aggregation strategies. An excellent overview regarding the design space 
-	for \acs{gnn}s is provided in the articles by \cite{you2020design} and 
-	\cite{zhou2020graph} as a reference. Of course there are exceptions and 
-	alternative procedures exist. The \acs{gnn} methods evaluated in this thesis and 
-	most successful \acs{gnn}s however tend to follow a variation of the structure 
-	shown in algorithm \ref{algo:GNN_struct}.  \\
+	and validation sets to ensure a good model fit. \acsp{gnn} are flexible in 
+	that a myriad of modifications can be added to the \acs{gnn} layers similar 
+	to the possibilities of \acsp{cnn} and \acsp{ann}. The defining features of
+	different \acs{gnn} models usually involve the selection of different 
+	message passing methods and aggregation strategies. An excellent overview 
+	regarding the design space for \acsp{gnn} is provided in the articles by 
+	\cite{you2020design} and \cite{zhou2020graph} as a reference. Of course, 
+	there are exceptions and alternative procedures exist. The \acs{gnn} methods 
+	evaluated in this thesis and most successful \acsp{gnn} however tend to 
+	follow a variation of the structure shown in algorithm \ref{algo:GNN_struct}.  \\
 
-	\noindent In terms of interpretation, the output of the first \acs{gnn} layers in
-	figure \ref{fig:GNN_structure} (gray boxes) corresponds to the hidden layer 
-	representations of the direct neighbors of the target node A. The output of 
-	the final \acs{gnn} layer corresponds to the node embedding $z_{A}$ of the target 
-	node A. This should appear familiar when comparing this approach to the graph 
-	representation learning method outlined in the previous section. 
-	GNNs can indeed be used for unsupervised learning tasks such as learning 
-	node embeddings. Good examples for generating node embeddings are shown in 
-	the articles regarding Graph Convolutional Networks by \cite{kipf2016semi} 
-	and GraphSage by \cite{hamilton2017inductive}. As shown in algorithm 
-	\ref{algo:GNN_struct}, \acs{gnn}s can directly be applied for machine learning
-	tasks such as customer classification. This is where \acs{gnn}s are especially 
-	powerful and differ to the Graph Representation Learning algorithms 
-	outlined in the previous section. \acs{gnn}s are flexible tools and can be used 
-	in various settings such as graph representation learning, clustering, 
-	classification and link prediction tasks among others \citep{zhou2020graph}. \\
+	\noindent In terms of interpretation, the output of the first \acs{gnn} 
+	layer in figure \ref{fig:GNN_structure} (gray boxes) corresponds to the 
+	hidden layer representations of the direct neighbors of the target node A. 
+	The output of the final \acs{gnn} layer corresponds to the node embedding 
+	$z_{A}$ of the target node A. This should appear familiar when comparing 
+	this approach to the \acs{grl} models introduces in the previous section. 
+	\acsp{gnn} can indeed be used for unsupervised learning tasks such as 
+	learning node embeddings. Good examples for generating node embeddings are 
+	shown in the articles regarding \acsp{gcn} by \cite{kipf2016semi} and 
+	GraphSage by \cite{hamilton2017inductive}. As shown in algorithm 
+	\ref{algo:GNN_struct}, \acsp{gnn} can directly be applied for \acs{ml} tasks 
+	such as customer classification. This is where \acsp{gnn} are especially 
+	powerful and differ to the \acs{grl} algorithms outlined in the previous 
+	section. \acsp{gnn} are flexible tools and can be used in various settings 
+	such as \acs{grl}, clustering, classification and link prediction tasks 
+	among others \citep{zhou2020graph}. \\
 
-	\noindent Having introduced the general functionality of \acs{gnn}s, the models
-	\ac{gcn} and GraphSage are introduced in detail in the following two sections. 
+	\noindent Having introduced the general functionality of \acsp{gnn}, the 
+	models \ac{gcn} and GraphSage are introduced in detail in the following two 
+	sections. 
 
 	\subsubsection{Graph Convolutional Networks}
 	
-	\noindent The \acl{gcn} was introduced by \cite{kipf2016semi} and makes use 
+	\noindent The \acf{gcn} was introduced by \cite{kipf2016semi} and makes use 
 	of simplified spectral graph convolutions. The author Thomas Kipf 
-	\citeyearpar{kipf2016online} provides excellent explanations on his website 
-	which is used as inspiration for presenting the theory\footnote{Website Thomas Kipf: 
-	\url{https://tkipf.github.io/graph-convolutional-networks/}}. As outlined, 
-	\acs{gnn}s typically differ with regards to the type of message passing and 
-	aggregation strategy applied. \acs{gcn}s make use of the following forward 
-	propagation function \citep[p. 2]{kipf2016semi}:
+	\citeyearpar{kipf2016online} provides excellent explanations on his
+	website\footnote{Website Thomas Kipf: 
+	\url{https://tkipf.github.io/graph-convolutional-networks/}} which is used 
+	as inspiration for presenting the theory. As outlined, \acsp{gnn} typically 
+	differ with regards to the type of message passing and aggregation strategy 
+	applied. \acsp{gcn} make use of the following forward propagation function 
+	\citep[p. 2]{kipf2016semi}:
 
 	\begin{equation}
 		H^{(l+1)} = \sigma\left(\tilde D^{-\frac{1}{2}}\tilde A \tilde
@@ -695,8 +717,8 @@
 		\item $\tilde D_{ii} = \sum_{j}\tilde A_{ij}$ is a diagonal matrix
 			containing the degree distributions of the modified adjacency
 			matrix $\tilde A$.
-		\item $\sigma(\cdot)$ refers to an activation function such as ReLU or
-			Softmax.
+		\item $\sigma(\cdot)$ refers to an activation function such as ReLU
+			\citep{nair2010rectified} or softmax.
 	\end{itemize}
 
 	\noindent To provide a better overview, the compact notation shown in 
@@ -731,11 +753,11 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	to the symmetric normalization. \\
 
 	\noindent The detailed explanations given above show the procedure for
-	one layer of a GCN. Returning now to compact notation, this procedure can be
-	expanded for two or more GCN layers. First, the notation is further
-	simplified by defining $\hat A = \tilde D^{-\frac{1}{2}}\tilde A \tilde
-	D^{-\frac{1}{2}}$. An example of a two-layer GCN is then given as follows 
-	where $Z$ refers to the embedding or output of the target node 
+	one layer of a \acs{gcn}. Returning now to compact notation, this procedure 
+	can be expanded for two or more \acs{gcn} layers. First, the notation is 
+	further simplified by defining $\hat A = \tilde D^{-\frac{1}{2}}\tilde A \tilde
+	D^{-\frac{1}{2}}$. An example of a two layer \acs{gcn} is then given as 
+	follows where $Z$ refers to the embedding or output of the target node 
 	\citep[p. 3]{kipf2016semi}:
 
 	\begin{equation}
@@ -746,22 +768,23 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\noindent Finally, the model parameters are updated analogues to the
 	procedure outlined in algorithm \ref{algo:GNN_struct}. The main distinctive
-	feature for the GCN is the differing forward propagation function. 
+	feature for the \acs{gcn} is the differing forward propagation function. 
 
 	\subsubsection{GraphSage}
 	
 	\noindent This section introduces GraphSage by \cite{hamilton2017inductive} 
-	which can be thought of as the inductive counterpart of the GCN presented 
-	in the previous section. Inductive refers to the capability of not only 
-	performing machine learning tasks on the graph used for training but to 
-	apply the trained GNN model to new and unseen graphs. This is a large leap 
-	as GCN for instance can only be used to predict unseen nodes on the graph 
-	which was used for training. This is very limiting for the application of 
-	GNNs in a practical setting. GraphSage achieves this by applying different 
-	aggregation strategies and sampling the neighborhood $\mathcal{N}(v)$.
-	Specifically, the GraphSage model only considers a fixed number of 
-	uniformly random sampled neighbors from $\mathcal{N}(v)$ with depth $K$. A 
-	graphical example of this procedure is shown in figure \ref{fig:GraphSage_sample}:
+	which can be thought of as the inductive counterpart of the \acs{gcn} 
+	presented in the previous section. Inductive refers to the capability of 
+	not only performing \acs{ml} tasks on the graph used for training but to 
+	apply the trained \acs{gnn} model to new and unseen graphs. This is a large 
+	leap as \acsp{gcn} for instance can only be used to predict unseen nodes on 
+	the graph which was used for training. This is very limiting for the 
+	application of \acsp{gcn} in a practical setting. GraphSage overcomes this
+	problem by applying different aggregation strategies and sampling the 
+	neighborhood $\mathcal{N}(v)$. Specifically, the GraphSage model only 
+	considers a fixed number of uniformly random sampled neighbors from 
+	$\mathcal{N}(v)$ with depth $K$. A graphical example of this procedure is 
+	shown in figure \ref{fig:GraphSage_sample}:
 
 	\begin{figure}[h]
 		\centering
@@ -772,7 +795,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\end{figure}
 
 	\noindent The steps shown in figure \ref{fig:GraphSage_sample} are similar
-	to the procedures for GCNs. The pseudo code for the GraphSage forward 
+	to the procedures for \acsp{gcn}. The pseudo code for the GraphSage forward 
 	propagation function is given in algorithm \ref{algo:GraphSage} 
 	\cite[p. 12]{hamilton2017inductive}. \\
 
@@ -809,7 +832,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 				}		
 			}
 		\nl $z_v \leftarrow h_{u}^{K},\forall u \in \mathcal{B}$
-		\caption{GraphSAGE Minibatch Forward Propagation Algorithm}
+		\caption{GraphSage Minibatch Forward Propagation Algorithm}
 		\label{algo:GraphSage}
 	\end{algorithm}
 	
@@ -825,9 +848,9 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\ref{algo:GNN_struct}. For algorithm \ref{algo:GraphSage}, $\mathcal{B}$ 
 	refers to the mini-batches of vertices taken from the set of vertices $V$ 
 	of the graph $G(V,E)$. \\
-	\newpage
+
 	\noindent There are three aggregator types proposed for GraphSage
-	\citep{hamilton2017inductive}:
+	\citep[p. 5-6]{hamilton2017inductive}:
 
 	\begin{enumerate}
 		\setlength\itemsep{0.2em}
@@ -840,11 +863,11 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	as follows:
 
 	\paragraph{Mean Aggregation} \mbox{}\\
-	\noindent This type of aggregation is similar to the GCN and takes the
+	\noindent This type of aggregation is similar to the \acs{gcn} and takes the
 	average of the received messages from the message passing procedure. The 
-	difference to GCN is that mean aggregation does not rely on the full graph 
-	Laplacian and makes use of a slightly different normalization approach. The 
-	aggregation process differs to the one shown in algorithm 
+	difference to \acs{gcn} is that mean aggregation does not rely on the full 
+	graph Laplacian and makes use of a slightly different normalization approach. 
+	The aggregation process differs to the one shown in algorithm 
 	\ref{algo:GraphSage} and replaces the procedures in line 9 and 10 with 
 	\citep[p. 5]{hamilton2017inductive}:
 
@@ -855,11 +878,10 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\paragraph{Max-Pooling Aggregation} \mbox{}\\
 	\noindent Max-Pooling aggregation refers to the application of an 
-	element-wise $\max$ operator. This means 
-	that of the neighbors, only the largest element-wise features are considered. 
-	More formally, max-pooling aggregation is defined as follows and is used 
-	for the aggregation shown in line 9 of algorithm \ref{algo:GraphSage} 
-	\citep[p. 6]{hamilton2017inductive}:
+	element-wise $\max$ operator. This means that of the neighbors, only the 
+	largest element-wise features are considered. More formally, max-pooling 
+	aggregation is defined as follows and is used for the aggregation shown in 
+	line 9 of algorithm \ref{algo:GraphSage} \citep[p. 6]{hamilton2017inductive}:
 
 	\begin{equation}
 		AGGREGATE_{k}^{pool} = \max\left(\sigma(\{W_{pool}h_{u_{i}}^{k} +
@@ -869,13 +891,13 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\noindent Note, that $W_{pool}$ refers to a separate weight matrix for the
 	one layer message passing of the max-pooling aggregation. In principle, an 
 	arbitrary number of layers could be added for max-pooling. The authors 
-	\cite{hamilton2017inductive} however focus on the case with one layer. The
-	parameters of max-pooling are learned analogues to the other GraphSage
-	model parameters. \\ 
+	\cite[p. 6]{hamilton2017inductive} however focus on the case with one layer. 
+	This approach is kept as it yielded good results. The parameters of 
+	max-pooling are learned analogues to the other GraphSage model parameters. \\ 
 
 	\paragraph{LSTM Aggregation} \mbox{}\\
-	\noindent Long short-term memory (\acs{lstm}) is the last aggregation strategy 
-	proposed for GraphSage and uses the \acs{lstm} \acs{rnn} first introduced by
+	\noindent \Acf{lstm} is the last aggregation strategy 
+	proposed for GraphSage and uses the \acs{lstm} \acf{rnn} first introduced by
 	\cite{hochreiter1997long} as an aggregation strategy. \acsp{lstm} are not
 	permutation invariant which is a requirement for the aggregation strategy.
 	The authors propose using a random permutation of the set of node neighbors 
@@ -885,22 +907,23 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	\section{Graph Generation}
 	\label{section:theory_graphgen} 
 
-	This section introduces the \acl{mag} model by \cite{kim2012multiplicative}. 
+	This section introduces the \acf{mag} model by \cite{kim2012multiplicative}. 
 	This model is used to generate semi-synthetic graphs from feature data as 
 	mentioned in the introduction. Originally, the MAG model was introduced for 
 	the purpose of generating realistic graphs from feature data and to show that 
 	the resulting graph can obey properties of real-world networks. To show this, 
-	Kim \& Leskovec generated random feature data for which the model parameters 
-	were set in such a manner, that the resulting graph adheres to a set of real 
-	network properties. These network properties include the emergence of a giant
-	connected component and a power-law or $\log$-normal degree distribution
-	among others \citep[p. 113]{kim2012multiplicative}. While the creation of a 
-	graph which follows real-world network properties would be desirable, it is 
-	not the primary target for this thesis. The main goal of the semi-synthetic 
-	graph generation is to create a graph that provides useful additional 
-	information, which can be exploited using graph machine learning. The MAG 
-	model is flexible in this sense, that it can create graphs which are not 
-	constrained to adhere to a specific set of network properties. Lastly, 
+	\citeauthor{kim2012multiplicative} generated random feature data for which 
+	the model parameters were set in such a manner, that the resulting graph 
+	adheres to a set of real network properties. These network properties 
+	include the emergence of a giant connected component and a power-law or 
+	$\log$-normal degree distribution among others 
+	\citep[p. 113]{kim2012multiplicative}. While the creation of a graph which 
+	follows real-world network properties would be desirable, it is not the 
+	primary target for this thesis. The main goal of the semi-synthetic graph 
+	generation is to create a graph that provides useful additional information, 
+	which can be exploited using \acs{gml}. The \acs{mag} model is flexible in 
+	this sense, that it can create graphs which are not constrained to adhere to 
+	a specific set of network properties. Lastly, 
 	\citeauthor{kim2012multiplicative} 
 	\citeyearpar[p. 138-139]{kim2012multiplicative} present model parameters 
 	which generate graphs that follow real-world network properties. These model 
@@ -913,13 +936,13 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	create random graphs that can adhere to said network properties. For this
 	thesis, the same MAG model will applied using real feature data. This makes
 	the task of defining the model parameters more difficult as they cannot be
-	freely assigned. In addition, the generated graph will be used for machine
-	learning which is not an application the authors had considered. In this 
-	regard the reason and aim for using the MAG model differs for this thesis 
+	freely assigned. In addition, the generated graph will be used for \acs{ml} 
+	which is not an application the authors had considered. In this regard the 
+	reason and aim for using the \acs{mag} model differs for this thesis 
 	compared to the original paper. \\
 
-	\noindent The starting point of the MAG model is a matrix of feature data, 
-	$X^{N \times F}$, where $N$ refers to the number of observations 
+	\noindent The starting point of the \acs{mag} model is a matrix of feature 
+	data, $X^{N \times F}$, where $N$ refers to the number of observations 
 	and $F$ to the number of features. \citeauthor{kim2012multiplicative} refer 
 	to feature data as attributes and they use the terms interchangeably. For this 
 	thesis a distinction is made, where features correspond to the full set of 
@@ -1025,7 +1048,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 		\label{algo:MAG}
 	\end{algorithm}
 
-	\noindent The pseudo-code of the MAG model is depicted in algorithm 
+	\noindent The pseudo-code of the \acs{mag} model is depicted in algorithm 
 	\ref{algo:MAG} and generates the adjacency matrix $A$ which is then used 
 	for constructing the graph $G(V,E)$. The observations of the feature data 
 	$X$ which contains the attributes are used as inputs and correspond to the 
