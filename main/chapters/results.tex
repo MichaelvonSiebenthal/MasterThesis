@@ -224,51 +224,15 @@
   from the target node and randomly samples 5 nodes at a 1-hop distance. This 
   corresponds to the steps shown in figure \ref{fig:GraphSage_sample}. To 
   improve the robustness of the model, a dropout rate of $p = 0.02$ is set. 
-  GraphSage is run using the aggregation strategies mean, \acs{lstm} and max-pooling. 
-  In addition, sum-pooling is added as an additional aggregation strategy 
-  as suggested by \cite{xu2019powerful}. \\
-
-  \noindent The sum-pooling applied in the GraphSage setting follows 
-  the same procedure as max-pooling. The only difference is that element-wise 
-  sum-pooling is performed instead of element-wise max-pooling. 
-  \cite{xu2019powerful} show that certain graph structures can confuse 
-  aggregation strategies such as mean aggregation or max-pooling. The issue with 
-  these aggregation strategies is, that they are not injective functions. 
-  Different input nodes (with different graph structures) in a mean- or 
-  max aggregation setting can yield an identical output. Given an 
-  identical output, the \acs{gnn} would classify the two identical outputs as the 
-  same node representation even though they are the result of different graph
-  structures. This is an area where \acsp{gnn} can fail to distinguish graph 
-  structures. Examples of where sum aggregation succeeds and mean- and/or max 
-  aggregation fails is shown in figure \ref{fig:graph_structures}:
-
-  \begin{figure}[h]
-		\centering
-		\includegraphics[width=0.9\textwidth]{mean_max_fail.png}
-		\caption{Examples of Graph Structures that Mean and Max Aggregators 
-        Fail to Distinguish.}
-        \label{fig:graph_structures}
-        \cite[p. 6]{xu2019powerful}
-  \end{figure}
-
-  \noindent The node coloring shown in figure \ref{fig:graph_structures}
-  corresponds to one-hot encoded types of nodes. Further, $v$ and $v'$ should
-  correspond to different node representations, which mean- and/or max
-  aggregation fail to distinguish from each other (hence the same node coloring). 
-  Given one-hot encoded nodes with no feature data, sum aggregation is shown to 
-  be an injective function \citep[p. 5]{xu2019powerful}. For the \acs{us} airline
-  passenger dataset with its many features, sum aggregation is unfortunately not 
-  an injective function. It however sparked the interest in sum aggregation,
-  which is why it is added as an aggregation strategy of interest for the
-  GraphSage model. \\
-  
-  \noindent The model for each aggregation strategy is trained using 400 epochs. 
-  The training- and validation results using the training graph are presented 
-  for every aggregation strategy. In addition, the trained models are applied 
-  to a new unseen test graph which also consists of 6'000 randomly sampled nodes. 
-  The test graph is created analogues to the training- and validation graph using 
-  a separate test feature dataset. The results for all aggregation strategies 
-  are presented in the following paragraphs. 
+  GraphSage is run using the aggregation strategies mean, \acs{lstm},
+  max-pooling, and sum-pooling. The model for each aggregation strategy is 
+  trained using 400 epochs. The training- and validation results using the 
+  training graph are presented for every aggregation strategy. In addition, 
+  the trained models are applied to a new unseen test graph which also consists 
+  of 6'000 randomly sampled nodes. The test graph is created analogues to the 
+  training- and validation graph using a separate test feature dataset. The 
+  results for all aggregation strategies are presented in the following 
+  paragraphs. 
 
   \paragraph{Mean Aggregation}  \mbox{}\\ 
   In figure \ref{fig:mean_aggregation} the training- and validation losses as
@@ -345,10 +309,11 @@
   \end{table}
 
   \paragraph{Sum-Pooling Aggregation}  \mbox{}\\ 
-  Sum-pooling is added for the reasons previously outlined. It is of particular 
-  interest to assess, whether sum-pooling can provide some added value compared 
-  to the other aggregation strategies. Given the feature data, sum aggregation 
-  is unfortunately not injective. For that reason, it is not expected to 
+  Sum-pooling is added for the reasons outlined in section
+  \ref{section:theory_graphsage}. It is of particular interest to assess, 
+  whether sum-pooling can provide some added value compared to the other 
+  aggregation strategies. Given the feature data, sum aggregation is 
+  unfortunately not injective. For that reason, it is not expected to 
   necessarily dominate the other strategies. Nevertheless, it is of interest to 
   assess, whether sum aggregation is competitive if not superior even in a 
   non-injective setting. The training- and validation results are shown in 

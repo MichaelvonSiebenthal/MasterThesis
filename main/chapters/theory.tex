@@ -771,6 +771,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	feature for the \acs{gcn} is the differing forward propagation function. 
 
 	\subsubsection{GraphSage}
+	\label{section:theory_graphsage}
 	
 	\noindent This section introduces GraphSage by \cite{hamilton2017inductive} 
 	which can be thought of as the inductive counterpart of the \acs{gcn} 
@@ -849,20 +850,24 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	refers to the mini-batches of vertices taken from the set of vertices $V$ 
 	of the graph $G(V,E)$. \\
 
-	\noindent There are three aggregator types proposed for GraphSage
-	\citep[p. 5-6]{hamilton2017inductive}:
+	\noindent There are three aggregator strategies proposed for GraphSage by
+	\citeauthor{hamilton2017inductive} \citeyearpar[p.
+	5-6]{hamilton2017inductive}. In addition, sum-pooling will be added as a
+	fourth aggregation strategy and are shown as follows:
 
 	\begin{enumerate}
 		\setlength\itemsep{0.2em}
 		\item Mean aggregation
 		\item Max-pooling
 		\item Long short-term memory (\acs{lstm}) aggregation
+		\item Sum-pooling
 	\end{enumerate}
 
-	\noindent The three proposed aggregation strategies are briefly introduced
-	as follows:
+	\noindent The four proposed aggregation strategies are briefly introduced
+	in the following paragraphs:
 
-	\paragraph{Mean Aggregation} \mbox{}\\
+	\paragraph{Mean Aggregation} \mbox{}
+
 	\noindent This type of aggregation is similar to the \acs{gcn} and takes the
 	average of the received messages from the message passing procedure. The 
 	difference to \acs{gcn} is that mean aggregation does not rely on the full 
@@ -876,7 +881,8 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 		\text{MEAN}(\{h_{v}^{k-1}\}\cup\{h_{u}^{k-1},\forall u \in \mathcal{N}(v)\})\right)
 	\end{equation}
 
-	\paragraph{Max-Pooling Aggregation} \mbox{}\\
+	\paragraph{Max-Pooling Aggregation} \mbox{}
+
 	\noindent Max-Pooling aggregation refers to the application of an 
 	element-wise $\max$ operator. This means that of the neighbors, only the 
 	largest element-wise features are considered. More formally, max-pooling 
@@ -893,16 +899,55 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	arbitrary number of layers could be added for max-pooling. The authors 
 	\cite[p. 6]{hamilton2017inductive} however focus on the case with one layer. 
 	This approach is kept as it yielded good results. The parameters of 
-	max-pooling are learned analogues to the other GraphSage model parameters. \\ 
+	max-pooling are learned analogues to the other GraphSage model parameters.
 
-	\paragraph{LSTM Aggregation} \mbox{}\\
+	\paragraph{LSTM Aggregation} \mbox{}
+
 	\noindent \Acf{lstm} is the last aggregation strategy 
 	proposed for GraphSage and uses the \acs{lstm} \acf{rnn} first introduced by
 	\cite{hochreiter1997long} as an aggregation strategy. \acsp{lstm} are not
 	permutation invariant which is a requirement for the aggregation strategy.
 	The authors propose using a random permutation of the set of node neighbors 
 	to counter this problem \citep[p. 5]{hamilton2017inductive}. The \acs{lstm}
-	parameters are trained along with the other GraphSage model parameters.  
+	parameters are trained along with the other GraphSage model parameters. 
+
+	\paragraph{Sum-Pooling Aggregation} \mbox{}
+	\label{sum-pooling}
+  
+	\noindent The sum-pooling applied in the GraphSage model follows the same 
+	procedure as max-pooling. The only difference is that element-wise 
+	sum-pooling is performed instead of element-wise max-pooling. 
+	\cite{xu2019powerful} show that certain graph structures can confuse 
+	aggregation strategies such as mean aggregation or max-pooling. The issue with 
+	these aggregation strategies is, that they are not injective functions. 
+	Different input nodes (with different graph structures) in a mean- or 
+	max aggregation setting can yield an identical output. Given an 
+	identical output, the \acs{gnn} would classify the two identical outputs as the 
+	same node representation even though they are the result of different graph
+	structures. This is an area where \acsp{gnn} can fail to distinguish graph 
+	structures. Examples of where sum aggregation succeeds and mean- and/or max 
+	aggregation fails is shown in figure \ref{fig:graph_structures}:
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.9\textwidth]{mean_max_fail.png}
+		\caption{Examples of Graph Structures that Mean and Max Aggregators 
+        Fail to Distinguish.}
+        \label{fig:graph_structures}
+        \cite[p. 6]{xu2019powerful}
+	\end{figure}
+
+	\noindent The node coloring shown in figure \ref{fig:graph_structures}
+	corresponds to the one-hot encoded types of nodes. Further, $v$ and $v'$ should
+	correspond to different node representations, which mean- and/or max
+	aggregation fail to distinguish from each other (hence the same node coloring). 
+	Given one-hot encoded nodes with no feature data, sum aggregation is shown to 
+	be an injective function \citep[p. 5]{xu2019powerful}. The datasets
+	considered in this thesis contain many features. For that reason,
+	sum-pooling alone is unfortunately not an injective function. The potential
+	advantages of sum-pooling nevertheless sparked the interest in this
+	aggregation strategy. For that reason, sum-pooling is added as an 
+	aggregation strategy of interest for the GraphSage model.
 
 	\section{Graph Generation}
 	\label{section:theory_graphgen} 
@@ -1009,7 +1054,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.8\textwidth]{MAG.png}
+		\includegraphics[width=0.7\textwidth]{MAG.png}
 		\caption{Schematic Representation of the 
 			Multiplicative Attribute Graphs (MAG) Model}
 		\cite[p. 120]{kim2012multiplicative}

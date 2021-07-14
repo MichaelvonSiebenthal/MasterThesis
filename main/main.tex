@@ -93,9 +93,9 @@
   \end{titlepage} 
 
 
-  %%% frontmatter
-  \pagenumbering{Roman}      
+  %%% frontmatter  
   \chapter*{Abstract}
+  \pagenumbering{Roman}    
   \input{chapters/abstract}
   \addcontentsline{toc}{chapter}{Abstract}
   \newpage
@@ -103,21 +103,27 @@
   \singlespacing
   \renewcommand{\contentsname}{Table of Contents}
   \setcounter{secnumdepth}{3}
-  \setcounter{tocdepth}{3} 
+  \setcounter{tocdepth}{3}
+  \phantomsection
   \addcontentsline{toc}{chapter}{Table of Contents}
   \tableofcontents
+  \newpage
   
   \listoffigures
   \addcontentsline{toc}{chapter}{List of Figures}
+  \newpage
 
   \listoftables
   \addcontentsline{toc}{chapter}{List of Tables}
+  \newpage
 
   \listofalgocfs 
   \addcontentsline{toc}{chapter}{List of Algorithms}
+  \newpage
 
   \printacronyms[include=abbrev,name=List of Abbreviations]
   \addcontentsline{toc}{chapter}{List of Abbreviations}
+  \newpage
 
   %%% Main Body
   \onehalfspacing
@@ -130,49 +136,60 @@
   \chapter{Theory}
   \label{section:theory}
   \input{chapters/theory}
+  \newpage
  
 
   % Data
   \chapter{Data}
   \label{section:data}
   \input{chapters/data}
+  \newpage
   
   %Results
   \chapter{Results}
   \label{section:results}
   \input{chapters/results}
+  \newpage
   
   %Discussion
   \chapter{Discussion}
   \label{section:discussion}
   \input{chapters/discussion.tex}
+  \newpage
 
   %Conclusion \& Outlook
   \chapter{Conclusion and Outlook}
   \label{section:conclusion_outlook}
   \input{chapters/conclusion.tex}
+  \newpage
 
   %%% endmatter
-  \newpage
-  \addcontentsline{toc}{chapter}{References}
+
   \renewcommand\bibname{References}
+  \phantomsection
+  \addcontentsline{toc}{chapter}{References}
   \bibliography{bibliography.bib}
+  \newpage
 
   \appendix
   \chapter{Simulation Results}
   \input{chapters/app_simulations.tex}
+  \newpage
 
   \chapter{Deterministic Graph Results}
   \label{app:det_graphs}
   \input{chapters/app_detresults.tex}
+  \newpage
 
   \chapter{Auxhiliary Node2Vec Results}
   \label{app:n2v5}
   \input{chapters/app_node2vec.tex}
+  \newpage
 
   \chapter{Pairplot of US Airline Passenger Dataset}
   \label{App:pairplot}
   \input{chapters/app_pairplot.tex}
+  \newpage
 
   \chapter*{Declaration}
   \addcontentsline{toc}{chapter}{Declaration}

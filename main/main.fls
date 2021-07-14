@@ -1079,6 +1079,11 @@ INPUT ./images//graphsage.png
 INPUT images//graphsage.png
 INPUT ./images//graphsage.png
 INPUT ./images//graphsage.png
+INPUT ./images//mean_max_fail.png
+INPUT ./images//mean_max_fail.png
+INPUT images//mean_max_fail.png
+INPUT ./images//mean_max_fail.png
+INPUT ./images//mean_max_fail.png
 INPUT ./images//affinity_matrices.png
 INPUT ./images//affinity_matrices.png
 INPUT images//affinity_matrices.png
@@ -1156,11 +1161,6 @@ INPUT ./images//gcn_plots.png
 INPUT images//gcn_plots.png
 INPUT ./images//gcn_plots.png
 INPUT ./images//gcn_plots.png
-INPUT ./images//mean_max_fail.png
-INPUT ./images//mean_max_fail.png
-INPUT images//mean_max_fail.png
-INPUT ./images//mean_max_fail.png
-INPUT ./images//mean_max_fail.png
 INPUT ./images//graphsage_mean_plots.png
 INPUT ./images//graphsage_mean_plots.png
 INPUT images//graphsage_mean_plots.png
