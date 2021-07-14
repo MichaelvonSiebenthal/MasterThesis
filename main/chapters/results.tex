@@ -92,18 +92,18 @@
 
   \noindent Alternative model specifications were tested, which mainly included
   learning higher dimensional node embeddings. These node embeddings however
-  did not yield better results. Given that the accuracies were almost identical, 
-  the more parsimonious model with 2 dimensions is preferred and kept. As a 
-  final test, the node embeddings were joined to the feature data presented in 
-  section \ref{section:airline_data}. This data was then used as the input data 
-  for the downstream \acs{ml} models. For the training- and validation data,
-  this approach yielded excellent results with accuracies often being close to 
-  95\%. For some of the models such as the Random Forest classifier, this also
-  translated into a good accuracy for the test data. Unfortunately, the results 
-  presented in section \ref{section:result_comp} show, that better accuracies
-  for the test data are achieved only using the feature data. For that reason, 
-  joining feature data with node embeddings is not a recommended approach for 
-  the \acs{us} airline passenger dataset.
+  yielded worse results as shown in appendix \ref{app:n2v5}. As a final test, 
+  the node embeddings were joined to the feature data presented in section 
+  \ref{section:airline_data}. This data was then used as the input data for the 
+  downstream \acs{ml} models. For the training- and validation data, this 
+  approach yielded excellent results with accuracies often being close to 95\%. 
+  For some of the models such as the Random Forest classifier, this also
+  translated into a good accuracy for the test data. The results of this
+  approach can also be found in appendix \ref{app:n2v5}. Unfortunately, the 
+  results presented in section \ref{section:result_comp} show, that better 
+  accuracies for the test data are achieved only using the feature data. For 
+  that reason, joining feature data with node embeddings is not a recommended 
+  approach for the \acs{us} airline passenger dataset.
 
   \section{Graph Neural Networks}
 
