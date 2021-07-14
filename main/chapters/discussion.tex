@@ -1,7 +1,7 @@
 
   The analysis of the data in chapter \ref{section:data} and the presentation
   of the \acs{ml} results in chapter \ref{section:results} provided a
-  myriad of interesting results. These results primarily touch following topics
+  myriad of interesting results. These findings primarily touch following topics
   and provide the structure for the discussion:
 
   \begin{enumerate}
@@ -34,10 +34,10 @@
   that the passenger experience for women would be significantly different to 
   the one for men. For that reason, the resulting gender based clusters are
   only marginally pronounced to the point that no visual interpretations can be
-  made. In addition, one needs to consider the distribution of gender. The
-  attribute is almost perfectly 50/50 split into male and female observations.
-  Assigning more extreme link-affinity probabilities would strongly alter the
-  entire graph. Most likely, the graph would be further split according to
+  made. In addition, one needs to consider the distribution of gender. The 
+  attribute is almost perfectly 50/50 split into male and female observations. 
+  Assigning more extreme link-affinity probabilities would strongly 
+  alter the entire graph. Most likely, the graph would be further split according to
   gender. In comparison, attributes with more categories can have more extreme
   values assigned to them. Larger cardinalities have the consequence, that each
   category affects less nodes. For that reason, one can be less vigilant when
@@ -70,8 +70,8 @@
   considering the node connections. The Node2Vec algorithm is a beautiful
   dimensionality reduction technique, which successfully reduced the complexity
   of the graph shown in figures \ref{fig:us_airline_graph} \& 
-  \ref{fig:us_airline_nodes}. In this sense, the \acs{mag} model in combination 
-  with \acs{grl} such as Node2Vec can be used as powerful cluster analysis tools.
+  \ref{fig:us_airline_nodes}. In this sense, the \acs{mag} in combination 
+  with \acs{grl} models such as Node2Vec can be used as powerful cluster analysis tools.
   
   \section{Appropriateness of Semi-Synthetic Graphs for Machine Learning}
   \label{section:gml_performance}
@@ -91,7 +91,7 @@
   invest. For \acs{gml} and also the standard \acs{ml} models, it is loss 
   optimizing to classify most observations as non-investors. When generating 
   the biased graph shown in figure \ref{fig:Moro_bias}, a classification 
-  accuracy of > 95\% is achieved which is a remarkable improvement. As 
+  accuracy of > 95\% was achieved which is a remarkable improvement. As 
   mentioned in section \ref{section:bank_data}, the biased graph which includes 
   the label as an attribute cannot be used in a practical setting and is a form of
   cheating. Nevertheless it shows, that if a network structure can be generated
@@ -99,7 +99,7 @@
   overcome. In particular it shows, that the attributes must be capable of
   generating network structures that are at least in part predictive of the
   label. Overcoming the problem presented by unbalanced label data is a relevant 
-  issue for \acs{ml} and warrant further research. \\
+  issue for \acs{ml} and warrants further research. \\
 
   \noindent The \acs{us} airline passenger dataset is shown to be well suited for 
   \acs{gml}. The reasons for its success are in line with the previous 
@@ -113,23 +113,23 @@
   results shown in section \ref{section:result_n2v} using Node2Vec. Taking a 
   step back with a more generous perspective, it is nevertheless impressive that 
   an accuracy of approximately 76\% could be achieved for the training- and 
-  validation dataset which only considers 2-dimensional node embeddings. This 
+  validation dataset which only considered 2-dimensional node embeddings. This 
   however did not translate to the test graph for which the best accuracy was at 
   only approximately 58\%. In this sense, the model is only marginally more 
   successful at the classification task than randomly guessing the 
   classification. \\
 
-  \noindent \acsp{gcn} also achieve a classification accuracy of approximately 
+  \noindent \acsp{gcn} also achieved a classification accuracy of approximately 
   76\%. This result is even worse when comparing it to Node2Vec. The \acs{gcn} 
   considers the network structure as well as the node features and should 
   therefore be capable of outperforming Node2Vec. The \acs{gcn} model clearly 
   fails here and has the serious limitation that it cannot be applied in an 
-  inductive setting to unseen graphs. \acs{gcn} is a breakthrough model 
+  inductive setting to unseen graphs. The \acs{gcn} is a breakthrough model 
   as it is one of the first successful \acsp{gnn}. Nevertheless, it 
   performed poorly for the given datasets and is surpassed in terms of 
   performance by more modern \acs{gnn} models such as GraphSage. \\
 
-  \noindent The Final \acs{gml} model tested is GraphSage. This model yields 
+  \noindent The final \acs{gml} model tested is GraphSage. This model yields 
   very good results as shown in section \ref{section:graphsage_results}. 
   GraphSage is capable of training models which have a test accuracy of > 94\%. 
   The aggregation strategies used for the GraphSage model are successful in the 
@@ -139,7 +139,7 @@
   \ref{section:graphsage_simulation} and appendix \ref{App:sim_results}. 
   When comparing the two main aggregation strategies of interest, max-pooling 
   and sum-pooling, both methods almost yield identical test results. For the
-  results shown in section \ref{section:graphsage_results} max-pooling is only 
+  results shown in section \ref{section:graphsage_results}, max-pooling is only 
   more successful in classifying 1 more passenger as satisfied compared to
   sum-pooling. The test results are otherwise identical as shown in tables 
   \ref{table:max_results_test} \& \ref{table:sum_results_test}. The simulation
@@ -149,22 +149,23 @@
   is however more consistent, whereas max-pooling has a larger variance 
   regarding the test accuracy. In addition, max-pooling suffered from two large 
   negative test accuracy outliers during the simulation. Sum-pooling also 
-  suffered from two negative test accuracy outliers, which were however less 
+  suffered from two negative test accuracy outliers which were however less 
   pronounced. The GraphSage results show, that semi-synthetic graphs can indeed 
   be appropriate for \acs{gml}.
 
   \section[GML vs. Standard ML]{Graph Machine Learning vs. Standard Machine Learning}
   \label{section:comp_disc}
 
-  The overview table \ref{table:result_comparison} shows that the results using 
+  The overview in table \ref{table:result_comparison} shows, that the results using 
   GraphSage are competitive in comparison to the standard \acs{ml} models. The 
-  results further confirm that the results using Node2Vec and the GCN are not 
+  results further confirm, that the results using Node2Vec and the GCN are not 
   competitive. GraphSage is proven to be the second best method behind the 
   random forest classifier. The \acs{ann} model on average tends to yield 
-  marginally inferior test accuracy results as presented in the simulation results 
+  marginally inferior test accuracies as presented in the simulation results 
   shown in appendix \ref{App:ann_sim}. In addition, the \acs{ann} is more prone to 
-  over-fitting as illustrated in figure \ref{fig:ANN_fit}. With regard to the other 
-  standard \acs{ml} methods, GraphSage clearly outperformed these methods. \\
+  overfitting as illustrated in figure \ref{fig:ANN_fit}. With regard to the other 
+  standard \acs{ml} methods, GraphSage clearly outperformed these models in
+  terms of accuracy. \\
 
   \noindent This shows, that semi-synthetic graphs can be used for \acs{gml} in 
   a competitive setting. The accuracy improvements one would hope for 
@@ -175,8 +176,8 @@
   similar results as GraphSage. In \acs{ml} the principle of Occam's razor is 
   often referred to for choosing appropriate models. Following this principle, 
   simpler models are preferred if they yield similar/identical results compared 
-  to more complex methods.GraphSage using semi-synthetic graphs is most 
-  definitely the most complex method shown in table \ref{table:result_comparison}. 
+  to more complex methods. GraphSage in combination with the semi-synthetic 
+  graphs, is most definitely the most complex model shown in table \ref{table:result_comparison}. 
   For that reason, certainly the random forest classifier is preferred as it 
   yields better accuracies and is a more simple model compared to GraphSage. In 
   addition, one could argue that the \acs{ann}, \acs{svm}, and AdaBoost are 
@@ -188,32 +189,32 @@
   insights, the consequences for having marginally higher- or lower accuracies 
   are less severe. In such a setting, the principle of Occam's razor can be more 
   fully embraced which is why the \acs{ann}, \acs{svm}, and AdaBoost might be 
-  preferred as they are simpler and more practical for application in a 
+  preferred as they are simpler and more practical for the application in a 
   real world setting. This is a subjective assessment and depending on the 
   context, it might differ. Nevertheless, GraphSage yields the second best 
   accuracies and remains a competitive model. \\ 
 
   \noindent Last but not least, the comparison of real network properties and
-  the \acs{mag} presented in section \ref{section:airline_data} must be
-  discussed. As shown, the graph generated using the \acs{us} airline passenger
-  dataset is not in line with the properties of real networks. At first glance,
-  this might not appear to be of importance. The results presented in chapter
-  \ref{section:results} show, that \acs{gml} was competitive but not superior
-  to standard \acs{ml} models. The network structure appears to only provide a
-  marginal improvement for the \acs{gml} models. A reason for this limited
-  success could be, that the vertex degrees are too large. This for instance has
-  the consequence, that the GraphSage model has the same network structure at
-  every layer. According to the model specifications, the GraphSage model
-  samples 10 nodes at the 2-hop distance and 5 nodes at the 1-hop distance.
-  Given, that the degree distribution shown in figure
-  \ref{fig:centrality_measures} starts at approximately 150, the GraphSage will
+  the \acs{mag} must be discussed as indicated in section 
+  \ref{section:airline_data}. As shown, the properties of the graph generated from the 
+  \acs{us} airline passenger dataset is not in line with the properties of 
+  real networks. At first glance, this might not appear to be of importance. 
+  The results presented in chapter \ref{section:results} however show, that \acs{gml} 
+  was competitive but not superior to standard \acs{ml} models. The network 
+  structure appears to only provide a marginal improvement for the \acs{gml} 
+  models. A reason for this limited success could be, that the vertex degrees 
+  are too large. This for instance has the consequence, that the GraphSage 
+  model has the same network structure at every layer. According to the model 
+  specifications, the GraphSage model samples 10 nodes at the 2-hop distance 
+  and 5 nodes at the 1-hop distance. Given, that the degree distribution shown 
+  in figure \ref{fig:centrality_measures} starts at 263, the GraphSage model will 
   always sample exactly 10 and 5 nodes respectively. In this setting, only the 
-  feature data and the general neighborhood of the nodes can be considered.
-  Specific network structures withing the neighborhoods can however not be
-  exploited. This points to a serious limitation of the generated \acs{mag} 
-  and might be a reason why GraphSage did not perform better. A similar
-  observation is also made for the \acs{gcn}. This model always has to consider
-  the entire graph Laplacian. Given the large starting value of the degree
+  feature data and the general neighborhood of the nodes can be considered. 
+  Specific network structures within the neighborhoods can however not be 
+  exploited. This points to a serious limitation of the generated \acs{mag} and 
+  might be a reason why GraphSage did not perform better. A similar observation 
+  is also made for the \acs{gcn}. This model always has to consider the entire 
+  graph Laplacian. Given the large starting value of the degree
   distribution, this can become a challenging task. While, the model may be
   able to differentiate general neighborhoods, recognizing more local
   neighborhoods could prove to be excessively challenging. This is an area which

@@ -5,15 +5,15 @@
   \section{Conclusion}
   \label{section:conclusion}
 
-  The aim of this thesis is to assess to what extent semi-synthetic graphs based 
-  on real feature data are useful for \acs{ml}. This aim corresponds to
-  the research question stated in section \ref{section:research_topics}. The
+  The aim of this thesis was to assess to what extent semi-synthetic graphs 
+  are useful for gaining customer insights using \acs{gml}. This aim corresponds 
+  to the research question stated in section \ref{section:research_topics}. The
   results for answering this question are mixed and are based on the data
   presented in chapter \ref{section:data}, the results of chapter
-  \ref{section:results} and the discussion in chapter \ref{section:discussion}.
+  \ref{section:results}, and the discussion in chapter \ref{section:discussion}.
   \\
 
-  \noindent \acs{gml} on the graph created from the bank telemarketing dataset 
+  \noindent \acs{gml} on the network created from the bank telemarketing dataset 
   fails to overcome the problem of unbalanced labels. It however yields similar 
   results in terms of accuracy as the standard \acs{ml} models. In addition it 
   is shown, that if a network structure can be created which corresponds to the 
@@ -23,16 +23,16 @@
   and is second only to the random forest classifier in terms of accuracy. As
   discussed, following the principle of Occam's razor, the good results for the
   GraphSage model must be taken with a grain of salt. For the purpose of
-  gaining customer insights, simpler models such as \acs{ann}, \acs{svm}, and 
+  gaining customer insights, simpler models such as \acsp{ann}, \acsp{svm}, and 
   AdaBoost provide only marginally inferior results and are more practical and 
   thus preferable for this setting. Given similar results for more sensitive 
-  applications such as medicine, the GraphSage model could be preferred as even 
-  marginal performance improvements can be of utmost importance. In short, the 
-  GraphSage yields competitive results in terms of accuracy, the results are 
-  however not superior enough to necessarily warrant the complex graph 
-  generation process and model complexity of GraphSage. Lastly, the 
+  applications in fields such as medicine, the GraphSage model could be 
+  preferred as even marginal performance improvements can be of utmost importance. 
+  In short, the GraphSage yields competitive results in terms of accuracy, 
+  the results are however not superior enough to necessarily warrant the complex 
+  graph generation process and model complexity of GraphSage. Lastly, the 
   \acs{gcn} and Node2Vec are not successful for the given classification task. 
-  For that reason more recent \acs{gml} models should be tested and/or new 
+  For that reason, more recent \acs{gml} models should be tested and/or new 
   models should be developed to expand the possibilities of \acs{gml}.\\
 
   \noindent The perhaps most interesting result is provided by the \acs{us} 
@@ -40,9 +40,9 @@
   \acs{mag} model successfully generated neighborhoods within the graph, where 
   the nodes are grouped according to their similarity which respects the 
   similarities between all attributes. This observation is further confirmed 
-  by the scatter plots shown in figure \ref{fig:node2vec}. The graphs and the 
-  scatter plots make it possible to visually interpret the relationships within 
-  the data. Standard scatter plots using the feature data do not allow for the 
+  by the scatterplots shown in figure \ref{fig:node2vec}. The graphs and the 
+  scatterplots make it possible to visually interpret the relationships within 
+  the data. Standard scatterplots using the feature data do not allow for the 
   generation of such insightful graphs/plots. \\
 
   \noindent To summarize and provide an answer to the research question, it is
@@ -52,34 +52,35 @@
   associated with unbalanced label data. This however requires the availability 
   of a graph with a structure which corresponds to the label. The usefulness of 
   semi-synthetic graphs are limited by the complexity associated with generating 
-  graphs and the general complexity of \acs{gml} models. The graph based models 
-  further fail to outperform the standard \acs{ml} models and are ranked 
-  anywhere between the second to fifth best model depending on how one weights 
-  the trade off between model complexity and accuracy. Based on this, the 
-  hypotheses presented in section \ref{section:research_topics} can be answered 
-  as follows: \\
+  graphs and the general complexity of the \acs{gml} models. In addition, the
+  network properties of the \acs{mag} is a limiting factor for the \acs{gml}
+  models. The graph based models further fail to outperform the standard 
+  \acs{ml} models and are ranked anywhere between the second to fifth best model 
+  depending on how one weights the trade-off between model complexity and accuracy. 
+  Based on this, the hypotheses presented in section 
+  \ref{section:research_topics} can be answered as follows: \\
 
-  \noindent\textbf{H1:} Graph machine learning using semi-synthetic graphs fail
-  to outperform standard machine learning methods. This hypothesis is thus
+  \noindent\textbf{H1:} Graph machine learning model using semi-synthetic graphs 
+  fail to outperform standard machine learning methods. This hypothesis is thus
   rejected. \\
 
   \noindent\textbf{H2:} Graph machine learning is shown to be a competitive
   strategy with competitive results in line with the results shown for the
-  standard machine learning methods. This hypothesis is not rejected.
+  standard machine learning models. This hypothesis is not rejected.
 
   \section{Outlook}
 
   The discussion in chapter \ref{section:discussion} and the conclusion in section
   \ref{section:conclusion} provides interesting topics for future research.
-  These topics include graph generation, cluster analysis on graphs and
-  \acs{gml} models. 
-
+  These topics include graph generation, cluster analysis on graphs, and
+  \acs{gml} models and are presented in the following paragraphs.
+  \newpage
   \paragraph{Graph Generation} \mbox{}
   
   \noindent Creating semi-synthetic graphs using the \acs{mag} model is shown to 
   be a viable approach. The graph is however sensitive to attribute selection and 
   setting appropriate link-affinity probabilities. A fist step for resolving
-  this issue was introduced by \cite{kim2011modeling} as a follow-up to their
+  this issue was introduced by \cite{kim2011modeling} as a follow up to their
   \acs{mag} model. In this paper they propose a reverse model, in which given a real
   graph, the attributes and the link-affinity probabilities are estimated such 
   that the attributes and link-affinity probabilities generate the observed real
@@ -87,22 +88,22 @@
   master's thesis. The estimated attributes do not correspond to real 
   attributes/features. In this model, the attributes are estimated to fit the 
   graph. An interesting topic for future research would be to develop a model 
-  that generates a semi-synthetic graph based on attributes which at the same
+  that generates a semi-synthetic graph based on real attributes which at the same
   time optimizes the link-affinity probabilities such that the resulting graph
   adheres to real network properties. Perhaps these more realistic graph 
   properties can improve the performance for \acs{gml}. This is an area worth 
   consideration as especially the degree distribution and centrality measures 
-  shown in figure \ref{fig:centrality_measures} force graph \acs{gml} models to 
-  consider a large number of neighbors. In addition, even when sampling, the 
-  neighborhood is bound to always have the same size, given the range of the
+  shown in figure \ref{fig:centrality_measures} force \acs{gml} models to 
+  consider a large number of neighbors. In addition even when sampling, the 
+  neighborhood is bound to always have the same size given the range of the 
   degree distribution shown in figure \ref{fig:centrality_measures}. This is a
-  potential limiting factor for \acs{gml}, as it makes it more difficult to 
+  potentially serious limiting factor for \acs{gml}, as it makes it more difficult to 
   distinguish between more local structures within the graph.
 
   \paragraph{Cluster Analysis on Graphs} \mbox{}
 
   \noindent The graph plots shown in figure \ref{fig:us_airline_nodes} reveal,
-  that semi-synthetic graphs can be excellent tools for visualizing data. The
+  that \acsp{mag} can be excellent tools for visualizing data. The
   amount of useful information provided for interpreting the data is a welcome
   and unexpected result. For understanding the relationships between the
   attribute data and the label, the graph plots yielded the most useful
@@ -119,8 +120,8 @@
 
   \noindent \acsp{gcn} and GraphSage were selected for this master's thesis as 
   they are probably the two most well-known \acsp{gnn}. There are however 
-  newer and more sophisticated models such as \ac{gat} \citep{velivckovic2018graph} 
-  or \ac{gin} \citep{xu2019powerful}. \\
+  newer and more sophisticated models such as \acp{gat} \citep{velivckovic2018graph} 
+  or \acp{gin} \citep{xu2019powerful}. \\
 
   \noindent \acs{gat} models have the ability of identifying more- or less 
   important neighbors in the graph. This is a useful ability and has been shown 
@@ -134,7 +135,7 @@
   within the graph. The authors \cite{xu2019powerful} present the general
   \acs{gin} framework which can accept any type of features as inputs whilst 
   ensuring that the aggregation function is injective. Given the injective 
-  aggregation strategy, it is shown that the \acs{gin} can be as expressive at 
+  aggregation strategy, it is shown that the \acs{gin} can be as powerful at 
   distinguishing graph structures as the Weisfeiler-Lehman graph isomorphism test 
   \citep{weisfeiler1968}. Again, for such a model to work best, the number of
   degrees would most likely need to be smaller than currently present in the
@@ -144,8 +145,8 @@
 
   \noindent Given a more realistic graph with a smaller number of degrees, it
   would be interesting to develop and assess, whether a new model which
-  includes the attention mechanism of the \acs{gat} network with the isomorphic 
-  capabilities of the \acs{gin} model could be of use. This new model could for
-  instance be tested on well understood benchmark graphs such as Cora
+  includes the attention mechanism of the \acs{gat} and the isomorphic 
+  capabilities of the \acs{gin} could be of use. This new model could for
+  instance then be tested on well understood benchmark graphs such as Cora
   \citep{mccallum2000automating} or Citeseer \citep{giles1998citeseer}. 
 

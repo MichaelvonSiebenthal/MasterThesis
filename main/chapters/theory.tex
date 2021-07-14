@@ -19,7 +19,7 @@
 	to Leonhard Euler and the famous "Königsberg Bridge Problem"
 	\citep{euler1741solutio}. The study of graphs has had a recent revival
 	thanks to its useful applications in areas such as the Google algorithm
-	PageRank \citep{page1999pagerank} and graph machine learning. Graphs are 
+	PageRank \citep{page1999pagerank} and \acs{gml}. Graphs are 
 	special data structures for which an example is shown in Figure 
 	\ref{fig:graph}. The terms graph and network are often used interchangeably 
 	and have the identical meaning for the purpose of this master's thesis. 
@@ -60,7 +60,7 @@
 	paragraphs give an introduction to the adjacency matrix, node degrees, and 
 	centrality measures which are used in this thesis.
 
-	\paragraph{Adjacency Matrix} \mbox{}\\  
+	\paragraph{Adjacency Matrix} \mbox{} 
 
 	\noindent The adjacency matrix $A$ is defined as a $n \times n$ matrix, 
 	where $n$ refers to the number of vertices present in the graph. Each 
@@ -104,7 +104,7 @@
 	regarding the adjacency matrix, again the book by Mark Newman 
 	\citeyearpar{Newman2010} is highly recommended. 
 
-	\paragraph{Degree Measures} \mbox{}\\
+	\paragraph{Degree Measures} \mbox{}
 
 	\noindent An important measure for graphs are the vertex degrees denoted by 
 	$k$. Degrees refer to the number of edges connected to a vertex. The 
@@ -148,7 +148,7 @@
 	$0 \leqslant \rho \leqslant 1$. In addition, for sufficiently large graphs,
 	one can approximate $\rho = \frac{c}{n}$. 
 
-	\paragraph{Eigenvector Centrality} \mbox{}\\
+	\paragraph{Eigenvector Centrality} \mbox{}
 
 	\noindent The degrees of a vertex shown in the previous section correspond 
 	to the simplest form of a centrality measure. The issue with this measure 
@@ -169,16 +169,16 @@
 	more detail.\\
 
 	\noindent Eigenvector centrality gives all vertices a centrality score which 
-	is proportional to the sum of the scores of the vertices' neighbors. This is 
-	a procedure in which typically the initial centrality $x_i$ of vertex $i$ is 
-	guessed to be 1, $\forall i$. This can be used to calculate the 
-	centralities of the neighbors of $i$ which is denoted as $x_{i}'$. One can 
+	is proportional to the sum of the scores of the vertices' neighbors $j$. 
+	This is a procedure in which typically the initial centrality $x_i$ of 
+	vertex $i$ is guessed to be 1 $\forall i$. This can be used to calculate the 
+	centralities of the neighbors of $i$ which is denoted by $x_{i}'$. One can 
 	thus write \citep[p. 169]{Newman2010}:
 
 	\begin{equation}
 		x_i' = \sum_{j}A_{ij}x_j
 	\end{equation}
-	\newpage
+
 	\noindent In matrix notation:
 
 	\begin{equation}
@@ -189,10 +189,10 @@
 	estimates \citep[p. 170]{Newman2010}:
 
 	\begin{equation}
-		x(t) =  A^tx(0)
+		x(t) =  A^tx(0),
 	\end{equation}
 
-	\noindent Where $x(0)$ denotes the linear combination of 
+	where $x(0)$ denotes the linear combination of 
 	\citep[p. 170]{Newman2010}:
 
 	\begin{equation}
@@ -227,10 +227,10 @@
 		x_i = k_{1}^{-1} \sum_{j} A_{ij}x_j 
 	\end{equation}
 
-	\paragraph{Closeness Centrality} \mbox{}\\
+	\paragraph{Closeness Centrality} \mbox{}
 
 	\noindent The closeness centrality $C_i$ of vertex $i$ is defined as the 
-	average distance to the other vertices in the graph. This centrality 
+	average distance to the other vertices $j$ in the graph. This centrality 
 	measure is defined as follows \citep[p. 182]{Newman2010}:
 
 	\begin{equation}
@@ -244,10 +244,10 @@
 	the closeness centrality lies within the range $0\leqslant
 	C_{i}\leqslant1$.
 
-	\paragraph{Betweenness Centrality} \mbox{}\\
+	\paragraph{Betweenness Centrality} \mbox{}
 
 	\noindent This centrality measures to which extent a vertex $i$ lies on 
-	a geodesic path between two other vertices. For instance, a bottle neck 
+	a geodesic path between two other vertices. For instance, a bottleneck 
 	vertex would exhibit a large betweenness centrality if many nodes must pass 
 	through it to reach their destination. More formally, betweenness 
 	centrality $x_i$ is defined as \citep[p. 187]{Newman2010}:
@@ -283,7 +283,7 @@
 	"Peter" can only ever reach each other, if they are directly or perhaps 
 	indirectly connected via a mutual friend. This aspect is unique to network 
 	data and provides interesting additional information as well as added
-	complexity. This property does not allow for comparing nodes in a graph
+	complexity. This property does not allow for comparing the nodes in a graph
 	using common distance measures such as Euclidean distances. The edges
 	connecting the nodes only indicate that two nodes are connected. It
 	however does not indicate whether two connected nodes are more- or less 
@@ -300,19 +300,21 @@
 		\item Graph neural networks
 	\end{enumerate}
 	
-	\noindent Graph representation learning refers to models which generate node
+	\noindent \Acl{grl} refers to models which generate node
 	embeddings of a given graph. Specifically, this approach creates vector 
 	representations of the nodes in a graph given a defined similarity measure. 
 	For these node vector representations, distance measures such as Euclidean 
 	distances can be measured. The generated node embeddings can thus be used for
-	downstream machine learning using standard machine learning models. A 
-	\acs{gnn} can also generate node embeddings as well as directly using graphs 
-	for a given classification task among others. The capability of
-	directly applying graphs for machine learning, makes graph neural networks 
-	especially promising. \\
+	downstream \acs{ml} using standard models. A \acl{gnn} can also generate 
+	node embeddings as well as directly using graphs for a given classification 
+	task among others. The capability of directly applying graphs for \acs{ml} 
+	makes \acsp{gnn} especially promising. \\
 
-	\noindent In the following subsections, the theory for \acs{grl} and
-	\acsp{gnn} is introduced. 
+	\noindent In the following two subsections the theory for \acs{grl} and
+	\acsp{gnn} is introduced. The theory presented in these subsections is in 
+	part based on the CS224W lecture\footnote{CS224W website:
+	\url{http://web.stanford.edu/class/cs224w/}} at Stanford University given 
+	by Prof. Dr. Jure Leskovec \citeyearpar{leskovec2021lecture}. 
 
 	\subsection{Graph Representation Learning}
 
@@ -333,9 +335,9 @@
 	\noindent To generate node embeddings of a graph, one has to define an
 	encoder which transforms nodes in a graph into their embedding space as
 	shown in figure \ref{fig:embedding}. The nodes must be embedded in such a
-	manner that similar nodes in the graph are also embedded closely in the 
-	embedding space. A common measure for similarity is to find vector embeddings 
-	$z$ of nodes $u$ and $v$ such that \citep{leskovec2021lecture}:
+	manner that similar nodes in the graph are also embedded closely together 
+	in the embedding space. A common measure for similarity is to find vector 
+	embeddings $z$ of nodes $u$ and $v$ such that \citep{leskovec2021lecture}:
 
 	\begin{equation}
 		z_u^Tz_v \approx similarity(u,v)
@@ -366,7 +368,7 @@
 	models. \\
 
 	\noindent DeepWalk and Node2Vec make use of methods which have its origin in 
-	\ac{nlp}. Specifically they makes use of the Skip-gram model introduced by 
+	\ac{nlp}. More specifically, they makes use of the Skip-gram model introduced by 
 	\cite{mikolov2013efficient,mikolov2013distributed}. 
 	The Skip-gram model is a core component of DeepWalk and Node2Vec, which is why 
 	it is explained in detail before proceeding to the \acs{grl} models. \\
@@ -398,8 +400,10 @@
 	This creates the output vector $u$ which is then used to predict the correct
 	context word $c$ from the vocabulary of $C$ number of context words. To do 
 	so, the training target is set to maximize the average $\log$ probability 
-	of the correct context word for every input word $w_{t}$. The $\log$
-	probability is more formally defined by \citep[p. 2]{mikolov2013distributed}:
+	of the correct context word for every input word $w_{t}$. 
+	\newpage
+	\noindent The average $\log$ probability is more formally defined by 
+	\citep[p. 2]{mikolov2013distributed}:
 
 	\begin{equation}
 		\frac{1}{T}\sum_{t=1}^{T}\sum_{-c \leqslant j \leqslant c,j\neq0}\log
@@ -428,7 +432,7 @@
 	\end{split}
 	\end{equation}
 
-	\noindent The notation is slightly adjusted, where $u_{j_{c}^{*}}$ refers
+	\noindent The notation was slightly adjusted, where $u_{j_{c}^{*}}$ refers
 	to the index of the output vector $u$ which corresponds to the actual
 	context word $c$ given the input word $w_{t}$. In turn, 
 	$\sum_{j'=1}^{T}\exp(u_{j'})$ is a summation over all exponentiated output 
@@ -449,7 +453,7 @@
 	DeepWalk algorithm builds on top of the Skip-gram model and uses 
 	fixed-length random walks for learning the node embeddings. To provide a 
 	better overview of the DeepWalk algorithm, the pseudo-code is presented in 
-	algorithm \ref{algo:DeepWalk} \& \ref{algo:SkipGram} 
+	algorithms \ref{algo:DeepWalk} \& \ref{algo:SkipGram} 
 	\citep[p. 704]{perozzi2014deepwalk}.
 	
 	\begin{algorithm}[h]
@@ -485,7 +489,7 @@
 		\nl			$\Phi = \Phi - \alpha * \frac{\partial J}{\partial \Phi}$
 				}
 			}
-		\caption[SkipGram]{SkipGram($\Phi,\mathcal{W}_{vi},w$)}
+		\caption[Skip-gram]{SkipGram($\Phi,\mathcal{W}_{vi},w$)}
 		\label{algo:SkipGram}
 	\end{algorithm}	
 	
@@ -550,11 +554,8 @@
 	\end{enumerate}
 	
 	\noindent Before presenting the two above mentioned methods, a general
-	overview of the \acs{gnn} framework is given. The general framework
-	presented here is largely inspired by the CS224W lecture\footnote{CS224W website:
-	\url{http://web.stanford.edu/class/cs224w/}} at Stanford University given 
-	by Prof. Dr. Jure Leskovec \citeyearpar{leskovec2021lecture}. First, the 
-	required setup is defined:
+	overview of the \acs{gnn} framework is given. First, the required setup is 
+	defined \citep{leskovec2021lecture}:
 
 	\begin{itemize}
 		\setlength\itemsep{0.2em}
@@ -657,8 +658,8 @@
 	message passing methods and aggregation strategies. An excellent overview 
 	regarding the design space for \acsp{gnn} is provided in the articles by 
 	\cite{you2020design} and \cite{zhou2020graph} as a reference. Of course, 
-	there are exceptions and alternative procedures exist. The \acs{gnn} methods 
-	evaluated in this thesis and most successful \acsp{gnn} however tend to 
+	there are exceptions and alternative procedures exist. The \acs{gnn}
+	models evaluated in this thesis and most successful \acsp{gnn} however tend to 
 	follow a variation of the structure shown in algorithm \ref{algo:GNN_struct}.  \\
 
 	\noindent In terms of interpretation, the output of the first \acs{gnn} 
@@ -784,7 +785,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	problem by applying different aggregation strategies and sampling the 
 	neighborhood $\mathcal{N}(v)$. Specifically, the GraphSage model only 
 	considers a fixed number of uniformly random sampled neighbors from 
-	$\mathcal{N}(v)$ with depth $K$. A graphical example of this procedure is 
+	$\mathcal{N}(v)$ with depth $K$. A typical example of this procedure is 
 	shown in figure \ref{fig:GraphSage_sample}:
 
 	\begin{figure}[h]
@@ -833,11 +834,11 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 				}		
 			}
 		\nl $z_v \leftarrow h_{u}^{K},\forall u \in \mathcal{B}$
-		\caption{GraphSage Minibatch Forward Propagation Algorithm}
+		\caption{GraphSage Mini-batch Forward Propagation Algorithm}
 		\label{algo:GraphSage}
 	\end{algorithm}
 	
-	\noindent Note that algorithm \ref{algo:GraphSage} assumes that the
+	\noindent Note, that algorithm \ref{algo:GraphSage} assumes that the
 	parameters of the aggregator functions and the weight matrices $W$
 	are known. Algorithm \ref{algo:GraphSage} thus shows the forward
 	propagation of a trained GraphSage model. The model is trained by
@@ -852,8 +853,9 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\noindent There are three aggregator strategies proposed for GraphSage by
 	\citeauthor{hamilton2017inductive} \citeyearpar[p.
-	5-6]{hamilton2017inductive}. In addition, sum-pooling will be added as a
-	fourth aggregation strategy and are shown as follows:
+	5-6]{hamilton2017inductive}. In addition, sum-pooling is added as a
+	fourth strategy and is listed with the other three aggregation approaches as
+	follows:
 
 	\begin{enumerate}
 		\setlength\itemsep{0.2em}
@@ -870,7 +872,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\noindent This type of aggregation is similar to the \acs{gcn} and takes the
 	average of the received messages from the message passing procedure. The 
-	difference to \acs{gcn} is that mean aggregation does not rely on the full 
+	difference to the \acs{gcn} is that mean aggregation does not require the full 
 	graph Laplacian and makes use of a slightly different normalization approach. 
 	The aggregation process differs to the one shown in algorithm 
 	\ref{algo:GraphSage} and replaces the procedures in line 9 and 10 with 
@@ -1005,7 +1007,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	the probability for a connection is calculated given the attributes $a_i$ of 
 	observation $u$ and $v$ where $(a_{i}(u),a_{i}(v))\in B$. For example, a 
 	reasonable assumption could be to assume, that people which are of the same 
-	age group, are more likely to be similar and thus form a connection 
+	age group are more likely to be similar and thus form a connection 
 	compared to people which are not of the same age group. Another example for 
 	this could be gender in terms of biological sex which is a classical binary 
 	setting for a link-affinity matrix. Examples of binary attribute 
@@ -1099,7 +1101,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 	$X$ which contains the attributes are used as inputs and correspond to the 
 	nodes in the resulting graph. More precisely, the order of the generated 
 	adjacency matrix $A$, corresponds to the ordering of the feature matrix $X$. 
-	Therefore the features can be assigned to the nodes of the generated graph. 
+	Therefore, the features can be assigned to the nodes of the generated graph. 
 	The procedure outlined in algorithm \ref{algo:MAG} can be summarized with 
 	the following sequential steps:
 
@@ -1109,7 +1111,7 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 		\item As only undirected graphs are considered, the upper triangular
 			matrix $U$ of $P$ is taken where the $diag(U) = 0$. The diagonal of
 			$U$ is set to 0 to exclude self-loops.
-		\item For every element in $U$, draw a random number form a standard
+		\item For every element in $U$, draw a random number from a standard
 			uniform distribution $\mathcal{U}(0,1)$. If the connection
 			probability $P_{u,v}>\mathcal{U}(0,1)$, a 1 in the
 			preliminary adjacency matrix $\hat A_{u,v}$ is recorded.

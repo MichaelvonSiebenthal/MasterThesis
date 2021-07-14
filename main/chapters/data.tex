@@ -12,7 +12,7 @@
 
   \noindent The datasets are introduced to the extent that they are successful 
   or useful within the framework of this thesis. In particular, the self 
-  launched survey and the Bank Telemarketing dataset showed to be problematic 
+  launched survey and the bank telemarketing dataset showed to be problematic 
   for different reasons. They however provide valuable insights as to when 
   \acs{gml} can be successful. These two datasets are therefore only briefly 
   introduced with the focus lying on providing the relevant insights gained 
@@ -52,10 +52,11 @@
   chapter \ref{section:results}. The repository serves as a general reference 
   for the datasets and the Python code used for this thesis. For every folder 
   in the GitHub repository, there is a readme file  which describes the files 
-  present in the corresponding folder. In addition, the Python Code is written 
+  present in the corresponding folder. In addition, the Python code is written 
   in Jupyter Notebooks which include descriptions of the code. Last but not
   least, the implementation of the GraphSage model is partially derived from 
-  the tutorial given at the \acs{kdd} 2020 conference \citep{kdd2020}.
+  the tutorial given at the \acs{kdd} \citeyearpar{kdd2020} conference and is
+  referenced here.
 
   \section{Self Launched Survey}
   \label{section:self_survey} 
@@ -67,12 +68,12 @@
   classification task involved classifying clients according to their 
   investment preferences in terms of products (single securities like stocks or 
   bonds, funds, \acsp{etf}, etc.). The attributes used for creating the
-  \acs{mag} graph included mostly demographic data. Additional data was 
+  \acs{mag} included mostly demographic data. Additional data was 
   collected which assessed the financial knowledge and behavioral profile of 
   the survey participants by using questions from the financial literacy report 
   of the \acs{oecd} \citeyearpar{OECD2017}. The idea was, that demographic data 
   coupled with the financial literacy questions should provide a suitable 
-  database for the bank client classification task. \\
+  database for the given bank client classification task. \\
 
   \noindent Unfortunately, only $n=113$ people participated in the survey which 
   in general is very small for a \acs{ml} task. Further, the graphs generated 
@@ -85,20 +86,20 @@
   a fixed threshold probability, the \acs{mag} model would generate deterministic 
   graphs which are always the same. The downside however is, that this makes the 
   graph generation process less realistic. In a homophily setting this would 
-  assume that a connection is formed with any node where $P[u,v]>0.5$. It is 
-  unclear without testing, what impact this would have on the graph generation 
-  and whether it is positive or negative. It is well understood, that people 
-  often form connections with people that appear unlikely from a probabilistic 
-  perspective. This consideration would warrant the generation of stochastic 
-  graphs. The main priority is however to create graphs which provide additional 
-  information that can be exploited via \acs{gml}. Having this objective in mind, 
-  it warrants further investigation for which the results are presented in 
-  section \ref{section:stoch_det}. \\
+  assume, that a connection is formed with any node where $P[u,v]>0.5$. It is 
+  unclear without testing, what impact this would have on the graph generation
+  process and whether it would have a positive or a negative impact for \acs{gml}. 
+  It is well understood, that people often form connections with people that appear 
+  unlikely from a probabilistic perspective. This consideration would warrant the 
+  generation of stochastic graphs. The main priority is however to create graphs 
+  which provide additional information that can be exploited via \acs{gml}. 
+  Having this objective in mind, it warrants further investigation for which the 
+  results are presented in section \ref{section:stoch_det}. \\
 
   \noindent The self-launched survey could not be used for any meaningful
-  analysis due to the small sample size. Nevertheless, it provides an
+  analysis due to the small sample size. Nevertheless, it provided an
   interesting follow-up question regarding the generating of
-  stochastic- versus deterministic graphs. The dataset was discarded for
+  stochastic vs. deterministic graphs. The dataset was discarded for
   further analysis and the survey data as well as the performed analyses can be
   found in the GitHub repository. 
 
@@ -106,21 +107,21 @@
   \label{section:bank_data}
 
   The bank telemarketing dataset first introduced by 
-  \cite{moro2011using,moro2014data} was considered as a banking related back-up 
+  \cite{moro2011using,moro2014data} was considered as a banking related backup 
   dataset for the case that the self made survey did not yield a sufficient 
   number of responses. The bank telemarketing dataset is based on a marketing 
   campaign at a Portuguese bank. The dataset includes demographic data, data 
-  regarding the bank client's wealth, contact success during previous campaigns
-  among others. The dataset further provides label data which indicates whether 
-  a client invested in a short-term deposit after having been contacted by the
-  call center of the bank. The dataset is therefore set-up for a binary 
-  classification task. The \acs{mag} generated from the bank telemarketing 
-  dataset is shown in figure \ref{fig:Moro}.
+  regarding the bank client's wealth, contact success during previous
+  campaigns among others. The dataset further provides the label data which 
+  indicates whether a client invested in a short-term deposit after having been 
+  contacted by the call center of the bank. The dataset is therefore set up for 
+  a binary classification task. The \acs{mag} generated from the bank 
+  telemarketing dataset is shown in figure \ref{fig:Moro}.
  
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.5\textwidth]{Moro_network.png}
-		\caption{MAG Graph of Bank Telemarketing Dataset}
+		\caption{MAG of Bank Telemarketing Dataset}
         \label{fig:Moro}
 	\end{figure}
   
@@ -133,14 +134,15 @@
   to have invested in the short-term deposit. To be more precise, only 
   approximately 12\% of bank clients invested in the short-term deposit. 
   The dataset is unbalanced which makes the classification task difficult.
-  \acs{grl} using Node2Vec does not provide any useful results and 
-  the \acsp{gnn} also perform rather poorly. In particular, \acsp{gnn} tend to 
-  classify most clients as non-investors and struggle to accurately classify 
-  clients which did invest. Due to the unbalanced data, it is loss optimizing 
-  for the \acsp{gnn} to predict most nodes as non-investors rather than learning 
-  the true label. Table \ref{table:Moro_conf} shows the confusion matrix of the 
-  classification results for the validation dataset (20\%) using GraphSage.
-  This model yielded the best results among the \acs{gml} models. 
+  \acs{grl} using Node2Vec fails to overcome the challenge set by the
+  unbalanced nature of the dataset as shown in appendix \ref{app:n2v_bank}. The 
+  results using \acsp{gnn} also perform rather poorly. In particular, \acsp{gnn} 
+  tend to classify most clients as non-investors and struggle to accurately 
+  classify clients which did invest. Due to the unbalanced data, it is loss 
+  optimizing for the \acsp{gnn} to predict most nodes as non-investors rather 
+  than learning the true label. Table \ref{table:Moro_conf} shows the confusion 
+  matrix of the classification results for the validation dataset (20\%) of the 
+  GraphSage model. This model yielded the best results among all \acs{gnn} models. 
 
   \begin{table}[h]
     \centering
@@ -160,8 +162,9 @@
   \noindent The confusion matrix corresponds to an accuracy of approximately 
   86.89\%. The \acs{mag} generation process was repeated multiple times
   for which the GraphSage accuracies ranged between 86 - 90\%. Similar results
-  are observed for both graph based methods and standard \acs{ml} modelss such 
-  as \acsp{ann}, \acsp{svm}, and random forest classifiers. \\
+  were achieved for both graph based methods and standard \acs{ml} models such 
+  as \acsp{ann}, \acsp{svm}, and random forest classifiers. The results for
+  these standard \acs{ml} models are shown in appendix \ref{app:standard_bank}. \\
 
   \noindent Unbalanced datasets are part of a larger and common problem in 
   \acs{ml}. Possible remedies might include using loss functions which 
@@ -174,9 +177,9 @@
   separate field of research and could be interesting for a future project. \\
 
   \noindent The failure using \acs{gml} models for this dataset reveals, that 
-  \acsp{gnn} are not an easy remedy for unbalanced data. Perhaps, if the
+  \acsp{gml} are not an easy remedy for unbalanced data. Perhaps, if the
   network structure provided clusters which corresponded to the labels,
-  \acsp{gnn} could provide superior results. Given the variables available in 
+  \acsp{gml} could provide superior results. Given the variables available in 
   the dataset and the limitations of using the \acs{mag} model, this is not 
   possible. In order to check, whether network structure could indeed remedy 
   the unbalanced label problem, the label of the bank telemarketing dataset was 
@@ -332,14 +335,14 @@
   \noindent The variables of the dataset are categorized as follows:
 
   \begin{itemize}
-    \item \textbf{Categorical Variables:} Gender, Customer Type, Type of 
-      Travel, and Satisfaction
-    \item \textbf{Ordinal Variables:} Class, Inflight WiFi Service, Ease of Online
-      Booking, Gate Location, Food and Drink, Online Boarding, Seat Comfort,
-      Inflight Entertainment, On-Board Service, Leg Room Service, Baggage
-      Handling, Check-in Service, Inflight Service, and Cleanliness
-    \item \textbf{Numerical Variables:} Age, Flight Distance, and 
-      Departure Delay in Minutes
+    \item \textbf{Categorical Variables:} gender, customer type, type of 
+      travel, and satisfaction
+    \item \textbf{Ordinal Variables:} class, inflight wifi service, ease of online
+      booking, gate location, food and drink, online boarding, seat comfort,
+      inflight entertainment, on-board Service, leg room service, baggage
+      handling, check-in service, inflight service, and cleanliness
+    \item \textbf{Numerical Variables:} age, flight distance, and 
+      departure delay in minutes
   \end{itemize}
 
   \noindent The categorical variables are dummy coded and the ordinal variable
@@ -395,7 +398,7 @@
       the service)
     \item \textbf{Negative similar observations} (e.g. both observations 
       dislike the service)
-    \item \textbf{Dissimilar observations} (Symmetric for undirected graphs, 
+    \item \textbf{Dissimilar observations} (symmetric for undirected graphs, 
       can be asymmetric for directed graphs)
   \end{itemize}
  
@@ -410,10 +413,10 @@
       \textbf{Attribute Name} & \textbf{Link-Affinity Probabilities}\\
       \hline\hline
       Gender & 0.6, 0.4; 0.4, 0.6  \\\hline 
-      Customer Type & 0.8, 0.5; 0.5, 0.8 \\\hline
+      Customer type & 0.8, 0.5; 0.5, 0.8 \\\hline
       Age & 0.90, 0.80, 0.60, 0,40; 0.80, 0.90, 0.80, 0.60; 0.60, 0.80, 0.90,
       0.80; 0.40, 0.60, 0.80, 0.90 \\\hline
-      Type of Travel & 0.80, 0.20; 0.20, 0.80 \\\hline
+      Type of travel & 0.80, 0.20; 0.20, 0.80 \\\hline
       Class & 0.85, 0.60, 0.45; 0.60, 0.85, 0.60; 0.45, 0.60, 0.85 \\
       \hline
     \end{tabular}
@@ -466,9 +469,7 @@
   retrieved due to the computational cost of running algorithm \ref{algo:MAG}. 
   Simulations which involved creating graphs with different random subsamples 
   show, that the random subsamples are representative for the entire dataset. 
-  This is further supported when comparing the summary statistics of the 
-  subsamples with the full dataset. The generated graph is shown in figure 
-  \ref{fig:us_airline_graph}.
+  The generated graph is shown in figure \ref{fig:us_airline_graph}.
 
   \begin{figure}[h]
 	  \centering
@@ -510,9 +511,10 @@
       associated with booking more business class tickets. The age plot however 
       reveals, that older passengers tend to be mostly satisfied even when 
       booking economy class.
-    \item Most loyal customers book business class. There is some overlap where 
-      loyal customers also book economy class tickets. The reverse is true as 
-      well, where a cluster of disloyal customers book business class. 
+    \item Most loyal customers book business class. There is however some 
+      overlap where loyal customers also book economy class tickets. The 
+      reverse is true as well, where a cluster of disloyal customers book 
+      business class. 
   \end{enumerate}
   
   \noindent Passengers traveling for personal reasons do not appear to adhere
@@ -580,7 +582,7 @@
   the created graph to real world graphs. \acsp{gnn} were designed with real
   world networks in mind. Especially the large number of vertex degrees might
   be of concern and is discussed in more detail in section 
-  \ref{section:gml_performance}. For that reason, the generated \acs{mag} is
+  \ref{section:comp_disc}. For that reason, the generated \acs{mag} is
   compared to real networks. The most appropriate type of networks for comparison 
   are a social networks. Common structures of social networks include 
   \citep{watts1998collective,newman2006structure,Newman2010,kim2012multiplicative}:
@@ -648,7 +650,7 @@
   \begin{figure}[h]
 		\centering
 		\includegraphics[width=1.0\textwidth]{deterministic_MAG.png}
-		\caption{Deterministic MAG graph}
+		\caption{Deterministic MAG}
         \label{fig:det_MAG}
   \end{figure}
 

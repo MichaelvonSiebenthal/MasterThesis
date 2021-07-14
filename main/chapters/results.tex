@@ -8,7 +8,7 @@
   random forest classifiers \citep{breiman2001random}, AdaBoost classifiers 
   \citep{freund1997decision,hastie2009multi}, \acs{qda}
   \citep{tharwat2016linear}, and \acsp{ann}
-  \citep{mcculloch1943logical,werbos1974beyond} are considered.
+  \citep{mcculloch1943logical,werbos1974beyond} were considered.
 
   \section{Graph Representation Learning}
   \label{section:result_n2v}
@@ -77,9 +77,9 @@
 
   \noindent The results show, that the Node2Vec model is not successful for
   classifying passengers according to their satisfaction. Applying the trained
-  models to the test data yields even poorer results. When looking at the
+  models to the test data yielded even poorer results. When looking at the
   satisfaction scatter plot in figure \ref{fig:node2vec}, it becomes obvious why
-  the downstream \acs{ml} tasks are unsuccessful. Node2Vec generates very good 
+  the downstream \acs{ml} tasks were unsuccessful. Node2Vec generates very good 
   node embeddings for the attributes to the extent that clusters exist within 
   the original graph. The label satisfaction could not be used as an attribute 
   for generating the graph. This would be unrealistic in practice. As the label 
@@ -97,11 +97,11 @@
   \ref{section:airline_data}. This data was then used as the input data for the 
   downstream \acs{ml} models. For the training- and validation data, this 
   approach yielded excellent results with accuracies often being close to 95\%. 
-  For some of the models such as the Random Forest classifier, this also
+  For some of the models such as the random forest classifier, this also
   translated into a good accuracy for the test data. The results of this
   approach can also be found in appendix \ref{app:n2v5}. Unfortunately, the 
   results presented in section \ref{section:result_comp} show, that better 
-  accuracies for the test data are achieved only using the feature data. For 
+  accuracies for the test data are achieved by only using the feature data. For 
   that reason, joining feature data with node embeddings is not a recommended 
   approach for the \acs{us} airline passenger dataset.
 
@@ -113,7 +113,7 @@
   satisfaction of the \acs{us} airline passengers. The model specifications and
   the results are presented in the following sections for both models.
 
-  \subsection{Graph Convolutional Network}
+  \subsection{Graph Convolutional Networks}
   \label{section:GCN_results}
 
   The \acs{gcn} is designed using a similar forward propagation function as the
@@ -199,7 +199,7 @@
   be used in an inductive setting is very limiting. Further, the \acs{gcn} 
   requires 1'000 epochs to finish training and yields only mediocre results in 
   terms of accuracy and model fit. A reason for this could be, that only a 
-  full batch implementation for \acs{gcn} was introduced. In addition,
+  full-batch implementation for \acs{gcn} was introduced. In addition,
   \acsp{gcn} always consider the entire neighborhood set. GraphSage for 
   comparison is specifically designed with mini-batch training and neighborhood 
   sampling in mind. The results for GraphSage are presented in the following 
@@ -272,7 +272,7 @@
   and the accuracy using LSTM aggregation. The model yields very good results 
   for the training- and validation data sets. The LSTM model is however 
   significantly slower for training purposes compared to the other aggregation 
-  methods. This is an inconvenient short-coming.
+  methods. This is an inconvenient shortcoming.
 
   \begin{figure}[h]
 		\centering
@@ -283,14 +283,14 @@
 
   \noindent The training- and validation accuracy after 400 epochs is 95.75\% 
   and 95.14\% respectively. Here again, it is shown that the training behavior
-  is relatively good. The model is however prone to over-fit as shown in figure 
-  \ref{fig:lstm_aggregation}. Fortunately, the over-fit is small and remains 
+  is relatively good. The model is however prone to overfit as shown in figure 
+  \ref{fig:lstm_aggregation}. Fortunately, the overfit is small and remains 
   stable. The results for the test graph are shown in table 
   \ref{table:lstm_results_test}. The results reveal, that the accuracies of >
   95\% for the training- and validation datasets do not transfer to the test
   graph. While this is to be expected, the decrease in accuracy for the test
   graph is most pronounced for \acs{lstm} aggregation. This further indicates, 
-  that \acs{lstm} aggregation is prone to over-fitting.
+  that \acs{lstm} aggregation is prone to overfitting.
 
   \begin{table}[h]
     \centering
@@ -386,7 +386,7 @@
   \label{section:graphsage_simulation}
   
   The loss- and accuracy plots using the GraphSage model reveal mostly a 
-  relatively good model fit. Repeatedly training the GraphSage models revealed, 
+  relatively good model fit. Repeatedly training the GraphSage models showed, 
   that there is some non-negligible variation in the performance of the trained 
   models. In particular, depending on how the data is randomly split into 80\% training
   data and 20\% validation data, the model results could differ significantly.
@@ -394,25 +394,26 @@
   data is not the sole culprit for the observed variation in model performance. 
   The dropout rate of 2\% employed in the GraphSage model is just as responsible. 
   Simulations show, that if the dropout rate is set to 0, that the model tends
-  to over-fit significantly. In this setting, the training accuracy approaches
+  to overfit significantly. In this setting, the training accuracy approaches
   98\% while the validation accuracy stagnates around 92-93\%. The trained model 
   accordingly does not translate well to the test graph for which the accuracy
   is approximately 91\%. This training behavior is observed regardless of the
   random train- and validation data set assignment. For that reason, a dropout 
-  rate of 2\% is set to avoid this over-fitting problem which in turn also 
-  yields better test results as shown in section \ref{section:graphsage_results}. \\
+  rate of 2\% is set to avoid this overfitting problem which in turn also 
+  yields better test results which are presented in section 
+  \ref{section:graphsage_results}. \\
 
   \noindent Setting a dropout rate introduces an additional obstacle
-  for training the model. While training the model, the dropout rate is
+  for training the model. While training, the dropout rate is
   applied for forward propagating the training data. The validation data is 
   however forward propagated with no dropout. This is the intended mechanism
-  which can be used to prevent over-fitting. This however makes the model more
+  which can be used to prevent overfitting. This however makes the model more
   sensitive to the random assignment of nodes into training- and validation
   data. Given the structure present in the graph, some nodes are more difficult
   to classify than others. If the training data includes more difficult nodes
   in combination with the dropout rate, the outcome can occur where the
   validation data has a lower loss and a higher accuracy than the training
-  data. The same can be true in reverse, where an over-fit occurs if the
+  data. The same can be true in reverse, where an overfit occurs if the
   training data includes mostly nodes which are more simple to classify than
   the validation data. Lastly, a good model fit is also frequently observed as
   shown in the results presented in the previous section. \\
@@ -473,12 +474,12 @@
   \label{section:result_comp}
 
   This section compares the results of the three models Node2Vec, \acs{gcn} and
-  GraphSage. In addition the graph based \acs{ml} models are compared to the 
+  GraphSage. In addition, the graph based \acs{ml} models are compared to the 
   standard \acs{ml} models. More precisely, the same standard \acs{ml} models 
   are used for comparison as for the downstream \acs{ml} task for \acs{grl} 
   shown in section \ref{section:result_n2v}. For the comparison, the standard 
   \acs{ml} models consider the same features as inputs as the \acsp{gnn}. The 
-  comparison is done to assess to what extent, semi-synthetic graphs are useful 
+  comparison is done to assess to what extent semi-synthetic graphs are useful 
   for \acs{gml}. This comparison thus provides the key results for answering
   the research question and assessing the hypotheses stated in section 
   \ref{section:research_topics}. The comparison of the results is shown in table 
@@ -521,8 +522,8 @@
   \noindent The comparison shown in table \ref{table:result_comparison} reveals,
   that \acsp{gcn} and Node2Vec are not competitive strategies for the \acs{us} 
   airline passenger dataset. GraphSage is shown to be a serious competitor and 
-  is the second best model. The Random Forest classifier is consistently the best 
-  model regardless of the training- and validation data split and test data. 
+  is the second best model. The random forest classifier is consistently the best 
+  model regardless of the training- and validation data split and the test data. 
   The \acs{ann} is the third best model and is only marginally inferior to the
   GraphSage models. Similarly as for \acsp{gnn}, it is important to evaluate the 
   model fit of the \acs{ann} to draw a more definitive conclusion. The loss- and
@@ -541,10 +542,10 @@
   using the softmax function. The loss is calculated using cross-entropy and
   the model parameters are updated using the Adam optimizer with a learning
   rate of $\alpha=0.002$. The dropout rate is set to $p=0.01$. Without setting 
-  the dropout rate, the \acs{ann} is prone to significant over-fitting. The 
+  the dropout rate, the \acs{ann} is prone to significant overfitting. The 
   presented model settings correspond to the ones which performed best for the 
   \acs{ann}. Figure \ref{fig:ANN_fit} shows, that the \acs{ann} model starts 
-  over-fitting after approximately 200 epochs. When comparing the GraphSage 
+  overfitting after approximately 200 epochs. When comparing the GraphSage 
   training plots with the \acs{ann}, the GraphSage model appears to exhibit 
   preferable training behavior on average. \\
 

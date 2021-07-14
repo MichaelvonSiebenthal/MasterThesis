@@ -63,11 +63,11 @@
 		\item[\textbf{Chapter 1:}] Contains the introduction for the thesis and 
 			defines the research topic.
 		\item[\textbf{Chapter 2:}] The required theory for understanding
-			graphs, \acs{gml}, and graph generation are presented in this 
+			graphs, \acs{gml}, and graph generation is presented in this 
 			chapter.
 		\item[\textbf{Chapter 3:}] This chapter presents the datasets and the 
-			graphs. This chapter also contains some key insights gained from the 
-			datasets which are not considered in chapter 4.
+			graphs. The key findings of the datasets not considered in chapter
+			4, are presented in chapter 3 as well. 
 		\item[\textbf{Chapter 4:}] Presents the \acs{ml} results of the
 			\acs{us} airline passenger dataset. This dataset showed to be best 
 			suited for a fair comparison of \acs{ml} models. This dataset is 
@@ -78,7 +78,7 @@
 			future research.
 	\end{itemize}
 
-	\noindent In the following section, the motivation for the topic and its
+	\noindent In the following section the motivation for the topic and its
 	relationship to business \& economics is given. 
 
 	\section{Motivation}
@@ -117,7 +117,7 @@
 	using \acs{gml}. \\
 
 	\noindent Most researchers and companies do not have access to datasets which
-	include network information and feature data. In a practical setting,
+	include network information as well as feature data. In a practical setting,
 	companies may have access to large amounts of customer data. This data
 	however rarely contains any network information (e.g. which client is
 	connect with which other clients). This scenario is similar for researchers
@@ -131,7 +131,7 @@
 	companies have to choose between network data or feature data. For the 
 	purpose of gaining customer insights, feature data is more important. 
 	Therefore, the most practical approach is to discard network information 
-	and to focus on using feature data. This data access problem prevents many 
+	and to focus on using features. This data access problem prevents many 
 	researchers and companies to make use of potentially superior graph based 
 	\acs{ml} models. This problem motivates this master's thesis to find
 	alternatives which at least in part remove the barrier for \acs{gml}. For 
@@ -154,7 +154,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.7\textwidth]{overview_datascience.png}
-		\caption{Machine Learning Overview}
+		\caption{Overview Machine Learning}
 		\citep{Frauenhofer2021}
 		\label{fig:ml_overview}
 	\end{figure} 
@@ -204,15 +204,15 @@
 	neural network, as network depth does not necessarily improve the model and 
 	can be even counter-productive. Within \acs{gml} there are two main 
 	approaches. The first approach focuses on learning vector representations of 
-	graphs which are then used for downstream machine learning. The downstream 
+	graphs which are then used for downstream \acs{ml}. The downstream 
 	\acs{ml} models involve the standard models presented previously. 
-	\Ac{grl} approaches include models such as DeepWalk 
+	These \Ac{grl} approaches include models such as DeepWalk 
 	\citep{perozzi2014deepwalk} and Node2Vec \citep{grover2016node2vec} among 
 	others. The second approach involves the application of \acp{gnn} for which 
 	there exist many different models. Popular and established models include 
 	\acp{gcn} \citep{kipf2016semi} and GraphSage \citep{hamilton2017inductive}. 
 	The detailed theoretical background for the considered \acs{gml} models is 
-	provided in chapter 2.
+	provided in chapter \ref{section:theory}.
 
 	\section{Research Topic}
 	\label{section:research_topics}
@@ -236,7 +236,7 @@
 	which can adhere to observed real world network properties. An analysis of 
 	the \ac{mag} model revealed, that it could also be a useful model for 
 	creating semi-synthetic graphs using existing feature data. For that reason, 
-	the \acs{mag} model is selected for generating semi-synthetic graphs. This 
+	the \acs{mag} model is chosen for generating semi-synthetic graphs. This 
 	model is introduced in detail in section \ref{section:theory_graphgen}. \\
 
 	\noindent More recently, researchers have focused their attention on deep 
@@ -281,11 +281,11 @@
 
 	\paragraph{Hypotheses}\mbox{}
 
-	\noindent\textbf{H1:} Graph machine learning using semi-synthetic graphs
-	provide superior results compared to the results of standard machine
-	learning for a given classification task.\\
+	\noindent\textbf{H1:} Graph machine learning models using semi-synthetic 
+	graphs provide superior results compared to the results of standard machine
+	learning models for a given classification task.\\
 
-	\noindent\textbf{H2:} Graph machine learning using semi-synthetic graphs is
-	a competitive strategy compared to the results of standard machine
-	learning for a given classification task.\\
+	\noindent\textbf{H2:} Graph machine learning using semi-synthetic graphs is 
+	a competitive strategy compared to the results of standard machine learning 
+	models for a given classification task.
 
