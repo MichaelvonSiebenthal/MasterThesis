@@ -86,36 +86,50 @@
 	  Supervisor: \\
 	  Prof. Dr. Dietmar Maringer\\
 	  \vspace{4em}
-	  Submission Date: \\\today
+	  Submission Date: \\
+      July 15, 2021
 	  \vspace{3em}
     \end{center}
   \end{titlepage} 
 
 
   %%% frontmatter
+  \pagenumbering{Roman}      
   \chapter*{Abstract}
   \input{chapters/abstract}
+  \addcontentsline{toc}{chapter}{Abstract}
+  \newpage
 
   \singlespacing
+  \renewcommand{\contentsname}{Table of Contents}
   \setcounter{secnumdepth}{3}
-  \setcounter{tocdepth}{3}
+  \setcounter{tocdepth}{3} 
+  \addcontentsline{toc}{chapter}{Table of Contents}
   \tableofcontents
+  
   \listoffigures
+  \addcontentsline{toc}{chapter}{List of Figures}
+
   \listoftables
+  \addcontentsline{toc}{chapter}{List of Tables}
+
   \listofalgocfs 
+  \addcontentsline{toc}{chapter}{List of Algorithms}
+
   \printacronyms[include=abbrev,name=List of Abbreviations]
+  \addcontentsline{toc}{chapter}{List of Abbreviations}
 
   %%% Main Body
   \onehalfspacing
-  
   \chapter{Introduction}
+  \pagenumbering{arabic}
   \input{chapters/introduction}
 
 
   % Theory
   \chapter{Theory}
-  \input{chapters/theory}
   \label{section:theory}
+  \input{chapters/theory}
  
 
   % Data
@@ -138,15 +152,31 @@
   \label{section:conclusion_outlook}
   \input{chapters/conclusion.tex}
 
-  \chapter*{Declaration}
-  \input{chapters/declaration}
-
   %%% endmatter
-  \bibliography{bibliography.bib}  
+  \newpage
+  \addcontentsline{toc}{chapter}{References}
+  \renewcommand\bibname{References}
+  \bibliography{bibliography.bib}
 
   \appendix
-  \chapter{Auxhiliary Results}
-  \input{chapters/appendix}
+  \chapter{Simulation Results}
+  \input{chapters/app_simulations.tex}
+
+  \chapter{Deterministic Graph Results}
+  \label{app:det_graphs}
+  \input{chapters/app_detresults.tex}
+
+  \chapter{Auxhiliary Node2Vec Results}
+  \label{app:n2v5}
+  \input{chapters/app_node2vec.tex}
+
+  \chapter{Pairplot of US Airline Passenger Dataset}
+  \label{App:pairplot}
+  \input{chapters/app_pairplot.tex}
+
+  \chapter*{Declaration}
+  \addcontentsline{toc}{chapter}{Declaration}
+  \input{chapters/declaration}
 
 \end{document}
 

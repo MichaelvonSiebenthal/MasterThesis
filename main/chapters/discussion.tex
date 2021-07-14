@@ -11,7 +11,8 @@
   \end{enumerate}
 
   \section[Informativeness of Graphs]{Informativeness of Semi-Synthetic Graphs}
-  
+  \label{section:informativeness}
+
   The graph generated for the \acs{us} airline passenger dataset presented in 
   section \ref{section:airline_data} provided interesting results for cluster 
   analysis. The \acs{mag} model was successfully used for generating a graph that 
@@ -209,7 +210,7 @@
   always sample exactly 10 and 5 nodes respectively. In this setting, only the 
   feature data and the general neighborhood of the nodes can be considered.
   Specific network structures withing the neighborhoods can however not be
-  exploited. This points toward serious limitation of the generated \acs{mag} 
+  exploited. This points to a serious limitation of the generated \acs{mag} 
   and might be a reason why GraphSage did not perform better. A similar
   observation is also made for the \acs{gcn}. This model always has to consider
   the entire graph Laplacian. Given the large starting value of the degree
