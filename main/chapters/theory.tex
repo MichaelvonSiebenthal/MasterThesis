@@ -419,7 +419,8 @@
 	probability for every context word given $w_{t}$. To formalize this in 
 	terms of a loss function, the training target shown in equation 
 	\ref{eq:skip_traintarget} can be rewritten as follows for every input word 
-	$w_{t}$: 
+	$w_{t}$ and is taken from the deep learning and data science lecture given
+	at Yonsei University by Prof. \cite{won2021lecture}: 
 
 	\begin{equation}
 		\begin{split}
@@ -453,8 +454,8 @@
 	DeepWalk algorithm builds on top of the Skip-gram model and uses 
 	fixed-length random walks for learning the node embeddings. To provide a 
 	better overview of the DeepWalk algorithm, the pseudo-code is presented in 
-	algorithms \ref{algo:DeepWalk} \& \ref{algo:SkipGram} 
-	\citep[p. 704]{perozzi2014deepwalk}.
+	algorithms \ref{algo:DeepWalk} \& \ref{algo:SkipGram} as shown in the
+	original paper by \citeauthor{perozzi2014deepwalk} \citeyearpar[p. 704]{perozzi2014deepwalk}.
 	
 	\begin{algorithm}[h]
 		\scriptsize
@@ -607,8 +608,9 @@
 	find node embeddings based on local network neighborhoods \citep{leskovec2021lecture}. 
 	The node embeddings at layer 0 correspond to the features of the input nodes 
 	where $X = H^{(0)}$. A typical procedure for a \acs{gnn} model is outlined 
-	in the pseudo-code shown in algorithm \ref{algo:GNN_struct} 
-	\citep{hamilton2017inductive,leskovec2021lecture,you2020design}.	
+	in the pseudo-code shown in algorithm \ref{algo:GNN_struct} and is inspired
+	by the articles from 
+	\cite{hamilton2017inductive,leskovec2021lecture,you2020design}.	
 
 	\begin{algorithm}[h]
 		\scriptsize
@@ -798,8 +800,9 @@ d_{k,k}\tilde d_{i,i}}} W^{(l)}\right)
 
 	\noindent The steps shown in figure \ref{fig:GraphSage_sample} are similar
 	to the procedures for \acsp{gcn}. The pseudo code for the GraphSage forward 
-	propagation function is given in algorithm \ref{algo:GraphSage} 
-	\cite[p. 12]{hamilton2017inductive}. \\
+	propagation function is given in algorithm \ref{algo:GraphSage} as
+	presented in the appendix of the article by
+	\citeauthor{hamilton2017inductive} \citeyearpar[p. 12]{hamilton2017inductive}. \\
 
 
 	\begin{algorithm}[h]
