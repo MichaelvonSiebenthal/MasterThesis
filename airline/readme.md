@@ -22,20 +22,27 @@ files.
 5. The file TEST_DF is used for the Node2Vec.ipynb script and the Simulation.ipynb script. 
     This file contains the subsample of 6'000 nodes used as the test data.
 
-6. adjacency_matrices.zip contains the adjacency matrix 'adjacency_matrix.csv' which 
+6.  The file TEST_DF_det contains the test feature and is used for analyzing the 
+    results of the deterministic MAG.
+
+7. adjacency_matrices.zip contains the adjacency matrix 'adjacency_matrix.csv' which 
     is the adjacency matrix of the training graph. It further contains the adjacency matrix
-    'adjacency_matrix_test_graph.csv' which is the adjacency matrix of the test graph. 
-    These .csv files must first be unpacked before they can be used.
+    'adjacency_matrix_test_graph.csv' which is the adjacency matrix of the test graph. Lastly,
+    the zip file contains the adjacency matrix of the deterministic graph as well as the
+    adjacency matrix of the graph excluding the attribute gender. These .csv files must first 
+    be unpacked before they can be used.
 
-7. The file clean_data contains the cleaned training data generated from the airline_data.ipynb file.
+8. The file clean_data contains the cleaned training data generated from the airline_data.ipynb file.
 
-8. embeddings contain the 2-dimensional node embeddings of the training graph which were generated using Node2Vec.
+9. embeddings contain the 2-dimensional node embeddings of the training graph which were generated using Node2Vec.
 
-9. embeddings_test contain the 2-dimensional node embeddings of the test graph which were generated using Node2Vec.
+10. embeddings_test contain the 2-dimensional node embeddings of the test graph which were generated using Node2Vec.
 
-10. main_script.ipynb is the main Python script used for analyzing the graphs and 
+11. embeddings_5 contains the 5-dimensional node embeddings of the training graph.
+
+12. main_script.ipynb is the main Python script used for analyzing the graphs and 
     generating the machine learning results.
 
-11. Node2Vec.ipynb is the script used for the Node2Vec results. 
+13. Node2Vec.ipynb is the script used for the Node2Vec results. 
 
-12. Simulation.ipynb is used for running the GraphSage robustness simulation.
+14. Simulation.ipynb is used for running the GraphSage robustness simulation.
